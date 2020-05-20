@@ -16,7 +16,7 @@ You need to have AnyLogic with any valid license (PLE, University, or Profession
 ### Installation
 
 1. Download the `Pypeline.jar` file and place it somewhere it won't be moved (or accidently deleted).
-2. Add it to your AnyLogic palette. A step-by-step explanation of how to do this is available in the AnyLogic help article ["Managing Libraries"](https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Flibraries%2FManaging+Libraries.html ""Managing Libraries""). 
+2. Add it to your AnyLogic palette. A step-by-step explanation of how to do this is available in the AnyLogic help article ["Managing Libraries"](https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Flibraries%2FManaging+Libraries.html). 
 3. You should see a new palette item for Pypeline with the custom Python Communicator agent.
 
 ## Quick start guide
@@ -56,7 +56,7 @@ traceln(xValue);
 
   > If you press the "get x" button first, an error will be thrown because you tried to get the value of a variable before you defined it!
 
-We have provided demos and example models with the library. Please review them to get some inspiration of possible use cases and to better understand the workflow.
+There are demos and example models provided with the library. Please review them to get some inspiration of possible use cases and to better understand the workflow.
 
 ## Important disclaimers
 * Pypeline is not part of the main AnyLogic product, and The AnyLogic Company is not obligated to provide support for users or to provide future support/updates
@@ -65,5 +65,7 @@ We have provided demos and example models with the library. Please review them t
   * You can (and should) build models in the AnyLogic GUI exactly as before, making full use of AnyLogic's extensive native capabilities
 * Pypeline will also add some computational overhead to your model and therefore may not be the best option if computational efficiency is a priority in your models
 
+## Contributing
+Please feel free to contribute to Pypeline! For this purpose, pull requests are used - if you're not familiar with how to do this, consult GitHub Help for more information.
 
-
+Any questions, issues, bug reports, or feature requests should be made on the "Issues" tab.
