@@ -176,10 +176,19 @@ if (!pyCommunicator.isConnected())
 							<Name><![CDATA[preferredPythonVersion]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[pathToPythonExe]]></Name>
+							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadFromProperties]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[true]]></Code>
+							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>

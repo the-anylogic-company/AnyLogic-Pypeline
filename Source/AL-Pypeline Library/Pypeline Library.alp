@@ -15,22 +15,26 @@
 	<OptionLists>
 		<OptionList>
 			<Id>1574961034301</Id>
-			<Name><![CDATA[PreferredPythonVersion]]></Name>
+			<Name><![CDATA[PythonCommandType]]></Name>
 			<Option>
 				<Id>1574961050485</Id>
-				<Name><![CDATA[PYTHON_AUTO]]></Name>
+				<Name><![CDATA[PYTHON]]></Name>
 			</Option>
 			<Option>
 				<Id>1574961045397</Id>
-				<Name><![CDATA[PYTHON_2]]></Name>
+				<Name><![CDATA[PYTHON2]]></Name>
 			</Option>
 			<Option>
 				<Id>1574961047949</Id>
-				<Name><![CDATA[PYTHON_3]]></Name>
+				<Name><![CDATA[PYTHON3]]></Name>
 			</Option>
 			<Option>
 				<Id>1574961034631</Id>
 				<Name><![CDATA[PYTHON_OTHER]]></Name>
+			</Option>
+			<Option>
+				<Id>1589489938747</Id>
+				<Name><![CDATA[PYTHON_PATH]]></Name>
 			</Option>
 		</OptionList>
 	</OptionLists>
@@ -69,26 +73,66 @@ In addition to single-line Python code, you can also pass multiline Python code 
 Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
 <br>
 Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
-			<AdditionalClassCode><![CDATA[public PyCommunicator(PreferredPythonVersion prefPythonVersion) {
-	this(prefPythonVersion, "", false);
+			<AdditionalClassCode><![CDATA[/**
+Initialize PyCommunicator object based on whether to load from properties.
+*/
+public PyCommunicator(boolean loadFromProperties) {
+	this(loadFromProperties, null, null, null, true);
 }
 
-public PyCommunicator(PreferredPythonVersion prefPythonVersion, boolean throwErrorOnFailedAttempt) {
-	this(prefPythonVersion, "", throwErrorOnFailedAttempt);
+/**
+Initialize PyCommunicator object from the preferred version.
+Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
+Defaults to throwing error on failed attempt.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType) {
+	this(false, pythonCommandType, "", "", true);
 }
 
-public PyCommunicator(String pathToPythonExe) {
-	this(PYTHON_OTHER, pathToPythonExe, false);
+/**
+Initialize PyCommunicator object from the preferred version.
+Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt) {
+	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt);
 }
 
-public PyCommunicator(String pathToPythonExe, boolean throwErrorOnFailedAttempt) {
-	this(PYTHON_OTHER, pathToPythonExe, throwErrorOnFailedAttempt);
+/**
+Initialize PyCommunicator object from the preferred version and an argument.
+Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
+Defaults to throwing error on failed attempt.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType, String arg) {
+	this(false, pythonCommandType, pythonCommandType.equals(PYTHON_OTHER) ? arg : null, pythonCommandType.equals(PYTHON_PATH) ? arg : null, true);
 }
-/*
-public static <T> String arrayToString(Object array, Class<T> clazz) {
-	return "";
-}*/
-]]></AdditionalClassCode>
+
+/**
+Initialize PyCommunicator object from the preferred version and an argument.
+Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType, String arg, boolean throwErrorOnFailedAttempt) {
+	this(false, pythonCommandType, pythonCommandType.equals(PYTHON_OTHER) ? arg : null, pythonCommandType.equals(PYTHON_PATH) ? arg : null, throwErrorOnFailedAttempt);
+}
+
+@Deprecated
+/**
+* @deprecated
+* With the new parameter for custom command, the string type is now ambiguous.
+* Use PyCommunicator(PreferredPythonVersion, String) instead
+*/
+public PyCommunicator(String pythonExecPath) {
+	this(false, PYTHON_PATH, "", pythonExecPath, false);
+}
+
+@Deprecated
+/**
+* @deprecated
+* With the new parameter for custom command, the string type is now ambiguous.
+* Use PyCommunicator(PreferredPythonVersion, String, boolean) instead
+*/
+public PyCommunicator(String pythonExecPath, boolean throwErrorOnFailedAttempt) {
+	this(false, PYTHON_PATH, "", pythonExecPath, throwErrorOnFailedAttempt);
+}]]></AdditionalClassCode>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Files;
 import java.io.IOException;
@@ -97,7 +141,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import spark.utils.IOUtils;
 import java.nio.charset.StandardCharsets;
-/*
 import java.util.Properties;
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -107,8 +150,10 @@ import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.net.MalformedURLException;
-*/]]></Import>
-			<StartupCode><![CDATA[initialize();]]></StartupCode>
+import java.net.URI;
+]]></Import>
+			<StartupCode><![CDATA[initialize();
+generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
@@ -215,7 +260,7 @@ try {
 					<X>250</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="private" StaticVariable="false">
 						<Type><![CDATA[PySubProcess]]></Type>        
@@ -226,115 +271,113 @@ try {
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1574960246472</Id>
-					<Name><![CDATA[PYTHON_AUTO]]></Name>
-					<X>80</X><Y>80</Y>
+					<Name><![CDATA[PYTHON]]></Name>
+					<X>80</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
-						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<Type><![CDATA[PythonCommandType]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[PreferredPythonVersion.PYTHON_AUTO]]></Code>
+							<Code><![CDATA[PythonCommandType.PYTHON]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1574960293631</Id>
-					<Name><![CDATA[PYTHON_2]]></Name>
-					<X>80</X><Y>110</Y>
+					<Name><![CDATA[PYTHON2]]></Name>
+					<X>80</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
-						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<Type><![CDATA[PythonCommandType]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[PreferredPythonVersion.PYTHON_2]]></Code>
+							<Code><![CDATA[PythonCommandType.PYTHON2]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1574960297045</Id>
-					<Name><![CDATA[PYTHON_3]]></Name>
-					<X>80</X><Y>140</Y>
+					<Name><![CDATA[PYTHON3]]></Name>
+					<X>80</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
-						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<Type><![CDATA[PythonCommandType]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[PreferredPythonVersion.PYTHON_3]]></Code>
+							<Code><![CDATA[PythonCommandType.PYTHON3]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1574960298125</Id>
 					<Name><![CDATA[PYTHON_OTHER]]></Name>
-					<X>80</X><Y>170</Y>
+					<X>80</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
-						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<Type><![CDATA[PythonCommandType]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[PreferredPythonVersion.PYTHON_OTHER]]></Code>
+							<Code><![CDATA[PythonCommandType.PYTHON_OTHER]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1589490530972</Id>
+					<Name><![CDATA[PYTHON_PATH]]></Name>
+					<X>80</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[PythonCommandType]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[PythonCommandType.PYTHON_PATH]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1589586802472</Id>
+					<Name><![CDATA[PROPERTIES_FILENAME]]></Name>
+					<X>-150</X><Y>450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[String]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA["pypeline.properties"]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1570726491560</Id>
-					<Name><![CDATA[preferredPythonVersion]]></Name>
-					<Description><![CDATA[The preferred version of Python to use.<br>
-If <i>auto</i> is selected, the library will use whichever python version corresponds to the <code>python</code> command.<br>
-If <i>other</i> is selected, you can specify the full path to the desired python executable.
-]]></Description>
+					<Id>1589488014296</Id>
+					<Name><![CDATA[loadLastWorkingConfig]]></Name>
 					<X>50</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[com.anylogic.libraries.pypeline.PreferredPythonVersion]]></Type>
+						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[self.PYTHON_AUTO]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1570726491558</Id>
-							<Label><![CDATA[Preferred Python version]]></Label>
-							<EditorContolType>RADIO_BUTTONS</EditorContolType>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[auto]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON_AUTO]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[python 2]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON_2]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[python 3]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON_3]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[other]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
-								</Value>
-							</PredefParamValue>
+							<Id>1589488014294</Id>
+							<Label><![CDATA[Load last working configuration]]></Label>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -342,10 +385,82 @@ If <i>other</i> is selected, you can specify the full path to the desired python
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1578675862658</Id>
-					<Name><![CDATA[pathToPythonExe]]></Name>
+					<Id>1570726491560</Id>
+					<Name><![CDATA[pythonCommandType]]></Name>
+					<Description><![CDATA[The preferred command to call Python.<br>
+If <i>(other)</i> is selected, you can specify the alias to Python.<br>
+If <i>(path)</i> is selected, you can specify the full path to the desired python executable.
+]]></Description>
+					<X>50</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[com.anylogic.libraries.pypeline.PythonCommandType]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[self.PYTHON]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1570726491558</Id>
+							<Label><![CDATA[Command to call Python]]></Label>
+							<EditorContolType>RADIO_BUTTONS</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1589488014296</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[true]]></Code>
+								</Value>
+							</HideCondition>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[python]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[python2]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON2]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[python3]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON3]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[(other)]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[(path)]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_PATH]]></Code>
+								</Value>
+							</PredefParamValue>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>SEPARATOR</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1589488235619</Id>
+					<Name><![CDATA[pythonCommand]]></Name>
 					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
-					<X>50</X><Y>200</Y>
+					<X>50</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -355,18 +470,68 @@ If <i>other</i> is selected, you can specify the full path to the desired python
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[""]]></Code>
+							<Code><![CDATA[// e.g., "python38"]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1589488235617</Id>
+							<Label><![CDATA[Python command]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<HideCondition>
+								<Id>1589488235615</Id>
+								<ParameterId>1570726491560</ParameterId>
+								<Operation>NOT_EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
+								</Value>
+							</HideCondition>
+							<HideCondition>
+								<Id>1589488235616</Id>
+								<ParameterId>1589488014296</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[true]]></Code>
+								</Value>
+							</HideCondition>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1578675862658</Id>
+					<Name><![CDATA[pythonExecPath]]></Name>
+					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
+					<X>50</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[// e.g., "C:\\Program Files\\Python37\\python.exe"]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1578675862656</Id>
-							<Label><![CDATA[Path to python executable]]></Label>
+							<Label><![CDATA[Python executable path]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<HideCondition>
 								<Id>0</Id>
 								<ParameterId>1570726491560</ParameterId>
 								<Operation>NOT_EQUALS</Operation>
 								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
+									<Code><![CDATA[self.PYTHON_PATH]]></Code>
+								</Value>
+							</HideCondition>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1589488014296</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[true]]></Code>
 								</Value>
 							</HideCondition>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
@@ -379,7 +544,7 @@ If <i>other</i> is selected, you can specify the full path to the desired python
 					<Id>1582299117563</Id>
 					<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 					<Description><![CDATA[Decides whether to throw an AnyLogic model error if any command does not execute successfully.<br>]]></Description>
-					<X>50</X><Y>250</Y>
+					<X>50</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -395,6 +560,14 @@ If <i>other</i> is selected, you can specify the full path to the desired python
 							<Id>1582299117561</Id>
 							<Label><![CDATA[Throw error on failed attempt]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1589488014296</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[true]]></Code>
+								</Value>
+							</HideCondition>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -743,7 +916,7 @@ return null;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[return py.activePyVersion + "\n" + pathToPythonExe;]]></Body>
+					<Body><![CDATA[return py.activePyVersion + "\n" + py.activePyPath;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -752,7 +925,7 @@ return null;]]></Body>
 					<Name><![CDATA[initialize]]></Name>
 					<Description><![CDATA[Uses the currently set value for the preferred Python version (and optionally, the path to the executable) to initialize the Python environment.<br>
 If there is already a running Python environment, this will first try to close it gracefully before creating a new environment.]]></Description>
-					<X>50</X><Y>300</Y>
+					<X>50</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -766,13 +939,41 @@ if (py != null) {
 	}
 }
 
+if (loadLastWorkingConfig) {
+	importProperties();
+}
 
+// Synchronize parameters based on provided parameters
 String pathToServerPy = createServerPy();
-if (preferredPythonVersion == PYTHON_OTHER) {
-	py = new PySubProcess(pathToServerPy, pathToPythonExe);
-} else {
-	py = new PySubProcess(pathToServerPy, preferredPythonVersion);
-	set_pathToPythonExe(py.activePyPath);
+switch (pythonCommandType) {
+	case PYTHON:
+	case PYTHON2:
+	case PYTHON3:
+		set_pythonCommand(PySubProcess.convertToCommand(pythonCommandType));
+	case PYTHON_OTHER:
+		try {
+			set_pythonExecPath(PySubProcess.findPythonPath(pythonCommand));
+		} catch (PyException e) {
+			error(e, "Failed to find Python executable path based on Python command: " + String.format(pythonCommand));
+		}
+	case PYTHON_PATH:
+		break;
+}
+
+// TODO give context to this error (what was tried, where it went wrong, etc)
+if (pythonExecPath == null)
+	error("Could not resolve the path to the Python executable based on your preferred input (" + pythonCommandType + ")");
+
+File f = new File(pythonExecPath);
+if (!f.exists())
+	error("No Python executable is located at: " + pythonExecPath);
+else if (!f.isFile())
+	error("The specified path to the Python executable is not a file: " + pythonExecPath);
+
+try {
+	py = new PySubProcess(pathToServerPy, pythonExecPath);
+} catch (Exception e) {
+	error(e, "Problem with setting up Python Subprocess:");
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="true">
@@ -791,14 +992,22 @@ if (preferredPythonVersion == PYTHON_OTHER) {
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[preferredVersion]]></Name>
-						<Type><![CDATA[PreferredPythonVersion]]></Type>
+						<Type><![CDATA[PythonCommandType]]></Type>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!preferredVersion.equals(PreferredPythonVersion.PYTHON_OTHER)) {
-	String pyPath = PySubProcess.findPythonPath(preferredVersion);
+					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
+	
+	String pyPath;
+	try {
+		pyPath = PySubProcess.findPythonPath(
+							PySubProcess.convertToCommand(preferredVersion)
+						);
+	} catch (PyException e) {
+		return new Attempt(e);
+	}
 	// add to args
 	String[] tmp = new String[args.length+1];
 	tmp[0] = pyPath;
@@ -815,7 +1024,7 @@ try {
 	output = IOUtils.toString(proc.getInputStream()).trim();
 	error = IOUtils.toString(proc.getErrorStream()).trim();
 } catch (IOException e) {
-	e.printStackTrace();
+	return new Attempt(e);
 }
 
 Attempt attempt;
@@ -848,7 +1057,7 @@ return attempt;]]></Body>
 tmp[0] = py.activePyPath;
 System.arraycopy(args, 0, tmp, 1, args.length);
 
-Attempt attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_OTHER, tmp);
+Attempt attempt = PyCommunicator.runFile(PythonCommandType.PYTHON_OTHER, tmp);
 history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), attempt));
 validateHistoryLimit();
 return attempt;]]></Body>
@@ -865,6 +1074,98 @@ return attempt;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if (history.size() > 500)
 	history.removeLast();]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1588104859912</Id>
+					<Name><![CDATA[importProperties]]></Name>
+					<X>50</X><Y>450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[String filename = PROPERTIES_FILENAME;
+// First check if one exists in current directory;
+// If not, set to the default location.
+File f = new File(filename);
+if (!f.exists())
+	filename = getDefaultPropertiesPath();
+
+// Check if properties exists.
+// If not, generate.
+f = new File(filename);
+if (!f.exists())
+	generateProperties();
+
+try (InputStream input = new FileInputStream(filename)) {
+	Properties prop = new Properties();
+	prop.load(input);
+	set_pythonCommandType(
+		PythonCommandType.valueOf(prop.getProperty("command_type"))
+	);
+	set_pythonCommand(
+		prop.getProperty("command")
+	);
+	set_pythonExecPath(
+		prop.getProperty("exec_path")
+	);
+	set_throwErrorOnFailedAttempt(
+		Boolean.valueOf(prop.getProperty("throw_error_on_failed_attempt"))
+	);
+} catch (IOException e) {
+	error(e, "Exception when reading properties file");
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1588105438239</Id>
+					<Name><![CDATA[generateProperties]]></Name>
+					<X>50</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[String newFilePath = getDefaultPropertiesPath();
+try (OutputStream output = new FileOutputStream(newFilePath)) {
+
+    Properties prop = new Properties();
+
+    // set the properties value
+    prop.setProperty("command_type", String.valueOf(pythonCommandType));
+    prop.setProperty("command", String.valueOf(pythonCommand));
+    prop.setProperty("exec_path", String.valueOf(pythonExecPath));
+    prop.setProperty("throw_error_on_failed_attempt", String.valueOf(throwErrorOnFailedAttempt));
+
+    // save properties to project root folder
+    prop.store(output, null);
+
+    //traceln("Saved to: %s", newFilePath);
+
+} catch (IOException io) {
+    io.printStackTrace();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1589485728564</Id>
+					<Name><![CDATA[getDefaultPropertiesPath]]></Name>
+					<X>50</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[String file = PROPERTIES_FILENAME;
+try {
+	URI parentURI = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().resolve("..");
+	String parentPath = Paths.get(parentURI).toString();
+	file = Paths.get(parentPath, file).toString();
+} catch (URISyntaxException ex) {
+	ex.printStackTrace();
+}
+return file;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -1020,10 +1321,16 @@ return attempt;]]></Body>
 
 			<Parameters>			
 				<Parameter>
-					<ParameterName><![CDATA[preferredPythonVersion]]></ParameterName>
+					<ParameterName><![CDATA[loadLastWorkingConfig]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[pathToPythonExe]]></ParameterName>
+					<ParameterName><![CDATA[pythonCommandType]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[pythonCommand]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[pythonExecPath]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[throwErrorOnFailedAttempt]]></ParameterName>
@@ -1109,32 +1416,17 @@ public class PySubProcess {
 	public InputStream stderr = null;
 	
 	public ExecutorService executor = null;
-
-	/**
-	 * 
-	 * @param prefPyVersion
-	 * @param pathToServerPy
-	 */
-    public PySubProcess(String pathToServerPy, PreferredPythonVersion prefPyVersion) {
-    	this(pathToServerPy, findPythonPath(prefPyVersion));
-    }
     
     /**
      * 
      * @param pathToPyExe
      * @param pathToServerPy
      */
-    public PySubProcess(String pathToServerPy, String pathToPyExe) {
-    	try {
-    		activePyPath = pathToPyExe;
-    		activePyVersion = getPythonVersion(activePyPath);
-	    	initConnection(pathToServerPy);
-			openStreams();
-    	} catch (IOException e1) {
-    		e1.printStackTrace();
-    	} catch (Exception e2) {
-    		e2.printStackTrace();
-    	}
+    public PySubProcess(String pathToServerPy, String pathToPyExe) throws IOException, PyException, InterruptedException {
+    	activePyPath = pathToPyExe;
+    	activePyVersion = getPythonVersion(activePyPath);
+	    initConnection(pathToServerPy);
+		openStreams();
     }
     
     /**
@@ -1143,7 +1435,7 @@ public class PySubProcess {
      * @throws IOException
      * @throws Exception
      */
-    private void initConnection(String pathToServerPy) throws IOException, Exception {
+    private void initConnection(String pathToServerPy) throws IOException, PyException, InterruptedException {
     	// First find/validate the path to the server.py file
     	final String serverPyFile = "server.py";
     	File workingDirectory = new File(System.getProperty("user.dir"));
@@ -1159,13 +1451,9 @@ public class PySubProcess {
     	// Build and execute the command to run the server.py file
     	List<String> pythonCmd = Arrays.asList(activePyPath, pathToServerPy);
 		ProcessBuilder pb = new ProcessBuilder(formatCommand(pythonCmd)).directory(workingDirectory);
-		try {
-			proc = pb.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
 		
+		proc = pb.start();
+
 		// The server.py file will print the port it's using to the standard output.
 		// Capture the port it's using.
 		String portLine = null;
@@ -1181,7 +1469,7 @@ public class PySubProcess {
 		try {
 			port = Integer.parseInt(portLine);
 		} catch (NumberFormatException e) {
-			earlyFail("Python process did not provide a port to connect with; read line: " + portLine);
+			earlyFail("Python process did not provide a port to connect with -- are you using a valid Python executable?; read line: " + portLine);
 		}
 		
 		// Connect to the server.py file via socket
@@ -1221,10 +1509,10 @@ public class PySubProcess {
      * @param prefix
      * @throws Exception
      */
-    void earlyFail(String prefix) throws Exception {
+    void earlyFail(String prefix) throws IOException, PyException {
 		String stdoutOutput = readAllReady(new InputStreamReader(proc.getInputStream()));
 		String stderrOutput = readAllReady(new InputStreamReader(proc.getErrorStream()));
-		throw new Exception("[ERROR] " + prefix + (prefix.endsWith("\n") ? "" : "\n")
+		throw new PyException("[ERROR] " + prefix + (prefix.endsWith("\n") ? "" : "\n")
 				+ (stderrOutput.isEmpty() ? "" : "Error stream message:\n" + stderrOutput)
 				+ (stdoutOutput.isEmpty() ? "" : "Output stream message:\n" + stdoutOutput));
 	}
@@ -1424,14 +1712,33 @@ public class PySubProcess {
 			sbuilder.append((char)inReader.read());
 		return sbuilder.toString();
 	}
-
+	
+	
 	/**
-	 * Locate the executable in user's path by running the 'find' command (will be different based on OS)
-	 * @param executable
+	 * Helper function to convert the enum to the Python command
+	 * @param preferredCommand
 	 * @return String
 	 */
-	public static String findInPath(String executable) {
-		ProcessBuilder pb = new ProcessBuilder(findCmd, executable);
+	public static String convertToCommand(PythonCommandType preferredCommand) {
+		switch (preferredCommand) {
+			case PYTHON:
+				return "python";
+			case PYTHON2:
+				return "python2";
+			case PYTHON3:
+				return "python3";
+			default:
+				return null;
+		}
+	}
+	
+	/**
+	 * Locate the executable in user's path by running the 'find' command (or the OS-equivalent)
+	 * @param pythonCommand
+	 * @return String
+	 */
+	public static String findPythonPath(String pythonCommand) throws PyException {
+		ProcessBuilder pb = new ProcessBuilder(findCmd, pythonCommand);
 		pb.redirectError(Redirect.PIPE);
 		pb.redirectInput(Redirect.PIPE);
 		String loc = null;
@@ -1441,52 +1748,12 @@ public class PySubProcess {
 			loc = reader.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e2) {
+			throw new PyException("Failed to find Python path using command: " + pythonCommand);
 		}
 		return loc;
 	}
-	
-	
-	/**
-	 * Helper function to find a Path to an available instance of Python.
-	 * Based on the argument, tries running `python`, `python2` and `python3`
-	 * @param preferredVersion
-	 * @return String
-	 */
-	public static String findPythonPath(PreferredPythonVersion preferredVersion) {
-		// TODO: Add option/support for executing alt commands (e.g., `python3.6`)
-		String pyPath = findInPath("python");
-		String py2Path = findInPath("python2");
-		String py3Path = findInPath("python3");
-		String path = "";
-		switch (preferredVersion) {
-			case PYTHON_2:
-				// check 2 first, then unspecified, then 3
-				if (py2Path != null)
-					path = py2Path;
-				else if (pyPath != null)
-					path = pyPath;
-				else
-					path = py3Path;
-			case PYTHON_3:
-				// check 3 first, then unspecified, then 2
-				if (py3Path != null)
-					path = py3Path;
-				else if (pyPath != null)
-					path = pyPath;
-				else
-					path = py2Path;
-			default:
-				// check unspecified first, then 3, then 2; 3 before 2 because it's obviously superior ;)
-				if (pyPath != null)
-					path = pyPath;
-				else if (py3Path != null)
-					path = py3Path;
-				else
-					path = py2Path;
-		}
-		
-		return path;
-	}
+
 	
 	/**
 	 * Helper function to get the specified Python version.
@@ -1494,18 +1761,15 @@ public class PySubProcess {
 	 * @param pythonPath The path to the desired Python executable
 	 * @return String
 	 */
-	public static String getPythonVersion(String pythonPath) {
+	public static String getPythonVersion(String pythonPath) throws IOException {
 		ProcessBuilder pb = new ProcessBuilder(pythonPath, "--version");
 		pb.redirectError(Redirect.PIPE);
 		pb.redirectInput(Redirect.PIPE);
-		String version = "";
-		try {
-			Process proc = pb.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			version = reader.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		Process proc = pb.start();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+		String version = reader.readLine();
+
 		return version;
 	}
 	
@@ -1629,6 +1893,19 @@ public class Attempt {
 	}
 }
 ]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1589584967334</Id>
+			<Name><![CDATA[PyException]]></Name>
+			<Text><![CDATA[/**
+ * Custom (generic) exception class
+ */
+public class PyException extends Exception { 
+    public PyException(String errorMessage) {
+        super(errorMessage);
+    }
+}]]></Text>
 		</JavaClass>
 	</JavaClasses>
 	<Libraries>
