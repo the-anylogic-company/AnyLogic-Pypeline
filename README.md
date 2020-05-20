@@ -1,0 +1,69 @@
+# Pypeline
+A custom library for AnyLogic that allows you to call Python within a running model. It connects to a local installation of Python, allowing you to make use of any Python library.
+
+It can be used for cases such as:
+* Utilizing code that was originally written in Python without having to port to Java
+* Writing complex algorithms in Python that you can call in Java, optionally passing objects/data between the languages
+* Being able to use any Python-exclusive library
+* Using simulation as a testbed for testing trained artificial intelligence policies
+
+## Getting Started
+These instructions will get Pypeline integrated with AnyLogic. They are described more thoroughly in the provided user guide.
+
+### Prerequisites
+You need to have AnyLogic with any valid license (PLE, University, or Professional) and a version of Python installed on your machine.
+
+### Installation
+
+1. Download the `Pypeline.jar` file and place it somewhere it won't be moved (or accidently deleted).
+2. Add it to your AnyLogic palette. A step-by-step explanation of how to do this is available in the AnyLogic help article ["Managing Libraries"](https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Flibraries%2FManaging+Libraries.html ""Managing Libraries""). 
+3. You should see a new palette item for Pypeline with the custom Python Communicator agent.
+
+## Quick start guide
+This section goes over testing the connection works and a simple tutorial.
+
+*For a full explanation of how to use, including a deeper description of the available functions, please refer to the user guide document. *
+
+### Testing connection
+To ensure proper connection is made, first run a simple test:
+1. Create a new AnyLogic model
+2. Drag in a Python Communicator from the Pypeline palette tab; keep its default name ("pyCommunicator")
+3. Run the model
+  1. In your running model, click the Communicator object
+  2. The inspection window should show the version of Python and the path to the Python executable that's being run. 
+> If you do not see this, or you receive an error, please refer to the troubleshooting section of the full user guide.
+
+### Basic tutorial
+Building on the model made in the previous section, try the following:
+1. In the AnyLogic editor, drag in a new button from the **Controls** palette.  Set its label to "set x", and in its **Action** field, type the following code:
+```java
+pyCommunicator.run("x = 3.14");
+```
+> The `run` function is used to send statements to Python that expect no response (e.g., variable assignments or import statements).
+> The passed string is what is sent to Python; it defines a new Python variable, `x`, which is set to the floating point number `3.14`
+
+2. Drag in another button, set its label to "get x", and in its **Action** field, type the following code:
+```java
+Attempt attempt = pyCommunicator.runResults("x");
+double xValue = attempt.getFeedback(double.class);
+traceln(xValue);
+```
+> The `runResults` function is used when you want to retrieve a value from Python.
+> An `Attempt` object is returned, containing a function to check whether the command executed successfully - `isSuccessful()` - and a function to get the response - `getFeedback()`.
+> The double class is passed to convert the feedback (a string by default) to a floating point value.
+
+3. Run the model! You should first click the "set x" button, then press the "get x" button; afterwards, the number specified should be printed.
+
+  > If you press the "get x" button first, an error will be thrown because you tried to get the value of a variable before you defined it!
+
+We have provided demos and example models with the library. Please review them to get some inspiration of possible use cases and to better understand the workflow.
+
+## Important disclaimers
+* Pypeline is not part of the main AnyLogic product, and The AnyLogic Company is not obligated to provide support for users or to provide future support/updates
+  * It's encouraged to make use of the community features available on here or elsewhere online
+* Using Pypeline is not a substitute for Java, which still remains as the only native scripting language of AnyLogic
+  * You can (and should) build models in the AnyLogic GUI exactly as before, making full use of AnyLogic's extensive native capabilities
+* Pypeline will also add some computational overhead to your model and therefore may not be the best option if computational efficiency is a priority in your models
+
+
+

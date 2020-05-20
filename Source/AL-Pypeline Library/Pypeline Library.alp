@@ -1,0 +1,1681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************
+	         AnyLogic Project File 
+*************************************************	         
+-->
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<Model>
+	<Id>1567802082268</Id>
+	<Name><![CDATA[Pypeline Library]]></Name>
+	<Description><![CDATA[The library for being able to run Python within an AnyLogic model]]></Description>
+	<EngineVersion>6</EngineVersion>
+	<JavaPackageName><![CDATA[com.anylogic.libraries.pypeline]]></JavaPackageName>
+	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
+	<OptionLists>
+		<OptionList>
+			<Id>1574961034301</Id>
+			<Name><![CDATA[PreferredPythonVersion]]></Name>
+			<Option>
+				<Id>1574961050485</Id>
+				<Name><![CDATA[PYTHON_AUTO]]></Name>
+			</Option>
+			<Option>
+				<Id>1574961045397</Id>
+				<Name><![CDATA[PYTHON_2]]></Name>
+			</Option>
+			<Option>
+				<Id>1574961047949</Id>
+				<Name><![CDATA[PYTHON_3]]></Name>
+			</Option>
+			<Option>
+				<Id>1574961034631</Id>
+				<Name><![CDATA[PYTHON_OTHER]]></Name>
+			</Option>
+		</OptionList>
+	</OptionLists>
+	<ActiveObjectClasses>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1569858524855</Id>
+			<Name><![CDATA[PyCommunicator]]></Name>
+			<Description><![CDATA[<h4>Python Communicator</h4>
+<h5>Dragging this agent into a model allows you to run Python code as part of your model.</h5>
+
+Available functions, with name and description:<br>
+(See code completion for more info)<br>
+<table border="1">
+  <tr>
+    <td><code>isConnected</code></td>
+    <td style="font-size:12">Pings the server to check if it's still alive</td>
+  </tr>
+  <tr>
+    <td><code>run</code></td>
+    <td style="font-size:12">Execute a statement (return void)</td>
+  </tr>
+  <tr>
+    <td><code>runResults</code></td>
+    <td style="font-size:12">Evaluation an expression (return some results)</td>
+  </tr>
+  <tr>
+	<td><code>runFile</code></td>
+	<td style="font-size:12">Runs a file and returns the output. Can be used as part of an active object or staticly.</td>
+  </tr>
+</table>
+Note 1: all calls return an <code>Attempt</code> object. <br>
+You can query the success and feedback using the <code>isSuccessful</code> and <code>getFeedback</code> functions.<br>
+<br>
+In addition to single-line Python code, you can also pass multiline Python code in the form of multiple arguments<br>
+Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
+<br>
+Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
+			<AdditionalClassCode><![CDATA[public PyCommunicator(PreferredPythonVersion prefPythonVersion) {
+	this(prefPythonVersion, "", false);
+}
+
+public PyCommunicator(PreferredPythonVersion prefPythonVersion, boolean throwErrorOnFailedAttempt) {
+	this(prefPythonVersion, "", throwErrorOnFailedAttempt);
+}
+
+public PyCommunicator(String pathToPythonExe) {
+	this(PYTHON_OTHER, pathToPythonExe, false);
+}
+
+public PyCommunicator(String pathToPythonExe, boolean throwErrorOnFailedAttempt) {
+	this(PYTHON_OTHER, pathToPythonExe, throwErrorOnFailedAttempt);
+}
+/*
+public static <T> String arrayToString(Object array, Class<T> clazz) {
+	return "";
+}*/
+]]></AdditionalClassCode>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Import><![CDATA[import java.nio.file.Files;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.File;
+import spark.utils.IOUtils;
+import java.nio.charset.StandardCharsets;
+/*
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.net.MalformedURLException;
+*/]]></Import>
+			<StartupCode><![CDATA[initialize();]]></StartupCode>
+			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
+try {
+	py.close();
+} catch (Exception e) {
+	e.printStackTrace();
+}]]></DestroyCode>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1569858524853</Id>
+				<Name><![CDATA[1569858524853]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<SceneSkybox>null</SceneSkybox>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1569916800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1569858524851</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>10</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<CurrentLevel>1569858524854</CurrentLevel>
+			<ConnectionsId>1569858524850</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1569878540323</Id>
+					<Name><![CDATA[py]]></Name>
+					<Description><![CDATA[An instance of the <code>PySubProcess</code> object]]></Description>
+					<X>250</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="private" StaticVariable="false">
+						<Type><![CDATA[PySubProcess]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[null]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1574960246472</Id>
+					<Name><![CDATA[PYTHON_AUTO]]></Name>
+					<X>80</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[PreferredPythonVersion.PYTHON_AUTO]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1574960293631</Id>
+					<Name><![CDATA[PYTHON_2]]></Name>
+					<X>80</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[PreferredPythonVersion.PYTHON_2]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1574960297045</Id>
+					<Name><![CDATA[PYTHON_3]]></Name>
+					<X>80</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[PreferredPythonVersion.PYTHON_3]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1574960298125</Id>
+					<Name><![CDATA[PYTHON_OTHER]]></Name>
+					<X>80</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[PreferredPythonVersion]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[PreferredPythonVersion.PYTHON_OTHER]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1570726491560</Id>
+					<Name><![CDATA[preferredPythonVersion]]></Name>
+					<Description><![CDATA[The preferred version of Python to use.<br>
+If <i>auto</i> is selected, the library will use whichever python version corresponds to the <code>python</code> command.<br>
+If <i>other</i> is selected, you can specify the full path to the desired python executable.
+]]></Description>
+					<X>50</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[com.anylogic.libraries.pypeline.PreferredPythonVersion]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[self.PYTHON_AUTO]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1570726491558</Id>
+							<Label><![CDATA[Preferred Python version]]></Label>
+							<EditorContolType>RADIO_BUTTONS</EditorContolType>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[auto]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_AUTO]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[python 2]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_2]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[python 3]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_3]]></Code>
+								</Value>
+							</PredefParamValue>
+							<PredefParamValue>
+								<Id>0</Id>
+								<Name><![CDATA[other]]></Name>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
+								</Value>
+							</PredefParamValue>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1578675862658</Id>
+					<Name><![CDATA[pathToPythonExe]]></Name>
+					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
+					<X>50</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[""]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1578675862656</Id>
+							<Label><![CDATA[Path to python executable]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1570726491560</ParameterId>
+								<Operation>NOT_EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
+								</Value>
+							</HideCondition>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1582299117563</Id>
+					<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+					<Description><![CDATA[Decides whether to throw an AnyLogic model error if any command does not execute successfully.<br>]]></Description>
+					<X>50</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1582299117561</Id>
+							<Label><![CDATA[Throw error on failed attempt]]></Label>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1573064066321</Id>
+					<Name><![CDATA[history]]></Name>
+					<Description><![CDATA[Holds the last 500 commands ran by the user, in chronological order (i.e., the first item is the most recently run command).<br>
+Implemented as a list of <code>Pair</code> objects with the command as the first value and the <code>Attempt</code> as the second value.<br>
+For example, to get the code used in the most recent command: <code>history.get(0).getFirst()</code><br>
+And to get the Attempt used in the most recent command: <code>history.get(0).getSecond()</code><br>
+<br>
+Provided as reference for the end-user; for example, if they execute multiple commands sequentially and want the outputs without having to create an object for each call.<br>]]></Description>
+					<X>250</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[LinkedList]]></CollectionClass>
+						<ElementClass><![CDATA[Pair<String, Attempt>]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1575321216484</Id>
+					<Name><![CDATA[serverPyLines]]></Name>
+					<Description><![CDATA[This file is written in the system's temporary file directory and how Python communicates with AnyLogic.]]></Description>
+					<X>850</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="private" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[String]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+						<CollectionInitializer Class="CodeValue">
+							<Code><![CDATA[{
+"import os",
+"import socket",
+"import sys",
+"import numbers",
+"import json",
+"from collections import Mapping",
+"import traceback",
+"import struct",
+"",
+"LEN_SIZE = 10",
+"TYPE_SIZE = 1",
+"",
+"# In",
+"EXEC_MSG = 0",
+"EVAL_MSG = 1",
+"PING_MSG = 2",
+"",
+"# Out",
+"SUCC_MSG = 0",
+"ERR_MSG = 1",
+"EMPTY_RESULT = ''",
+"",
+"def print_err(s):",
+"    sys.stderr.write('{}\\n'.format(s))",
+"    sys.stderr.flush()",
+"",
+"class ConnectionReader(object):",
+"    def __init__(self, conn):",
+"        self.conn = conn",
+"        self.buff = bytearray()",
+"",
+"    def _get_packet(self):",
+"        data = self.conn.recv(1024)",
+"        if not data:",
+"            raise EOFError('Connection closed')",
+"        return data",
+"",
+"    def read(self, size):",
+"        while len(self.buff) < size:",
+"            self.buff.extend(self._get_packet())",
+"        result = bytes(self.buff[:size])",
+"        del self.buff[:size]",
+"        return result",
+"",
+"    def read_json(self):",
+"        return json.loads(self.read_string())",
+"",
+"    def read_int(self):",
+"        return struct.unpack('>i', self.read(4))[0]",
+"",
+"    def read_byte(self):",
+"        return struct.unpack('b', self.read(1))[0]",
+"",
+"    def read_string(self):",
+"        length = self.read_int()",
+"        return self.read(length).decode('utf-8')",
+"",
+"",
+"class ConnectionWriter(object):",
+"    def __init__(self, conn):",
+"        self.conn = conn",
+"        self.buff = bytearray()",
+"",
+"    def write(self, data):",
+"        self.buff.extend(data)",
+"",
+"    def write_byte(self, b):",
+"        self.write(struct.pack('b', b))",
+"",
+"    def write_int(self, i):",
+"        self.write(struct.pack('>i', i))",
+"",
+"    def write_string(self, s):",
+"        bs = to_bytes(s)",
+"        self.write_int(len(bs))",
+"        self.write(bs)",
+"",
+"    def flush(self):",
+"        self.conn.sendall(self.buff)",
+"        self.clear()",
+"",
+"    def clear(self):",
+"        self.buff = bytearray()",
+"",
+"",
+"def utf8(bs):",
+"    if sys.version_info >= (3, 0):",
+"        return str(bs, 'UTF8')",
+"    else:",
+"        return unicode(bs, 'UTF8')",
+"",
+"",
+"def to_bytes(s):",
+"    if type(s) == bytes:",
+"        return s",
+"    elif type(s) != str:",
+"        s = str(s)",
+"        ",
+"    if sys.version_info >= (3, 0):",
+"        return bytes(s, 'UTF8')",
+"    else:",
+"        return bytes(s)",
+"",
+"",
+"def responder():",
+"    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)",
+"    try:",
+"        sock.bind(('localhost', 0))",
+"        sock.listen(0)",
+"        _, port = sock.getsockname()",
+"        sys.stdout.write(\"{}\\n\".format(port))",
+"        sys.stdout.flush()",
+"        conn, addr = sock.accept()",
+"        try:",
+"            inp = ConnectionReader(conn)",
+"            out = ConnectionWriter(conn)",
+"            globs = {}",
+"            while True:",
+"                msg_type = int(inp.read_byte())",
+"                try:",
+"                    if msg_type == EXEC_MSG: # 0 (just run)",
+"                        code = inp.read_string()",
+"                        exec(code, globs)",
+"                        out.write_byte(SUCC_MSG)",
+"                        out.write_string(EMPTY_RESULT)",
+"                    elif msg_type == EVAL_MSG: # 1 (run and return)",
+"                        code = inp.read_string()",
+"                        try:",
+"                            result = eval(code, globs)",
+"                        except NameError: # assume json",
+"                            result = json.loads(code)",
+"                        out.write_byte(SUCC_MSG)",
+"                        out.write_string(result)",
+"                    elif msg_type == PING_MSG: # 2 (testing)",
+"                        out.write_byte(SUCC_MSG)",
+"                        out.write_string(EMPTY_RESULT)",
+"                    else:",
+"                        raise Exception('Unrecognized message type: {}'.format(msg_type))",
+"                except Exception as e:",
+"                    out.write_byte(ERR_MSG)",
+"                    out.write_string(repr(e))",
+"                finally:",
+"                    out.flush()",
+"                    flush()",
+"        finally:",
+"            conn.close()",
+"    finally:",
+"        sock.close()",
+"",
+"def flush():",
+"    sys.stdout.flush()",
+"    sys.stderr.flush()",
+"",
+"if __name__ == '__main__':",
+"    sys.path.insert(0, os.getcwd())",
+"    responder()",
+""
+}]]></Code>
+						</CollectionInitializer>
+					</Properties>
+
+				</Variable>
+			</Variables>
+			<Functions>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1569878590739</Id>
+					<Name><![CDATA[run]]></Name>
+					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
+@param code the single line of code to be executed<br>
+@return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
+					<X>350</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[code]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[Attempt attempt = py.exec(code);
+history.add(0, new Pair<>(code, attempt));
+validateHistoryLimit();
+if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
+	error(attempt.getFeedback());
+return attempt;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1569878595053</Id>
+					<Name><![CDATA[run]]></Name>
+					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
+@param lines the multi-lined code to run, with each line as its own argument<br>
+@return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
+					<X>380</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[lines]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.join("\n", lines);
+return run(code);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1569878710125</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param code the single line of code to be executed<br>
+@return Attempt Contains the feedback of the returned value if no error, otherwise the error message]]></Description>
+					<X>450</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[code]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[Attempt attempt = py.eval(code);
+history.add(0, new Pair<>(code, attempt));
+validateHistoryLimit();
+if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
+	error(attempt.getFeedback());
+return attempt;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1569878750550</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param lines The multi-lined code to run, with each line as its own argument<br>
+@return Attempt Contains the feedback of the returned value if no error, otherwise the error message]]></Description>
+					<X>480</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[lines]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.join("\n", lines);
+return runResults(code);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[boolean]]></ReturnType>
+					<Id>1572989835347</Id>
+					<Name><![CDATA[isConnected]]></Name>
+					<Description><![CDATA[Attempts to ping the Python server to see if it's still alive and ready to receive commands<br>
+@return boolean whether the ping was successful]]></Description>
+					<X>700</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[Attempt attempt = py.ping();
+
+if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
+	error(attempt.getFeedback());
+
+return attempt.isSuccessful();]]></Body>
+				</Function>
+				<Function AccessType="private" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1575321216486</Id>
+					<Name><![CDATA[createServerPy]]></Name>
+					<Description><![CDATA[Creates the server Python file
+@return String Path to the server file]]></Description>
+					<X>850</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[try {
+	java.nio.file.Path tmpFile = Files.createTempFile("pypeline-server_", ".py");
+	tmpFile.toFile().deleteOnExit();
+	BufferedWriter writer = new BufferedWriter(new FileWriter(tmpFile.toFile()));
+	for (String line : serverPyLines)
+    	writer.write(line + "\n");
+    writer.close();
+	return tmpFile.toString();
+} catch (IOException e) {
+	e.printStackTrace();
+}
+return null;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1581007322208</Id>
+					<Name><![CDATA[toString]]></Name>
+					<X>-100</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return py.activePyVersion + "\n" + pathToPythonExe;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1581016103424</Id>
+					<Name><![CDATA[initialize]]></Name>
+					<Description><![CDATA[Uses the currently set value for the preferred Python version (and optionally, the path to the executable) to initialize the Python environment.<br>
+If there is already a running Python environment, this will first try to close it gracefully before creating a new environment.]]></Description>
+					<X>50</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Allow the existing Python environment (if one is created) to die gracefully
+if (py != null) {
+	try {
+		py.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+
+String pathToServerPy = createServerPy();
+if (preferredPythonVersion == PYTHON_OTHER) {
+	py = new PySubProcess(pathToServerPy, pathToPythonExe);
+} else {
+	py = new PySubProcess(pathToServerPy, preferredPythonVersion);
+	set_pathToPythonExe(py.activePyPath);
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1581016194646</Id>
+					<Name><![CDATA[runFile]]></Name>
+					<Description><![CDATA[Execute a Python file and get the output.<br>
+@param preferredVersion One of the options for which Python version to run the file<br>
+@param args The file path and any arguments to run (flags and values should be separate strings)<br>
+@return Attempt with any outputs from running the file]]></Description>
+					<X>600</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[preferredVersion]]></Name>
+						<Type><![CDATA[PreferredPythonVersion]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (!preferredVersion.equals(PreferredPythonVersion.PYTHON_OTHER)) {
+	String pyPath = PySubProcess.findPythonPath(preferredVersion);
+	// add to args
+	String[] tmp = new String[args.length+1];
+	tmp[0] = pyPath;
+	System.arraycopy(args, 0, tmp, 1, args.length);
+	args = tmp;
+}
+
+ProcessBuilder pb = new ProcessBuilder(args);
+String output = "";
+String error = "";
+
+try {
+	Process proc = pb.start();
+	output = IOUtils.toString(proc.getInputStream()).trim();
+	error = IOUtils.toString(proc.getErrorStream()).trim();
+} catch (IOException e) {
+	e.printStackTrace();
+}
+
+Attempt attempt;
+if (error.isEmpty()) {
+	attempt = new Attempt(Attempt.RESULT_SUCCESSFUL, output);
+} else {
+	attempt = new Attempt(Attempt.RESULT_ERROR, error);
+}
+	
+return attempt;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1581020688077</Id>
+					<Name><![CDATA[runFile]]></Name>
+					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
+@param args The file path, and any arguments to run (flags and values should be separate strings)<br>
+@return Attempt with any outputs from running the file]]></Description>
+					<X>600</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String[] tmp = new String[args.length+1];
+tmp[0] = py.activePyPath;
+System.arraycopy(args, 0, tmp, 1, args.length);
+
+Attempt attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_OTHER, tmp);
+history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), attempt));
+validateHistoryLimit();
+return attempt;]]></Body>
+				</Function>
+				<Function AccessType="private" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1582829555051</Id>
+					<Name><![CDATA[validateHistoryLimit]]></Name>
+					<X>250</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (history.size() > 500)
+	history.removeLast();]]></Body>
+				</Function>
+			</Functions>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1569858524850</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+
+			<Presentation>
+				<Level>
+					<Id>1569858524854</Id>
+					<Name><![CDATA[level]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+
+			<Presentation>
+				<Image>
+					<Id>1582833534630</Id>
+					<Name><![CDATA[image2]]></Name>
+					<X>5</X><Y>5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<OnClickCode><![CDATA[return true;]]></OnClickCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>32</Width>
+					<Height>32</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+							<ClassName><![CDATA[Python-logo.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>true</OriginalSize>
+				</Image>
+			</Presentation>
+
+				</Level>
+			</Presentation>
+
+		</ActiveObjectClass>
+	</ActiveObjectClasses>	
+	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
+	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
+	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
+	<AbsoluteAccuracy>1.0E-5</AbsoluteAccuracy>
+	<FixedTimeStep>0.001</FixedTimeStep>
+	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
+	<TimeAccuracy>1.0E-5</TimeAccuracy>
+	<Frame>
+		<Width>1000</Width>
+		<Height>600</Height>
+	</Frame>
+	<Database>
+		<Logging>false</Logging>
+		<AutoExport>false</AutoExport>
+		<ShutdownCompact>false</ShutdownCompact>
+		<ImportSettings>
+		</ImportSettings>
+		<ExportSettings>
+		</ExportSettings>
+	</Database>
+	
+	<RunConfiguration ActiveObjectClassId="1569858524855">
+		<Id>1567802082277</Id>
+		<Name><![CDATA[RunConfiguration]]></Name>
+		<MaximumMemory>512</MaximumMemory>
+		<ModelTimeProperties>
+			<StopOption><![CDATA[Stop at specified time]]></StopOption>
+			<InitialDate><![CDATA[1567728000000]]></InitialDate>	
+			<InitialTime><![CDATA[0.0]]></InitialTime>	
+			<FinalDate><![CDATA[1570320000000]]></FinalDate>	
+			<FinalTime><![CDATA[100.0]]></FinalTime>	
+		</ModelTimeProperties>
+		<AnimationProperties>
+			<StopNever>true</StopNever>
+			<ExecutionMode>realTimeScaled</ExecutionMode>
+			<RealTimeScale>1.0</RealTimeScale>
+			<EnableZoomAndPanning>true</EnableZoomAndPanning>
+			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+		</AnimationProperties>
+		<Inputs>		
+		</Inputs>
+		<Outputs>
+		</Outputs>
+	</RunConfiguration>
+	<Experiments>	
+		<!--   =========   Simulation Experiment   ========  -->
+		<SimulationExperiment ActiveObjectClassId="1569858524855">
+			<Id>1574367440449</Id>
+			<Name><![CDATA[Simulation]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
+			<MaximumMemory>512</MaximumMemory>
+			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
+			<SeedValue>1</SeedValue>
+			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
+			<VmArgs><![CDATA[]]></VmArgs>
+			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
+
+			<Presentation>
+				<Text>
+					<Id>0</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>50</X><Y>30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12490271</Color>
+					<Text><![CDATA[Pypeline Library]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
+
+			<Parameters>			
+				<Parameter>
+					<ParameterName><![CDATA[preferredPythonVersion]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[pathToPythonExe]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[throwErrorOnFailedAttempt]]></ParameterName>
+				</Parameter>
+			</Parameters>			
+			<PresentationProperties>
+				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
+				<Title><![CDATA[Pypeline Library : Simulation]]></Title>	
+				<EnableDeveloperPanel>true</EnableDeveloperPanel>
+				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+				<RealTimeScale>1.0</RealTimeScale>
+			</PresentationProperties>
+			<ModelTimeProperties>
+				<StopOption><![CDATA[Never]]></StopOption>
+				<InitialDate><![CDATA[1574294400000]]></InitialDate>	
+				<InitialTime><![CDATA[0.0]]></InitialTime>	
+				<FinalDate><![CDATA[1576886400000]]></FinalDate>	
+				<FinalTime><![CDATA[100.0]]></FinalTime>	
+			</ModelTimeProperties>
+		</SimulationExperiment>	
+	</Experiments>
+	<JavaClasses>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1569858562164</Id>
+			<Name><![CDATA[PySubProcess]]></Name>
+			<Text><![CDATA[import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectStreamException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.lang.ProcessBuilder.Redirect;
+import java.net.URL;
+import spark.utils.IOUtils;
+
+
+/**
+ * This object is created in the main communicator agent and works as the 'middleman' between your model and Python.
+ * Specifically, it works by first locating your Python executable, then using that to start the server.py file.
+ * Once it does that, it listens for what port the Python server is listening on (which it communicates via i/o streams) and then connects as a client.
+ * It is then able to receive code passed from an AnyLogic model and communicates that to the Python server.
+ * 
+ * @author Tyler Wolfe-Adam
+ */
+public class PySubProcess {
+	
+	// the command that will be used to locate python - will be different for windows vs mac/linux
+	public static final String findCmd = System.getProperty("os.name").toLowerCase().contains("win") ? "where" : "which";
+	// the path to the python executable
+	public String activePyPath = "";
+	public String activePyVersion = "";
+	
+	// out types
+	public final static byte execMsg = 0;
+	public final static byte evalMsg = 1;
+	public final static byte pingMsg = 2;
+	
+	// in types
+	public final static int successMsg = 0;
+	public final static int errorMsg = 1;
+	
+	public Process proc = null;
+	public Socket socket = null;
+	
+	public InputStream in = null;
+	public OutputStream out = null;
+	
+	public InputStream stdout = null;
+	public InputStream stderr = null;
+	
+	public ExecutorService executor = null;
+
+	/**
+	 * 
+	 * @param prefPyVersion
+	 * @param pathToServerPy
+	 */
+    public PySubProcess(String pathToServerPy, PreferredPythonVersion prefPyVersion) {
+    	this(pathToServerPy, findPythonPath(prefPyVersion));
+    }
+    
+    /**
+     * 
+     * @param pathToPyExe
+     * @param pathToServerPy
+     */
+    public PySubProcess(String pathToServerPy, String pathToPyExe) {
+    	try {
+    		activePyPath = pathToPyExe;
+    		activePyVersion = getPythonVersion(activePyPath);
+	    	initConnection(pathToServerPy);
+			openStreams();
+    	} catch (IOException e1) {
+    		e1.printStackTrace();
+    	} catch (Exception e2) {
+    		e2.printStackTrace();
+    	}
+    }
+    
+    /**
+     * 
+     * @param pathToServerPy
+     * @throws IOException
+     * @throws Exception
+     */
+    private void initConnection(String pathToServerPy) throws IOException, Exception {
+    	// First find/validate the path to the server.py file
+    	final String serverPyFile = "server.py";
+    	File workingDirectory = new File(System.getProperty("user.dir"));
+    	if (pathToServerPy == null) // in case nothing was given, check in working directory
+    		pathToServerPy = Paths.get(workingDirectory.toString(), serverPyFile).toString();
+    	else if (!pathToServerPy.endsWith(".py")) // in case just directory was given
+    		pathToServerPy = Paths.get(pathToServerPy, serverPyFile).toString();
+    	
+    	if (!new File(pathToServerPy).exists()) {
+    		throw new IOException("Path to server python file does not exist: " + pathToServerPy);
+    	}
+    	
+    	// Build and execute the command to run the server.py file
+    	List<String> pythonCmd = Arrays.asList(activePyPath, pathToServerPy);
+		ProcessBuilder pb = new ProcessBuilder(formatCommand(pythonCmd)).directory(workingDirectory);
+		try {
+			proc = pb.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		// The server.py file will print the port it's using to the standard output.
+		// Capture the port it's using.
+		String portLine = null;
+		BufferedReader pbInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+		portLine = pbInput.readLine();
+		if (portLine == null) {
+			//BufferedReader pbError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+			String errorMsg = IOUtils.toString(proc.getErrorStream());
+			throw new IOException("Input returned null; Error stream line reads: " + errorMsg);
+		}
+		
+		int port = Integer.MIN_VALUE;
+		try {
+			port = Integer.parseInt(portLine);
+		} catch (NumberFormatException e) {
+			earlyFail("Python process did not provide a port to connect with; read line: " + portLine);
+		}
+		
+		// Connect to the server.py file via socket
+		while (socket == null && proc.isAlive()) {
+			try {
+				socket = new Socket("localhost", port);
+			} catch (IOException e) {
+				// keep trying
+				Thread.sleep(100);
+			}
+		}
+		
+		// Make sure the process is alive and running
+		if (!proc.isAlive()) {
+			earlyFail("Python process failed to start:");
+		}
+	}
+    
+    /**
+     * Open the streams to and from the Python server
+     */
+    private void openStreams() {
+    	try {
+			in = socket.getInputStream();
+			out = socket.getOutputStream();
+			stdout = proc.getInputStream();
+			stderr = proc.getErrorStream();
+			executor = Executors.newSingleThreadExecutor();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Generate an early failure with some given prefix text.
+     * Useful, as it will also provide stdout and stderr.
+     * @param prefix
+     * @throws Exception
+     */
+    void earlyFail(String prefix) throws Exception {
+		String stdoutOutput = readAllReady(new InputStreamReader(proc.getInputStream()));
+		String stderrOutput = readAllReady(new InputStreamReader(proc.getErrorStream()));
+		throw new Exception("[ERROR] " + prefix + (prefix.endsWith("\n") ? "" : "\n")
+				+ (stderrOutput.isEmpty() ? "" : "Error stream message:\n" + stderrOutput)
+				+ (stdoutOutput.isEmpty() ? "" : "Output stream message:\n" + stdoutOutput));
+	}
+    
+    /**
+     * Just ping the Python server to make sure it's still running.
+     * @return Attempt
+     */
+    public Attempt ping() {
+    	try {
+	    	out.write(pingMsg);
+			out.flush();
+
+	    	return readAttemptResult();
+    	} catch (Throwable e) { // catchall
+    		return new Attempt(e);
+    	}
+    	
+    }
+    
+    /**
+     * Execute a statement ("just run" / no expected return, other than the return code)
+     * @param stmt The code to be executed
+     * @return Attempt With empty feedback if successful, otherwise the error message
+     */
+    public Attempt exec(String stmt) {
+    	try {
+			out.write(execMsg);
+			writeString(stmt);
+			out.flush();
+	    	return readAttemptResult();
+    	} catch (Throwable e) { // catchall
+    		return new Attempt(e);
+    	}
+	}
+	
+    /**
+     * Evaluate an expression ("get value" / expecting a return)
+     * @param expr the code to be evaluated
+     * @return Attempt With a feedback of the returned value if no error, otherwise the error message
+     */
+	public Attempt eval(String expr) {
+		try {
+			out.write(evalMsg);
+			writeString(expr);
+			out.flush();
+			
+	    	return readAttemptResult();
+		} catch (Exception e) {
+			return new Attempt(e);
+		}
+	}
+    
+    private Attempt readAttemptResult() throws IOException {
+    	byte resultCode = readByte();
+    	String feedback = readString();
+    	Attempt result = new Attempt(resultCode, feedback);
+    	return result;
+    }
+	
+	/**
+	 * Read a number of bytes from the in stream
+	 * @param numBytes how many bytes to read
+	 * @return byte[]
+	 * @throws IOException
+	 */
+	byte[] read(int numBytes) throws IOException {
+		byte[] output = new byte[numBytes];
+		for (int i = 0; i < numBytes; i++)
+			output[i] = readByte();
+		return output;
+	}
+	
+	/**
+	 * Read a single byte
+	 * @return byte
+	 * @throws IOException
+	 */
+	byte readByte() throws IOException {
+		int nextByte = in.read();
+		if (nextByte == -1) {
+			throw new IOException("Cannot read byte; reached end of stream");
+		}
+		return (byte) nextByte;
+	}
+	
+	/**
+	 * Read an integer (4 bytes) from the in stream
+	 * @return int
+	 * @throws IOException
+	 */
+	int readInt() throws IOException {
+		return (readByte() << 24) & 0xff000000 |
+				(readByte() << 16) & 0x00ff0000 | 
+				(readByte() <<  8) & 0x0000ff00 |
+				(readByte() <<  0) & 0x000000ff;
+	}
+	
+	/**
+	 * Read a string (by first reading an integer to see how long the string will be)
+	 * @return String
+	 * @throws IOException
+	 */
+	String readString() throws IOException {
+		int len = readInt();
+		String output = new String(read(len), "UTF-8");
+		return output;
+	}
+	
+	/**
+	 * Write an integer to the out stream
+	 * @param i
+	 * @throws IOException
+	 */
+	void writeInt(int i) throws IOException {
+		byte[] b = new byte[] {
+				(byte) (i >>> 24),
+				(byte) (i >>> 16),
+				(byte) (i >>> 8),
+				(byte) i
+		};
+		out.write(b);
+	}
+	
+	/**
+	 * Write a string to the out stream (but first write the size [in bytes] as an integer)
+	 * @param str
+	 * @throws IOException
+	 */
+	void writeString(String str) throws IOException {
+		byte[] b = str.getBytes();
+		writeInt(b.length);
+		out.write(b);
+	}
+	
+	/**
+	 * Close all streams and processes
+	 * @throws Exception
+	 */
+	void close() throws Exception {
+		executor.shutdownNow();
+		// close down streams, ignoring if they throw errors
+		try {
+			in.close();
+		} catch (IOException e) {}
+		
+		try {
+			out.close();
+		} catch (IOException e) {}
+		
+		try {
+			socket.close();
+		} catch (IOException e) {}
+		
+		proc.destroyForcibly();
+		try {
+			proc.waitFor(3, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {}
+		if (proc.isAlive())
+			throw new Exception("Python process failed to shutdown. Please shut it down via your process manager");
+		
+	}
+	
+	/**
+	 * Helper function to format the command based on the operating system
+	 * @param args
+	 * @return List<String>
+	 */
+	public static List<String> formatCommand(List<String> args) {
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("mac")) {
+			args.replaceAll(s -> "'" + s + "'");
+			args.addAll(0, new ArrayList<>(Arrays.asList("/bin/bash", "-l", "-c")));
+		}
+		return args;
+	}
+	
+	/**
+	 * Read all ready strings
+	 * @param in
+	 * @return String
+	 * @throws IOException
+	 */
+	public static String readAllReady(InputStream in) throws IOException {
+		return readAllReady(new InputStreamReader(in));
+	}
+	
+	/**
+	 * Read all ready strings
+	 * @param inReader
+	 * @return String
+	 * @throws IOException
+	 */
+	public static String readAllReady(InputStreamReader inReader) throws IOException {
+		StringBuilder sbuilder = new StringBuilder();
+		while (inReader.ready())
+			sbuilder.append((char)inReader.read());
+		return sbuilder.toString();
+	}
+
+	/**
+	 * Locate the executable in user's path by running the 'find' command (will be different based on OS)
+	 * @param executable
+	 * @return String
+	 */
+	public static String findInPath(String executable) {
+		ProcessBuilder pb = new ProcessBuilder(findCmd, executable);
+		pb.redirectError(Redirect.PIPE);
+		pb.redirectInput(Redirect.PIPE);
+		String loc = null;
+		try {
+			Process proc = pb.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			loc = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return loc;
+	}
+	
+	
+	/**
+	 * Helper function to find a Path to an available instance of Python.
+	 * Based on the argument, tries running `python`, `python2` and `python3`
+	 * @param preferredVersion
+	 * @return String
+	 */
+	public static String findPythonPath(PreferredPythonVersion preferredVersion) {
+		// TODO: Add option/support for executing alt commands (e.g., `python3.6`)
+		String pyPath = findInPath("python");
+		String py2Path = findInPath("python2");
+		String py3Path = findInPath("python3");
+		String path = "";
+		switch (preferredVersion) {
+			case PYTHON_2:
+				// check 2 first, then unspecified, then 3
+				if (py2Path != null)
+					path = py2Path;
+				else if (pyPath != null)
+					path = pyPath;
+				else
+					path = py3Path;
+			case PYTHON_3:
+				// check 3 first, then unspecified, then 2
+				if (py3Path != null)
+					path = py3Path;
+				else if (pyPath != null)
+					path = pyPath;
+				else
+					path = py2Path;
+			default:
+				// check unspecified first, then 3, then 2; 3 before 2 because it's obviously superior ;)
+				if (pyPath != null)
+					path = pyPath;
+				else if (py3Path != null)
+					path = py3Path;
+				else
+					path = py2Path;
+		}
+		
+		return path;
+	}
+	
+	/**
+	 * Helper function to get the specified Python version.
+	 * (Just calls Python with the `--version` flag)
+	 * @param pythonPath The path to the desired Python executable
+	 * @return String
+	 */
+	public static String getPythonVersion(String pythonPath) {
+		ProcessBuilder pb = new ProcessBuilder(pythonPath, "--version");
+		pb.redirectError(Redirect.PIPE);
+		pb.redirectInput(Redirect.PIPE);
+		String version = "";
+		try {
+			Process proc = pb.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			version = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return version;
+	}
+	
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1569861582393</Id>
+			<Name><![CDATA[Attempt]]></Name>
+			<Text><![CDATA[import java.util.Arrays;
+import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * This object represents the results from the attempt that was made to execute some Python code.
+ * It has two basic objects: one for determining the success of the command and the other for the response with additional data (referred to as the "feedback").<br>
+ * If the code executed without errors, the feedback will contain either the requested data or some message indicating the success (depending on if using `run` or `runResults`).<br>
+ * Otherwise, the feedback will contain the error message - this could be from Python or Java, depending on the specific problem.<br>
+ * 
+ * The following examples show what function is called and its argument, followed by what would be printed to the console.<br>
+ * Some also have additional comments underneath to explain the results.<br>
+ * Examples:<br>
+ * &emsp; runResults("3+5") -> Attempt [isSuccessful=true, feedback=8]<br>
+ * &emsp; run("3+5") -> Attempt [isSuccessful=true, feedback=]<br>
+ * &emsp; run("3..5") -> Attempt [isSuccessful=false, feedback=SyntaxError('invalid syntax', ('<string>', 1, 4, '3..5\n'))]<br>
+ * &emsp; runResults("foo()") -> Attempt [isSuccessful=false, feedback=NameError("name 'foo' is not defined",)]<br>
+ * &emsp; run("def foo():", "  return 'hello'") -> Attempt [isSuccessful=true, feedback=0]<br>
+ * &emsp; runResults("foo()") -> Attempt [isSuccessful=true, feedback=hello]<br>
+ * 
+ * @author Tyler Wolfe-Adam
+ */
+public class Attempt {
+	
+	public static final int RESULT_SUCCESSFUL = 0;
+	public static final int RESULT_ERROR = 1;
+	
+	private final int resultCode;
+	private final String feedback;
+	
+	/**
+	 * Initialize a new Attempt object as having been successful with null feedback
+	 */
+	public Attempt() {
+		this(RESULT_SUCCESSFUL, null);
+	}
+	
+	public Attempt(Throwable e) {
+		this(RESULT_ERROR, e.getMessage());
+	}
+	
+	/**
+	 * Initialize a new Attempt object as determined by the arguments
+	 * @param resultCode The static int indicating if the command executed successfully
+	 * @param feedback The response received from running the command associated with this object
+	 */
+	public Attempt(int resultCode, String feedback) {
+		this.resultCode = resultCode;
+		this.feedback = feedback;
+	}
+
+	/**
+	 * Stringified version of this object
+	 */
+	@Override
+	public String toString() {
+		String isSuccStr = String.valueOf(isSuccessful());
+		return String.format("Attempt [isSuccessful=%s, feedback=%s]", isSuccStr, getFeedback());
+	}
+
+	/**
+	 * @return whether or not this command executed successfully
+	 */
+	public boolean isSuccessful() {
+		return resultCode == RESULT_SUCCESSFUL;
+	}
+	
+	/**
+	 * @return the result code of the command associated with this Attempt
+	 */
+	public int getResultCode() {
+		return resultCode;
+	}
+
+	/**
+	 * @return the feedback received from Python after executing the command
+	 */
+	public String getFeedback() {
+		return feedback;
+	}
+
+	/**
+	 * @param type the class to cast the object to
+	 * @return the feedback from executing the command, casted to the specified type
+	 */
+	public <T> T getFeedback(Class<T> type) {
+		
+		if (type.equals(Byte.class)) {
+			return type.cast(Byte.valueOf(feedback));
+		} else if (type.equals(Short.class)) {
+			return type.cast(Short.valueOf(feedback));
+		} else if (type.equals(Integer.class)) {
+			return type.cast(Integer.valueOf(feedback));
+		} else if (type.equals(Long.class)) {
+			return type.cast(Long.valueOf(feedback));
+		} else if (type.equals(Float.class)) {
+			return type.cast(Float.valueOf(feedback));
+		} else if (type.equals(Double.class)) {
+			return type.cast(Double.valueOf(feedback));
+		} else if (type.equals(Boolean.class)) {
+			return type.cast(Boolean.valueOf(feedback));
+		} else { // assume feedback is json
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				return mapper.readValue(feedback, type);
+			} catch (IOException e) {
+				//e.printStackTrace();
+			}
+		}
+		
+		return type.cast(feedback);
+	}
+}
+]]></Text>
+		</JavaClass>
+	</JavaClasses>
+	<Libraries>
+		<!--   =========   Library   ========  -->
+		<Library>
+			<Id>1567903824199</Id>
+			<Name><![CDATA[Pypeline]]></Name>
+			<Description><![CDATA[The library that allows you to run Python code within AnyLogic model.]]></Description>
+			<AOCEntry>
+				<ActiveObjectClassId>1569858524855</ActiveObjectClassId>
+				<Icon16ResourceReference>
+					<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+					<ClassName><![CDATA[Python-logo-16.png]]></ClassName>
+				</Icon16ResourceReference>
+				<Icon32ResourceReference>
+					<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+					<ClassName><![CDATA[Python-logo-32.png]]></ClassName>
+				</Icon32ResourceReference>
+			</AOCEntry>
+
+			<IconResourceReference>
+				<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
+			</IconResourceReference>
+			<VersionMajor>1</VersionMajor>
+			<VersionMinor>0</VersionMinor>
+			<VersionBuild>0</VersionBuild>
+			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
+		</Library>
+	</Libraries>
+	<ModelResources>
+		<Resource>
+			<Path><![CDATA[Python-logo-16.png]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[Python-logo-32.png]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[Python-logo.png]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[Pypeline-libicon.png]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+	</ModelResources>
+</Model>
+</AnyLogicWorkspace>
