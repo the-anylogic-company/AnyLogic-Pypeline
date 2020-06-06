@@ -1683,10 +1683,12 @@ public class PySubProcess {
 	 */
 	public static List<String> formatCommand(List<String> args) {
 		String os = System.getProperty("os.name").toLowerCase();
+		/* TODO Why was this needed? Seemed to be causing problems, so removed for now.
 		if (os.contains("mac")) {
 			args.replaceAll(s -> "'" + s + "'");
 			args.addAll(0, new ArrayList<>(Arrays.asList("/bin/bash", "-l", "-c")));
 		}
+		*/
 		return args;
 	}
 	
@@ -1770,6 +1772,12 @@ public class PySubProcess {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		String version = reader.readLine();
 
+		// There's weird behavior when running on Mac's built-in Python 2,
+		//	where the version gets printed out in the error stream (and input stream is null).
+		// Handle if applicable.
+		if (version == null)
+			version = new BufferedReader(new InputStreamReader(proc.getErrorStream())).readLine();
+		
 		return version;
 	}
 	
