@@ -20,7 +20,6 @@ ax.set(xlim=[-25, 25], ylim=[-30, 30], zlim=[0, 50])
 ax.set_xlabel("X", color="goldenrod", weight="bold")
 ax.set_ylabel("Y", color="orangered", weight="bold")
 ax.set_zlabel("Z", color="dodgerblue", weight="bold")
-plt.tight_layout()
 
 fig.canvas.draw()
 bg = fig.canvas.copy_from_bbox(ax.bbox)
@@ -32,6 +31,12 @@ line_style = '-'
 line3d, = ax.plot(xs, ys, zs, line_color + line_style)
 
 #### Function called from AL:
+
+def set_inputs(S, R, B):
+    ax.set_title(f"S={S:.2f}", loc='left', color="goldenrod")
+    ax.set_title(f"R={R:.2f}", loc='center', color="orangered")
+    ax.set_title(f"B={B:.2f}", loc='right', color="dodgerblue")
+    plt.tight_layout()
 
 def append(x, y, z):
     xs.append(x)
