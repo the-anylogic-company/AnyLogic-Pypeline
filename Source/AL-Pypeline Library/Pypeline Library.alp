@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -960,15 +960,27 @@ switch (pythonCommandType) {
 		break;
 }
 
-// TODO give context to this error (what was tried, where it went wrong, etc)
-if (pythonExecPath == null)
-	error("Could not resolve the path to the Python executable based on your preferred input (" + pythonCommandType + ")");
+if (pythonExecPath == null) {
+	String msg = "Could not find any Python executable based on your preferred input (" + pythonCommandType + ")";
+	msg += "\nNOTE: Please check your system PATH. This can be printed out in AnyLogic by executing the code: `traceln(System.getenv(\"PATH\"));`";
+	error(msg);
+}
 
 File f = new File(pythonExecPath);
-if (!f.exists())
-	error("No Python executable is located at: " + pythonExecPath);
-else if (!f.isFile())
-	error("The specified path to the Python executable is not a file: " + pythonExecPath);
+if (!f.exists()) {
+	String msg = "No Python executable is located at: " + pythonExecPath;
+	msg += "\nConsult the user guide for more information.";
+	if (pythonExecPath.contains("Microsoft\\WindowsApps")) {
+		msg += "\nNOTE: The `python3` command is tied to the MS version of Python (which you don't have installed)."
+				+ "\nIf desired, you can disable it from Settings > Apps & Features > App execution aliases.";
+	}
+	error(msg);
+} else if (!f.isFile()) {
+	String msg = "The specified path to the Python executable is not a file: " + pythonExecPath;
+	msg += "\nPlease append the file to execute and try again.";
+	error(msg);
+}
+
 
 try {
 	py = new PySubProcess(pathToServerPy, pythonExecPath);
@@ -1086,7 +1098,7 @@ return attempt;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[String filename = PROPERTIES_FILENAME;
-// First check if one exists in current directory;
+// First check if one exists in current directory.
 // If not, set to the default location.
 File f = new File(filename);
 if (!f.exists())
@@ -1159,7 +1171,7 @@ try (OutputStream output = new FileOutputStream(newFilePath)) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[String file = PROPERTIES_FILENAME;
 try {
-	URI parentURI = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().resolve("..");
+	URI parentURI = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().resolve(".");
 	String parentPath = Paths.get(parentURI).toString();
 	file = Paths.get(parentPath, file).toString();
 } catch (URISyntaxException ex) {
@@ -1940,7 +1952,7 @@ public class PyException extends Exception {
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>0</VersionMinor>
-			<VersionBuild>0</VersionBuild>
+			<VersionBuild>1</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
