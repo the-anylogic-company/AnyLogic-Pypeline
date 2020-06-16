@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1582302519625</Id>
 	<Name><![CDATA[Demo - runFile]]></Name>
@@ -258,14 +258,14 @@ String baseStr = String.valueOf(baseValue);
 Attempt attempt;
 if (verbosityLevel == 0) {
 	// No verbosity is desired. Just call the specified file passing the desired value.
-	attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 										"power_calculator.py", 
 										baseStr);
 } else {
 	// Some verbosity is desired. Call the specified file passing both the desired value and verbose string.
 	// As indicated by the help, more 'v's == more verbosity.
 	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 										"power_calculator.py", 
 										baseStr, 
 										verboseStr);
@@ -293,7 +293,7 @@ traceln(attempt.getFeedback());]]></ActionCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// Run the specified file, passing the '-h' flag so that the help is printed to the console.
-Attempt helpAttempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+Attempt helpAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 												"power_calculator.py", 
 												"-h");
 traceln(helpAttempt.getFeedback());]]></ActionCode>
@@ -482,7 +482,7 @@ String exponentStr = String.valueOf(exponentValue);
 Attempt attempt;
 if (verbosityLevel == 0) {
 	// No verbosity is desired. Just call the specified file passing the desired values.
-	attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 										"power_calculator.py", 
 										baseStr, 
 										"-e", exponentStr);
@@ -490,7 +490,7 @@ if (verbosityLevel == 0) {
 	// Some verbosity is desired. Call the specified file passing the desired values and verbose string.
 	// As indicated by the help, more 'v's == more verbosity.
 	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 										"power_calculator.py", 
 										baseStr, 
 										"-e", exponentStr, 
@@ -613,7 +613,7 @@ say_hello.py]]></Text>
 						<ActionCode><![CDATA[// Run the specified file (located in the model directory) using the automatically found Python version.
 // Note that `PyCommunicator` is the class name, as we are running this statically
 //	(in contrast to non-statically, where we first create an instance of PyCommunicator before calling the function)
-Attempt hiAttempt = PyCommunicator.runFile(PreferredPythonVersion.PYTHON_AUTO, 
+Attempt hiAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 											"say_hello.py");
 traceln(hiAttempt.getFeedback());]]></ActionCode>
 					</BasicProperties>
