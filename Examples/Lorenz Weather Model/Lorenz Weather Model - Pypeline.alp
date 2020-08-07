@@ -31,6 +31,7 @@ From a technical standpoint, the Lorenz system is nonlinear, non-periodic, three
 			<Id>1162412338975</Id>
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Import><![CDATA[import java.nio.file.Paths;]]></Import>
 			<StartupCode><![CDATA[Attempt attempt = pyCom.run("import plotter");
 if (!attempt.isSuccessful())
 	error("Could not import the custom 'plotter.py' file provided with this example or you do not have the Python libraries 'numpy' or 'matplotlib'.");
@@ -475,7 +476,11 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[pyCom.run(String.format("plotter.append(%s, %s, %s)", X, Y, Z));]]></Action>
+					<Action><![CDATA[try {
+	pyCom.run(String.format("plotter.append(%s, %s, %s)", X, Y, Z));
+} catch (Exception e) {
+	getExperimentHost().close();
+}]]></Action>
 				</Event>
 			</Events>
 			<AgentLinks>
@@ -1310,7 +1315,10 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[traceln("RESULT OF SAVE: " + pyCom.run(String.format("plotter.fig.savefig('day_%.2f.png')", time())));]]></ActionCode>
+						<ActionCode><![CDATA[String fileName = String.format("day_%.2f.png", time());
+
+traceln("RESULT OF SAVE: " + pyCom.run(String.format("plotter.fig.savefig('%s')", fileName)));
+getExperimentHost().showMessageDialog(String.format("Saved to %s", Paths.get(fileName).toAbsolutePath()));]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
