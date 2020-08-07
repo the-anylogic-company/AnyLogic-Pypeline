@@ -866,7 +866,7 @@ For the static version, note that you'll need to specify which Python version to
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>

@@ -356,16 +356,22 @@ pyCommunicator.run("import json");]]></StartupCode>
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[preferredPythonVersion]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[pathToPythonExe]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[true]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1367,7 +1373,7 @@ These are equally valid to use -
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>

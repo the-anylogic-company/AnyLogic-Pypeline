@@ -717,13 +717,19 @@ if (!attempt.isSuccessful()) {
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[preferredPythonVersion]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[pathToPythonExe]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -4481,7 +4487,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>

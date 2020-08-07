@@ -173,22 +173,19 @@ if (!pyCommunicator.isConnected())
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[preferredPythonVersion]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommand]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[loadFromProperties]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[true]]></Code>
-							</Value>
+							<Name><![CDATA[pythonExecPath]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[pythonExecPath]]></Name>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -886,7 +883,7 @@ It also shows how you can check the last 500 commands sent to the Communicator (
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
