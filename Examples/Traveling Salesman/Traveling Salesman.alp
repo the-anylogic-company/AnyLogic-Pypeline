@@ -925,8 +925,8 @@ send(o, truck);]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from:
-https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
+					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
