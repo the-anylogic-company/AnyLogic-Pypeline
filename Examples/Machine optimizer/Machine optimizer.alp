@@ -8,6 +8,14 @@
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine optimizer]]></Name>
+	<Description><![CDATA[[this model requires Pypeline library to be installed]
+There are 3 types of machines (Type 1, 2, and 3).
+Each have different production costs.
+Each have three stages to be built (Stage 1, 2, and 3).
+Each stage has a different time requirement based on machine type.
+
+There are two constraints: the allotted number of machines built, and the allotted time for each stage.
+The goal is change the number of each type built, such that the production cost is minimized.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[machine_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -133,7 +141,7 @@ if (!attempt.isSuccessful()) {
 				<Output>
 					<Id>1574377546355</Id>
 					<Name><![CDATA[objFunc]]></Name>
-					<X>300</X><Y>250</Y>
+					<X>300</X><Y>300</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -153,7 +161,7 @@ if (!attempt.isSuccessful()) {
 				<Output>
 					<Id>1574377557149</Id>
 					<Name><![CDATA[nBuiltType1]]></Name>
-					<X>300</X><Y>290</Y>
+					<X>300</X><Y>340</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -173,7 +181,7 @@ if (!attempt.isSuccessful()) {
 				<Output>
 					<Id>1574377563909</Id>
 					<Name><![CDATA[nBuiltType2]]></Name>
-					<X>300</X><Y>330</Y>
+					<X>300</X><Y>380</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -193,7 +201,7 @@ if (!attempt.isSuccessful()) {
 				<Output>
 					<Id>1574377564874</Id>
 					<Name><![CDATA[nBuiltType3]]></Name>
-					<X>300</X><Y>370</Y>
+					<X>300</X><Y>420</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -251,7 +259,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375208447</Id>
 					<Name><![CDATA[reqTimeStage1Type1]]></Name>
-					<X>50</X><Y>50</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -278,7 +286,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375283277</Id>
 					<Name><![CDATA[reqTimeStage2Type1]]></Name>
-					<X>50</X><Y>90</Y>
+					<X>50</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -305,7 +313,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375285130</Id>
 					<Name><![CDATA[reqTimeStage3Type1]]></Name>
-					<X>50</X><Y>130</Y>
+					<X>50</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -332,7 +340,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375347948</Id>
 					<Name><![CDATA[reqTimeStage1Type2]]></Name>
-					<X>50</X><Y>250</Y>
+					<X>50</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -359,7 +367,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375347951</Id>
 					<Name><![CDATA[reqTimeStage2Type2]]></Name>
-					<X>50</X><Y>290</Y>
+					<X>50</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -386,7 +394,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375347954</Id>
 					<Name><![CDATA[reqTimeStage3Type2]]></Name>
-					<X>50</X><Y>330</Y>
+					<X>50</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -413,7 +421,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375363431</Id>
 					<Name><![CDATA[reqTimeStage1Type3]]></Name>
-					<X>50</X><Y>450</Y>
+					<X>50</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -440,7 +448,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375363434</Id>
 					<Name><![CDATA[reqTimeStage2Type3]]></Name>
-					<X>50</X><Y>490</Y>
+					<X>50</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -467,7 +475,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375363437</Id>
 					<Name><![CDATA[reqTimeStage3Type3]]></Name>
-					<X>50</X><Y>530</Y>
+					<X>50</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -494,7 +502,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375584496</Id>
 					<Name><![CDATA[costProduceType1]]></Name>
-					<X>50</X><Y>170</Y>
+					<X>50</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -519,7 +527,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375615553</Id>
 					<Name><![CDATA[costProduceType2]]></Name>
-					<X>50</X><Y>370</Y>
+					<X>50</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -544,7 +552,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375617691</Id>
 					<Name><![CDATA[costProduceType3]]></Name>
-					<X>50</X><Y>570</Y>
+					<X>50</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -569,7 +577,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375675665</Id>
 					<Name><![CDATA[allottedTimeStage1]]></Name>
-					<X>300</X><Y>90</Y>
+					<X>300</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -595,7 +603,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375712071</Id>
 					<Name><![CDATA[allottedTimeStage2]]></Name>
-					<X>300</X><Y>130</Y>
+					<X>300</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -622,7 +630,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375733167</Id>
 					<Name><![CDATA[allottedTimeStage3]]></Name>
-					<X>300</X><Y>170</Y>
+					<X>300</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -649,7 +657,7 @@ if (!attempt.isSuccessful()) {
 				<Variable Class="Parameter">
 					<Id>1574375877656</Id>
 					<Name><![CDATA[allottedMachinesBuilt]]></Name>
-					<X>300</X><Y>50</Y>
+					<X>300</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2374,6 +2382,49 @@ machines]]></Text>
 						<Name>SansSerif</Name>
 						<Size>20</Size>
 						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1596828165919</Id>
+					<Name><![CDATA[text18]]></Name>
+					<X>10</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65281</Color>
+					<Text><![CDATA[This model requires Pypeline library to be installed from:
+https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1596828404756</Id>
+					<Name><![CDATA[text19]]></Name>
+					<X>10</X><Y>60</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[Requires the Python libraries 'scipy' and 'numpy']]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>

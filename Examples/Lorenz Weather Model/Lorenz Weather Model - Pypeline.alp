@@ -8,7 +8,12 @@
 <Model>
 	<Id>1162412338974</Id>
 	<Name><![CDATA[Lorenz Weather Model - Pypeline]]></Name>
-	<Description><![CDATA[The Lorenz system is a system of ordinary differential equations first studied by Edward Lorenz. It is notable for having chaotic solutions for certain parameter values and initial conditions. In particular, the Lorenz attractor is a set of chaotic solutions of the Lorenz system which, when plotted, resemble a butterfly or figure eight.
+	<Description><![CDATA[[this model requires Pypeline library to be installed]
+This is a slightly modified version of the AnyLogic example model (original description seen below).
+The Python library "MatPlotLib" is used to show a live, 3D graph of the X, Y, and Z stocks in the SD model.
+Try changing the parameters on the fly or rotating the graph to see it from a different angle!
+--
+The Lorenz system is a system of ordinary differential equations first studied by Edward Lorenz. It is notable for having chaotic solutions for certain parameter values and initial conditions. In particular, the Lorenz attractor is a set of chaotic solutions of the Lorenz system which, when plotted, resemble a butterfly or figure eight.
 In 1963, Edward Lorenz developed a simplified mathematical model for atmospheric convection. The model is a system of three ordinary differential equations now known as the Lorenz equations:
 dX/dt = S*(Y-X)
 dY/dt = (R-Z)*X – Y
@@ -128,7 +133,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="StockVariable">
 					<Id>1162412368436</Id>
 					<Name><![CDATA[X]]></Name>
-					<X>180</X><Y>60</Y>
+					<X>180</X><Y>110</Y>
 					<Label><X>-24</X><Y>-28</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -145,7 +150,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="StockVariable">
 					<Id>1162412379543</Id>
 					<Name><![CDATA[Y]]></Name>
-					<X>230</X><Y>110</Y>
+					<X>230</X><Y>160</Y>
 					<Label><X>-34</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -162,7 +167,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="StockVariable">
 					<Id>1162412384661</Id>
 					<Name><![CDATA[Z]]></Name>
-					<X>280</X><Y>60</Y>
+					<X>280</X><Y>110</Y>
 					<Label><X>-2</X><Y>-28</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -179,7 +184,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1162412420762</Id>
 					<Name><![CDATA[S]]></Name>
-					<X>130</X><Y>60</Y>
+					<X>130</X><Y>110</Y>
 					<Label><X>-15</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -204,7 +209,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1162412427613</Id>
 					<Name><![CDATA[B]]></Name>
-					<X>330</X><Y>40</Y>
+					<X>330</X><Y>90</Y>
 					<Label><X>0</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -229,7 +234,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1162412433171</Id>
 					<Name><![CDATA[R]]></Name>
-					<X>230</X><Y>160</Y>
+					<X>230</X><Y>210</Y>
 					<Label><X>5</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -254,7 +259,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1162412451206</Id>
 					<Name><![CDATA[X0]]></Name>
-					<X>130</X><Y>110</Y>
+					<X>130</X><Y>160</Y>
 					<Label><X>-15</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -279,7 +284,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1588449983138</Id>
 					<Name><![CDATA[plotUpdateRecurrence_hrs]]></Name>
-					<X>800</X><Y>200</Y>
+					<X>800</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -310,7 +315,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>100</X><Y>0</Y></Direction>
 					<Id>1342444341947</Id>
 					<Name><![CDATA[X - Z]]></Name>
-					<X>180</X><Y>60</Y>
+					<X>180</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -325,7 +330,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>-50</X><Y>20</Y></Direction>
 					<Id>1342444341948</Id>
 					<Name><![CDATA[B - Z]]></Name>
-					<X>330</X><Y>40</Y>
+					<X>330</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -340,7 +345,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>-50</X><Y>-50</Y></Direction>
 					<Id>1342444341949</Id>
 					<Name><![CDATA[Y - X]]></Name>
-					<X>230</X><Y>110</Y>
+					<X>230</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -355,7 +360,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>50</X><Y>50</Y></Direction>
 					<Id>1342444341950</Id>
 					<Name><![CDATA[X - Y]]></Name>
-					<X>180</X><Y>60</Y>
+					<X>180</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -370,7 +375,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>-50</X><Y>50</Y></Direction>
 					<Id>1342444341951</Id>
 					<Name><![CDATA[Z - Y]]></Name>
-					<X>280</X><Y>60</Y>
+					<X>280</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -385,7 +390,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>50</X><Y>-50</Y></Direction>
 					<Id>1342444341952</Id>
 					<Name><![CDATA[Y - Z]]></Name>
-					<X>230</X><Y>110</Y>
+					<X>230</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -400,7 +405,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>0</X><Y>-50</Y></Direction>
 					<Id>1342444341953</Id>
 					<Name><![CDATA[R - Y]]></Name>
-					<X>230</X><Y>160</Y>
+					<X>230</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -415,7 +420,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>50</X><Y>0</Y></Direction>
 					<Id>1342444341954</Id>
 					<Name><![CDATA[S - X]]></Name>
-					<X>130</X><Y>60</Y>
+					<X>130</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -430,7 +435,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Direction><X>50</X><Y>-50</Y></Direction>
 					<Id>1342444341955</Id>
 					<Name><![CDATA[X0 - X]]></Name>
-					<X>130</X><Y>110</Y>
+					<X>130</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -444,7 +449,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Event>
 					<Id>1572970369980</Id>
 					<Name><![CDATA[updatePyPlot]]></Name>
-					<X>800</X><Y>250</Y>
+					<X>800</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -499,7 +504,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<EmbeddedObject>
 					<Id>1572968063054</Id>
 					<Name><![CDATA[pyCom]]></Name>
-					<X>800</X><Y>120</Y>
+					<X>800</X><Y>170</Y>
 					<Label><X>-5</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -592,7 +597,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414146493</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>760</X><Y>20</Y>
+					<X>760</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -613,7 +618,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414201323</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>462</X><Y>60</Y>
+					<X>462</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -634,7 +639,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414523176</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>442</X><Y>60</Y>
+					<X>442</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -655,7 +660,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414529625</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>479</X><Y>60</Y>
+					<X>479</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -676,7 +681,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414529675</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>498</X><Y>60</Y>
+					<X>498</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -697,7 +702,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414534282</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>518</X><Y>60</Y>
+					<X>518</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -718,7 +723,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414534332</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>548</X><Y>60</Y>
+					<X>548</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -739,7 +744,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414534342</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>569</X><Y>60</Y>
+					<X>569</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -760,7 +765,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414534344</Id>
 					<Name><![CDATA[text9]]></Name>
-					<X>541</X><Y>60</Y>
+					<X>541</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -781,7 +786,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539059</Id>
 					<Name><![CDATA[text10]]></Name>
-					<X>740</X><Y>60</Y>
+					<X>740</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -802,7 +807,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539119</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>644</X><Y>60</Y>
+					<X>644</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -823,7 +828,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539121</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>614</X><Y>60</Y>
+					<X>614</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -844,7 +849,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539129</Id>
 					<Name><![CDATA[text13]]></Name>
-					<X>760</X><Y>60</Y>
+					<X>760</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -865,7 +870,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539131</Id>
 					<Name><![CDATA[text14]]></Name>
-					<X>719</X><Y>60</Y>
+					<X>719</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -886,7 +891,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539133</Id>
 					<Name><![CDATA[text15]]></Name>
-					<X>577</X><Y>60</Y>
+					<X>577</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -907,7 +912,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539139</Id>
 					<Name><![CDATA[text16]]></Name>
-					<X>622</X><Y>60</Y>
+					<X>622</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -928,7 +933,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414539141</Id>
 					<Name><![CDATA[text17]]></Name>
-					<X>597</X><Y>60</Y>
+					<X>597</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -949,7 +954,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414625683</Id>
 					<Name><![CDATA[text18]]></Name>
-					<X>699</X><Y>60</Y>
+					<X>699</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -970,7 +975,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1162414635437</Id>
 					<Name><![CDATA[text19]]></Name>
-					<X>678</X><Y>60</Y>
+					<X>678</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -992,7 +997,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1543498886075</Id>
 					<Name><![CDATA[slider]]></Name>
-					<X>250</X><Y>150</Y>
+					<X>250</X><Y>200</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1015,7 +1020,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1543498962165</Id>
 					<Name><![CDATA[slider1]]></Name>
-					<X>10</X><Y>40</Y>
+					<X>10</X><Y>90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1038,7 +1043,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1543498984379</Id>
 					<Name><![CDATA[slider2]]></Name>
-					<X>350</X><Y>20</Y>
+					<X>350</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1060,7 +1065,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
     			<TimePlot>
 					<Id>1162412896556</Id>
 					<Name><![CDATA[plot]]></Name>
-					<X>0</X><Y>170</Y>
+					<X>0</X><Y>220</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1144,7 +1149,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
     			<Plot>
 					<Id>1162413257565</Id>
 					<Name><![CDATA[plot1]]></Name>
-					<X>0</X><Y>350</Y>
+					<X>0</X><Y>400</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1219,7 +1224,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
     			<Plot>
 					<Id>1162413872100</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>360</X><Y>350</Y>
+					<X>360</X><Y>400</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1295,7 +1300,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1573256292316</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>800</X><Y>290</Y>
+					<X>800</X><Y>340</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1334,7 +1339,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Text>
 					<Id>1588449749416</Id>
 					<Name><![CDATA[text20]]></Name>
-					<X>850</X><Y>340</Y>
+					<X>850</X><Y>390</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1356,6 +1361,49 @@ Advised to decrease time scale or increase recurrence.]]></Text>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Text>
+					<Id>1596828185505</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>10</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65281</Color>
+					<Text><![CDATA[This model requires Pypeline library to be installed from:
+https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1596828458297</Id>
+					<Name><![CDATA[text21]]></Name>
+					<X>10</X><Y>50</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[Requires the Python libraries 'numpy' and 'matplotlib']]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -1372,7 +1420,7 @@ Advised to decrease time scale or increase recurrence.]]></Text>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
 		<Width>1000</Width>
-		<Height>600</Height>
+		<Height>650</Height>
 	</Frame>
 	<Database>
 		<Logging>false</Logging>

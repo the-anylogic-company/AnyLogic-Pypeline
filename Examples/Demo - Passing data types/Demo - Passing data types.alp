@@ -8,6 +8,11 @@
 <Model>
 	<Id>1582306164627</Id>
 	<Name><![CDATA[Demo - Passing data types]]></Name>
+	<Description><![CDATA[[this model requires Pypeline library to be installed]
+This demo shows how to pass different data types between Java and Python:
+- pass a Java object to Python, 
+- change the value in Python,
+- retrieve the value from Python and convert to a Java type.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___passing_data_types]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -338,7 +343,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<EmbeddedObject>
 					<Id>1582306219735</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>30</X><Y>30</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>-25</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1201,6 +1206,28 @@ try {
 						<Style>0</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1596827635933</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>10</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65281</Color>
+					<Text><![CDATA[This model requires Pypeline library to be installed from:
+https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
