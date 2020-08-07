@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
 <Model>
 	<Id>1574374744725</Id>
-	<Name><![CDATA[Machine optimizer]]></Name>
+	<Name><![CDATA[Machine Optimizer]]></Name>
 	<Description><![CDATA[[this model requires Pypeline library to be installed]
 There are 3 types of machines (Type 1, 2, and 3).
 Each have different production costs.
@@ -2523,7 +2523,7 @@ https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Machine optimizer]]></Text>
+					<Text><![CDATA[Machine Optimizer]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -3188,7 +3188,7 @@ The goal is change the number of each type built,
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Machine optimizer : Simulation]]></Title>	
+				<Title><![CDATA[Machine Optimizer : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
@@ -4520,7 +4520,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 			</ModelTimeProperties>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<Title><![CDATA[Machine optimizer : ParametersVariation]]></Title>
+				<Title><![CDATA[Machine Optimizer : ParametersVariation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 			</PresentationProperties>

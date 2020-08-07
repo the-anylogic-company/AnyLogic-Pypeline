@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
 <Model>
 	<Id>1582302519625</Id>
-	<Name><![CDATA[Demo - runFile]]></Name>
+	<Name><![CDATA[Demo - Running Python Files]]></Name>
 	<Description><![CDATA[[this model requires Pypeline library to be installed]
 This demo shows how you can use the `runFile` function to execute Python files without importing them.]]></Description>
 	<EngineVersion>6</EngineVersion>
@@ -814,7 +814,7 @@ https://github.com/t-wolfeadam/AnyLogic-Pypeline]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - runFile]]></Text>
+					<Text><![CDATA[Demo - Running Python Files]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -874,7 +874,7 @@ For the static version, note that you'll need to specify which Python version to
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - runFile : Simulation]]></Title>	
+				<Title><![CDATA[Demo - Running Python Files : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>true</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
