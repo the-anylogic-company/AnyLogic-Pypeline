@@ -192,7 +192,11 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.net.MalformedURLException;
 import java.net.URI;
-]]></Import>
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;]]></Import>
 			<StartupCode><![CDATA[initialize();
 generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
@@ -397,6 +401,21 @@ try {
 						<Type><![CDATA[String]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA["pypeline.properties"]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1597361797787</Id>
+					<Name><![CDATA[objmapper]]></Name>
+					<X>450</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="true">
+						<Type><![CDATA[ObjectMapper]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new ObjectMapper()]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -684,6 +703,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "import sys",
 "import numbers",
 "import json",
+"from json.decoder import JSONDecodeError",
 "from collections import Mapping",
 "import traceback",
 "import struct",
@@ -808,8 +828,15 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "                        code = inp.read_string()",
 "                        try:",
 "                            result = eval(code, globs)",
-"                        except NameError: # assume json",
-"                            result = json.loads(code)",
+"                        except NameError as n_err: # assume json",
+"                            try:",
+"                                result = json.loads(code)",
+"                            except JSONDecodeError as j_err:",
+"                                raise Exception(\"The following line failed to parse (as strictly Python or JSON-parsed code):\"",
+"												 + f\"\\n    `{code}`\"",
+"												 +  \"\\nConsider one of the following reasons:\"",
+"                                                + f\"\\n1. Python reason: {n_err}\"",
+"                                                + f\"\\n2. JSON   reason: {j_err}\")",
 "                        out.write_byte(SUCC_MSG)",
 "                        out.write_string(result)",
 "                    elif msg_type == PING_MSG: # 2 (testing)",
@@ -864,7 +891,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
-	error(attempt.getFeedback());
+	error(attempt.getFeedback().replace("\\n", "\n")); // new lines aren't printing properly, TODO - look into that
 return attempt;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -985,7 +1012,7 @@ return null;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[return py.activePyVersion + "\n" + py.activePyPath;]]></Body>
+					<Body><![CDATA[return py == null ? "null" : py.activePyVersion + "\n" + py.activePyPath;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1248,6 +1275,59 @@ try {
 	ex.printStackTrace();
 }
 return file;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1597362027154</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<X>450</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[String output = null;
+try {
+	output = objmapper.writeValueAsString(object);
+} catch (JsonProcessingException e) {
+	e.printStackTrace();
+}
+return output;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1597362055799</Id>
+					<Name><![CDATA[fromJson]]></Name>
+					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
+					<X>450</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Body><![CDATA[T output = null;
+try {
+	output = objmapper.readValue(json, clazz);
+} catch (JsonMappingException e) {
+	e.printStackTrace();
+} catch (JsonParseException e) {
+	e.printStackTrace();
+} catch (IOException e) {
+	e.printStackTrace();
+}
+return output;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -1998,7 +2078,7 @@ public class Attempt {
 	 * @return the feedback received from Python after executing the command
 	 */
 	public String getFeedback() {
-		return feedback;
+		return getFeedback(null);
 	}
 
 	/**
@@ -2006,8 +2086,9 @@ public class Attempt {
 	 * @return the feedback from executing the command, casted to the specified type
 	 */
 	public <T> T getFeedback(Class<T> type) {
-		
-		if (type.equals(Byte.class)) {
+		if (type == null || type.equals(String.class)) { 
+			return (T) feedback;
+		} else if (type.equals(Byte.class)) {
 			return type.cast(Byte.valueOf(feedback));
 		} else if (type.equals(Short.class)) {
 			return type.cast(Short.valueOf(feedback));
@@ -2072,8 +2153,8 @@ public class PyException extends Exception {
 				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
-			<VersionMinor>0</VersionMinor>
-			<VersionBuild>1</VersionBuild>
+			<VersionMinor>1</VersionMinor>
+			<VersionBuild>2</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
