@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
@@ -20,7 +20,6 @@ This model showcases how, with Pypeline, you can use simulation as a testbed for
 			<Id>1586797690572</Id>
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<Import><![CDATA[import com.google.common.collect.EvictingQueue;]]></Import>
 			<StartupCode><![CDATA[// Import class from local file to use in calling the trained neural network models
 py.run("from nn_model_parser import HospitalPredictor",
 		"predictor = HospitalPredictor()");]]></StartupCode>
@@ -1371,7 +1370,7 @@ source.set_rate(newRate, PER_HOUR);]]></Action>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
+					<Color>-65536</Color>
 					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
@@ -1384,7 +1383,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1596828346192</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>10</X><Y>60</Y>
+					<X>10</X><Y>50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>

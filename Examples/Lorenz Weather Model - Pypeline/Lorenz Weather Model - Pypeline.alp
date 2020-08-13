@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1162412338974</Id>
 	<Name><![CDATA[Lorenz Weather Model - Pypeline]]></Name>
@@ -33,9 +33,7 @@ From a technical standpoint, the Lorenz system is nonlinear, non-periodic, three
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Paths;]]></Import>
 			<StartupCode><![CDATA[Attempt attempt = pyCom.run("import plotter");
-if (!attempt.isSuccessful())
-	error("Could not import the custom 'plotter.py' file provided with this example or you do not have the Python libraries 'numpy' or 'matplotlib'.");
-	
+
 // Set the inputs (updates title of 3D plot)
 pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></StartupCode>
 			<Generic>false</Generic>
@@ -1381,8 +1379,8 @@ Advised to decrease time scale or increase recurrence.]]></Text>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>

@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
@@ -31,20 +31,16 @@ py.run("random.seed(1)");
 // build distance matrix and pass to initialized solver
 distanceMatrix = buildDistanceMatrix();
 
-Attempt importAttempt = py.run("from solver import HubOrderSolver");
-if (!importAttempt.isSuccessful())
-	error("Import of solver.py was not successful for the following reason: " + importAttempt.getFeedback());
-	
-Attempt buildSolverAttempt = py.run(
+py.run("from solver import HubOrderSolver");
+
+py.run(
 	String.format(
 		"solver = HubOrderSolver(%s, %s)",
 		Arrays.deepToString(distanceMatrix),
 		home_index
 	)
 );
-if (!buildSolverAttempt.isSuccessful())
-	error("Building the solver object was not successful for the following reason: " + buildSolverAttempt.getFeedback());
-	
+
 if (newOrderOnStartup)
 	buildNewOrder();]]></StartupCode>
 			<Generic>false</Generic>
@@ -220,30 +216,16 @@ return matrix;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[Order o = add_orders();
-//traceln("random visit list: " + o);
-
-
 int[] dests = o.destinations;
 
-//Instant start = Instant.now();
-
-Attempt solveAttempt = py.runResults(
-						String.format(
-							"solver.solve(%s)['order']", // gets the visit order array from the solution
-							Arrays.toString(dests)
-						));
+py.runResults(
+	String.format(
+		"solver.solve(%s)['order']", // gets the visit order array from the solution
+		Arrays.toString(dests)
+));
 						
-if (!solveAttempt.isSuccessful())
-	error("Calling solver did not work for the following reason: " + solveAttempt.getFeedback());
-	
 int[] newDests = solveAttempt.getFeedback(int[].class);
-
-//traceln("O\t" + (Duration.between(start, Instant.now()).toNanos()/1e+9));
-
 o.set_destinations(newDests);
-
-//traceln("optimized visit order: " + Arrays.toString(newDests) + "\n");
-
 send(o, truck);]]></Body>
 				</Function>
 			</Functions>
@@ -924,7 +906,7 @@ send(o, truck);]]></Body>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
+					<Color>-65536</Color>
 					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>

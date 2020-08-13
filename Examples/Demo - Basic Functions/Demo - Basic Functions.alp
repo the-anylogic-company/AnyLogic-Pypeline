@@ -4,11 +4,11 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1582222207135</Id>
 	<Name><![CDATA[Demo - Basic Functions]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
+	<Description><![CDATA[[this model requires the Pypeline library to be installed]
 This demo shows usage of the basic Pypeline functions.
 It also shows how you can check the last 500 commands sent to the Communicator (using its built in `history` collection).]]></Description>
 	<EngineVersion>6</EngineVersion>
@@ -764,8 +764,8 @@ pyCommunicator.history.get(index).getSecond()]]></TextCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>

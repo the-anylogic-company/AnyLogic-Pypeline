@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1582306164627</Id>
 	<Name><![CDATA[Demo - Passing Data Types]]></Name>
@@ -1219,8 +1219,8 @@ try {
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -1384,7 +1384,7 @@ These are equally valid to use -
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - Passing Data Types : Simulation]]></Title>
+				<Title><![CDATA[Demo - Passing Data Types : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>

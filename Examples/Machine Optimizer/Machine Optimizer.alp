@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
@@ -24,17 +24,6 @@ The goal is change the number of each type built, such that the production cost 
 		<ActiveObjectClass>
 			<Id>1574374744731</Id>
 			<Name><![CDATA[Main]]></Name>
-			<Description><![CDATA[viewArea.navigateTo();
-
-// import statements
-Attempt attempt = pyCom.run("import numpy as np",
-		"from scipy.optimize import linprog",
-		"from numpy.linalg import solve");
-if (!attempt.isSuccessful()) {
-	error("Please ensure you have `numpy` and `scipy` installed!");
-}
-
-solveit();]]></Description>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[viewArea.navigateTo();
 
@@ -44,7 +33,10 @@ Attempt attempt = pyCom.run("import numpy as np",
 		"from numpy.linalg import solve");
 if (!attempt.isSuccessful()) {
 	error("Please ensure you have `numpy` and `scipy` installed!");
-}]]></StartupCode>
+}
+
+// Run solver with default arguments
+solveit();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1574374744729</Id>
@@ -220,42 +212,6 @@ if (!attempt.isSuccessful()) {
 				</Output>
 			</Outputs>
 			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1580247043978</Id>
-					<Name><![CDATA[numberOf1s]]></Name>
-					<X>1350</X><Y>900</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1580247058911</Id>
-					<Name><![CDATA[numberOf2s]]></Name>
-					<X>1350</X><Y>950</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1580247060279</Id>
-					<Name><![CDATA[numberOf3s]]></Name>
-					<X>1350</X><Y>1000</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-					</Properties>
-				</Variable>
 				<Variable Class="Parameter">
 					<Id>1574375208447</Id>
 					<Name><![CDATA[reqTimeStage1Type1]]></Name>
@@ -681,6 +637,51 @@ if (!attempt.isSuccessful()) {
 					</Properties>                 
 				</Variable>
 			</Variables>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1597356974171</Id>
+					<Name><![CDATA[solveit]]></Name>
+					<X>300</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// assigning `A_eq`, the 2-D array which, when matrix-multiplied by x, gives the values of the equality constraints at x;
+// because each machine type is considered 1 unit, these values are not parameterized.
+pyCom.run("A_eq = np.array([[1, 1, 1]])");
+
+// assigning `b_eq`, the 1-D array of values representing the RHS of each equality constraint (row) in A_eq.
+// i.e., solving: `A_eq` * [x_1, x_2, x_3] = allottedMachinesBuilt
+pyCom.run(String.format("b_eq = np.array([%s])", allottedMachinesBuilt));
+
+// assigning `A_ub`, the 2-D array which, when matrix-multiplied by x, gives the values of the upper-bound inequality constraints at x;
+pyCom.run(String.format("A_ub = np.array([ [%s,%s,%s], [%s,%s,%s], [%s,%s,%s] ])", 
+	reqTimeStage1Type1(MINUTE), reqTimeStage1Type2(MINUTE), reqTimeStage1Type3(MINUTE),
+	reqTimeStage2Type1(MINUTE), reqTimeStage2Type2(MINUTE), reqTimeStage2Type3(MINUTE),
+	reqTimeStage3Type1(MINUTE), reqTimeStage3Type2(MINUTE), reqTimeStage3Type3(MINUTE)	
+	));
+	
+// assigning `b_ub`, the 1-D array of values representing the upper-bound of each inequality constraint (row) in A_ub;
+pyCom.run(String.format("b_ub = np.array([%s, %s, %s])",
+	allottedTimeStage1(MINUTE), allottedTimeStage2(MINUTE), allottedTimeStage3(MINUTE)
+	));
+
+// assigning `c`, the coefficients of the linear objective function to be minimized;
+pyCom.run(String.format("c = np.array([%s, %s, %s])",
+	costProduceType1, costProduceType2, costProduceType3
+	));
+
+pyCom.run("result = linprog(c, A_eq = A_eq, b_eq = b_eq, A_ub = A_ub, b_ub = b_ub, bounds=(0,None))");
+
+
+update_objFunc();
+update_nBuiltType1();
+update_nBuiltType2();
+update_nBuiltType3();]]></Body>
+				</Function>
+			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1574374744726</Id>
@@ -707,7 +708,7 @@ if (!attempt.isSuccessful()) {
 				<EmbeddedObject>
 					<Id>1578675134023</Id>
 					<Name><![CDATA[pyCom]]></Name>
-					<X>1500</X><Y>790</Y>
+					<X>300</X><Y>580</Y>
 					<Label><X>0</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -800,7 +801,7 @@ if (!attempt.isSuccessful()) {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1574379033163</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>1350</X><Y>770</Y>
+					<X>480</X><Y>720</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -810,40 +811,7 @@ if (!attempt.isSuccessful()) {
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// assigning `A_eq`, the 2-D array which, when matrix-multiplied by x, gives the values of the equality constraints at x;
-// because each machine type is considered 1 unit, these values are not parameterized.
-pyCom.run("A_eq = np.array([[1, 1, 1]])");
-
-// assigning `b_eq`, the 1-D array of values representing the RHS of each equality constraint (row) in A_eq.
-// i.e., solving: `A_eq` * [x_1, x_2, x_3] = allottedMachinesBuilt
-pyCom.run(String.format("b_eq = np.array([%s])", allottedMachinesBuilt));
-
-// assigning `A_ub`, the 2-D array which, when matrix-multiplied by x, gives the values of the upper-bound inequality constraints at x;
-pyCom.run(String.format("A_ub = np.array([ [%s,%s,%s], [%s,%s,%s], [%s,%s,%s] ])", 
-	reqTimeStage1Type1(MINUTE), reqTimeStage1Type2(MINUTE), reqTimeStage1Type3(MINUTE),
-	reqTimeStage2Type1(MINUTE), reqTimeStage2Type2(MINUTE), reqTimeStage2Type3(MINUTE),
-	reqTimeStage3Type1(MINUTE), reqTimeStage3Type2(MINUTE), reqTimeStage3Type3(MINUTE)	
-	));
-	
-// assigning `b_ub`, the 1-D array of values representing the upper-bound of each inequality constraint (row) in A_ub;
-pyCom.run(String.format("b_ub = np.array([%s, %s, %s])",
-	allottedTimeStage1(MINUTE), allottedTimeStage2(MINUTE), allottedTimeStage3(MINUTE)
-	));
-
-// assigning `c`, the coefficients of the linear objective function to be minimized;
-pyCom.run(String.format("c = np.array([%s, %s, %s])",
-	costProduceType1, costProduceType2, costProduceType3
-	));
-
-pyCom.run("result = linprog(c, A_eq = A_eq, b_eq = b_eq, A_ub = A_ub, b_ub = b_ub, bounds=(0,None))");
-
-
-numberOf1s = pyCom.runResults("int(round(result.x[0]))").getFeedback(Integer.class);
-numberOf2s = pyCom.runResults("int(round(result.x[1]))").getFeedback(Integer.class);
-numberOf3s = pyCom.runResults("int(round(result.x[2]))").getFeedback(Integer.class);
-
-traceln("Number of type 1s = %s, number of type 2s = %s, number of type 3s = %s", 
-	numberOf1s, numberOf2s, numberOf3s);]]></ActionCode>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -904,7 +872,7 @@ The goal is change the number of each type built,
 				<Text>
 					<Id>1574437362754</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>1350</X><Y>720</Y>
+					<X>540</X><Y>680</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -914,19 +882,19 @@ The goal is change the number of each type built,
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-8388608</Color>
-					<Text><![CDATA[Change any of the parameters and click the button below to
-run the solver and update the outputs.]]></Text>
+					<Text><![CDATA[Change any of the fields below and click the solve button
+to re-run the optimization and update the outputs.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>CENTER</Alignment>
 				</Text>
 				<Group>
 					<Id>1579027117924</Id>
 					<Name><![CDATA[inputs1]]></Name>
-					<X>220</X><Y>830</Y>
+					<X>220</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1122,7 +1090,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1145,7 +1112,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1168,7 +1134,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1191,7 +1156,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1205,7 +1169,7 @@ run the solver and update the outputs.]]></Text>
 				<Group>
 					<Id>1579027132100</Id>
 					<Name><![CDATA[inputs2]]></Name>
-					<X>540</X><Y>830</Y>
+					<X>540</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1393,7 +1357,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1416,7 +1379,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1439,7 +1401,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1462,7 +1423,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1476,7 +1436,7 @@ run the solver and update the outputs.]]></Text>
 				<Group>
 					<Id>1579027147029</Id>
 					<Name><![CDATA[inputs3]]></Name>
-					<X>860</X><Y>830</Y>
+					<X>860</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1679,7 +1639,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1702,7 +1661,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1725,7 +1683,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1748,7 +1705,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1762,7 +1718,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027174174</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>170</X><Y>720</Y>
+					<X>170</X><Y>840</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1783,7 +1739,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027193200</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>490</X><Y>720</Y>
+					<X>490</X><Y>840</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1804,7 +1760,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027195264</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>810</X><Y>720</Y>
+					<X>810</X><Y>840</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1825,7 +1781,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027201594</Id>
 					<Name><![CDATA[text9]]></Name>
-					<X>170</X><Y>690</Y>
+					<X>170</X><Y>810</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1846,7 +1802,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027208990</Id>
 					<Name><![CDATA[text10]]></Name>
-					<X>490</X><Y>690</Y>
+					<X>490</X><Y>810</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1867,7 +1823,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027211285</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>810</X><Y>690</Y>
+					<X>810</X><Y>810</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1888,7 +1844,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027214371</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>860</X><Y>890</Y>
+					<X>860</X><Y>1010</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1909,7 +1865,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027246796</Id>
 					<Name><![CDATA[text13]]></Name>
-					<X>540</X><Y>890</Y>
+					<X>540</X><Y>1010</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1930,7 +1886,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027250463</Id>
 					<Name><![CDATA[text14]]></Name>
-					<X>220</X><Y>890</Y>
+					<X>220</X><Y>1010</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1951,7 +1907,7 @@ run the solver and update the outputs.]]></Text>
 				<Polyline>
 					<Id>1579027325186</Id>
 					<Name><![CDATA[polyline3]]></Name>
-					<X>120</X><Y>950</Y>
+					<X>120</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1980,7 +1936,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027425334</Id>
 					<Name><![CDATA[line]]></Name>
-					<X>450</X><Y>950</Y>
+					<X>450</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2004,7 +1960,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027429072</Id>
 					<Name><![CDATA[line1]]></Name>
-					<X>770</X><Y>950</Y>
+					<X>770</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2029,7 +1985,7 @@ run the solver and update the outputs.]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1579027441630</Id>
 					<Name><![CDATA[editbox]]></Name>
-					<X>1050</X><Y>980</Y>
+					<X>1050</X><Y>1100</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2040,7 +1996,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2052,7 +2007,7 @@ run the solver and update the outputs.]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1579027452925</Id>
 					<Name><![CDATA[editbox1]]></Name>
-					<X>1050</X><Y>1050</Y>
+					<X>1050</X><Y>1170</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2063,7 +2018,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2075,7 +2029,7 @@ run the solver and update the outputs.]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1579027455578</Id>
 					<Name><![CDATA[editbox2]]></Name>
-					<X>1050</X><Y>1120</Y>
+					<X>1050</X><Y>1240</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2086,7 +2040,6 @@ run the solver and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2097,7 +2050,7 @@ run the solver and update the outputs.]]></Text>
 				<Polyline>
 					<Id>1579027461333</Id>
 					<Name><![CDATA[polyline4]]></Name>
-					<X>210</X><Y>950</Y>
+					<X>210</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2126,7 +2079,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027471208</Id>
 					<Name><![CDATA[line2]]></Name>
-					<X>540</X><Y>950</Y>
+					<X>540</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2150,7 +2103,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027474801</Id>
 					<Name><![CDATA[line3]]></Name>
-					<X>850</X><Y>950</Y>
+					<X>850</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2174,7 +2127,7 @@ run the solver and update the outputs.]]></Text>
 				<Polyline>
 					<Id>1579027479906</Id>
 					<Name><![CDATA[polyline5]]></Name>
-					<X>300</X><Y>950</Y>
+					<X>300</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2203,7 +2156,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027489093</Id>
 					<Name><![CDATA[line4]]></Name>
-					<X>630</X><Y>950</Y>
+					<X>630</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2227,7 +2180,7 @@ run the solver and update the outputs.]]></Text>
 				<Line>
 					<Id>1579027494838</Id>
 					<Name><![CDATA[line5]]></Name>
-					<X>950</X><Y>950</Y>
+					<X>950</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2251,7 +2204,7 @@ run the solver and update the outputs.]]></Text>
 				<Text>
 					<Id>1579027600418</Id>
 					<Name><![CDATA[text15]]></Name>
-					<X>1090</X><Y>940</Y>
+					<X>1090</X><Y>1060</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2274,7 +2227,7 @@ per stage]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1579027628297</Id>
 					<Name><![CDATA[editbox3]]></Name>
-					<X>1050</X><Y>820</Y>
+					<X>1050</X><Y>940</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2285,7 +2238,6 @@ per stage]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[textNumTypes.setText("?\n?\n?");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2296,7 +2248,7 @@ per stage]]></Text>
 				<Text>
 					<Id>1579027633696</Id>
 					<Name><![CDATA[text16]]></Name>
-					<X>1090</X><Y>780</Y>
+					<X>1090</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2315,76 +2267,6 @@ machines]]></Text>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
-				<Line>
-					<Id>1579027654332</Id>
-					<Name><![CDATA[line6]]></Name>
-					<X>1240</X><Y>660</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>4</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>0</Dx>
-					<Dy>660</Dy>
-					<Dz>0</Dz>
-				</Line>
-				<Text>
-					<Id>1579031348757</Id>
-					<Name><![CDATA[text17]]></Name>
-					<X>2056</X><Y>911.5</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[# Type 1s:
-# Type 2s:
-# Type 3s:]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>20</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1579031428273</Id>
-					<Name><![CDATA[textNumTypes]]></Name>
-					<X>2066</X><Y>911.5</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[?
-?
-?]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>20</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Text>
 					<Id>1596828165919</Id>
 					<Name><![CDATA[text18]]></Name>
@@ -2397,8 +2279,8 @@ machines]]></Text>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -2410,7 +2292,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1596828404756</Id>
 					<Name><![CDATA[text19]]></Name>
-					<X>10</X><Y>60</Y>
+					<X>10</X><Y>50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2428,6 +2310,72 @@ https://git.io/al_py]]></Text>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Text>
+					<Id>1597356736857</Id>
+					<Name><![CDATA[text20]]></Name>
+					<X>280</X><Y>960</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8388608</Color>
+					<Text><![CDATA[x ##]]></Text>
+					<TextCode><![CDATA["x " + nBuiltType1]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>36</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1597356765138</Id>
+					<Name><![CDATA[text21]]></Name>
+					<X>600</X><Y>960</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8388608</Color>
+					<Text><![CDATA[x ##]]></Text>
+					<TextCode><![CDATA["x " + nBuiltType2]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>36</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1597356767714</Id>
+					<Name><![CDATA[text22]]></Name>
+					<X>920</X><Y>960</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8388608</Color>
+					<Text><![CDATA[x ##]]></Text>
+					<TextCode><![CDATA["x " + nBuiltType3]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>36</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -2442,7 +2390,7 @@ https://git.io/al_py]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<Title><![CDATA[]]></Title>
-					<Width>1800</Width>
+					<Width>1160</Width>
 					<Height>660</Height>
 				</Area>
 			</Areas>
@@ -2457,7 +2405,7 @@ https://git.io/al_py]]></Text>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
-		<Width>1800</Width>
+		<Width>1160</Width>
 		<Height>660</Height>
 	</Frame>
 	<Database>
@@ -3188,7 +3136,7 @@ The goal is change the number of each type built,
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Machine Optimizer : Simulation]]></Title>
+				<Title><![CDATA[Machine Optimizer : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>

@@ -723,8 +723,8 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-65281</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
 https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -874,7 +874,7 @@ For the static version, note that you'll need to specify which Python version to
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - Running Python Files : Simulation]]></Title>
+				<Title><![CDATA[Demo - Running Python Files : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>true</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
