@@ -4,24 +4,29 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
 <Model>
-	<Id>1582302519625</Id>
-	<Name><![CDATA[Demo - runFile]]></Name>
+	<Id>1582222207135</Id>
+	<Name><![CDATA[Demo - Basic Functions]]></Name>
+	<Description><![CDATA[[this model requires Pypeline library to be installed]
+This demo shows usage of the basic Pypeline functions.
+It also shows how you can check the last 500 commands sent to the Communicator (using its built in `history` collection).]]></Description>
 	<EngineVersion>6</EngineVersion>
-	<JavaPackageName><![CDATA[demo___runfile]]></JavaPackageName>
+	<JavaPackageName><![CDATA[demo___functions]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
-			<Id>1582302519631</Id>
+			<Id>1582222207141</Id>
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<Import><![CDATA[import com.google.common.base.Strings;]]></Import>
+			<StartupCode><![CDATA[// Check to make sure Communicator initialized successfully
+if (!pyCommunicator.isConnected())
+	error("Communicator object could not find a version of Python.");]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
-				<Id>1582302519629</Id>
-				<Name><![CDATA[1582302519629]]></Name>
+				<Id>1582222207139</Id>
+				<Name><![CDATA[1582222207139]]></Name>
 				<GenericParameterValue Class="CodeValue">
 					<Code><![CDATA[T extends Agent]]></Code>
 				</GenericParameterValue>
@@ -82,7 +87,7 @@
 			<DatasetsCreationProperties>
 				<AutoCreate>true</AutoCreate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1582358400000</OccurrenceDate>
+					<OccurrenceDate>1582272000000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
@@ -93,7 +98,7 @@
 					</RecurrenceCode>
 			</DatasetsCreationProperties>
 			<ScaleRuler>
-				<Id>1582302519627</Id>
+				<Id>1582222207137</Id>
 				<Name><![CDATA[scale]]></Name>
 				<X>0</X><Y>-150</Y>
 				<PublicFlag>false</PublicFlag>
@@ -108,58 +113,28 @@
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1582302519630</CurrentLevel>
-			<ConnectionsId>1582302519626</ConnectionsId>
+			<CurrentLevel>1582222207140</CurrentLevel>
+			<ConnectionsId>1582222207136</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
-					<Id>1582303695984</Id>
-					<Name><![CDATA[baseValue]]></Name>
-					<X>-200</X><Y>390</Y>
+					<Id>1582222408879</Id>
+					<Name><![CDATA[x_al]]></Name>
+					<X>100</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[String]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[3.0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1582304975417</Id>
-					<Name><![CDATA[exponentValue]]></Name>
-					<X>-200</X><Y>430</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[2.0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1582305069456</Id>
-					<Name><![CDATA[verbosityLevel]]></Name>
-					<X>-200</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA["1"]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 			</Variables>
 			<AgentLinks>
 				<AgentLink>
-					<Id>1582302519626</Id>
+					<Id>1582222207136</Id>
 					<Name><![CDATA[connections]]></Name>
 					<X>50</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
@@ -179,10 +154,88 @@
 				</AgentLink>
 			</AgentLinks>
 
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>1582222213566</Id>
+					<Name><![CDATA[pyCommunicator]]></Name>
+					<X>50</X><Y>100</Y>
+					<Label><X>-31</X><Y>-22</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+						<ClassName><![CDATA[PyCommunicator]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+							<ClassName><![CDATA[PyCommunicator]]></ClassName>
+							<ItemName><![CDATA[1569858524853]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
 
 			<Presentation>
 				<Level>
-					<Id>1582302519630</Id>
+					<Id>1582222207140</Id>
 					<Name><![CDATA[level]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -194,119 +247,242 @@
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582303554461</Id>
-					<Name><![CDATA[editbox]]></Name>
-					<X>140</X><Y>450</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="50">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="18" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>baseValue</Link>
-					</ExtendedProperties>
-				</Control>
-				<Text>
-					<Id>1582303563297</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>245</X><Y>445</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[2]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>20</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582303648447</Id>
+					<Id>1582222220508</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>290</X><Y>450</Y>
+					<X>150</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="160" Height="40">
+					<BasicProperties Width="140" Height="40">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// The runFile function only accepts strings as arguments.
-// Converted here for clarity.
-String baseStr = String.valueOf(baseValue);
-
-Attempt attempt;
-if (verbosityLevel == 0) {
-	// No verbosity is desired. Just call the specified file passing the desired value.
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
-										baseStr);
-} else {
-	// Some verbosity is desired. Call the specified file passing both the desired value and verbose string.
-	// As indicated by the help, more 'v's == more verbosity.
-	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
-										baseStr, 
-										verboseStr);
-}
-
-traceln(attempt.getFeedback());]]></ActionCode>
+						<ActionCode><![CDATA[boolean result = pyCommunicator.isConnected();
+textIsConnected.setText(result);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[Print results]]></LabelText>
+						<LabelText><![CDATA[Check connection]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1582222252020</Id>
+					<Name><![CDATA[textIsConnected]]></Name>
+					<X>435</X><Y>90</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222276095</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>300</X><Y>90</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Is connected?]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="EditBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1582222339669</Id>
+					<Name><![CDATA[editbox]]></Name>
+					<X>200</X><Y>230</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="90" Height="40">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<FillColor/>
+						<TextColor/>
+						<Enabled>true</Enabled>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="20" Style="0"/>
+						<DefaultValueCode><![CDATA["0"]]></DefaultValueCode>
+						<LinkTo>true</LinkTo>
+						<Link>x_al</Link>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1582222351854</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>160</X><Y>240</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[X =]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1582222382958</Id>
+					<Name><![CDATA[button1]]></Name>
+					<X>360</X><Y>230</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="140" Height="40">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[// Test the Pypeline function `run`.
+// This will set a variable inside Python called "x_py" equal to your specified value of X, plus 1.
+// The Java function `String.format` is used to avoid having to concatenate strings with '+'.
+//	(The `%s` is used to indicate where in the string the `x_al` variable should be placed)
+String pyCode = String.format("x_py = %s + 1", x_al);
+
+// The `run` function returns an Attempt object, but we don't need it, so it's not stored to a variable.
+pyCommunicator.run(pyCode);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Assign]]></LabelText>
 					</ExtendedProperties>
 				</Control>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582304124605</Id>
-					<Name><![CDATA[button4]]></Name>
-					<X>410</X><Y>190</Y>
+					<Id>1582222487394</Id>
+					<Name><![CDATA[button2]]></Name>
+					<X>150</X><Y>380</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="160" Height="40">
+					<BasicProperties Width="140" Height="40">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Run the specified file, passing the '-h' flag so that the help is printed to the console.
-Attempt helpAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-												"power_calculator.py", 
-												"-h");
-traceln(helpAttempt.getFeedback());]]></ActionCode>
+						<ActionCode><![CDATA[// This will query Python for the variable in the String (`x_py`).
+// 	(It will return the last successly set value, assuming no errors)
+// The value will be saved in the feedback of the returned Attempt object.
+Attempt xAttempt = pyCommunicator.runResults("x_py");
+
+// The default feedback (called without arguments) returns type String.
+String resultStr = xAttempt.getFeedback();
+textGetX.setText(resultStr);
+
+// You can get the numerical value by passing the class.
+int resultInt = xAttempt.getFeedback(int.class);
+textGet2X.setText(resultInt*2);
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[Print file help]]></LabelText>
+						<LabelText><![CDATA[Get value of x]]></LabelText>
 					</ExtendedProperties>
 				</Control>
+				<Text>
+					<Id>1582222550895</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>300</X><Y>240</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[+ 1]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222584396</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>300</X><Y>390</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[X =]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222593040</Id>
+					<Name><![CDATA[textGetX]]></Name>
+					<X>340</X><Y>390</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 				<Line>
-					<Id>1582304939434</Id>
+					<Id>1582222857975</Id>
 					<Name><![CDATA[line]]></Name>
-					<X>500</X><Y>350</Y>
+					<X>600</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -318,86 +494,19 @@ traceln(helpAttempt.getFeedback());]]></ActionCode>
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
-					<LineStyle>DOTTED</LineStyle>
+					<LineStyle>SOLID</LineStyle>
 					<BeginArrowSize>1</BeginArrowSize>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
 					<Dx>0</Dx>
-					<Dy>250</Dy>
+					<Dy>600</Dy>
 					<Dz>0</Dz>
 				</Line>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582304948147</Id>
-					<Name><![CDATA[editbox1]]></Name>
-					<X>550</X><Y>450</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="50">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="18" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>baseValue</Link>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582304958573</Id>
-					<Name><![CDATA[editbox2]]></Name>
-					<X>660</X><Y>420</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="50">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="18" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>exponentValue</Link>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582305650756</Id>
-					<Name><![CDATA[slider]]></Name>
-					<X>350</X><Y>280</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="300" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[3]]></MaxValue>
-						<LinkTo>true</LinkTo>
-						<Link>verbosityLevel</Link>
-					</ExtendedProperties>
-				</Control>
 				<Text>
-					<Id>1582305667098</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>350</X><Y>310</Y>
+					<Id>1582222870001</Id>
+					<Name><![CDATA[text6]]></Name>
+					<X>640</X><Y>30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -407,8 +516,130 @@ traceln(helpAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[min]]></Text>
-					<TextCode><![CDATA[slider.getMin()]]></TextCode>
+					<Text><![CDATA[History:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222916161</Id>
+					<Name><![CDATA[text7]]></Name>
+					<X>640</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Code:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222928805</Id>
+					<Name><![CDATA[text8]]></Name>
+					<X>800</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Attempt:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222934878</Id>
+					<Name><![CDATA[text9]]></Name>
+					<X>640</X><Y>110</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<YCode><![CDATA[110 + index*20]]></YCode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[pyCommunicator.history.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<TextCode><![CDATA[// Because replications are used (see Advanced section below), we have access to the local variable `index`.
+// Thus, `index` will be a value in the interval [0, pyCommunicator.history.size()).
+// Each value in Pypeline's `history` object is a Pair object, 
+//		containing the code for that command (`getFirst`) and the returned Attempt (`getSecond`)
+pyCommunicator.history.get(index).getFirst()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582222946008</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>800</X><Y>110</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<YCode><![CDATA[110 + index*20]]></YCode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[pyCommunicator.history.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<TextCode><![CDATA[// Because replications are used (see Advanced section below), we have access to the local variable `index`.
+// Thus, `index` will be a value in the interval [0, pyCommunicator.history.size()).
+// Each value in Pypeline's `history` object is a Pair object, 
+//		containing the code for that command (`getFirst`) and the returned Attempt (`getSecond`)
+pyCommunicator.history.get(index).getSecond()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1582329340997</Id>
+					<Name><![CDATA[text11]]></Name>
+					<X>150</X><Y>280</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[If you try setting x to any non-numeric value, you can see what happens when commands fail.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>10</Size>
@@ -417,9 +648,9 @@ traceln(helpAttempt.getFeedback());]]></ActionCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1582305667099</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>650</X><Y>310</Y>
+					<Id>1588444754584</Id>
+					<Name><![CDATA[text12]]></Name>
+					<X>300</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -429,203 +660,60 @@ traceln(helpAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[max]]></Text>
-					<TextCode><![CDATA[slider.getMax()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1582305667100</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>500</X><Y>310</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[value]]></Text>
-					<TextCode><![CDATA[slider.getValue()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582305678234</Id>
-					<Name><![CDATA[button1]]></Name>
-					<X>790</X><Y>450</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="160" Height="40">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// The runFile function only accepts strings as arguments.
-// Converted here for clarity.
-String baseStr = String.valueOf(baseValue);
-String exponentStr = String.valueOf(exponentValue);
-
-Attempt attempt;
-if (verbosityLevel == 0) {
-	// No verbosity is desired. Just call the specified file passing the desired values.
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
-										baseStr, 
-										"-e", exponentStr);
-} else {
-	// Some verbosity is desired. Call the specified file passing the desired values and verbose string.
-	// As indicated by the help, more 'v's == more verbosity.
-	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
-										baseStr, 
-										"-e", exponentStr, 
-										verboseStr);
-}
-
-traceln(attempt.getFeedback());]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[Print results]]></LabelText>
-					</ExtendedProperties>
-				</Control>
-				<Line>
-					<Id>1582305839686</Id>
-					<Name><![CDATA[line1]]></Name>
-					<X>1000</X><Y>170</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>-1000</Dx>
-					<Dy>0</Dy>
-					<Dz>0</Dz>
-				</Line>
-				<Line>
-					<Id>1582305898134</Id>
-					<Name><![CDATA[line2]]></Name>
-					<X>100</X><Y>600</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>0</Dx>
-					<Dy>-600</Dy>
-					<Dz>0</Dz>
-				</Line>
-				<Text>
-					<Id>1582305923092</Id>
-					<Name><![CDATA[text4]]></Name>
-					<X>20</X><Y>410</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>270.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[executes
-power_calculator.py]]></Text>
+					<Text><![CDATA[X*2 =]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>20</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1582305946086</Id>
+					<Id>1588444762005</Id>
+					<Name><![CDATA[textGet2X]]></Name>
+					<X>360</X><Y>450</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1588445060077</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>150</X><Y>360</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Test the Pypeline function `runResults`]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1588445074754</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>10</X><Y>80</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>270.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[executes
-say_hello.py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>20</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582305955843</Id>
-					<Name><![CDATA[button5]]></Name>
-					<X>410</X><Y>70</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="160" Height="40">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Run the specified file (located in the model directory) using the automatically found Python version.
-// Note that `PyCommunicator` is the class name, as we are running this statically
-//	(in contrast to non-statically, where we first create an instance of PyCommunicator before calling the function)
-Attempt hiAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-											"say_hello.py");
-traceln(hiAttempt.getFeedback());]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[Say hello!]]></LabelText>
-					</ExtendedProperties>
-				</Control>
-				<Text>
-					<Id>1582305987335</Id>
-					<Name><![CDATA[text6]]></Name>
-					<X>280</X><Y>350</Y>
+					<X>150</X><Y>210</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -635,18 +723,18 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Using the default exponent (2)]]></Text>
+					<Text><![CDATA[Test the Pypeline function `run`]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>14</Size>
+						<Size>12</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1582306004209</Id>
-					<Name><![CDATA[text7]]></Name>
-					<X>740</X><Y>350</Y>
+					<Id>1588445082396</Id>
+					<Name><![CDATA[text13]]></Name>
+					<X>150</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -656,58 +744,35 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Using the custom, optional exponent flag]]></Text>
+					<Text><![CDATA[Test the Pypeline function `isConnected`]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>14</Size>
+						<Size>12</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
-				<Line>
-					<Id>1582306025582</Id>
-					<Name><![CDATA[line3]]></Name>
-					<X>1000</X><Y>370</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>DOTTED</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>-900</Dx>
-					<Dy>0</Dy>
-					<Dz>0</Dz>
-				</Line>
 				<Text>
-					<Id>1582306046206</Id>
-					<Name><![CDATA[text8]]></Name>
-					<X>500</X><Y>260</Y>
+					<Id>1596828057597</Id>
+					<Name><![CDATA[text14]]></Name>
+					<X>10</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Verbosity level:]]></Text>
+					<Color>-65281</Color>
+					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
-						<Style>0</Style>
+						<Style>1</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -724,7 +789,7 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
-		<Width>1000</Width>
+		<Width>1250</Width>
 		<Height>600</Height>
 	</Frame>
 	<Database>
@@ -737,15 +802,15 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 		</ExportSettings>
 	</Database>
 	
-	<RunConfiguration ActiveObjectClassId="1582302519631">
-		<Id>1582302519634</Id>
+	<RunConfiguration ActiveObjectClassId="1582222207141">
+		<Id>1582222207144</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
 		<MaximumMemory>512</MaximumMemory>
 		<ModelTimeProperties>
 			<StopOption><![CDATA[Stop at specified time]]></StopOption>
-			<InitialDate><![CDATA[1582243200000]]></InitialDate>	
+			<InitialDate><![CDATA[1582156800000]]></InitialDate>	
 			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1584748800000]]></FinalDate>	
+			<FinalDate><![CDATA[1584662400000]]></FinalDate>	
 			<FinalTime><![CDATA[100.0]]></FinalTime>	
 		</ModelTimeProperties>
 		<AnimationProperties>
@@ -763,8 +828,8 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 	</RunConfiguration>
 	<Experiments>	
 		<!--   =========   Simulation Experiment   ========  -->
-		<SimulationExperiment ActiveObjectClassId="1582302519631">
-			<Id>1582302519633</Id>
+		<SimulationExperiment ActiveObjectClassId="1582222207141">
+			<Id>1582222207143</Id>
 			<Name><![CDATA[Simulation]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
@@ -790,7 +855,7 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - runFile]]></Text>
+					<Text><![CDATA[Demo - Basic Functions]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -799,7 +864,7 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1582329721611</Id>
+					<Id>1582329007740</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>50</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
@@ -811,31 +876,8 @@ traceln(hiAttempt.getFeedback());]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[This demo shows how you can use the `runFile` function to execute Python files without importing them.
-
-It can be called statically (without creating a Communicator object) or non-statically.
-For the static version, note that you'll need to specify which Python version to use (as shown in this demo).]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1582329892967</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>50</X><Y>180</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Note: This feature is primarily useful when you have existing Python code that was written to be executed from the command line.]]></Text>
+					<Text><![CDATA[This demo shows usage of the basic Pypeline functions.
+It also shows how you can check the last 500 commands sent to the Communicator (using its built in `history` collection).]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -850,23 +892,23 @@ For the static version, note that you'll need to specify which Python version to
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - runFile : Simulation]]></Title>	
+				<Title><![CDATA[Demo - Functions : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>true</ShowDeveloperPanelOnStart>
+				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Never]]></StopOption>
-				<InitialDate><![CDATA[1582243200000]]></InitialDate>	
+				<InitialDate><![CDATA[1582156800000]]></InitialDate>	
 				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1584748800000]]></FinalDate>	
+				<FinalDate><![CDATA[1584662400000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
 		</SimulationExperiment>	
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>

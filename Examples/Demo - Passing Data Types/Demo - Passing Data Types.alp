@@ -7,7 +7,12 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
 <Model>
 	<Id>1582306164627</Id>
-	<Name><![CDATA[Demo - Passing data types]]></Name>
+	<Name><![CDATA[Demo - Passing Data Types]]></Name>
+	<Description><![CDATA[[this model requires Pypeline library to be installed]
+This demo shows how to pass different data types between Java and Python:
+- pass a Java object to Python, 
+- change the value in Python,
+- retrieve the value from Python and convert to a Java type.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___passing_data_types]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -338,7 +343,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<EmbeddedObject>
 					<Id>1582306219735</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>30</X><Y>30</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>-25</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -356,16 +361,22 @@ pyCommunicator.run("import json");]]></StartupCode>
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[preferredPythonVersion]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[pathToPythonExe]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[true]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1196,6 +1207,28 @@ try {
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Text>
+					<Id>1596827635933</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>10</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65281</Color>
+					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
+https://git.io/al_py]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -1277,7 +1310,7 @@ try {
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - Passing data types]]></Text>
+					<Text><![CDATA[Demo - Passing Data Types]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -1351,7 +1384,7 @@ These are equally valid to use -
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - Passing data types : Simulation]]></Title>	
+				<Title><![CDATA[Demo - Passing Data Types : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
@@ -1367,7 +1400,7 @@ These are equally valid to use -
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
