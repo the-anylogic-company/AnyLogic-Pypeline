@@ -76,42 +76,82 @@ Node 3: A history of recently ran commands  can be accessed through the variable
 			<AdditionalClassCode><![CDATA[/**
 Initialize PyCommunicator object based on whether to load from properties.
 */
-public PyCommunicator(boolean loadFromProperties) {
-	this(loadFromProperties, null, null, null, true);
+public PyCommunicator(boolean loadLastWorkingConfig) {
+	this(loadLastWorkingConfig, null, null, null, true, true);
 }
 
 /**
 Initialize PyCommunicator object from the preferred version.
 Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
 Defaults to throwing error on failed attempt.
+Defaults to redirect Python output.
 */
 public PyCommunicator(PythonCommandType pythonCommandType) {
-	this(false, pythonCommandType, "", "", true);
+	this(false, pythonCommandType, "", "", true, true);
+}
+
+@Deprecated
+/**
+@deprecated
+Initialize PyCommunicator object from the preferred version.
+Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
+Defaults to redirect Python output.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt) {
+	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt, true);
 }
 
 /**
 Initialize PyCommunicator object from the preferred version.
 Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
 */
-public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt) {
-	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt);
+public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
+	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt, redirectPyOutput);
 }
 
 /**
-Initialize PyCommunicator object from the preferred version and an argument.
+Initialize PyCommunicator object from the preferred version and argument.
 Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
 Defaults to throwing error on failed attempt.
+Defaults to redirect Python output.
 */
-public PyCommunicator(PythonCommandType pythonCommandType, String arg) {
-	this(false, pythonCommandType, pythonCommandType.equals(PYTHON_OTHER) ? arg : null, pythonCommandType.equals(PYTHON_PATH) ? arg : null, true);
+public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath) {
+	this(false, 
+		pythonCommandType, 
+		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
+		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
+		true,
+		true);
 }
+
+@Deprecated
+/**
+@deprecated
+Initialize PyCommunicator object from the preferred version and an argument.
+Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
+Defaults to redirect Python output.
+*/
+public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath, boolean throwErrorOnFailedAttempt) {
+	this(false, 
+		pythonCommandType, 
+		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
+		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
+		throwErrorOnFailedAttempt,
+		true);
+}
+
 
 /**
 Initialize PyCommunicator object from the preferred version and an argument.
 Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
 */
-public PyCommunicator(PythonCommandType pythonCommandType, String arg, boolean throwErrorOnFailedAttempt) {
-	this(false, pythonCommandType, pythonCommandType.equals(PYTHON_OTHER) ? arg : null, pythonCommandType.equals(PYTHON_PATH) ? arg : null, throwErrorOnFailedAttempt);
+public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
+	this(false, 
+		pythonCommandType, 
+		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
+		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
+		throwErrorOnFailedAttempt,
+		redirectPyOutput);
 }
 
 @Deprecated
@@ -119,9 +159,10 @@ public PyCommunicator(PythonCommandType pythonCommandType, String arg, boolean t
 * @deprecated
 * With the new parameter for custom command, the string type is now ambiguous.
 * Use PyCommunicator(PreferredPythonVersion, String) instead
+* 
 */
 public PyCommunicator(String pythonExecPath) {
-	this(false, PYTHON_PATH, "", pythonExecPath, false);
+	this(false, PYTHON_PATH, "", pythonExecPath, true, true);
 }
 
 @Deprecated
@@ -131,7 +172,7 @@ public PyCommunicator(String pythonExecPath) {
 * Use PyCommunicator(PreferredPythonVersion, String, boolean) instead
 */
 public PyCommunicator(String pythonExecPath, boolean throwErrorOnFailedAttempt) {
-	this(false, PYTHON_PATH, "", pythonExecPath, throwErrorOnFailedAttempt);
+	this(false, PYTHON_PATH, "", pythonExecPath, throwErrorOnFailedAttempt, true);
 }]]></AdditionalClassCode>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Files;
@@ -257,7 +298,7 @@ try {
 					<Id>1569878540323</Id>
 					<Name><![CDATA[py]]></Name>
 					<Description><![CDATA[An instance of the <code>PySubProcess</code> object]]></Description>
-					<X>250</X><Y>150</Y>
+					<X>300</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -574,6 +615,34 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1597358663336</Id>
+					<Name><![CDATA[redirectPyOutput]]></Name>
+					<Description><![CDATA[Whether to redirect output coming from Python to the AnyLogic console.<br>
+If true, anything sent by Python to the standard output (e.g., print statements) or non-halting standard error (e.g., warnings) will be printed to the AnyLogic console.<br>
+When viewed from the developer panel, standard output will be printed in <span style="color:green;">green</span> and standard error will be printed in <span style="color:red;">red</span>.<br>]]></Description>
+					<X>50</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1597358663334</Id>
+							<Label><![CDATA[Redirect Python output]]></Label>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1573064066321</Id>
 					<Name><![CDATA[history]]></Name>
@@ -583,7 +652,7 @@ For example, to get the code used in the most recent command: <code>history.get(
 And to get the Attempt used in the most recent command: <code>history.get(0).getSecond()</code><br>
 <br>
 Provided as reference for the end-user; for example, if they execute multiple commands sequentially and want the outputs without having to create an object for each call.<br>]]></Description>
-					<X>250</X><Y>50</Y>
+					<X>450</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -599,7 +668,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					<Id>1575321216484</Id>
 					<Name><![CDATA[serverPyLines]]></Name>
 					<Description><![CDATA[This file is written in the system's temporary file directory and how Python communicates with AnyLogic.]]></Description>
-					<X>850</X><Y>50</Y>
+					<X>750</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -782,7 +851,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
 @param code the single line of code to be executed<br>
 @return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
-					<X>350</X><Y>50</Y>
+					<X>600</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -806,7 +875,7 @@ return attempt;]]></Body>
 					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
 @param lines the multi-lined code to run, with each line as its own argument<br>
 @return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
-					<X>380</X><Y>80</Y>
+					<X>630</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -826,7 +895,7 @@ return run(code);]]></Body>
 					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
 @param code the single line of code to be executed<br>
 @return Attempt Contains the feedback of the returned value if no error, otherwise the error message]]></Description>
-					<X>450</X><Y>50</Y>
+					<X>600</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -850,7 +919,7 @@ return attempt;]]></Body>
 					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
 @param lines The multi-lined code to run, with each line as its own argument<br>
 @return Attempt Contains the feedback of the returned value if no error, otherwise the error message]]></Description>
-					<X>480</X><Y>80</Y>
+					<X>630</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -869,7 +938,7 @@ return runResults(code);]]></Body>
 					<Name><![CDATA[isConnected]]></Name>
 					<Description><![CDATA[Attempts to ping the Python server to see if it's still alive and ready to receive commands<br>
 @return boolean whether the ping was successful]]></Description>
-					<X>700</X><Y>50</Y>
+					<X>600</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -888,7 +957,7 @@ return attempt.isSuccessful();]]></Body>
 					<Name><![CDATA[createServerPy]]></Name>
 					<Description><![CDATA[Creates the server Python file
 @return String Path to the server file]]></Description>
-					<X>850</X><Y>100</Y>
+					<X>750</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -925,7 +994,7 @@ return null;]]></Body>
 					<Name><![CDATA[initialize]]></Name>
 					<Description><![CDATA[Uses the currently set value for the preferred Python version (and optionally, the path to the executable) to initialize the Python environment.<br>
 If there is already a running Python environment, this will first try to close it gracefully before creating a new environment.]]></Description>
-					<X>50</X><Y>400</Y>
+					<X>300</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -981,9 +1050,8 @@ if (!f.exists()) {
 	error(msg);
 }
 
-
 try {
-	py = new PySubProcess(pathToServerPy, pythonExecPath);
+	py = new PySubProcess(pathToServerPy, pythonExecPath, redirectPyOutput);
 } catch (Exception e) {
 	error(e, "Problem with setting up Python Subprocess:");
 }]]></Body>
@@ -997,7 +1065,7 @@ try {
 @param preferredVersion One of the options for which Python version to run the file<br>
 @param args The file path and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>50</Y>
+					<X>600</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1056,7 +1124,7 @@ return attempt;]]></Body>
 					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
 @param args The file path, and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>80</Y>
+					<X>600</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1079,7 +1147,7 @@ return attempt;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1582829555051</Id>
 					<Name><![CDATA[validateHistoryLimit]]></Name>
-					<X>250</X><Y>100</Y>
+					<X>450</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1092,7 +1160,7 @@ return attempt;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588104859912</Id>
 					<Name><![CDATA[importProperties]]></Name>
-					<X>50</X><Y>450</Y>
+					<X>300</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1125,6 +1193,9 @@ try (InputStream input = new FileInputStream(filename)) {
 	set_throwErrorOnFailedAttempt(
 		Boolean.valueOf(prop.getProperty("throw_error_on_failed_attempt"))
 	);
+	set_redirectPyOutput(
+		Boolean.valueOf(prop.getProperty("redirect_py_output", "true"))
+	);
 } catch (IOException e) {
 	error(e, "Exception when reading properties file");
 }]]></Body>
@@ -1134,7 +1205,7 @@ try (InputStream input = new FileInputStream(filename)) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588105438239</Id>
 					<Name><![CDATA[generateProperties]]></Name>
-					<X>50</X><Y>550</Y>
+					<X>300</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1149,11 +1220,10 @@ try (OutputStream output = new FileOutputStream(newFilePath)) {
     prop.setProperty("command", String.valueOf(pythonCommand));
     prop.setProperty("exec_path", String.valueOf(pythonExecPath));
     prop.setProperty("throw_error_on_failed_attempt", String.valueOf(throwErrorOnFailedAttempt));
-
+	prop.setProperty("redirect_py_output", String.valueOf(redirectPyOutput));
+    
     // save properties to project root folder
     prop.store(output, null);
-
-    //traceln("Saved to: %s", newFilePath);
 
 } catch (IOException io) {
     io.printStackTrace();
@@ -1164,7 +1234,7 @@ try (OutputStream output = new FileOutputStream(newFilePath)) {
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1589485728564</Id>
 					<Name><![CDATA[getDefaultPropertiesPath]]></Name>
-					<X>50</X><Y>500</Y>
+					<X>300</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1347,6 +1417,9 @@ return file;]]></Body>
 				<Parameter>
 					<ParameterName><![CDATA[throwErrorOnFailedAttempt]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[redirectPyOutput]]></ParameterName>
+				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -1408,6 +1481,7 @@ public class PySubProcess {
 	// the path to the python executable
 	public String activePyPath = "";
 	public String activePyVersion = "";
+	public boolean redirectPyOutput;
 	
 	// out types
 	public final static byte execMsg = 0;
@@ -1434,9 +1508,10 @@ public class PySubProcess {
      * @param pathToPyExe
      * @param pathToServerPy
      */
-    public PySubProcess(String pathToServerPy, String pathToPyExe) throws IOException, PyException, InterruptedException {
+    public PySubProcess(String pathToServerPy, String pathToPyExe, boolean redirectPyOutput) throws IOException, PyException, InterruptedException {
     	activePyPath = pathToPyExe;
     	activePyVersion = getPythonVersion(activePyPath);
+    	this.redirectPyOutput = redirectPyOutput;
 	    initConnection(pathToServerPy);
 		openStreams();
     }
@@ -1579,10 +1654,56 @@ public class PySubProcess {
 	}
     
     private Attempt readAttemptResult() throws IOException {
+    	// Continue to dump standard input and standard error of process until received data from Python.
+    	// Unhandled warn statements will block process from continuing (and are piped to standard error)
+    	while (in.available() == 0) {
+    		printStdout();
+    		printStderr();
+    	}
+    	
     	byte resultCode = readByte();
     	String feedback = readString();
+    	
+    	printStdout();
+    	printStderr();
+    	
     	Attempt result = new Attempt(resultCode, feedback);
     	return result;
+    }
+    
+    
+    /**
+     * Prints anything from the standard input stream (from the process)
+     * @return String
+     */
+    private void printStdout() throws IOException {
+    	// Display anything Python put into stdout (e.g., print statements)
+    	int n = stdout.available();
+    	if (n > 0) {
+    		byte[] b = new byte[n];
+    		stdout.read(b);
+    		String s = (new String(b)).trim();
+    		// start each line with '> ' to distinguish it for Console viewers
+    		s = "> " + s.replaceAll("(\\r\\n|\\r|\\n)", "$1> ");
+    		traceln(green, s);
+    	}
+    }
+    
+    /**
+     * Prints anything from the standard error stream (from the process)
+     * @return String
+     */
+    private void printStderr() throws IOException {
+    	// Display anything Python put into stderr, that's not an exception/error (e.g., warn statements)
+    	int n = stderr.available();
+    	if (n > 0) {
+    		byte[] b = new byte[n];
+    		stderr.read(b);
+    		String s = (new String(b)).trim();
+    		// start each line with '> ' to distinguish it for Console viewers
+    		s = "> " + s.replaceAll("(\\r\\n|\\r|\\n)", "$1> ");
+    		traceln(red, s);
+    	}
     }
 	
 	/**
@@ -1599,7 +1720,7 @@ public class PySubProcess {
 	}
 	
 	/**
-	 * Read a single byte
+	 * Read a single byte from the in stream
 	 * @return byte
 	 * @throws IOException
 	 */
@@ -1624,7 +1745,7 @@ public class PySubProcess {
 	}
 	
 	/**
-	 * Read a string (by first reading an integer to see how long the string will be)
+	 * Read a string from the in stream (by first reading an integer to see how long the string will be)
 	 * @return String
 	 * @throws IOException
 	 */
