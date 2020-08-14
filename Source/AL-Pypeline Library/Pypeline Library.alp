@@ -407,6 +407,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1597361797787</Id>
 					<Name><![CDATA[objmapper]]></Name>
+					<Description><![CDATA[An instance of Jackson's `ObjectMapper` class; used in the `toJson` and `fromJson` functions.]]></Description>
 					<X>450</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1174,12 +1175,13 @@ return attempt;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1582829555051</Id>
 					<Name><![CDATA[validateHistoryLimit]]></Name>
+					<Description><![CDATA[Continues to remove the last entry in `history` until its size is at/under 500.]]></Description>
 					<X>450</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if (history.size() > 500)
+					<Body><![CDATA[while (history.size() > 500)
 	history.removeLast();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -1187,6 +1189,7 @@ return attempt;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588104859912</Id>
 					<Name><![CDATA[importProperties]]></Name>
+					<Description><![CDATA[Tries to import the properties file and load it into the model's parameters; if the properties file does not exist, the `generateProperties` function is called.]]></Description>
 					<X>300</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1232,6 +1235,7 @@ try (InputStream input = new FileInputStream(filename)) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588105438239</Id>
 					<Name><![CDATA[generateProperties]]></Name>
+					<Description><![CDATA[Builds the properties file at the default properties path (`getDefaultPropertiesPath`) and saves the current parameter values.]]></Description>
 					<X>300</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1261,6 +1265,9 @@ try (OutputStream output = new FileOutputStream(newFilePath)) {
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1589485728564</Id>
 					<Name><![CDATA[getDefaultPropertiesPath]]></Name>
+					<Description><![CDATA[@return The path to the properties file<br>
+<br>
+Note: The path will change based on where the exported library jar is stored (as the properties is designed to be generated next to the library jar file).]]></Description>
 					<X>300</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1281,6 +1288,10 @@ return file;]]></Body>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1597362027154</Id>
 					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[@param object Any data type that can be converted to JSON<br>
+@return The JSON form of the given object, or `null` if an error was encountered<br>
+<br>
+Note that Agents can never be converted to JSON due to a recursive issue<br>]]></Description>
 					<X>450</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1303,6 +1314,9 @@ return output;]]></Body>
 					<ReturnType><![CDATA[T]]></ReturnType>
 					<Id>1597362055799</Id>
 					<Name><![CDATA[fromJson]]></Name>
+					<Description><![CDATA[@param json A JSON string to be converted to a Java object<br>
+@param clazz The class to convert the provided string to<br>
+@return The object of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
 					<X>450</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2017,7 +2031,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * &emsp; run("3+5") -> Attempt [isSuccessful=true, feedback=]<br>
  * &emsp; run("3..5") -> Attempt [isSuccessful=false, feedback=SyntaxError('invalid syntax', ('<string>', 1, 4, '3..5\n'))]<br>
  * &emsp; runResults("foo()") -> Attempt [isSuccessful=false, feedback=NameError("name 'foo' is not defined",)]<br>
- * &emsp; run("def foo():", "  return 'hello'") -> Attempt [isSuccessful=true, feedback=0]<br>
+ * &emsp; run("def foo():", "  return 'hello'") -> Attempt [isSuccessful=true, feedback=]<br>
  * &emsp; runResults("foo()") -> Attempt [isSuccessful=true, feedback=hello]<br>
  * 
  * @author Tyler Wolfe-Adam
