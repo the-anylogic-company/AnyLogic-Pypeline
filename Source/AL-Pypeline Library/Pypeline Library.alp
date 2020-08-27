@@ -73,7 +73,12 @@ In addition to single-line Python code, you can also pass multiline Python code 
 Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
 <br>
 Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
-			<AdditionalClassCode><![CDATA[/**
+			<AdditionalClassCode><![CDATA[
+public static List<String> varNamesToIgnore = Arrays.asList("scale", 
+	"connections", "icon", "presentation", "level",
+	"serialVersionUID");
+
+/**
 Initialize PyCommunicator object based on whether to load from properties.
 */
 public PyCommunicator(boolean loadLastWorkingConfig) {
@@ -196,7 +201,13 @@ import java.net.URI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;]]></Import>
+import com.fasterxml.jackson.databind.JsonMappingException;
+import java.util.stream.Collectors;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;]]></Import>
 			<StartupCode><![CDATA[initialize();
 generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
@@ -408,7 +419,7 @@ try {
 					<Id>1597361797787</Id>
 					<Name><![CDATA[objmapper]]></Name>
 					<Description><![CDATA[An instance of Jackson's `ObjectMapper` class; used in the `toJson` and `fromJson` functions.]]></Description>
-					<X>450</X><Y>300</Y>
+					<X>300</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -966,7 +977,7 @@ return runResults(code);]]></Body>
 					<Name><![CDATA[isConnected]]></Name>
 					<Description><![CDATA[Attempts to ping the Python server to see if it's still alive and ready to receive commands<br>
 @return boolean whether the ping was successful]]></Description>
-					<X>600</X><Y>350</Y>
+					<X>600</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1093,7 +1104,7 @@ try {
 @param preferredVersion One of the options for which Python version to run the file<br>
 @param args The file path and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>250</Y>
+					<X>600</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1152,7 +1163,7 @@ return attempt;]]></Body>
 					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
 @param args The file path, and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>280</Y>
+					<X>600</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1291,8 +1302,8 @@ return file;]]></Body>
 					<Description><![CDATA[@param object Any data type that can be converted to JSON<br>
 @return The JSON form of the given object, or `null` if an error was encountered<br>
 <br>
-Note that Agents can never be converted to JSON due to a recursive issue<br>]]></Description>
-					<X>450</X><Y>350</Y>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>]]></Description>
+					<X>300</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1301,7 +1312,12 @@ Note that Agents can never be converted to JSON due to a recursive issue<br>]]><
 						<Name><![CDATA[object]]></Name>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[String output = null;
+					<Body><![CDATA[// Handle agent conversion
+if (agentType(object) > 0)
+	return toAgentJson(object, true);
+		
+// All other types should use object mapper
+String output = null;
 try {
 	output = objmapper.writeValueAsString(object);
 } catch (JsonProcessingException e) {
@@ -1318,7 +1334,7 @@ return output;]]></Body>
 @param clazz The class to convert the provided string to<br>
 @return The object of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
-					<X>450</X><Y>400</Y>
+					<X>300</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1342,6 +1358,357 @@ try {
 	e.printStackTrace();
 }
 return output;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1598376672663</Id>
+					<Name><![CDATA[toAgentJson]]></Name>
+					<Description><![CDATA[As Agent-types cannot be used with ObjectMapper by default due to a recursive error, this function extracts as much useful information as possible.]]></Description>
+					<X>330</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[agentObj]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[int type = agentType(agentObj);
+if (type == 0) {
+	// passed object is not an agent;
+	// just use `toJson`
+	return PyCommunicator.toJson(agentObj);
+}
+
+HashSet<Object> seenAgents = new HashSet<>();
+// add to seen set
+seenAgents.add(agentObj);
+
+
+// passed object is a population of agents
+if (type == 2) {
+	AgentArrayList<Agent> pop = (AgentArrayList) agentObj;
+	ArrayList<?> popList = agentPopToList(pop, includeInvalidFields, seenAgents);
+	return PyCommunicator.toJson(popList);
+}
+
+// passed object is a single agent
+Agent agent = (Agent) agentObj;
+HashMap<String, Object> map = agentToMap(agent, includeInvalidFields, seenAgents);
+return PyCommunicator.toJson(map);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[HashMap<String, Object>]]></ReturnType>
+					<Id>1598473547292</Id>
+					<Name><![CDATA[agentToMap]]></Name>
+					<Description><![CDATA[Extracts all public fields from the given agent and puts it into a varname-to-varvalue map. ]]></Description>
+					<X>360</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[agent]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[seenAgents]]></Name>
+						<Type><![CDATA[HashSet<Object>]]></Type>
+					</Parameter>
+					<Body><![CDATA[// map of name of var to field value
+HashMap<String, Object> map = new HashMap<>();
+
+// always store index and id 
+//	(using internal prefixes ["_"], to not confuse w/any potential user vars of the same name)
+map.put("_index", agent.getIndex());
+map.put("_id", agent.getId());
+
+// generic agents should return immediately
+if (agent.getClass().equals(Agent.class)) {
+	return map;
+}
+
+// for custom agent types, use reflection to get all fields inside of agent
+Field[] fields = agent.getClass().getDeclaredFields();
+String name;
+Object value;
+for (Field field : fields) {
+	name = field.getName();
+	
+	// skip known internal or problematic fields
+	//	(e.g., for the scale, connections, internal datasets, etc.)
+	// also skip common classes with assumed insignificance (e.g., shapes)
+	if (name.contains("_xjal") || name.startsWith("_") 
+			|| varNamesToIgnore.contains(name)
+			|| Shape.class.isAssignableFrom(field.getType())) {
+		continue;
+	}
+		
+	// skip classes with known issues that should be handled in the future
+	//	(both discrete stats and histogram datas [both types] do not have serializers)
+	//	(not sure why continuous stats objects has one...a problem for later!)
+	// TODO - manually convert these objects
+	if (StatisticsDiscrete.class.isAssignableFrom(field.getType())
+		|| HistogramData.class.isAssignableFrom(field.getType())) {
+		if (includeInvalidFields) {
+			map.put(name, null);
+		}
+		continue;
+	}
+	
+	try {
+		field.trySetAccessible(); 
+		value = field.get(agent);
+		
+		// skip if value is top-level agent
+		if (value.equals(agent.getRootAgent())) {
+			continue;
+		}
+		
+		// individual agent should get converted
+		if (value instanceof Agent) {
+			// skip if already seen
+			if (seenAgents.contains(value)) {
+				continue;
+			}
+			value = agentToMap((Agent)value, includeInvalidFields, seenAgents);
+		}
+		// populations should be converted 
+		else if (value instanceof AgentArrayList) {
+			// skip if already seen
+			if (seenAgents.contains(value)) {
+				continue;
+			}
+			value = agentPopToList((AgentArrayList)value, includeInvalidFields, seenAgents);
+		}
+			
+		map.put(name, value);
+	} catch (IllegalAccessException e) {
+		if (includeInvalidFields) {
+			map.put(name, null);
+		}
+	}
+}
+
+return map;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1598473943538</Id>
+					<Name><![CDATA[agentType]]></Name>
+					<Description><![CDATA[Classifies an object based on its underlying class: `1` for single agents, `2` for agent populations, and `0` for non-agent types.]]></Description>
+					<X>330</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[agentObj]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (agentObj instanceof Agent)
+	return 1;
+else if (agentObj instanceof AgentArrayList)
+	return 2;
+return 0;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<HashMap<String, Object>>]]></ReturnType>
+					<Id>1598562546634</Id>
+					<Name><![CDATA[agentPopToList]]></Name>
+					<Description><![CDATA[Creates a list of Map objects, one for each converted agent in the population]]></Description>
+					<X>360</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[agentPop]]></Name>
+						<Type><![CDATA[AgentArrayList<Agent>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[seenAgents]]></Name>
+						<Type><![CDATA[HashSet<Object>]]></Type>
+					</Parameter>
+					<Body><![CDATA[// list of agent map objects
+ArrayList<HashMap<String, Object>> popList = new ArrayList<>();
+agentPop.forEach(a -> {
+	if (!seenAgents.contains(a)) {
+		seenAgents.add(a);
+		popList.add( PyCommunicator.agentToMap(a, includeInvalidFields, seenAgents) );
+	}
+});
+return popList;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1598564953670</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param return_type The Java class of the return type<br>
+@param code the single line of code to be executed<br>
+@return T The output, in the type specified]]></Description>
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<X>600</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[return_type]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[code]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[Attempt attempt = py.eval(code);
+history.add(0, new Pair<>(code, attempt));
+validateHistoryLimit();
+if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
+	error(attempt.getFeedback());
+return attempt.getFeedback(return_type);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1598565117046</Id>
+					<Name><![CDATA[runFile]]></Name>
+					<Description><![CDATA[Execute a Python file and get the output.<br>
+@param return_type The Java class of the return type<br>
+@param preferredVersion One of the options for which Python version to run the file<br>
+@param args The file path and any arguments to run (flags and values should be separate strings)<br>
+@return T The output, in the type specified]]></Description>
+					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
+					<X>630</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[return_type]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[preferredVersion]]></Name>
+						<Type><![CDATA[PythonCommandType]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
+	
+	String pyPath;
+	try {
+		pyPath = PySubProcess.findPythonPath(
+							PySubProcess.convertToCommand(preferredVersion)
+						);
+	} catch (PyException e) {
+		return (T)(new Attempt(e)).getFeedback();
+	}
+	// add to args
+	String[] tmp = new String[args.length+1];
+	tmp[0] = pyPath;
+	System.arraycopy(args, 0, tmp, 1, args.length);
+	args = tmp;
+}
+
+ProcessBuilder pb = new ProcessBuilder(args);
+String output = "";
+String error = "";
+
+try {
+	Process proc = pb.start();
+	output = IOUtils.toString(proc.getInputStream()).trim();
+	error = IOUtils.toString(proc.getErrorStream()).trim();
+} catch (IOException e) {
+	return (T)(new Attempt(e)).getFeedback();
+}
+
+Attempt attempt;
+if (error.isEmpty()) {
+	attempt = new Attempt(Attempt.RESULT_SUCCESSFUL, output);
+} else {
+	attempt = new Attempt(Attempt.RESULT_ERROR, error);
+}
+	
+return attempt.getFeedback(return_type);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1598565124530</Id>
+					<Name><![CDATA[runFile]]></Name>
+					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
+@param return_type The Java class of the return type<br>
+@param args The file path, and any arguments to run (flags and values should be separate strings)<br>
+@return T The output, in the type specified]]></Description>
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<X>630</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[return_type]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String[] tmp = new String[args.length+1];
+tmp[0] = py.activePyPath;
+System.arraycopy(args, 0, tmp, 1, args.length);
+
+Attempt attempt = PyCommunicator.runFile(PythonCommandType.PYTHON_OTHER, tmp);
+history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), attempt));
+validateHistoryLimit();
+return attempt.getFeedback(return_type);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1598565381265</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param return_type The Java class of the return type<br>
+@param lines The multi-lined code to run, with each line as its own argument<br>
+@return T The output, in the type specified]]></Description>
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<X>630</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[return_type]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[lines]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.join("\n", lines);
+return runResults(return_type, code);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
