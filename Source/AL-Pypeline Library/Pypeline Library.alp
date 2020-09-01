@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -207,7 +207,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;]]></Import>
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.SerializationFeature;]]></Import>
 			<StartupCode><![CDATA[initialize();
 generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
@@ -427,7 +428,7 @@ try {
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="true">
 						<Type><![CDATA[ObjectMapper]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ObjectMapper()]]></Code>
+							<Code><![CDATA[new ObjectMapper()//.enable(SerializationFeature.INDENT_OUTPUT);]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -668,6 +669,14 @@ When viewed from the developer panel, standard output will be printed in <span s
 							<Id>1597358663334</Id>
 							<Label><![CDATA[Redirect Python output]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1589488014296</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[true]]></Code>
+								</Value>
+							</HideCondition>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -1271,7 +1280,7 @@ try (OutputStream output = new FileOutputStream(newFilePath)) {
     io.printStackTrace();
 }]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1589485728564</Id>
@@ -1303,7 +1312,7 @@ return file;]]></Body>
 @return The JSON form of the given object, or `null` if an error was encountered<br>
 <br>
 Note that agents and agent populations are handled manually due to a recursive issue.<br>]]></Description>
-					<X>300</X><Y>400</Y>
+					<X>330</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1312,18 +1321,7 @@ Note that agents and agent populations are handled manually due to a recursive i
 						<Name><![CDATA[object]]></Name>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[// Handle agent conversion
-if (agentType(object) > 0)
-	return toAgentJson(object, true);
-		
-// All other types should use object mapper
-String output = null;
-try {
-	output = objmapper.writeValueAsString(object);
-} catch (JsonProcessingException e) {
-	e.printStackTrace();
-}
-return output;]]></Body>
+					<Body><![CDATA[return toJson(object, false);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1334,7 +1332,7 @@ return output;]]></Body>
 @param clazz The class to convert the provided string to<br>
 @return The object of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
-					<X>300</X><Y>550</Y>
+					<X>300</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1359,13 +1357,13 @@ try {
 }
 return output;]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="true">
+				<Function AccessType="public" StaticFunction="true">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1598376672663</Id>
 					<Name><![CDATA[toAgentJson]]></Name>
 					<Description><![CDATA[As Agent-types cannot be used with ObjectMapper by default due to a recursive error, this function extracts as much useful information as possible.]]></Description>
-					<X>330</X><Y>460</Y>
+					<X>300</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1378,11 +1376,15 @@ return output;]]></Body>
 						<Name><![CDATA[includeInvalidFields]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[prettyprint]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
 					<Body><![CDATA[int type = agentType(agentObj);
 if (type == 0) {
 	// passed object is not an agent;
 	// just use `toJson`
-	return PyCommunicator.toJson(agentObj);
+	return PyCommunicator.toJson(agentObj, prettyprint);
 }
 
 HashSet<Object> seenAgents = new HashSet<>();
@@ -1394,13 +1396,14 @@ seenAgents.add(agentObj);
 if (type == 2) {
 	AgentArrayList<Agent> pop = (AgentArrayList) agentObj;
 	ArrayList<?> popList = agentPopToList(pop, includeInvalidFields, seenAgents);
-	return PyCommunicator.toJson(popList);
+	return PyCommunicator.toJson(popList, prettyprint);
 }
 
 // passed object is a single agent
 Agent agent = (Agent) agentObj;
+//traceln("Converting: %s (type: %s)", agent.getName(), agent.getClass());
 HashMap<String, Object> map = agentToMap(agent, includeInvalidFields, seenAgents);
-return PyCommunicator.toJson(map);]]></Body>
+return PyCommunicator.toJson(map, prettyprint);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="true">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1408,7 +1411,7 @@ return PyCommunicator.toJson(map);]]></Body>
 					<Id>1598473547292</Id>
 					<Name><![CDATA[agentToMap]]></Name>
 					<Description><![CDATA[Extracts all public fields from the given agent and puts it into a varname-to-varvalue map. ]]></Description>
-					<X>360</X><Y>490</Y>
+					<X>330</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1425,13 +1428,15 @@ return PyCommunicator.toJson(map);]]></Body>
 						<Name><![CDATA[seenAgents]]></Name>
 						<Type><![CDATA[HashSet<Object>]]></Type>
 					</Parameter>
-					<Body><![CDATA[// map of name of var to field value
+					<Body><![CDATA[//traceln("Converting agent '%s' of type: %s", agent.getName(), agent.getClass());
+
+// map of name of var to field value
 HashMap<String, Object> map = new HashMap<>();
 
-// always store index and id 
+// store index if part of population (individual agents will have index of -1)
 //	(using internal prefixes ["_"], to not confuse w/any potential user vars of the same name)
-map.put("_index", agent.getIndex());
-map.put("_id", agent.getId());
+if (agent.getIndex() >= 0)
+	map.put("_index", agent.getIndex());
 
 // generic agents should return immediately
 if (agent.getClass().equals(Agent.class)) {
@@ -1450,7 +1455,8 @@ for (Field field : fields) {
 	// also skip common classes with assumed insignificance (e.g., shapes)
 	if (name.contains("_xjal") || name.startsWith("_") 
 			|| varNamesToIgnore.contains(name)
-			|| Shape.class.isAssignableFrom(field.getType())) {
+			|| Shape.class.isAssignableFrom(field.getType())
+			|| Event.class.isAssignableFrom(field.getType())) {
 		continue;
 	}
 		
@@ -1467,7 +1473,7 @@ for (Field field : fields) {
 	}
 	
 	try {
-		field.trySetAccessible(); 
+		//field.trySetAccessible(); 
 		value = field.get(agent);
 		
 		// skip if value is top-level agent
@@ -1475,7 +1481,7 @@ for (Field field : fields) {
 			continue;
 		}
 		
-		// individual agent should get converted
+		// apply this agent func for single agents
 		if (value instanceof Agent) {
 			// skip if already seen
 			if (seenAgents.contains(value)) {
@@ -1483,7 +1489,7 @@ for (Field field : fields) {
 			}
 			value = agentToMap((Agent)value, includeInvalidFields, seenAgents);
 		}
-		// populations should be converted 
+		// apply other agent func for populations 
 		else if (value instanceof AgentArrayList) {
 			// skip if already seen
 			if (seenAgents.contains(value)) {
@@ -1508,7 +1514,7 @@ return map;]]></Body>
 					<Id>1598473943538</Id>
 					<Name><![CDATA[agentType]]></Name>
 					<Description><![CDATA[Classifies an object based on its underlying class: `1` for single agents, `2` for agent populations, and `0` for non-agent types.]]></Description>
-					<X>330</X><Y>430</Y>
+					<X>300</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1529,7 +1535,7 @@ return 0;]]></Body>
 					<Id>1598562546634</Id>
 					<Name><![CDATA[agentPopToList]]></Name>
 					<Description><![CDATA[Creates a list of Map objects, one for each converted agent in the population]]></Description>
-					<X>360</X><Y>520</Y>
+					<X>330</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1546,7 +1552,9 @@ return 0;]]></Body>
 						<Name><![CDATA[seenAgents]]></Name>
 						<Type><![CDATA[HashSet<Object>]]></Type>
 					</Parameter>
-					<Body><![CDATA[// list of agent map objects
+					<Body><![CDATA[//traceln("Converting pop of size %s, type: %s", agentPop.size(), agentPop.getClass());
+
+// list of agent map objects
 ArrayList<HashMap<String, Object>> popList = new ArrayList<>();
 agentPop.forEach(a -> {
 	if (!seenAgents.contains(a)) {
@@ -1614,42 +1622,7 @@ return attempt.getFeedback(return_type);]]></Body>
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
-	
-	String pyPath;
-	try {
-		pyPath = PySubProcess.findPythonPath(
-							PySubProcess.convertToCommand(preferredVersion)
-						);
-	} catch (PyException e) {
-		return (T)(new Attempt(e)).getFeedback();
-	}
-	// add to args
-	String[] tmp = new String[args.length+1];
-	tmp[0] = pyPath;
-	System.arraycopy(args, 0, tmp, 1, args.length);
-	args = tmp;
-}
-
-ProcessBuilder pb = new ProcessBuilder(args);
-String output = "";
-String error = "";
-
-try {
-	Process proc = pb.start();
-	output = IOUtils.toString(proc.getInputStream()).trim();
-	error = IOUtils.toString(proc.getErrorStream()).trim();
-} catch (IOException e) {
-	return (T)(new Attempt(e)).getFeedback();
-}
-
-Attempt attempt;
-if (error.isEmpty()) {
-	attempt = new Attempt(Attempt.RESULT_SUCCESSFUL, output);
-} else {
-	attempt = new Attempt(Attempt.RESULT_ERROR, error);
-}
-	
+					<Body><![CDATA[Attempt attempt = runFile(preferredVersion, args);
 return attempt.getFeedback(return_type);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -1675,13 +1648,7 @@ return attempt.getFeedback(return_type);]]></Body>
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
-					<Body><![CDATA[String[] tmp = new String[args.length+1];
-tmp[0] = py.activePyPath;
-System.arraycopy(args, 0, tmp, 1, args.length);
-
-Attempt attempt = PyCommunicator.runFile(PythonCommandType.PYTHON_OTHER, tmp);
-history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), attempt));
-validateHistoryLimit();
+					<Body><![CDATA[Attempt attempt = runFile(args);
 return attempt.getFeedback(return_type);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -1709,6 +1676,63 @@ return attempt.getFeedback(return_type);]]></Body>
 					</Parameter>
 					<Body><![CDATA[String code = String.join("\n", lines);
 return runResults(return_type, code);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1598643746896</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[@param object Any data type that can be converted to JSON<br>
+@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)
+@return The JSON form of the given object, or `null` if an error was encountered<br>
+<br>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>]]></Description>
+					<X>300</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[prettyprint]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[String output = null;
+
+// Handle agent conversion
+if (agentType(object) > 0) {
+	//traceln("USING AGENT JSON CONVERSION");
+	output = toAgentJson(object, false, prettyprint);
+	return output;
+	/*
+	if (!prettyprint)
+		return output;
+	// Slightly more complicated for this case since 
+	//	the non-pretty version for agents always has to be created first.
+	// TODO - does it? either way, make cleaner
+	try {
+		JsonNode tempTree = objmapper.readTree(output);
+		output = objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(tempTree);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	return output;
+	*/
+}
+		
+// All other types should use object mapper
+try {
+	if (prettyprint)
+		output = objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+	else
+		output = objmapper.writeValueAsString(object);
+} catch (JsonProcessingException e) {
+	e.printStackTrace();
+}
+return output;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -1897,6 +1921,7 @@ return runResults(return_type, code);]]></Body>
 				<FinalDate><![CDATA[1576886400000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
 	<JavaClasses>
@@ -2557,5 +2582,11 @@ public class PyException extends Exception {
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
+    </RequiredLibraryReference>
 </Model>
 </AnyLogicWorkspace>
