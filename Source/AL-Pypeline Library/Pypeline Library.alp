@@ -73,10 +73,41 @@ In addition to single-line Python code, you can also pass multiline Python code 
 Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
 <br>
 Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
-			<AdditionalClassCode><![CDATA[
-public static List<String> varNamesToIgnore = Arrays.asList("scale", 
-	"connections", "icon", "presentation", "level",
-	"serialVersionUID");
+			<AdditionalClassCode><![CDATA[private static List<Class<?>> classesToIgnore = Arrays.asList(
+	Color.class,
+	Font.class,
+	StatisticsDiscrete.class, // TODO - manually add this
+	HistogramData.class, // TODO - manually add this
+	Shape.class,
+	EventOriginator.class, // TODO - maybe add this? 
+	Statechart.class, // TODO - maybe add this?
+	IStatechartState.class, // TODO - maybe add this?
+	AbstractLinkToAgent.class,
+	Scale.class,
+	CustomDistribution.class // TODO - should include? only can ever provide a single sample
+	);
+private static List<String> pkgNamesToIgnore = Arrays.asList(
+	"com.anylogic.libraries.pypeline",
+	"com.anylogic.libraries.processmodeling",
+	"com.anylogic.libraries.material_handling",
+	"com.anylogic.libraries.pedestrian",
+	"com.anylogic.libraries.rail",
+	"com.anylogic.libraries.road",
+	"com.anylogic.libraries.fluid",
+	"com.anylogic.engine.markup",
+	"com.anylogic.engine.connectivity",
+	"com.anylogic.engine.presentation"
+	);
+public static boolean skipJsonifying(Class<?> clazz) {
+	if (pkgNamesToIgnore.contains(clazz.getPackageName()))
+		return true;
+	for (Class<?> clsToIgnore : classesToIgnore) {
+		if (clsToIgnore.isAssignableFrom(clazz)) {
+			return true;
+		}
+	}
+	return false;
+}
 
 /**
 Initialize PyCommunicator object based on whether to load from properties.
@@ -186,29 +217,21 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.File;
 import spark.utils.IOUtils;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.io.InputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.net.MalformedURLException;
 import java.net.URI;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import java.util.stream.Collectors;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.SerializationFeature;]]></Import>
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;]]></Import>
 			<StartupCode><![CDATA[initialize();
 generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
@@ -428,7 +451,7 @@ try {
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="true">
 						<Type><![CDATA[ObjectMapper]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ObjectMapper()//.enable(SerializationFeature.INDENT_OUTPUT);]]></Code>
+							<Code><![CDATA[new ObjectMapper()]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -1341,13 +1364,17 @@ Note that agents and agent populations are handled manually due to a recursive i
 						<Name><![CDATA[clazz]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
-					<Body><![CDATA[T output = null;
+					<Body><![CDATA[// use specialized function for agent types
+if (Agent.class.isAssignableFrom(clazz)) {
+	return fromAgentJson(json, clazz);
+} else if (AgentArrayList.class.isAssignableFrom(clazz)) {
+	traceln("Need to use `fromPopulationJson` for converting agent populations (returning null)");
+	return null;
+}
+	
+T output = null;
 try {
 	output = objmapper.readValue(json, clazz);
-} catch (JsonMappingException e) {
-	e.printStackTrace();
-} catch (JsonParseException e) {
-	e.printStackTrace();
 } catch (IOException e) {
 	e.printStackTrace();
 }
@@ -1399,6 +1426,7 @@ if (type == 2) {
 Agent agent = (Agent) agentObj;
 //traceln("Converting: %s (type: %s)", agent.getName(), agent.getClass());
 HashMap<String, Object> map = agentToMap(agent, includeInvalidFields, seenAgents);
+//traceln("...as map: %s\n", map);
 return PyCommunicator.toJson(map, prettyprint);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="true">
@@ -1446,34 +1474,27 @@ Object value;
 for (Field field : fields) {
 	name = field.getName();
 	
+	//traceln("Examining field named '%s' (type: %s)...", name, field.getType());
+	//traceln("  -> %s - %s", field.getType().getPackageName(), field.getType().getSimpleName());
+	
 	// skip known internal or problematic fields
 	//	(e.g., for the scale, connections, internal datasets, etc.)
 	// also skip common classes with assumed insignificance (e.g., shapes)
-	if (name.contains("_xjal") || name.startsWith("_") 
-			|| varNamesToIgnore.contains(name)
-			|| Shape.class.isAssignableFrom(field.getType())
-			|| Event.class.isAssignableFrom(field.getType())) {
-		continue;
-	}
-		
-	// skip classes with known issues that should be handled in the future
-	//	(both discrete stats and histogram datas [both types] do not have serializers)
-	//	(not sure why continuous stats objects has one...a problem for later!)
-	// TODO - manually convert these objects
-	if (StatisticsDiscrete.class.isAssignableFrom(field.getType())
-		|| HistogramData.class.isAssignableFrom(field.getType())) {
-		if (includeInvalidFields) {
-			map.put(name, null);
-		}
+	if (name.contains("_xjal") || name.startsWith("__") || skipJsonifying(field.getType())) {
+		//traceln("\tSkipping!");
 		continue;
 	}
 	
 	try {
 		//field.trySetAccessible(); 
 		value = field.get(agent);
+		//traceln("\tValue is of type: %s", value.getClass());
+		if (value == null)
+			continue;
 		
 		// skip if value is top-level agent
 		if (value.equals(agent.getRootAgent())) {
+			//traceln("\tSkipping!");
 			continue;
 		}
 		
@@ -1481,19 +1502,39 @@ for (Field field : fields) {
 		if (value instanceof Agent) {
 			// skip if already seen
 			if (seenAgents.contains(value)) {
+				//traceln("\tSkipping!");
 				continue;
 			}
+			//traceln("\tIS AGENT; CONVERTING TO MAP!");
 			value = agentToMap((Agent)value, includeInvalidFields, seenAgents);
 		}
 		// apply other agent func for populations 
 		else if (value instanceof AgentArrayList) {
 			// skip if already seen
 			if (seenAgents.contains(value)) {
+				//traceln("\tSkipping!");
 				continue;
 			}
+			//traceln("\tIS AGENTPOP; CONVERTING TO LIST!");
 			value = agentPopToList((AgentArrayList)value, includeInvalidFields, seenAgents);
 		}
-			
+		// handle when value is a collection/map holding an incompatible AnyLogic type
+		else if (value instanceof Collection || value instanceof Map) {
+			boolean skip = false;
+			//traceln("\tCollection named '%s', of type %s", name, value.getClass());
+			for (java.lang.reflect.Type type : ((ParameterizedType)field.getGenericType()).getActualTypeArguments()) {
+				//traceln("\t\tType named: %s of class %s", type.getTypeName(), type.getClass());
+				if (skipJsonifying( (Class)type )) {
+					skip = true;
+					break;
+				}
+			}
+			if (skip) {
+				//traceln("\tSkipping!");
+				continue;
+			}
+		}
+		//traceln("\t%s: Adding object of type: %s", name, value.getClass());
 		map.put(name, value);
 	} catch (IllegalAccessException e) {
 		if (includeInvalidFields) {
@@ -1501,7 +1542,11 @@ for (Field field : fields) {
 		}
 	}
 }
-
+/*
+traceln(":: summary of types ::");
+map.forEach((k,v) -> traceln("'%s' -> %s (from: %s)", k, v.getClass().getSimpleName(), v.getClass().getPackageName()));
+traceln(":: ................ ::");
+*/
 return map;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="true">
@@ -1703,22 +1748,8 @@ if (agentType(object) > 0) {
 	//traceln("USING AGENT JSON CONVERSION");
 	output = toAgentJson(object, false, prettyprint);
 	return output;
-	/*
-	if (!prettyprint)
-		return output;
-	// Slightly more complicated for this case since 
-	//	the non-pretty version for agents always has to be created first.
-	// TODO - does it? either way, make cleaner
-	try {
-		JsonNode tempTree = objmapper.readTree(output);
-		output = objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(tempTree);
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	return output;
-	*/
 }
-		
+//traceln("Converting object of type '%s': %s", object.getClass(), object.toString());		
 // All other types should use object mapper
 try {
 	if (prettyprint)
@@ -1729,6 +1760,96 @@ try {
 	e.printStackTrace();
 }
 return output;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1599336077784</Id>
+					<Name><![CDATA[fromAgentJson]]></Name>
+					<Description><![CDATA[A function specifically for converting the given JSON to an agent class.<br>
+(Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
+@param json A JSON string to be converted to an AL agent<br>
+@param clazz The class of the AL agent type to convert the provided string to<br>
+@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
+					<CustomModifierCode><![CDATA[static <T>]]></CustomModifierCode>                 	
+					<X>300</X><Y>610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Convert json to hashmap for name/value lookup
+HashMap<String, Object> paramLookup = fromJson(json, HashMap.class);
+
+// Get the generic agent contrustor
+try {
+	T myAgent = clazz
+				.getDeclaredConstructor()
+				.newInstance();
+	paramLookup.forEach( (name,value) -> {
+		// don't include custom key added to agent json in `agentPopToList`
+		if (!name.equals("_index")) {
+			// last arg is whether to trigger 'on change' callback of parameter
+			((Agent)myAgent).setParameter(name, value, false);
+		}
+	});
+	return myAgent;
+} catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
+	e.printStackTrace();
+}
+
+return null;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
+					<Id>1599341550432</Id>
+					<Name><![CDATA[fromPopulationJson]]></Name>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>300</X><Y>640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[agent_clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[owner]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
+// (e.g., "[{"_index":0}, {"_index":1}]")
+try {	
+	// To properly get entirety of single agent, need to convert array to JsonNode
+	JsonNode root = objmapper.readTree(json);
+	// Build the output array based on the number of agent jsons detected
+	AgentArrayList<T> newPop = new AgentArrayList(owner);
+	// Run each child json's string thru `fromAgentJson` and add to output array
+	for (int i = 0; i < root.size(); i++) {
+		JsonNode child = root.get(i);
+		String childJson = objmapper.writeValueAsString(child);
+		T childAgent = fromAgentJson(childJson, agent_clazz);
+		newPop._add(childAgent);
+	}
+	return newPop;
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+return null;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
