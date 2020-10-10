@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
@@ -739,6 +739,9 @@ update_nBuiltType3();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[redirectPyOutput]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1854,7 +1857,7 @@ to re-run the optimization and update the outputs.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Time per stage:]]></Text>
+					<Text><![CDATA[Time per stage (minutes):]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -1875,7 +1878,7 @@ to re-run the optimization and update the outputs.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Time per stage:]]></Text>
+					<Text><![CDATA[Time per stage (minutes):]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -1896,7 +1899,7 @@ to re-run the optimization and update the outputs.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Time per stage:]]></Text>
+					<Text><![CDATA[Time per stage (minutes):]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -2215,7 +2218,7 @@ to re-run the optimization and update the outputs.]]></Text>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Total allotted time
-per stage]]></Text>
+per stage (hours):]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -2488,7 +2491,7 @@ https://git.io/al_py]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<OnClickCode><![CDATA[getExperimentHost().openWebSite("http://www.vision.ime.usp.br/~igor/articles/optimization-linprog.html");]]></OnClickCode>
+					<OnClickCode><![CDATA[getExperimentHost().openWebSite("https://web.archive.org/web/20160221155137/http://www.vision.ime.usp.br/~igor/articles/optimization-linprog.html");]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -3148,6 +3151,7 @@ The goal is change the number of each type built,
 				<FinalDate><![CDATA[1574294401000]]></FinalDate>	
 				<FinalTime><![CDATA[1.0]]></FinalTime>	
 			</ModelTimeProperties>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>
 		<!--   =========  Parameter Variation Experiment   ========  -->
 		<ParamVariationExperiment ActiveObjectClassId="1574374744731">
@@ -4486,6 +4490,12 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
+    </RequiredLibraryReference>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
