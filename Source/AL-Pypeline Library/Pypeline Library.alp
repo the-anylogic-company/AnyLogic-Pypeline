@@ -73,7 +73,15 @@ In addition to single-line Python code, you can also pass multiline Python code 
 Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
 <br>
 Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
-			<AdditionalClassCode><![CDATA[private static List<Class<?>> classesToIgnore = Arrays.asList(
+			<AdditionalClassCode><![CDATA[private static final String[][] condaPaths = new String[][]{
+	{"Library", "mingw-w64", "bin"},
+	{"Library", "usr", "bin"},
+	{"Library", "bin"},
+	{"Scripts"},
+	{"bin"}
+};
+
+private static List<Class<?>> classesToIgnore = Arrays.asList(
 	Color.class,
 	Font.class,
 	StatisticsDiscrete.class, // TODO - manually add this
@@ -785,7 +793,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "        return result",
 "",
 "    def read_json(self):",
-"        return json.loads(self.read_string())",
+"        return json.loads(r'{}'.format(self.read_string()))",
 "",
 "    def read_int(self):",
 "        return struct.unpack('>i', self.read(4))[0]",
@@ -849,7 +857,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "        sock.bind(('localhost', 0))",
 "        sock.listen(0)",
 "        _, port = sock.getsockname()",
-"        sys.stdout.write(\"{}\\n\".format(port))",
+"        sys.stdout.write('{}\\n'.format(port))",
 "        sys.stdout.flush()",
 "        conn, addr = sock.accept()",
 "        try:",
@@ -870,13 +878,13 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "                            result = eval(code, globs)",
 "                        except NameError as n_err: # assume json",
 "                            try:",
-"                                result = json.loads(code)",
+"                                result = json.loads(r'{}'.format(code))",
 "                            except JSONDecodeError as j_err:",
-"                                raise Exception(\"The following line failed to parse (as strictly Python or JSON-parsed code):\"",
-"                                                + f\"\\n    `{code}`\"",
-"												 +  \"\\nConsider one of the following reasons:\"",
-"                                                + f\"\\n1. Python reason: {n_err}\"",
-"                                                + f\"\\n2. JSON   reason: {j_err}\")",
+"                                raise Exception('The following line failed to parse (as strictly Python or JSON-parsed code):'",
+"                                                + '\\n    `{}`'.format(code)",
+"												 + '\\nConsider one of the following reasons:'",
+"                                                + '\\n1. Python reason: {}'.format(n_err)",
+"                                                + '\\n2. JSON   reason: {}'.format(j_err))",
 "                        out.write_byte(SUCC_MSG)",
 "                        out.write_string(result)",
 "                    elif msg_type == PING_MSG: # 2 (testing)",
@@ -930,8 +938,9 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					<Body><![CDATA[Attempt attempt = py.exec(code);
 history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
-if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
-	error(attempt.getFeedback().replace("\\n", "\n")); // new lines aren't printing properly, TODO - look into that
+if (throwErrorOnFailedAttempt && !attempt.isSuccessful()) {
+	error(attempt.getFeedback()); // new lines aren't printing properly, TODO - look into that
+}
 return attempt;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1104,6 +1113,7 @@ if (pythonExecPath == null) {
 
 File f = new File(pythonExecPath);
 if (!f.exists()) {
+	// handle when path does not exist
 	String msg = "No Python executable is located at: " + pythonExecPath;
 	msg += "\nConsult the user guide for more information.";
 	if (pythonExecPath.contains("Microsoft\\WindowsApps")) {
@@ -1112,6 +1122,8 @@ if (!f.exists()) {
 	}
 	error(msg);
 } else if (!f.isFile()) {
+	// TODO - add check for python.exe or executable python file
+	// handle case when path is not a file
 	String msg = "The specified path to the Python executable is not a file: " + pythonExecPath;
 	msg += "\nPlease append the file to execute and try again.";
 	error(msg);
@@ -1119,6 +1131,7 @@ if (!f.exists()) {
 
 try {
 	py = new PySubProcess(pathToServerPy, pythonExecPath, redirectPyOutput);
+	modifyPathAsNeeded();
 } catch (Exception e) {
 	error(e, "Problem with setting up Python Subprocess:");
 }]]></Body>
@@ -1365,10 +1378,8 @@ Note that agents and agent populations are handled manually due to a recursive i
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Body><![CDATA[// use specialized function for agent types
-if (Agent.class.isAssignableFrom(clazz)) {
-	return fromAgentJson(json, clazz);
-} else if (AgentArrayList.class.isAssignableFrom(clazz)) {
-	traceln("Need to use `fromPopulationJson` for converting agent populations (returning null)");
+if (Agent.class.isAssignableFrom(clazz) || AgentList.class.isAssignableFrom(clazz)) {
+	traceln("Need to use `fromAgentJson` or `fromPopulationJson` for converting agents/agent populations (returning null)");
 	return null;
 }
 	
@@ -1771,7 +1782,7 @@ return output;]]></Body>
 @param json A JSON string to be converted to an AL agent<br>
 @param clazz The class of the AL agent type to convert the provided string to<br>
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[static <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
 					<X>300</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1809,11 +1820,16 @@ return null;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
+					<ReturnType><![CDATA[ArrayList]]></ReturnType>
 					<Id>1599341550432</Id>
 					<Name><![CDATA[fromPopulationJson]]></Name>
+					<Description><![CDATA[A function specifically for converting the given JSON to an arraylist of agents.<br>
+@param json A JSON string to be converted (should be a list of dicts, mapping parameter name to value)<br>
+@param agent_clazz The class of the AL agent type<br>
+@param owner The owner of the population (e.g., your root agent)<br>
+@return AgentArrayList An access-only ArrayList of the agents]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>640</Y>
+					<X>300</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1836,13 +1852,13 @@ try {
 	// To properly get entirety of single agent, need to convert array to JsonNode
 	JsonNode root = objmapper.readTree(json);
 	// Build the output array based on the number of agent jsons detected
-	AgentArrayList<T> newPop = new AgentArrayList(owner);
+	ArrayList<T> newPop = new ArrayList();
 	// Run each child json's string thru `fromAgentJson` and add to output array
 	for (int i = 0; i < root.size(); i++) {
 		JsonNode child = root.get(i);
 		String childJson = objmapper.writeValueAsString(child);
 		T childAgent = fromAgentJson(childJson, agent_clazz);
-		newPop._add(childAgent);
+		newPop.add(childAgent);
 	}
 	return newPop;
 } catch (Exception e) {
@@ -1850,6 +1866,201 @@ try {
 }
 
 return null;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1599503670262</Id>
+					<Name><![CDATA[fromAgentJson]]></Name>
+					<Description><![CDATA[A function specifically for converting the given JSON to an agent class.<br>
+(Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
+@param json A JSON string to be converted to an AL agent<br>
+@param clazz The class of the AL agent type to convert the provided string to<br>
+@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>330</X><Y>640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[engine]]></Name>
+						<Type><![CDATA[Engine]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[owner]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[population]]></Name>
+						<Type><![CDATA[AgentArrayList]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Convert json to hashmap for name/value lookup
+HashMap<String, Object> paramLookup = fromJson(json, HashMap.class);
+
+
+try {
+	int index = population.size();
+	
+	T myAgent = clazz
+				.getDeclaredConstructor(Engine.class, Agent.class, AgentList.class)
+				.newInstance(engine, owner, population);
+	population._add(myAgent);
+	myAgent.markParametersAreSet();
+	paramLookup.forEach( (name,value) -> {
+		// don't include custom key added to agent json in `agentPopToList`
+		if (!name.equals("_index")) {
+			// last arg is whether to trigger 'on change' callback of parameter
+			myAgent.setParameter(name, value, false);
+		}
+	});
+	population.callCreate(myAgent, index);
+	myAgent.start();
+	return myAgent;
+} catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
+	e.printStackTrace();
+}
+return null;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
+					<Id>1599503959400</Id>
+					<Name><![CDATA[fromPopulationJson]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>330</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[agent_clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[engine]]></Name>
+						<Type><![CDATA[Engine]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[owner]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
+// (e.g., "[{"_index":0}, {"_index":1}]")
+try {	
+	// To properly get entirety of single agent, need to convert array to JsonNode
+	JsonNode root = objmapper.readTree(json);
+	// Build the output array based on the number of agent jsons detected
+	AgentArrayList<T> newPop = new AgentArrayList(owner);
+	// Run each child json's string thru `fromAgentJson` and add to output array
+	for (int i = 0; i < root.size(); i++) {
+		JsonNode child = root.get(i);
+		String childJson = objmapper.writeValueAsString(child);
+		fromAgentJson(childJson, agent_clazz, engine, owner, newPop);
+	}
+	return newPop;
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+return null;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
+					<Id>1599504104781</Id>
+					<Name><![CDATA[fromPopulationJson]]></Name>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>330</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[agent_clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[engine]]></Name>
+						<Type><![CDATA[Engine]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[owner]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[population]]></Name>
+						<Type><![CDATA[AgentArrayList]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
+// (e.g., "[{"_index":0}, {"_index":1}]")
+try {	
+	// To properly get entirety of single agent, need to convert array to JsonNode
+	JsonNode root = objmapper.readTree(json);
+	// Run each child json's string thru `fromAgentJson` and add to output array
+	for (int i = 0; i < root.size(); i++) {
+		JsonNode child = root.get(i);
+		String childJson = objmapper.writeValueAsString(child);
+		fromAgentJson(childJson, agent_clazz, engine, owner, population);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1600284468018</Id>
+					<Name><![CDATA[modifyPathAsNeeded]]></Name>
+					<Description><![CDATA[Anaconda environments (including its base) add specific folders inside the environment to the system path before calling Python. Because Pypeline works through a "normal" command-prompt, these are not added in by default.<br>
+If the 'conda-meta' directory - present in all Anaconda environments - is located in the same folder as the provided executable, this function will add all the paths that Anaconda does. Like Anaconda, this may include directories that don't exist on the user's machine (has no effect, though).<br>]]></Description>
+					<X>300</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Check if this is a conda environment by looking for 'conda-meta' dir
+// 	in same folder as executable path.
+File execFile = new File(pythonExecPath);
+File parentDir = execFile.getParentFile();
+String[] siblingFilenames = parentDir.list();
+boolean contains = Arrays.stream(siblingFilenames).anyMatch("conda-meta"::equals);
+if (contains) {
+	//traceln("Adding!");
+	run("import os");
+	String pathStrs = "";
+	String base = parentDir.getAbsolutePath() + parentDir.separator;
+	for (String[] pathParts : condaPaths) {
+		pathStrs += base + String.join(parentDir.separator, pathParts);
+		pathStrs += parentDir.pathSeparator;
+	}
+	//traceln("Adding: " + pathStrs);
+	run(
+		String.format(
+			"os.environ['PATH'] = r'%s' + os.environ['PATH']",
+			pathStrs
+	));
+	//traceln("Added: " + runResults(String.class, "os.environ['PATH']"));
+} else {
+	//traceln("Not adding!");
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -2129,6 +2340,8 @@ public class PySubProcess {
     	// First find/validate the path to the server.py file
     	final String serverPyFile = "server.py";
     	File workingDirectory = new File(System.getProperty("user.dir"));
+
+    	// TODO - is the following needed? server.py is always a temp file with full dir given
     	if (pathToServerPy == null) // in case nothing was given, check in working directory
     		pathToServerPy = Paths.get(workingDirectory.toString(), serverPyFile).toString();
     	else if (!pathToServerPy.endsWith(".py")) // in case just directory was given
@@ -2288,7 +2501,8 @@ public class PySubProcess {
     		String s = (new String(b)).trim();
     		// start each line with '> ' to distinguish it for Console viewers
     		s = "> " + s.replaceAll("(\\r\\n|\\r|\\n)", "$1> ");
-    		traceln(green, s);
+    		if (redirectPyOutput)
+    			traceln(green, s);
     	}
     }
     
@@ -2305,7 +2519,8 @@ public class PySubProcess {
     		String s = (new String(b)).trim();
     		// start each line with '> ' to distinguish it for Console viewers
     		s = "> " + s.replaceAll("(\\r\\n|\\r|\\n)", "$1> ");
-    		traceln(red, s);
+    		if (redirectPyOutput)
+    			traceln(red, s);
     	}
     }
 	
@@ -2601,7 +2816,7 @@ public class Attempt {
 	 * @return the feedback received from Python after executing the command
 	 */
 	public String getFeedback() {
-		return getFeedback(null);
+		return getFeedback(String.class);
 	}
 
 	/**
@@ -2676,8 +2891,8 @@ public class PyException extends Exception {
 				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
-			<VersionMinor>2</VersionMinor>
-			<VersionBuild>0</VersionBuild>
+			<VersionMinor>3</VersionMinor>
+			<VersionBuild>1</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
