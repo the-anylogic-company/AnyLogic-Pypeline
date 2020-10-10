@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
 <Model>
 	<Id>1162412338974</Id>
 	<Name><![CDATA[Lorenz Weather Model - Pypeline]]></Name>
@@ -32,10 +32,13 @@ From a technical standpoint, the Lorenz system is nonlinear, non-periodic, three
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Paths;]]></Import>
-			<StartupCode><![CDATA[Attempt attempt = pyCom.run("import plotter");
+			<StartupCode><![CDATA[pyCom.run("import plotter");
 
 // Set the inputs (updates title of 3D plot)
-pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></StartupCode>
+pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));
+
+// Move to the side of the AL window (approx.)
+pyCom.run("plotter.move_figure(1020, 15)");]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1434708003073</Id>
@@ -283,7 +286,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Variable Class="Parameter">
 					<Id>1588449983138</Id>
 					<Name><![CDATA[plotUpdateRecurrence_hrs]]></Name>
-					<X>800</X><Y>250</Y>
+					<X>1050</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -448,7 +451,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<Event>
 					<Id>1572970369980</Id>
 					<Name><![CDATA[updatePyPlot]]></Name>
-					<X>800</X><Y>300</Y>
+					<X>800</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -477,6 +480,8 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 					<Action><![CDATA[try {
 	pyCom.run(String.format("plotter.append(%s, %s, %s)", X, Y, Z));
 } catch (Exception e) {
+	// user must have closed the matplotlib window, 
+	//	so close the model window as well.
 	getExperimentHost().close();
 }]]></Action>
 				</Event>
@@ -507,7 +512,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				<EmbeddedObject>
 					<Id>1572968063054</Id>
 					<Name><![CDATA[pyCom]]></Name>
-					<X>800</X><Y>170</Y>
+					<X>830</X><Y>180</Y>
 					<Label><X>-5</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -539,6 +544,9 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[redirectPyOutput]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1303,7 +1311,7 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1573256292316</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>800</X><Y>370</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1313,9 +1321,11 @@ pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));]]></Startup
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[String fileName = String.format("day_%.2f.png", time());
+						<ActionCode><![CDATA[// save figure to local image, named based on the model time
+String fileName = String.format("day_%.2f.png", time());
+pyCom.run(String.format("plotter.fig.savefig('%s')", fileName));
 
-traceln("RESULT OF SAVE: " + pyCom.run(String.format("plotter.fig.savefig('%s')", fileName)));
+// show alert to user
 getExperimentHost().showMessageDialog(String.format("Saved to %s", Paths.get(fileName).toAbsolutePath()));]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -1345,7 +1355,7 @@ getExperimentHost().showMessageDialog(String.format("Saved to %s", Paths.get(fil
 				<Text>
 					<Id>1588449749416</Id>
 					<Name><![CDATA[text20]]></Name>
-					<X>850</X><Y>390</Y>
+					<X>850</X><Y>410</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1407,6 +1417,117 @@ https://git.io/al_py]]></Text>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
 						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1602290482818</Id>
+					<Name><![CDATA[slider3]]></Name>
+					<X>750</X><Y>260</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="200" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0.25]]></MinValue>
+						<MaxValue><![CDATA[10.0]]></MaxValue>
+						<Step><![CDATA[0.25]]></Step>
+						<LinkTo>true</LinkTo>
+						<Link>plotUpdateRecurrence_hrs</Link>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1602290509272</Id>
+					<Name><![CDATA[text22]]></Name>
+					<X>750</X><Y>290</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[min]]></Text>
+					<TextCode><![CDATA[slider3.getMin()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1602290509273</Id>
+					<Name><![CDATA[text23]]></Name>
+					<X>950</X><Y>290</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[max]]></Text>
+					<TextCode><![CDATA[slider3.getMax()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1602290509274</Id>
+					<Name><![CDATA[text24]]></Name>
+					<X>850</X><Y>290</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[value]]></Text>
+					<TextCode><![CDATA[slider3.getValue()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1602290513627</Id>
+					<Name><![CDATA[text25]]></Name>
+					<X>750</X><Y>240</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Time between plot updates (hours):]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -1794,6 +1915,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 				<FinalDate><![CDATA[1532549938000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>
 		<!--   =========  Parameter Variation Experiment   ========  -->
 		<ParamVariationExperiment ActiveObjectClassId="1162412338975">
@@ -2296,13 +2418,13 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
-		<LibraryName><![CDATA[com.anylogic.libraries.material_handling]]></LibraryName>
-		<VersionMajor>8</VersionMajor>
+		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
+		<VersionMajor>1</VersionMajor>
 		<VersionMinor>3</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionBuild>1</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
-		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
+		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
