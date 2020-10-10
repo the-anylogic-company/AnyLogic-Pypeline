@@ -1,17 +1,52 @@
 # A traveling salesman problem solver - designed for AnyLogic
 
 import numpy as np
-from ortools.constraint_solver import routing_enums_pb2
-from ortools.constraint_solver import pywrapcp
+from typing import List, Dict, Any
+from ortools.constraint_solver import routing_enums_pb2, pywrapcp
+from ortools.constraint_solver.pywrapcp import RoutingIndexManager, RoutingModel, Assignment
 
-class HubOrderSolver:
-    def __init__(self, full_distance_matrix, home_index):
+class FacilityOrderSolver:
+    def __init__(self, full_distance_matrix: List[List[float]], home_index: int):
+        """Create a new solver object based on the supplied route information.
+
+        Parameters
+        ----------
+        full_distance_matrix : List[List[float]]
+            A 2D square matrix representing the distance between all facilities.
+            The data is expected to be mirrored over the
+            main diagonal (which itself is expected to be 0s).
+            The number of facilities is implied to be the length of the matrix.
+        home_index : int
+            The index of the facility designated as the "home" or origin point.
+        """
         # matrix needs to be ints, so scale up before converting
         self.matrix = (np.array(full_distance_matrix)*100).astype(np.int32)
         self.home_index = home_index
 
 
-    def _create_data_model(self, indices_to_visit = None):
+    def _create_data_model(self, indices_to_visit: List[int] = None) -> Dict[str, Any]:
+        """Stores the data for the problem
+
+        Parameters
+        ----------
+        indices_to_visit : List[int]
+            The list of indices corresponding to the desired facilities to visit.
+
+        Note
+        ----
+        In this context, the index of the home facility is made relative to the list
+        of facilities to visit (as opposed to the list of all facilties).
+        This is needed to comply with how the solver works based on the example by Google.
+
+        Returns
+        -------
+        Dict[str, Any]
+            With keys:
+            - 'distance_matrix', set to original or rearranged distance matrix
+            - 'num_vehicles', set to 1
+            - 'home', set to the relative index of the home facility
+
+        """
         # slice the master matrix so that only the desired indices are included
         # (or don't slice if all are desired)
         if indices_to_visit is None:
@@ -26,7 +61,28 @@ class HubOrderSolver:
         return data
 
 
-    def _extract_solution(self, manager, routing, assignment, indices_to_visit):
+    def _extract_solution(self, manager: RoutingIndexManager, routing: RoutingModel, assignment: Assignment, indices_to_visit: List[int]) -> Dict[str, Any]:
+        """Transform results to a usable format
+
+        Parameters
+        ----------
+        manager : RoutingIndexManager
+            OR-tools' object to manage conversion between NodeIndex and variable index
+        routing : RoutingModel
+            OR-tools' object for route solving
+        assignment : Assignment
+            OR-tools' object for mapping from variable to domains
+        indices_to_visit : List[int]
+            The list of indices corresponding to the desired facilities to visit        
+
+        Returns
+        -------
+        Dict[str, Any]
+            With keys:
+            - 'objective', set to objective value (minified distance)
+            - 'order', instructions for the order of facilities to visit
+
+        """
         sln = {"objective": assignment.ObjectiveValue()}
     
         stop_indices = []
@@ -42,7 +98,21 @@ class HubOrderSolver:
         return sln
 
 
-    def solve(self, indices_to_visit = None) -> dict:
+    def solve(self, indices_to_visit: List[int] = None) -> Dict[str, Any]:
+        """Finds the optimal order of facilities to minimize distance.
+
+        Parameters
+        ----------
+        indices_to_visit : List[int]
+            The list of indices corresponding to the desired facilities to visit
+
+        Returns
+        -------
+        Dict[str, Any]
+            Soltution dictionary with keys:
+            - 'objective', set to objective value (minified distance)
+            - 'order', instructions for the order of facilities to visit
+        """
         if indices_to_visit is None:
             indices_to_visit = list(range(len(self.matrix)))
             
@@ -54,11 +124,11 @@ class HubOrderSolver:
         data = self._create_data_model(indices_to_visit)
 
         # create routing index manager
-        manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
+        manager = RoutingIndexManager(len(data['distance_matrix']),
                                            data['num_vehicles'], data['home'])
 
         # create routing model
-        routing = pywrapcp.RoutingModel(manager)
+        routing = RoutingModel(manager)
 
         def distance_callback(from_index, to_index):
             # returns distance between two nodes
@@ -85,6 +155,7 @@ class HubOrderSolver:
 
 
 def test():
+    """ Demonstrates a sample solution """
     ##0 Chicago
     ##1 New York City
     ##2 Los Angeles
@@ -102,6 +173,8 @@ def test():
     ##14 Atlanta
     ##15 Kansas City
     home_index = 15 # Kansas city
+    # 15x15 matrix with main diagonal consisting of 0s and to which data is mirrored along
+    # (values are derived from external resource and multiplied by 1000 for higher accuracy)
     matrix = np.array([[0.0, 1148413.3550047704, 2813453.6297408855, 572861.4368351421, 1483440.7452179305, 1296355.2188721865, 2801269.1215845253, 1370943.3069385102, 2996683.256068982, 422589.4697157836, 1515737.0196676727, 2343639.7107855356, 2031500.319603397, 1913900.3015914203, 946854.1020487415, 665894.0336505901],
                [1148413.3550047704, 0.0, 3949451.153672887, 1642119.4792808082, 2628946.6435325537, 2212019.1209020815, 3882177.952930788, 306997.0343229422, 4144977.810718553, 1408454.3261387087, 2286054.8575902223, 3455343.3108375454, 3179102.5335818897, 1754834.3710577146, 1202616.154562711, 1766599.1336905772],
                [2813453.6297408855, 3949451.153672887, 0.0, 2455296.3791196346, 1339227.410707824, 1998182.1420783552, 1545364.434045008, 4184394.186016967, 559978.4273194656, 2560790.9591738936, 2212581.51715849, 575975.8749662543, 933602.6426595236, 3767490.41517038, 3120118.850020503, 2186473.1552241463],
@@ -119,7 +192,9 @@ def test():
                [946854.1020487415, 1202616.154562711, 3120118.850020503, 1462408.5353501518, 1952618.0544916363, 1161480.3557326929, 3516794.375197078, 1509585.60107986, 3448359.745690545, 752855.8488125347, 1130480.278513877, 2564665.4531581327, 2551338.215149899, 973244.7750437199, 0.0, 1089830.6426635552],
                [665894.0336505901, 1766599.1336905772, 2186473.1552241463, 662752.1291133759, 899656.1020173575, 730446.8613086065, 2427457.036285458, 2015770.1390589625, 2428862.4239271535, 384122.2000072272, 1039856.4844335921, 1690942.142157212, 1490589.7393085626, 2000112.4162614697, 1089830.6426635552, 0.0]])
 
-    solver = HubOrderSolver(matrix, home_index)
+    solver = FacilityOrderSolver(matrix, home_index)
     return solver.solve()
 
-
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(test())
