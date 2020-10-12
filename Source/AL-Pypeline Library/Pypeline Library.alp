@@ -257,6 +257,7 @@ try {
 				</GenericParameterValue>
 				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
 			</GenericParameter>
+			<FlowchartBlock>true</FlowchartBlock>
 			<FlowChartsUsage>ENTITY</FlowChartsUsage>
 			<SamplesToKeep>100</SamplesToKeep>
 			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
@@ -310,7 +311,7 @@ try {
 					<MCode><![CDATA[10]]></MCode>
 			</EnvironmentProperties>
 			<DatasetsCreationProperties>
-				<AutoCreate>true</AutoCreate>
+				<AutoCreate>false</AutoCreate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1569916800000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -524,13 +525,6 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 								<Name><![CDATA[python]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[self.PYTHON]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[python2]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[self.PYTHON2]]></Code>
 								</Value>
 							</PredefParamValue>
 							<PredefParamValue>
@@ -1122,11 +1116,17 @@ if (!f.exists()) {
 	}
 	error(msg);
 } else if (!f.isFile()) {
-	// TODO - add check for python.exe or executable python file
-	// handle case when path is not a file
-	String msg = "The specified path to the Python executable is not a file: " + pythonExecPath;
-	msg += "\nPlease append the file to execute and try again.";
-	error(msg);
+	// user pasted a directory. Check for python.exe or just python
+	File[] potentials = f.listFiles((dir, name) -> name.toLowerCase().equals("python.exe") || name.toLowerCase().equals("python"));
+	// no results or > 1 result == fail
+	if (potentials.length != 1) {
+		String msg = "The specified path to the Python executable is not a file: " + pythonExecPath;
+		msg += "\nTried to find 'python.exe' or 'python', but couldn't locate a single result!";
+		msg += "\nPlease append the file to execute and try again.";
+		error(msg);
+	}
+	// update with corrected path
+	set_pythonExecPath(potentials[0].getAbsolutePath());
 }
 
 try {
