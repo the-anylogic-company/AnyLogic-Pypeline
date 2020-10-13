@@ -154,7 +154,7 @@ class FacilityOrderSolver:
 
 
 
-def test():
+def test(indices_to_visit = None):
     """ Demonstrates a sample solution """
     ##0 Chicago
     ##1 New York City
@@ -193,8 +193,25 @@ def test():
                [665894.0336505901, 1766599.1336905772, 2186473.1552241463, 662752.1291133759, 899656.1020173575, 730446.8613086065, 2427457.036285458, 2015770.1390589625, 2428862.4239271535, 384122.2000072272, 1039856.4844335921, 1690942.142157212, 1490589.7393085626, 2000112.4162614697, 1089830.6426635552, 0.0]])
 
     solver = FacilityOrderSolver(matrix, home_index)
-    return solver.solve()
+    
+    return solver.solve(indices_to_visit)
 
+# won't execute unless this file is directly run
+# (importing this file wont trigger)
 if __name__ == "__main__":
     from pprint import pprint
+    from random import sample
+    from time import time
+    
+    print("Visiting all :")
+    _start = time()
     pprint(test())
+    _elapsed = time() - _start
+    print(f"= {_elapsed:5.3f} seconds\n")
+
+    rand_cities = sample(range(15),5)
+    print("Visiting", rand_cities, ":")
+    _start = time()
+    pprint(test(rand_cities))
+    _elapsed = time() - _start
+    print(f"= {_elapsed:5.3f} seconds\n")
