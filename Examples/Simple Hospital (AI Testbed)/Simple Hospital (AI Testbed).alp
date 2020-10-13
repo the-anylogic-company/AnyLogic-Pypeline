@@ -219,7 +219,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[320]]></Code>
+							<Code><![CDATA[300]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1588439134185</Id>
@@ -389,8 +389,7 @@ new Color(137, 81, 58), // darkest
 // The called function scales it to the original range.
 // It also stores the predicted value in a data structure,
 //	so that it's using previous data to generate the next value.
-double newRate = py.runResults("predictor.predict_rate()")
-						  .getFeedback(double.class);
+double newRate = py.runResults(double.class, "predictor.predict_rate()");
 						  
 // Update source
 source.set_rate(newRate, PER_HOUR);]]></Action>
@@ -1239,7 +1238,7 @@ else
 					<Id>1586811668493</Id>
 					<Name><![CDATA[stay]]></Name>
 					<X>220</X><Y>280</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
+					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -1691,7 +1690,7 @@ https://git.io/al_py]]></Text>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
 						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[10]]></MinValue>
+						<MinValue><![CDATA[200]]></MinValue>
 						<MaxValue><![CDATA[400]]></MaxValue>
 						<Step><![CDATA[5]]></Step>
 						<LinkTo>true</LinkTo>
@@ -2920,7 +2919,7 @@ https://git.io/al_py]]></Text>
 				<Group>
 					<Id>1602367374339</Id>
 					<Name><![CDATA[brain1]]></Name>
-					<X>280</X><Y>255</Y>
+					<X>290</X><Y>245</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3758,7 +3757,7 @@ https://git.io/al_py]]></Text>
 				<Line>
 					<Id>1602367401033</Id>
 					<Name><![CDATA[line3]]></Name>
-					<X>265</X><Y>280</Y>
+					<X>270</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3775,8 +3774,8 @@ https://git.io/al_py]]></Text>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>6.6</Dx>
-					<Dy>-6.8</Dy>
+					<Dx>10</Dx>
+					<Dy>-5</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Rectangle>
@@ -3804,7 +3803,7 @@ https://git.io/al_py]]></Text>
 				<Rectangle>
 					<Id>1602367494093</Id>
 					<Name><![CDATA[rectangle1]]></Name>
-					<X>215</X><Y>280</Y>
+					<X>210</X><Y>270</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3817,8 +3816,8 @@ https://git.io/al_py]]></Text>
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
-					<Width>50</Width>
-					<Height>40</Height>
+					<Width>60</Width>
+					<Height>50</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -5791,7 +5790,7 @@ root.getEngine().setStartDate(today);]]></BeforeSimulationRunCode>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[320]]></Code>
+							<Code><![CDATA[300]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
