@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
 <Model>
 	<Id>1582306164627</Id>
 	<Name><![CDATA[Demo - Passing Data Types]]></Name>
@@ -377,6 +377,9 @@ pyCommunicator.run("import json");]]></StartupCode>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[redirectPyOutput]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -808,6 +811,7 @@ actionText.setText("Got! Int array = " + Arrays.toString(newIntArray));]]></Acti
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// Java does not have a built-in way of printing arrays.
 // To convert a 1D array to a string, the "Arrays.toString" function is needed.
+// For multi-dimensional primitive arrays, you can use "Arrays.deepToString".
 // Fortunately, the format is the same as Python uses (so no need to convert to JSON)
 pyCommunicator.run("int_list = " + Arrays.toString(intArray));
 
@@ -863,14 +867,9 @@ actionText.setText("Modified! (appended -1)");]]></ActionCode>
 //	however, the words need to be quoted before being sent to Python
 //	(as seen in the "set" button for the string value).
 
-// Method 1: Converting to JSON
-ObjectMapper mapper = new ObjectMapper();
-try {
-	String mappedStringArrayStr = mapper.writeValueAsString(stringArray);
-	pyCommunicator.run("str_list = " + mappedStringArrayStr);
-} catch (IOException e) {
-	e.printStackTrace();
-}
+// Method 1: Converting to JSON (using toJson function)
+String jsonStrArray = pyCommunicator.toJson(stringArray);
+pyCommunicator.run("str_list = " + jsonStrArray);
 
 // Method 2: modify the string array before sending to Python
 /*
@@ -905,7 +904,12 @@ button_strarray3.setEnabled(true);]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[pyCommunicator.run("str_list.append('okay')");
+						<ActionCode><![CDATA[// Note that you need to quote the Python string, inside the Java String.
+// Method 1: Using single quotations (Python allows this)
+pyCommunicator.run("str_list.append('okay')");
+
+// Method 2: Using double quotations by escaping them (via backslash) in the Java String
+//pyCommunicator.run("str_list.append(\"okay\")");
 
 actionText.setText("Modified! (appended the word 'okay')");]]></ActionCode>
 					</BasicProperties>
@@ -1058,8 +1062,8 @@ actionText.setText("Modified! (added 1 to the value)");]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[// To read back the value, need to use Python's json library to convert.
-LinkedHashMap newStringToIntMap = pyCommunicator.runResults("json.dumps(str2int_map)").getFeedback(LinkedHashMap.class);
+						<ActionCode><![CDATA[// To read back the map, need to use Python's json library to convert to JSON format
+LinkedHashMap newStringToIntMap = pyCommunicator.runResults(LinkedHashMap.class, "json.dumps(str2int_map)");
 
 actionText.setText("Got! Map = " + newStringToIntMap);
 
@@ -1088,23 +1092,15 @@ actionText.setText(String.format("\t(For string %s, value = %s)", stringValue, n
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Need to use the ObjectMapper object to convert a mapping to JSON
-ObjectMapper mapper = new ObjectMapper();
-// As part of using the `writeValueAsString` function, a try-catch is required.
-try {
-	pyCommunicator.run("str2int_map = " + mapper.writeValueAsString(stringToIntMap));
+						<ActionCode><![CDATA[// Use the provided toJson function
+String jsonMap = pyCommunicator.toJson(stringToIntMap);
+pyCommunicator.run("str2int_map = " + jsonMap);
 	
-	// Keep the trace statement and enabling of the other buttons inside the `try` statement.
-	// If the above function throws an error, this code will not be run.
-	actionText.setText("Set!");
+actionText.setText("Set!");
 	
-	// Enable the next buttons
-	button_map2.setEnabled(true);
-	button_map3.setEnabled(true);
-	
-} catch (IOException e) {
-	e.printStackTrace();
-}]]></ActionCode>
+// Enable the next buttons
+button_map2.setEnabled(true);
+button_map3.setEnabled(true);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="12" Style="0"/>
@@ -1396,10 +1392,17 @@ These are equally valid to use -
 				<FinalDate><![CDATA[1584748800000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
+    </RequiredLibraryReference>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
