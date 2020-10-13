@@ -42,6 +42,8 @@ def set_inputs(S: float, R: float, B: float) -> None:
     ax.set_title(f"R={R:.2f}", loc='center', color="orangered")
     ax.set_title(f"B={B:.2f}", loc='right', color="dodgerblue")
     plt.tight_layout()
+    fig.canvas.draw()
+    fig.canvas.flush_events()
 
 def move_figure(x, y):
     """ Move figure's upper left corner to pixel (x, y) """
@@ -65,7 +67,24 @@ def append(x: float, y: float, z: float) -> None:
     fig.canvas.draw()
     fig.canvas.flush_events()
 
+# won't execute unless this file is directly run
+# (importing this file wont trigger)
+if __name__ == "__main__":
+    # test inputs, moving, appending
+    from random import randint
+    from time import time
+    
+    set_inputs(100, -2, 5e-9)
+    move_figure(0, 100)
 
+    # try timing point drawing
+    _start = time()
+    pts_to_draw = 100
+    for _ in range(pts_to_draw):
+        append(randint(-10,10), randint(-30,-5), randint(10, 30))
+    _elapsed = time() - _start
+    print(f"Drew {pts_to_draw:3d} pts in {_elapsed:5.3f} seconds")
+    print(f"= {_elapsed / pts_to_draw:5.3f} seconds per point")
 
 
 
