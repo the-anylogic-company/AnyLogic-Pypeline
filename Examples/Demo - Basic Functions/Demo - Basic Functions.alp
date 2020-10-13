@@ -204,7 +204,7 @@ It also shows how you can check the last 500 commands sent to the Communicator (
 				<Variable Class="PlainVariable">
 					<Id>1601585940620</Id>
 					<Name><![CDATA[expression]]></Name>
-					<X>-100</X><Y>480</Y>
+					<X>-100</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -519,6 +519,9 @@ create_AnimateArrow(2, 0, 0, new ArrowAnimConfig(arrowRR2,
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[false]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommand]]></Name>
@@ -769,7 +772,7 @@ https://git.io/al_py]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601571358474</Id>
 					<Name><![CDATA[editVar]]></Name>
-					<X>160</X><Y>140</Y>
+					<X>80</X><Y>140</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -787,8 +790,8 @@ double newWidth = 70 + 11*charsOverlap;
 self.setWidth(newWidth);
 
 // grow box to the left.
-// original - w/ X=160, width=70 - stopped at X+width=230
-self.setX(230 - newWidth);]]></ActionCode>
+// original - w/ X=80, width=70 - stopped at X+width
+self.setX(150 - newWidth);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Courier New" Size="18" Style="0"/>
@@ -800,7 +803,7 @@ self.setX(230 - newWidth);]]></ActionCode>
 				<Text>
 					<Id>1601571396891</Id>
 					<Name><![CDATA[text13]]></Name>
-					<X>230</X><Y>80</Y>
+					<X>150</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -822,7 +825,7 @@ self.setX(230 - newWidth);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601571421700</Id>
 					<Name><![CDATA[editVal]]></Name>
-					<X>260</X><Y>140</Y>
+					<X>180</X><Y>140</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -833,9 +836,9 @@ self.setX(230 - newWidth);]]></ActionCode>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// update width based on number of characters in box
+						<ActionCode><![CDATA[// update width based on number of characters in box (force >= 5)
 // (purely aesthetic)
-double newWidth = 5+12*value.length();
+double newWidth = 5+12*limitMin(5, value.length());
 self.setWidth(newWidth);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -849,7 +852,7 @@ self.setWidth(newWidth);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601571428677</Id>
 					<Name><![CDATA[button3]]></Name>
-					<X>210</X><Y>290</Y>
+					<X>120</X><Y>290</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -887,7 +890,7 @@ resetRunFields();]]></ActionCode>
 				<Text>
 					<Id>1601572968218</Id>
 					<Name><![CDATA[text15]]></Name>
-					<X>230</X><Y>180</Y>
+					<X>150</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -908,7 +911,7 @@ resetRunFields();]]></ActionCode>
 				<Text>
 					<Id>1601572994891</Id>
 					<Name><![CDATA[text16]]></Name>
-					<X>260</X><Y>180</Y>
+					<X>180</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -930,7 +933,7 @@ resetRunFields();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601574562491</Id>
 					<Name><![CDATA[editImport]]></Name>
-					<X>260</X><Y>70</Y>
+					<X>180</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -941,9 +944,9 @@ resetRunFields();]]></ActionCode>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// update width based on number of characters in box
+						<ActionCode><![CDATA[// update width based on number of characters in box (force >= 5)
 // (purely aesthetic)
-double newWidth = 5+12*value.length();
+double newWidth = 5+12*limitMin(5, value.length());
 self.setWidth(newWidth);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -956,7 +959,7 @@ self.setWidth(newWidth);]]></ActionCode>
 				<Text>
 					<Id>1601574567518</Id>
 					<Name><![CDATA[text17]]></Name>
-					<X>260</X><Y>110</Y>
+					<X>180</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -978,7 +981,7 @@ self.setWidth(newWidth);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601574601140</Id>
 					<Name><![CDATA[editOther]]></Name>
-					<X>160</X><Y>220</Y>
+					<X>80</X><Y>220</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -989,14 +992,14 @@ self.setWidth(newWidth);]]></ActionCode>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// update width based on number of characters in box
+						<ActionCode><![CDATA[// update width based on number of characters in box (force >= 5)
 // (purely aesthetic)
-double newWidth = 5+12*value.length();
+double newWidth = 5+12*limitMin(5, value.length());
 self.setWidth(newWidth);
 
 // set position to be centered.
-// original - w/ X=160, width=190 - centered at 255
-self.setX(255 - newWidth/2.);]]></ActionCode>
+// original - w/ X=80, width=190 - centered at 165
+self.setX(165 - newWidth/2.);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Courier New" Size="18" Style="0"/>
@@ -1008,7 +1011,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				<Text>
 					<Id>1601574611843</Id>
 					<Name><![CDATA[text18]]></Name>
-					<X>255</X><Y>260</Y>
+					<X>175</X><Y>260</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1029,7 +1032,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				<Text>
 					<Id>1601574648215</Id>
 					<Name><![CDATA[text19]]></Name>
-					<X>245</X><Y>150</Y>
+					<X>165</X><Y>150</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1051,7 +1054,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601575379199</Id>
 					<Name><![CDATA[editExpression]]></Name>
-					<X>160</X><Y>460</Y>
+					<X>70</X><Y>430</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1062,14 +1065,14 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// update width based on number of characters in box
+						<ActionCode><![CDATA[// update width based on number of characters in box (force >= 5)
 // (purely aesthetic)
-double newWidth = 5+12*value.length();
+double newWidth = 5+12*limitMin(5, value.length());
 self.setWidth(newWidth);
 
 // set position to be centered.
-// original - w/ X=160, width=190 - centered at 255
-self.setX(255 - newWidth/2.);]]></ActionCode>
+// original - w/ X=70, width=190 - centered at 165
+self.setX(165 - newWidth/2.);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Courier New" Size="18" Style="0"/>
@@ -1081,7 +1084,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				<Text>
 					<Id>1601575385887</Id>
 					<Name><![CDATA[text20]]></Name>
-					<X>255</X><Y>500</Y>
+					<X>165</X><Y>470</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1102,7 +1105,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				<Text>
 					<Id>1601575551109</Id>
 					<Name><![CDATA[textRun]]></Name>
-					<X>440</X><Y>370</Y>
+					<X>320</X><Y>330</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1127,7 +1130,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				<Group>
 					<Id>1601575188333</Id>
 					<Name><![CDATA[groupPyEnv]]></Name>
-					<X>520</X><Y>410</Y>
+					<X>520</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1430,7 +1433,7 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1601585923631</Id>
 					<Name><![CDATA[button4]]></Name>
-					<X>200</X><Y>530</Y>
+					<X>110</X><Y>510</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1443,9 +1446,12 @@ self.setX(255 - newWidth/2.);]]></ActionCode>
 						<ActionCode><![CDATA[// The `runResults` function returns an Attempt object.
 // Capture it so that the feedback/out from it can be sent 
 //		to the animation function.
+// Can also pass the return class as the first argument to capture that
+// 		output type (see commented out code below for an example).
 
 if (!expression.isEmpty()) {
 	Attempt a = pyCommunicator.runResults(expression);
+//	String feedback = pyCommunicator.runResults(String.class, expression);
 	
 	// Update aesthetics of this model: animation and clear fields
 	animateRunResults(a.getFeedback());
@@ -1462,7 +1468,7 @@ if (!expression.isEmpty()) {
 				<Line>
 					<Id>1601593936275</Id>
 					<Name><![CDATA[ph_arrowRun]]></Name>
-					<X>300</X><Y>320</Y>
+					<X>270</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1479,14 +1485,14 @@ if (!expression.isEmpty()) {
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>160</Dx>
+					<Dx>180</Dx>
 					<Dy>50</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Line>
 					<Id>1601594342226</Id>
 					<Name><![CDATA[ph_arrowRR1]]></Name>
-					<X>340</X><Y>530</Y>
+					<X>290</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1503,14 +1509,14 @@ if (!expression.isEmpty()) {
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>120</Dx>
+					<Dx>170</Dx>
 					<Dy>-80</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Line>
 					<Id>1601594351219</Id>
 					<Name><![CDATA[ph_arrowRR2]]></Name>
-					<X>500</X><Y>460</Y>
+					<X>490</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1527,14 +1533,14 @@ if (!expression.isEmpty()) {
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>-140</Dx>
-					<Dy>100</Dy>
+					<Dx>-160</Dx>
+					<Dy>90</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Text>
 					<Id>1601662840841</Id>
 					<Name><![CDATA[textRR1]]></Name>
-					<X>430</X><Y>430</Y>
+					<X>410</X><Y>410</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1559,7 +1565,7 @@ if (!expression.isEmpty()) {
 				<Text>
 					<Id>1601662873729</Id>
 					<Name><![CDATA[textRR2]]></Name>
-					<X>370</X><Y>560</Y>
+					<X>330</X><Y>540</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1644,6 +1650,30 @@ if (!expression.isEmpty()) {
 					</Font>
 					<Alignment>RIGHT</Alignment>
 				</Text>
+				<Line>
+					<Id>1602472933188</Id>
+					<Name><![CDATA[line1]]></Name>
+					<X>-10</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>DASHED</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>340</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
 			</Presentation>
 
 				</Level>
@@ -1958,14 +1988,14 @@ root.level.add(root.arrowRR2);]]></BeforeSimulationRunCode>
 				<FinalDate><![CDATA[1584662400000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
-			<BypassInitialScreen>true</BypassInitialScreen>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
