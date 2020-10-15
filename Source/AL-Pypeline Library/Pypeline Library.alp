@@ -2891,8 +2891,8 @@ public class PyException extends Exception {
 				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
-			<VersionMinor>3</VersionMinor>
-			<VersionBuild>1</VersionBuild>
+			<VersionMinor>4</VersionMinor>
+			<VersionBuild>0</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
