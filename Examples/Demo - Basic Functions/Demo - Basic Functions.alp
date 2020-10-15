@@ -500,8 +500,8 @@ create_AnimateArrow(2, 0, 0, new ArrowAnimConfig(arrowRR2,
 				<EmbeddedObject>
 					<Id>1582222213566</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>-120</X><Y>25</Y>
-					<Label><X>-20</X><Y>-15</Y></Label>
+					<X>500</X><Y>350</Y>
+					<Label><X>-25</X><Y>-40</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -1276,156 +1276,6 @@ self.setX(165 - newWidth/2.);]]></ActionCode>
 			</Presentation>
 
 				</Group>
-				<Curve ControlPoints="true">
-					<Id>1601574839280</Id>
-					<Name><![CDATA[curveSnake1]]></Name>
-					<X>0</X><Y>-11</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>0.2</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor>-13143131</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-7</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-3</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-5</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-10</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>-10</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>-5</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>9</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>10</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>10</Y><Z>0</Z></Point>
-					   <Point><X>-9</X><Y>10</Y><Z>0</Z></Point>
-					   <Point><X>-11</X><Y>12</Y><Z>0</Z></Point>
-					   <Point><X>-11</X><Y>21</Y><Z>0</Z></Point>
-					   <Point><X>-12</X><Y>21</Y><Z>0</Z></Point>
-					   <Point><X>-14</X><Y>21</Y><Z>0</Z></Point>
-					   <Point><X>-15</X><Y>21</Y><Z>0</Z></Point>
-					   <Point><X>-22</X><Y>21</Y><Z>0</Z></Point>
-					   <Point><X>-22</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-15</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-13</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>1</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>true</Closed>
-				</Curve>
-				<Curve ControlPoints="true">
-					<Id>1601575082938</Id>
-					<Name><![CDATA[curveSnake2]]></Name>
-					<X>0</X><Y>11</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>0.2</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor>-8625</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>7</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>10</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>10</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-9</Y><Z>0</Z></Point>
-					   <Point><X>-10</X><Y>-10</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-10</Y><Z>0</Z></Point>
-					   <Point><X>9</X><Y>-10</Y><Z>0</Z></Point>
-					   <Point><X>11</X><Y>-12</Y><Z>0</Z></Point>
-					   <Point><X>11</X><Y>-21</Y><Z>0</Z></Point>
-					   <Point><X>12</X><Y>-21</Y><Z>0</Z></Point>
-					   <Point><X>14</X><Y>-21</Y><Z>0</Z></Point>
-					   <Point><X>15</X><Y>-21</Y><Z>0</Z></Point>
-					   <Point><X>22</X><Y>-21</Y><Z>0</Z></Point>
-					   <Point><X>22</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>15</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>13</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-1</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>true</Closed>
-				</Curve>
-				<Oval>
-					<Id>1601575135025</Id>
-					<Name><![CDATA[oval]]></Name>
-					<X>-5.75</X><Y>-15.25</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor/>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>1.75</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-16777216</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
-				<Oval>
-					<Id>1601575146257</Id>
-					<Name><![CDATA[oval1]]></Name>
-					<X>5.75</X><Y>15.25</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor/>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>1.75</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-16777216</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
 			</Presentation>
 
 				</Group>
@@ -1486,7 +1336,7 @@ if (!expression.isEmpty()) {
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
 					<Dx>180</Dx>
-					<Dy>50</Dy>
+					<Dy>30</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Line>
@@ -1993,9 +1843,9 @@ root.level.add(root.arrowRR2);]]></BeforeSimulationRunCode>
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>3</VersionMinor>
+		<VersionBuild>1</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
