@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
 <Model>
 	<Id>1582302519625</Id>
 	<Name><![CDATA[Demo - Running Python Files]]></Name>
@@ -181,6 +181,86 @@ This demo shows how you can use the `runFile` function to execute Python files w
 				</AgentLink>
 			</AgentLinks>
 
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>1604453353163</Id>
+					<Name><![CDATA[pyCommunicator]]></Name>
+					<X>160</X><Y>200</Y>
+					<Label><X>-35</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+						<ClassName><![CDATA[PyCommunicator]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
+							<ClassName><![CDATA[PyCommunicator]]></ClassName>
+							<ItemName><![CDATA[1569858524853]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[loadLastWorkingConfig]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommandType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonCommand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[pythonExecPath]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[redirectPyOutput]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
 
 			<Presentation>
 				<Level>
@@ -260,20 +340,18 @@ String baseStr = String.valueOf(baseValue);
 Attempt attempt;
 if (verbosityLevel == 0) {
 	// No verbosity is desired. Just call the specified file passing the desired value.
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
-										baseStr);
+	attempt = pyCommunicator.runFile("power_calculator.py", baseStr);
 } else {
 	// Some verbosity is desired. Call the specified file passing both the desired value and verbose string.
 	// As indicated by the help, more 'v's == more verbosity.
 	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
+	attempt = pyCommunicator.runFile("power_calculator.py", 
 										baseStr, 
 										verboseStr);
 }
 
-traceln(attempt.getFeedback());]]></ActionCode>
+Color textColor = attempt.isSuccessful() ? green : red;
+traceln(textColor, attempt.getFeedback());]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -295,10 +373,10 @@ traceln(attempt.getFeedback());]]></ActionCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// Run the specified file, passing the '-h' flag so that the help is printed to the console.
-Attempt helpAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-												"power_calculator.py", 
-												"-h");
-traceln(helpAttempt.getFeedback());]]></ActionCode>
+Attempt helpAttempt = pyCommunicator.runFile("power_calculator.py", "-h");
+
+Color textColor = helpAttempt.isSuccessful() ? green : red;
+traceln(textColor, helpAttempt.getFeedback());]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -484,22 +562,21 @@ String exponentStr = String.valueOf(exponentValue);
 Attempt attempt;
 if (verbosityLevel == 0) {
 	// No verbosity is desired. Just call the specified file passing the desired values.
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
+	attempt = pyCommunicator.runFile("power_calculator.py", 
 										baseStr, 
 										"-e", exponentStr);
 } else {
 	// Some verbosity is desired. Call the specified file passing the desired values and verbose string.
 	// As indicated by the help, more 'v's == more verbosity.
 	String verboseStr = "-" + Strings.repeat("v", verbosityLevel);
-	attempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
-										"power_calculator.py", 
+	attempt = pyCommunicator.runFile("power_calculator.py", 
 										baseStr, 
 										"-e", exponentStr, 
 										verboseStr);
 }
 
-traceln(attempt.getFeedback());]]></ActionCode>
+Color textColor = attempt.isSuccessful() ? green : red;
+traceln(textColor, attempt.getFeedback());]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -617,7 +694,9 @@ say_hello.py]]></Text>
 //	(in contrast to non-statically, where we first create an instance of PyCommunicator before calling the function)
 Attempt hiAttempt = PyCommunicator.runFile(PythonCommandType.PYTHON, 
 											"say_hello.py");
-traceln(hiAttempt.getFeedback());]]></ActionCode>
+											
+Color textColor = hiAttempt.isSuccessful() ? green : red;
+traceln(textColor, hiAttempt.getFeedback());]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -729,6 +808,52 @@ https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1604453447360</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>580</X><Y>70</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Note: The `action` of this button calls the runFile function statically. 
+It assumes that your environment is setup to use the `python` command.
+If you encounter errors, modify it accordingly.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1604453551359</Id>
+					<Name><![CDATA[text11]]></Name>
+					<X>660</X><Y>280</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Push the verbosity level to the max
+and try to print some results to see what an
+error in the Python response appears like.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -886,10 +1011,17 @@ For the static version, note that you'll need to specify which Python version to
 				<FinalDate><![CDATA[1584748800000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
+    </RequiredLibraryReference>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>

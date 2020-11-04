@@ -1010,7 +1010,7 @@ return runResults(code);]]></Body>
 					<Name><![CDATA[isConnected]]></Name>
 					<Description><![CDATA[Attempts to ping the Python server to see if it's still alive and ready to receive commands<br>
 @return boolean whether the ping was successful]]></Description>
-					<X>600</X><Y>450</Y>
+					<X>600</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
