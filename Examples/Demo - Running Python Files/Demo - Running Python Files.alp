@@ -827,7 +827,7 @@ https://git.io/al_py]]></Text>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Note: The `action` of this button calls the runFile function statically. 
 It assumes that your environment is setup to use the `python` command.
-If you encounter errors, modify it accordingly.]]></Text>
+If you encounter errors, modify it from the button's action field accordingly.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
