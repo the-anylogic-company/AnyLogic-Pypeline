@@ -125,7 +125,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306296885</Id>
 					<Name><![CDATA[intValue]]></Name>
-					<X>100</X><Y>140</Y>
+					<X>100</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -150,7 +150,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306305549</Id>
 					<Name><![CDATA[doubleValue]]></Name>
-					<X>100</X><Y>200</Y>
+					<X>100</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -175,7 +175,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306338064</Id>
 					<Name><![CDATA[booleanValue]]></Name>
-					<X>100</X><Y>260</Y>
+					<X>100</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -200,7 +200,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306352361</Id>
 					<Name><![CDATA[stringValue]]></Name>
-					<X>100</X><Y>320</Y>
+					<X>100</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -225,7 +225,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306373938</Id>
 					<Name><![CDATA[intArray]]></Name>
-					<X>100</X><Y>380</Y>
+					<X>100</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -250,7 +250,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306422265</Id>
 					<Name><![CDATA[stringArray]]></Name>
-					<X>100</X><Y>440</Y>
+					<X>100</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -275,7 +275,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="Parameter">
 					<Id>1582306453594</Id>
 					<Name><![CDATA[doubleArray2D]]></Name>
-					<X>100</X><Y>500</Y>
+					<X>100</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -304,7 +304,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<Variable Class="CollectionVariable">
 					<Id>1582310730574</Id>
 					<Name><![CDATA[stringToIntMap]]></Name>
-					<X>100</X><Y>560</Y>
+					<X>100</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -343,8 +343,8 @@ pyCommunicator.run("import json");]]></StartupCode>
 				<EmbeddedObject>
 					<Id>1582306219735</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>50</X><Y>100</Y>
-					<Label><X>-25</X><Y>-15</Y></Label>
+					<X>550</X><Y>20</Y>
+					<Label><X>-25</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -442,7 +442,7 @@ pyCommunicator.run("import json");]]></StartupCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582307618269</Id>
 					<Name><![CDATA[button_int1]]></Name>
-					<X>200</X><Y>120</Y>
+					<X>200</X><Y>130</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -453,9 +453,10 @@ pyCommunicator.run("import json");]]></StartupCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// When adding a string and a non-string, Java will automatically convert the non-string
-pyCommunicator.run("int_value = " + intValue);
+String pycode = "int_value = " + intValue;
+pyCommunicator.run(pycode);
 
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next button
 button_int2.setEnabled(true);
@@ -470,7 +471,7 @@ button_int3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582307631798</Id>
 					<Name><![CDATA[button_int2]]></Name>
-					<X>290</X><Y>120</Y>
+					<X>290</X><Y>130</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -493,7 +494,7 @@ actionText.setText("Modified! (added 1)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582307638166</Id>
 					<Name><![CDATA[button_int3]]></Name>
-					<X>380</X><Y>120</Y>
+					<X>380</X><Y>130</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -503,8 +504,7 @@ actionText.setText("Modified! (added 1)");]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[int newIntValue = pyCommunicator.runResults("int_value")
-								.getFeedback(int.class);
+						<ActionCode><![CDATA[int newIntValue = pyCommunicator.runResults(int.class, "int_value");
 
 actionText.setText("Got! Int value = " + newIntValue);]]></ActionCode>
 					</BasicProperties>
@@ -517,7 +517,7 @@ actionText.setText("Got! Int value = " + newIntValue);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308119197</Id>
 					<Name><![CDATA[button_double1]]></Name>
-					<X>200</X><Y>180</Y>
+					<X>200</X><Y>190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -528,9 +528,10 @@ actionText.setText("Got! Int value = " + newIntValue);]]></ActionCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// When adding a string and a non-string, Java will automatically convert the non-string
-pyCommunicator.run("double_value = " + doubleValue);
+String pycode = "double_value = " + doubleValue;
+pyCommunicator.run(pycode);
 
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_double2.setEnabled(true);
@@ -545,7 +546,7 @@ button_double3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308119199</Id>
 					<Name><![CDATA[button_double2]]></Name>
-					<X>290</X><Y>180</Y>
+					<X>290</X><Y>190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -568,7 +569,7 @@ actionText.setText("Modified! (multiplied by 1.5)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308119201</Id>
 					<Name><![CDATA[button_double3]]></Name>
-					<X>380</X><Y>180</Y>
+					<X>380</X><Y>190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -578,8 +579,7 @@ actionText.setText("Modified! (multiplied by 1.5)");]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[double newDoubleValue = pyCommunicator.runResults("double_value")
-									  .getFeedback(double.class);
+						<ActionCode><![CDATA[double newDoubleValue = pyCommunicator.runResults(double.class, "double_value");
 
 actionText.setText("Got! Double value = " + newDoubleValue);]]></ActionCode>
 					</BasicProperties>
@@ -592,7 +592,7 @@ actionText.setText("Got! Double value = " + newDoubleValue);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308211028</Id>
 					<Name><![CDATA[button_bool2]]></Name>
-					<X>290</X><Y>240</Y>
+					<X>290</X><Y>250</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -615,7 +615,7 @@ actionText.setText("Modified! (flipped boolean)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308211030</Id>
 					<Name><![CDATA[button_bool3]]></Name>
-					<X>380</X><Y>240</Y>
+					<X>380</X><Y>250</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -626,8 +626,7 @@ actionText.setText("Modified! (flipped boolean)");]]></ActionCode>
 						<TextColor/>
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[// Because booleans are different between Java and Python, need to convert to JSON.
-boolean newBooleanValue = pyCommunicator.runResults("json.dumps(boolean_value)")
-										.getFeedback(boolean.class);
+boolean newBooleanValue = pyCommunicator.runResults(boolean.class, "json.dumps(boolean_value)");
 
 // Alternatively, you can get the feedback as a string and then manually check:
 /*
@@ -647,7 +646,7 @@ actionText.setText("Got! Boolean value = " + newBooleanValue);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308211032</Id>
 					<Name><![CDATA[button_bool1]]></Name>
-					<X>200</X><Y>240</Y>
+					<X>200</X><Y>250</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -658,18 +657,13 @@ actionText.setText("Got! Boolean value = " + newBooleanValue);]]></ActionCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// Java uses 'true' and 'false', while Python uses 'True' and 'False'.
-// 	If you try to set directly, it will throw an error:
-//pyCommunicator.run("boolean_value = " + booleanValue); // <- will throw error
-
 // The quickest way is to manually convert (a ternary condition is used below; an if-else is also valid)
-String pyBooleanStr = booleanValue == true ? "True" : "False";
-pyCommunicator.run("boolean_value = " + pyBooleanStr);
+String pyBooleanStr = booleanValue ? "True" : "False";
+String pycode = "boolean_value = " + pyBooleanStr;
 
-// Alternative 1: Use the built-in JSON library in Python to convert.
-// 	(Use the "String.format" function to reduce the number of string concatenations needed)
-//pyCommunicator.run(String.format("boolean_value = json.loads('%s')", booleanValue));
+pyCommunicator.run(pycode);
 
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_bool2.setEnabled(true);
@@ -684,7 +678,7 @@ button_bool3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308941379</Id>
 					<Name><![CDATA[button_str1]]></Name>
-					<X>200</X><Y>300</Y>
+					<X>200</X><Y>310</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -694,24 +688,18 @@ button_bool3.setEnabled(true);]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// The value of the string parameter does not contain quotes, so we need to add them.
-pyCommunicator.run("str_value = '" + stringValue + "'");
+						<ActionCode><![CDATA[String pycode = "str_value = ";
 
-// Alternative 1: You can use double quotation marks by escaping them first:
-//pyCommunicator.run("str_value = \"" + stringValue + "\"");
+// Method 1: Use the Communicator's toJSon function
+pycode += pyCommunicator.toJson(stringValue);
 
-// Alternative 2: You can use the ObjectMapper to convert to JSON:
-/*
-ObjectMapper mapper = new ObjectMapper();
-try {
-	String mappedStringStr = mapper.writeValueAsString(stringValue);
-	pyCommunicator.run("str_value = " + mappedStringStr);
-} catch (IOException e) {
-	e.printStackTrace();
-}
-*/
+// Method 2: Manually add string quotes
+// (as Java String does not have any)
+//pycode += "'" + stringValue + "'";
 
-actionText.setText("Set!");
+pyCommunicator.run(pycode);
+
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_str2.setEnabled(true);
@@ -726,7 +714,7 @@ button_str3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308941381</Id>
 					<Name><![CDATA[button_str2]]></Name>
-					<X>290</X><Y>300</Y>
+					<X>290</X><Y>310</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -749,7 +737,7 @@ actionText.setText("Modified! (appended a period)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582308941383</Id>
 					<Name><![CDATA[button_str3]]></Name>
-					<X>380</X><Y>300</Y>
+					<X>380</X><Y>310</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -760,8 +748,7 @@ actionText.setText("Modified! (appended a period)");]]></ActionCode>
 						<TextColor/>
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[// Feedback is a string by default, so we don't need to provide any parameters.
-String newStringValue = pyCommunicator.runResults("str_value")
-									  .getFeedback();
+String newStringValue = pyCommunicator.runResults(String.class, "str_value");
 
 actionText.setText("Got! String value = " + newStringValue);]]></ActionCode>
 					</BasicProperties>
@@ -774,7 +761,7 @@ actionText.setText("Got! String value = " + newStringValue);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309053497</Id>
 					<Name><![CDATA[button_intarray3]]></Name>
-					<X>380</X><Y>360</Y>
+					<X>380</X><Y>370</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -784,8 +771,7 @@ actionText.setText("Got! String value = " + newStringValue);]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[int[] newIntArray = pyCommunicator.runResults("int_list")
-								  .getFeedback(int[].class);
+						<ActionCode><![CDATA[int[] newIntArray = pyCommunicator.runResults(int[].class, "int_list");
 
 // The "Arrays.toString" function is needed to print a human-readable form of the array
 actionText.setText("Got! Int array = " + Arrays.toString(newIntArray));]]></ActionCode>
@@ -799,7 +785,7 @@ actionText.setText("Got! Int array = " + Arrays.toString(newIntArray));]]></Acti
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309053499</Id>
 					<Name><![CDATA[button_intarray1]]></Name>
-					<X>200</X><Y>360</Y>
+					<X>200</X><Y>370</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -809,13 +795,11 @@ actionText.setText("Got! Int array = " + Arrays.toString(newIntArray));]]></Acti
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Java does not have a built-in way of printing arrays.
-// To convert a 1D array to a string, the "Arrays.toString" function is needed.
-// For multi-dimensional primitive arrays, you can use "Arrays.deepToString".
-// Fortunately, the format is the same as Python uses (so no need to convert to JSON)
-pyCommunicator.run("int_list = " + Arrays.toString(intArray));
+						<ActionCode><![CDATA[// Converting to JSON (using toJson function)
+String pycode = "int_list = " + pyCommunicator.toJson(intArray);
+pyCommunicator.run(pycode);
 
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_intarray2.setEnabled(true);
@@ -830,7 +814,7 @@ button_intarray3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309053501</Id>
 					<Name><![CDATA[button_intarray2]]></Name>
-					<X>290</X><Y>360</Y>
+					<X>290</X><Y>370</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -853,7 +837,7 @@ actionText.setText("Modified! (appended -1)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309607470</Id>
 					<Name><![CDATA[button_strarray1]]></Name>
-					<X>200</X><Y>420</Y>
+					<X>200</X><Y>430</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -863,23 +847,11 @@ actionText.setText("Modified! (appended -1)");]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// We could use the method seen in the "set" button for the integer array,
-//	however, the words need to be quoted before being sent to Python
-//	(as seen in the "set" button for the string value).
+						<ActionCode><![CDATA[// Converting to JSON (using toJson function)
+String pycode = "str_list = " + pyCommunicator.toJson(stringArray);
+pyCommunicator.run(pycode);
 
-// Method 1: Converting to JSON (using toJson function)
-String jsonStrArray = pyCommunicator.toJson(stringArray);
-pyCommunicator.run("str_list = " + jsonStrArray);
-
-// Method 2: modify the string array before sending to Python
-/*
-String[] modifiedStringArray = stringArray.clone();
-for (int i = 0; i < modifiedStringArray.length; i++)
-	modifiedStringArray[i] = "'" + modifiedStringArray[i] + "'";
-pyCommunicator.run("str_list = " + Arrays.toString(modifiedStringArray));
-*/
-
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_strarray2.setEnabled(true);
@@ -894,7 +866,7 @@ button_strarray3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309607472</Id>
 					<Name><![CDATA[button_strarray2]]></Name>
-					<X>290</X><Y>420</Y>
+					<X>290</X><Y>430</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -922,7 +894,7 @@ actionText.setText("Modified! (appended the word 'okay')");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582309607474</Id>
 					<Name><![CDATA[button_strarray3]]></Name>
-					<X>380</X><Y>420</Y>
+					<X>380</X><Y>430</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -933,8 +905,7 @@ actionText.setText("Modified! (appended the word 'okay')");]]></ActionCode>
 						<TextColor/>
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[// Because Python uses single quoted strings, need to have it convert to JSON first.
-String[] newStrArray = pyCommunicator.runResults("json.dumps(str_list)")
-									 .getFeedback(String[].class);
+String[] newStrArray = pyCommunicator.runResults(String[].class, "json.dumps(str_list)");
 
 // The "Arrays.toString" function is needed to print a human-readable form of the array
 actionText.setText("Got! String array = " + Arrays.toString(newStrArray));]]></ActionCode>
@@ -948,7 +919,7 @@ actionText.setText("Got! String array = " + Arrays.toString(newStrArray));]]></A
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310374235</Id>
 					<Name><![CDATA[button_double2darray2]]></Name>
-					<X>290</X><Y>480</Y>
+					<X>290</X><Y>490</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -973,7 +944,7 @@ actionText.setText("Modified! (last value in each row * 10)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310374237</Id>
 					<Name><![CDATA[button_double2darray3]]></Name>
-					<X>380</X><Y>480</Y>
+					<X>380</X><Y>490</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -983,8 +954,7 @@ actionText.setText("Modified! (last value in each row * 10)");]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>false</Enabled>
-						<ActionCode><![CDATA[double[][] newDoubleArray2D = pyCommunicator.runResults("double2d_list")
-											.getFeedback(double[][].class);
+						<ActionCode><![CDATA[double[][] newDoubleArray2D = pyCommunicator.runResults(double[][].class, "double2d_list");
 
 // The "Arrays.deepToString" function is needed to print a human-readable form of the array
 actionText.setText("Got! Double array 2D = " + Arrays.deepToString(newDoubleArray2D));]]></ActionCode>
@@ -998,7 +968,7 @@ actionText.setText("Got! Double array 2D = " + Arrays.deepToString(newDoubleArra
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310374239</Id>
 					<Name><![CDATA[button_double2darray1]]></Name>
-					<X>200</X><Y>480</Y>
+					<X>200</X><Y>490</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1008,12 +978,11 @@ actionText.setText("Got! Double array 2D = " + Arrays.deepToString(newDoubleArra
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Java does not have a built-in way of printing arrays.
-// To convert a 2D array to a string, the "Arrays.deepToString" function is needed.
-// Fortunately, the format is the same as Python uses (so no need to convert to JSON)
-pyCommunicator.run("double2d_list = " + Arrays.deepToString(doubleArray2D));
+						<ActionCode><![CDATA[// Converting to JSON (using toJson function)
+String pycode = "double2d_list = " + pyCommunicator.toJson(doubleArray2D);
+pyCommunicator.run(pycode);
 
-actionText.setText("Set!");
+actionText.setText("Set: `" + pycode + "`");
 
 // Enable the next buttons
 button_double2darray2.setEnabled(true);
@@ -1028,7 +997,7 @@ button_double2darray3.setEnabled(true);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310844094</Id>
 					<Name><![CDATA[button_map2]]></Name>
-					<X>290</X><Y>540</Y>
+					<X>290</X><Y>550</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1052,7 +1021,7 @@ actionText.setText("Modified! (added 1 to the value)");]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310844096</Id>
 					<Name><![CDATA[button_map3]]></Name>
-					<X>380</X><Y>540</Y>
+					<X>380</X><Y>550</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1082,7 +1051,7 @@ actionText.setText(String.format("\t(For string %s, value = %s)", stringValue, n
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1582310844098</Id>
 					<Name><![CDATA[button_map1]]></Name>
-					<X>200</X><Y>540</Y>
+					<X>200</X><Y>550</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1093,11 +1062,11 @@ actionText.setText(String.format("\t(For string %s, value = %s)", stringValue, n
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[// Use the provided toJson function
-String jsonMap = pyCommunicator.toJson(stringToIntMap);
-pyCommunicator.run("str2int_map = " + jsonMap);
-	
-actionText.setText("Set!");
-	
+String pycode = "str2int_map = " + pyCommunicator.toJson(stringToIntMap);
+pyCommunicator.run(pycode);
+
+actionText.setText("Set: `" + pycode + "`");
+
 // Enable the next buttons
 button_map2.setEnabled(true);
 button_map3.setEnabled(true);]]></ActionCode>
@@ -1110,7 +1079,7 @@ button_map3.setEnabled(true);]]></ActionCode>
 				<Text>
 					<Id>1588446504646</Id>
 					<Name><![CDATA[actionText]]></Name>
-					<X>280</X><Y>80</Y>
+					<X>200</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1126,12 +1095,12 @@ button_map3.setEnabled(true);]]></ActionCode>
 						<Size>20</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 				<Polyline>
 					<Id>1588447263836</Id>
 					<Name><![CDATA[polyline]]></Name>
-					<X>100</X><Y>365</Y>
+					<X>100</X><Y>375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1161,7 +1130,7 @@ button_map3.setEnabled(true);]]></ActionCode>
 				<Line>
 					<Id>1588447292839</Id>
 					<Name><![CDATA[line]]></Name>
-					<X>85</X><Y>470</Y>
+					<X>85</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1185,7 +1154,7 @@ button_map3.setEnabled(true);]]></ActionCode>
 				<Text>
 					<Id>1588447338255</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>50</X><Y>470</Y>
+					<X>50</X><Y>480</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1240,8 +1209,8 @@ https://git.io/al_py]]></Text>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
-		<Width>550</Width>
-		<Height>600</Height>
+		<Width>750</Width>
+		<Height>650</Height>
 	</Frame>
 	<Database>
 		<Logging>false</Logging>
@@ -1397,8 +1366,8 @@ These are equally valid to use -
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>4</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
