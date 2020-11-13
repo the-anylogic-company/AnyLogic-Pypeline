@@ -38,7 +38,9 @@ From a technical standpoint, the Lorenz system is nonlinear, non-periodic, three
 pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));
 
 // Move to the side of the AL window (approx.)
-pyCom.run("plotter.move_figure(1020, 15)");]]></StartupCode>
+pyCom.run(
+	String.format("plotter.move_figure(%s, %s)", win3DCoordinate.x, win3DCoordinate.y)
+);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1434708003073</Id>
@@ -302,6 +304,32 @@ pyCom.run("plotter.move_figure(1020, 15)");]]></StartupCode>
 						<ParameterEditor>
 							<Id>1588449983136</Id>
 							<Label><![CDATA[Hours between plot updates]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>SEPARATE_SECTION</DelimeterType>
+							<StartSection><![CDATA[Pypeline parameters]]></StartSection>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1605291035709</Id>
+					<Name><![CDATA[win3DCoordinate]]></Name>
+					<X>1050</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[Point]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[new Point(1020, 15)]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1605291035707</Id>
+							<Label><![CDATA[Coordinate of 3D window]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1899,6 +1927,9 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 				<Parameter>
 					<ParameterName><![CDATA[plotUpdateRecurrence_hrs]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[win3DCoordinate]]></ParameterName>
+				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -2335,6 +2366,12 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 			<FreeformParamValue>	
 				<Id>1588449983138</Id>
 			</FreeformParamValue>
+			<FreeformParamValue>	
+				<Id>1605291035709</Id>
+				<Expression Class="CodeValue">
+					<Code><![CDATA[new Point(300+(index%2*650), floorDiv(index,2)*540)]]></Code>
+				</Expression>
+			</FreeformParamValue>
 			<RangeVariationParamValue>	
 				<Id>1162412420762</Id>
 				<Type>RANGE</Type>
@@ -2382,6 +2419,10 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 				<Id>1588449983138</Id>
 				<Type>FIXED</Type>
 			</RangeVariationParamValue>
+			<RangeVariationParamValue>	
+				<Id>1605291035709</Id>
+				<Type>FIXED</Type>
+			</RangeVariationParamValue>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Stop at specified time]]></StopOption>
 				<InitialDate><![CDATA[1523909938000]]></InitialDate>	
@@ -2420,8 +2461,8 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
