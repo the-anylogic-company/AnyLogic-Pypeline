@@ -675,7 +675,7 @@ pyCom.run(String.format("c = np.array([%s, %s, %s])",
 
 pyCom.run("result = linprog(c, A_eq = A_eq, b_eq = b_eq, A_ub = A_ub, b_ub = b_ub, bounds=(0,None))");
 
-
+// values from `result` variable get pulled out in the Output objects
 update_objFunc();
 update_nBuiltType1();
 update_nBuiltType2();
@@ -859,7 +859,7 @@ The goal is change the number of each type built,
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<OnClickCode><![CDATA[getExperimentHost().openWebSite("http://www.vision.ime.usp.br/~igor/articles/optimization-linprog.html");]]></OnClickCode>
+					<OnClickCode><![CDATA[getExperimentHost().openWebSite("https://web.archive.org/web/20160221155137/http://www.vision.ime.usp.br/~igor/articles/optimization-linprog.html");]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -4490,8 +4490,8 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>4</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
