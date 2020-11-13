@@ -392,7 +392,7 @@ if (!otherStmt.isEmpty()) {
 	sentCode += String.format("\"%s\"", otherStmt);
 }
 
-textRun.setText("run(" + sentCode + ")");
+textRun.setText(pyCom.getName() + ".run(" + sentCode + ")");
 
 create_AnimateArrow(0, 0, 0, new ArrowAnimConfig(arrowRun, 
 	ph_arrowRun.getX(), ph_arrowRun.getY(), ph_arrowRun.getDx(), ph_arrowRun.getDy(), 
@@ -462,7 +462,7 @@ if (!expression.isEmpty()) {
 	sentCode += String.format("\"%s\"", expression);
 }
 
-textRR1.setText("runResults(" + sentCode + ")");
+textRR1.setText(pyCom.getName() + ".runResults(" + sentCode + ")");
 textRR2.setText(output);
 
 create_AnimateArrow(0.0, 0, 0, new ArrowAnimConfig(arrowRR1, 
@@ -499,9 +499,9 @@ create_AnimateArrow(2, 0, 0, new ArrowAnimConfig(arrowRR2,
 			<EmbeddedObjects>
 				<EmbeddedObject>
 					<Id>1582222213566</Id>
-					<Name><![CDATA[pyCommunicator]]></Name>
+					<Name><![CDATA[pyCom]]></Name>
 					<X>500</X><Y>350</Y>
-					<Label><X>-25</X><Y>-40</Y></Label>
+					<Label><X>0</X><Y>-40</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -693,7 +693,7 @@ create_AnimateArrow(2, 0, 0, new ArrowAnimConfig(arrowRR2,
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<YCode><![CDATA[110 + index*20]]></YCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[pyCommunicator.history.size()]]></Code>
+						<Code><![CDATA[pyCom.history.size()]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -706,7 +706,7 @@ create_AnimateArrow(2, 0, 0, new ArrowAnimConfig(arrowRR2,
 //		containing the code for that command (`getFirst`) and the returned Attempt (`getSecond`)
 // 0 = head of history = last thing executed.
 // Since it's desired to print out in reverse other, size is subtracted from the index.
-pyCommunicator.history.get(pyCommunicator.history.size() - index - 1).getFirst()]]></TextCode>
+pyCom.history.get(pyCom.history.size() - index - 1).getFirst()]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -725,7 +725,7 @@ pyCommunicator.history.get(pyCommunicator.history.size() - index - 1).getFirst()
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<YCode><![CDATA[110 + index*20]]></YCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[pyCommunicator.history.size()]]></Code>
+						<Code><![CDATA[pyCom.history.size()]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -738,7 +738,7 @@ pyCommunicator.history.get(pyCommunicator.history.size() - index - 1).getFirst()
 //		containing the code for that command (`getFirst`) and the returned Attempt (`getSecond`)
 // 0 = head of history = last thing executed.
 // Since it's desired to print out in reverse other, size is subtracted from the index.
-pyCommunicator.history.get(pyCommunicator.history.size() - index - 1).getSecond()]]></TextCode>
+pyCom.history.get(pyCom.history.size() - index - 1).getSecond()]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -867,15 +867,15 @@ self.setWidth(newWidth);]]></ActionCode>
 
 // Run each of the three fields if the user has put something
 if (!importLib.isEmpty()) {
-	pyCommunicator.run("import " + importLib);
+	pyCom.run("import " + importLib);
 }
 
 if (!(varName.isEmpty() || varValue.isEmpty())) {
-	pyCommunicator.run(varName + "=" + varValue);
+	pyCom.run(varName + "=" + varValue);
 }
 
 if (!otherStmt.isEmpty()) {
-	pyCommunicator.run(otherStmt);
+	pyCom.run(otherStmt);
 }
 
 // Update aesthetics of this model: animation and clear fields
@@ -1118,7 +1118,7 @@ self.setX(165 - newWidth/2.);]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
-					<Text><![CDATA[run("<CODE_1>",
+					<Text><![CDATA[pyCom.run("<CODE_1>",
 "<CODE_2>")]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -1300,7 +1300,7 @@ self.setX(165 - newWidth/2.);]]></ActionCode>
 // 		output type (see commented out code below for an example).
 
 if (!expression.isEmpty()) {
-	Attempt a = pyCommunicator.runResults(expression);
+	Attempt a = pyCom.runResults(expression);
 //	String feedback = pyCommunicator.runResults(String.class, expression);
 	
 	// Update aesthetics of this model: animation and clear fields
@@ -1403,7 +1403,7 @@ if (!expression.isEmpty()) {
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
-					<Text><![CDATA[runResults("<CODE_1>",
+					<Text><![CDATA[pyCom.runResults("<CODE_1>",
 "<CODE_2>")]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -1586,16 +1586,18 @@ if (!expression.isEmpty()) {
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<BeforeSimulationRunCode><![CDATA[//ShapeArrowLine(ShapeDrawMode drawMode,boolean ispublic,
-// double x,double y,double z,
-// java.awt.Paint color,
-// double dx,double dy,double dz,
-// double width,double zHeight, 
-// LineStyle style, 
-// LineArrowStyle beginArrowStyle, 
-// double beginArrowOffset,double beginArrowLength, double beginArrowWidth, 
-// LineArrowStyle endArrowStyle,
-// double endArrowOffset,double endArrowLength, double endArrowWidth) 
+			<BeforeSimulationRunCode><![CDATA[/* For reference:
+ShapeArrowLine(ShapeDrawMode drawMode,boolean ispublic,
+ double x,double y,double z,
+ java.awt.Paint color,
+ double dx,double dy,double dz,
+ double width,double zHeight, 
+ LineStyle style, 
+ LineArrowStyle beginArrowStyle, 
+ double beginArrowOffset,double beginArrowLength, double beginArrowWidth, 
+ LineArrowStyle endArrowStyle,
+ double endArrowOffset,double endArrowLength, double endArrowWidth) 
+*/
 
 root.arrowRun = new ShapeArrowLine(
 	ShapeDrawMode.SHAPE_DRAW_2D3D, true, 
@@ -1844,8 +1846,8 @@ root.level.add(root.arrowRR2);]]></BeforeSimulationRunCode>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
