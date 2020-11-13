@@ -25,12 +25,12 @@ import java.time.Duration;]]></Import>
 home_index = facilities.findFirst(h -> h.isHomeFacility).getIndex();
 
 // perform python imports and initialize solver object
-py.run(
+pyCom.run(
 	"import random", // used in the Order agent
 	"from tsp_solver import FacilityOrderSolver",
 	String.format( // pass in distance matrix and home index
 		"solver = FacilityOrderSolver(%s, %s)",
-		Arrays.deepToString(buildDistanceMatrix()),
+		pyCom.toJson(buildDistanceMatrix()),
 		home_index
 	)
 );
@@ -200,7 +200,7 @@ return matrix;]]></Body>
 					<Body><![CDATA[Order o = add_orders();
 int[] dests = o.destinations;
 
-int[] newDests = py.runResults(
+int[] newDests = pyCom.runResults(
 	int[].class,
 	String.format(
 		"solver.solve(%s)['order']", // gets the visit order array from the solution
@@ -407,9 +407,9 @@ send(o, truck);]]></Body>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1582070883326</Id>
-					<Name><![CDATA[py]]></Name>
+					<Name><![CDATA[pyCom]]></Name>
 					<X>1300</X><Y>450</Y>
-					<Label><X>10</X><Y>-15</Y></Label>
+					<Label><X>0</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -2715,7 +2715,7 @@ import java.time.Duration;]]></Import>
 // choosing some arbitrary number of random elements from a list and adding the home index at the end is just easier with python :)
 // (but obviously still possible with Java)
 String code = String.format("random.sample( set(range(%s)) - set([%s]), %s )", main.facilities.size(), main.home_index, numToChoose, main.home_index);
-int[] toVisit = main.py.runResults(int[].class, code);
+int[] toVisit = main.pyCom.runResults(int[].class, code);
 
 return toVisit;]]></Body>
 				</Function>
@@ -5554,8 +5554,8 @@ The list is passed to the truck via a message. A statechart is used to have the 
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
