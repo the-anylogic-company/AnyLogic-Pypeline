@@ -231,8 +231,12 @@ pyCommunicator.run("from priceGenerator import update_agent_data");]]></StartupC
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[String json = pyCommunicator.toJson(companies, true);
+String filename = String.format("companydata_%04.0f-%04.0f.json", filename);
+
+traceln("Dumping company data to: " + filename);
+
 pyCommunicator.run(
-	String.format("with open('companydata_%04.0f-%04.0f.json', 'w') as f:", time()-100+1, time()), 
+	String.format("with open('%s', 'w') as f:", filename), 
 	String.format("  f.write('''%s''')", json)
 );]]></Action>
 				</Event>
@@ -363,7 +367,7 @@ for (HashMap<String, Object> data : inputData) {
 				<EmbeddedObject>
 					<Id>1590605038476</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>440</X><Y>20</Y>
+					<X>440</X><Y>30</Y>
 					<Label><X>-35</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1023,6 +1027,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<OnClickCode><![CDATA[_origin_VA.navigateTo();]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -1518,7 +1523,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 				<Variable Class="PlainVariable">
 					<Id>1598642774834</Id>
 					<Name><![CDATA[value]]></Name>
-					<X>50</X><Y>150</Y>
+					<X>50</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1533,7 +1538,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 				<Variable Class="Parameter">
 					<Id>1598642774853</Id>
 					<Name><![CDATA[startValue]]></Name>
-					<X>50</X><Y>50</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1558,7 +1563,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 				<Variable Class="Parameter">
 					<Id>1598642774856</Id>
 					<Name><![CDATA[volatility]]></Name>
-					<X>50</X><Y>100</Y>
+					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1584,7 +1589,7 @@ plOutline.setLineColor(c_dark);]]></Body>
     			<DataSet>
 					<Id>1598642774842</Id>
 					<Name><![CDATA[priceHistory]]></Name>
-					<X>200</X><Y>50</Y>
+					<X>50</X><Y>250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1669,6 +1674,29 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<Text>
+					<Id>1605290446016</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>50</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[(All updates are made in the update event in Main)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -3392,7 +3420,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[Demo - Passing data types 2 (JSON) : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+				<ShowDeveloperPanelOnStart>true</ShowDeveloperPanelOnStart>
 				<RealTimeScale>5.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
@@ -3408,8 +3436,8 @@ Additionally, you can use the provided buttons to manually print the JSON format
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
