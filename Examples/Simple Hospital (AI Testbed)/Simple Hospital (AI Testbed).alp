@@ -21,7 +21,7 @@ This model showcases how, with Pypeline, you can use simulation as a testbed for
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[// Import class from local file to use in calling the trained neural network models
-py.run("from nn_model_parser import HospitalPredictor",
+pyCom.run("from nn_model_parser import HospitalPredictor",
 		"predictor = HospitalPredictor()");]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -119,7 +119,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602296996864</Id>
 					<Name><![CDATA[color00_04]]></Name>
-					<X>-400</X><Y>100</Y>
+					<X>-450</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -134,7 +134,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602297023552</Id>
 					<Name><![CDATA[color04_08]]></Name>
-					<X>-400</X><Y>150</Y>
+					<X>-450</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -149,7 +149,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602297030687</Id>
 					<Name><![CDATA[color08_12]]></Name>
-					<X>-400</X><Y>200</Y>
+					<X>-450</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -164,7 +164,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602297036382</Id>
 					<Name><![CDATA[color12_16]]></Name>
-					<X>-400</X><Y>250</Y>
+					<X>-450</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -179,7 +179,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602297041408</Id>
 					<Name><![CDATA[color16_20]]></Name>
-					<X>-400</X><Y>300</Y>
+					<X>-450</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -194,7 +194,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="PlainVariable">
 					<Id>1602297048045</Id>
 					<Name><![CDATA[color20_24]]></Name>
-					<X>-400</X><Y>350</Y>
+					<X>-450</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -209,7 +209,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="Parameter">
 					<Id>1588439134187</Id>
 					<Name><![CDATA[hospitalCapacity]]></Name>
-					<X>-100</X><Y>100</Y>
+					<X>-150</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -233,7 +233,7 @@ py.run("from nn_model_parser import HospitalPredictor",
 				<Variable Class="CollectionVariable">
 					<Id>1602362498129</Id>
 					<Name><![CDATA[skinTones]]></Name>
-					<X>-400</X><Y>400</Y>
+					<X>-450</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -257,7 +257,7 @@ new Color(137, 81, 58), // darkest
 				<Connector>
 					<Id>1586811665437</Id>
 					<Name><![CDATA[connector]]></Name>
-					<X>120</X><Y>300</Y>
+					<X>120</X><Y>255</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -290,7 +290,7 @@ new Color(137, 81, 58), // darkest
 				<Connector>
 					<Id>1588384312169</Id>
 					<Name><![CDATA[connector1]]></Name>
-					<X>160</X><Y>300</Y>
+					<X>160</X><Y>255</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -323,7 +323,7 @@ new Color(137, 81, 58), // darkest
 				<Connector>
 					<Id>1588384393591</Id>
 					<Name><![CDATA[connector2]]></Name>
-					<X>260</X><Y>300</Y>
+					<X>260</X><Y>255</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -358,7 +358,7 @@ new Color(137, 81, 58), // darkest
 				<Event>
 					<Id>1588383173375</Id>
 					<Name><![CDATA[updateArrivalRate]]></Name>
-					<X>50</X><Y>360</Y>
+					<X>50</X><Y>315</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -389,7 +389,7 @@ new Color(137, 81, 58), // darkest
 // The called function scales it to the original range.
 // It also stores the predicted value in a data structure,
 //	so that it's using previous data to generate the next value.
-double newRate = py.runResults(double.class, "predictor.predict_rate()");
+double newRate = pyCom.runResults(double.class, "predictor.predict_rate()");
 						  
 // Update source
 source.set_rate(newRate, PER_HOUR);]]></Action>
@@ -401,7 +401,7 @@ source.set_rate(newRate, PER_HOUR);]]></Action>
 					<ReturnType><![CDATA[Color]]></ReturnType>
 					<Id>1602296034032</Id>
 					<Name><![CDATA[getClockFaceColor]]></Name>
-					<X>-250</X><Y>100</Y>
+					<X>-300</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -432,7 +432,7 @@ if (hour < 4) {
 					<ReturnType><![CDATA[Color]]></ReturnType>
 					<Id>1602365224215</Id>
 					<Name><![CDATA[getClockTextColor]]></Name>
-					<X>-250</X><Y>150</Y>
+					<X>-300</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -454,7 +454,7 @@ else
     			<DataSet>
 					<Id>1588384032919</Id>
 					<Name><![CDATA[arrivalRateDS]]></Name>
-					<X>1100</X><Y>50</Y>
+					<X>-300</X><Y>300</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -477,7 +477,7 @@ else
     			<DataSet>
 					<Id>1588384705766</Id>
 					<Name><![CDATA[takenBedsDS]]></Name>
-					<X>1100</X><Y>100</Y>
+					<X>-300</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -500,7 +500,7 @@ else
     			<DataSet>
 					<Id>1588384769329</Id>
 					<Name><![CDATA[waitingDS]]></Name>
-					<X>1100</X><Y>150</Y>
+					<X>-300</X><Y>400</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -522,8 +522,39 @@ else
 				</DataSet>
     			<HistogramData>
 					<Id>1600281444359</Id>
-					<Name><![CDATA[tisHD]]></Name>
-					<X>1100</X><Y>200</Y>
+					<Name><![CDATA[predictedStayDurationHD]]></Name>
+					<X>-300</X><Y>500</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1600329600000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<Value><![CDATA[]]></Value>
+					<NumberOfIntervals>20</NumberOfIntervals>
+					<MinMaxAutodetect>true</MinMaxAutodetect>
+					<RangeMinExpression><![CDATA[0]]></RangeMinExpression>
+					<RangeMaxExpression><![CDATA[1]]></RangeMaxExpression>
+					<InitialIntervalSize><![CDATA[0.1]]></InitialIntervalSize>
+					<CalculateCDF>true</CalculateCDF>
+					<CalculatePercentiles>false</CalculatePercentiles>
+					<LowPercent>10</LowPercent>
+					<HighPercent>10</HighPercent>
+					<Title><![CDATA[]]></Title>
+				</HistogramData>
+    			<HistogramData>
+					<Id>1603484257726</Id>
+					<Name><![CDATA[cumulativeTisHD]]></Name>
+					<X>-300</X><Y>450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -556,7 +587,7 @@ else
 				<AgentLink>
 					<Id>1586797690567</Id>
 					<Name><![CDATA[connections]]></Name>
-					<X>50</X><Y>-50</Y>
+					<X>200</X><Y>-150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -577,8 +608,8 @@ else
 			<EmbeddedObjects>
 				<EmbeddedObject>
 					<Id>1586798228917</Id>
-					<Name><![CDATA[py]]></Name>
-					<X>40</X><Y>100</Y>
+					<Name><![CDATA[pyCom]]></Name>
+					<X>30</X><Y>50</Y>
 					<Label><X>10</X><Y>-5</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -663,7 +694,7 @@ else
 				<EmbeddedObject>
 					<Id>0</Id>
 					<Name><![CDATA[patients]]></Name>
-					<X>50</X><Y>200</Y>
+					<X>50</X><Y>155</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -793,7 +824,7 @@ else
 				<EmbeddedObject>
 					<Id>1586811637925</Id>
 					<Name><![CDATA[source]]></Name>
-					<X>30</X><Y>290</Y>
+					<X>30</X><Y>245</Y>
 					<Label><X>-5</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1123,7 +1154,7 @@ else
 				<EmbeddedObject>
 					<Id>1586811664328</Id>
 					<Name><![CDATA[queue]]></Name>
-					<X>120</X><Y>280</Y>
+					<X>120</X><Y>235</Y>
 					<Label><X>-5</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1237,7 +1268,7 @@ else
 				<EmbeddedObject>
 					<Id>1586811668493</Id>
 					<Name><![CDATA[stay]]></Name>
-					<X>220</X><Y>280</Y>
+					<X>220</X><Y>235</Y>
 					<Label><X>0</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1260,7 +1291,7 @@ else
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[py.runResults(
+								<Code><![CDATA[pyCom.runResults(
 	double.class,
 	"predictor.predict_los(" + agent.getArrayStr() + ")"
 )]]></Code>
@@ -1292,7 +1323,7 @@ else
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[agent.predictedDuration_days = delayTime;
-tisHD.add(delayTime);]]></Code>
+predictedStayDurationHD.add(delayTime);]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -1347,7 +1378,7 @@ tisHD.add(delayTime);]]></Code>
 				<EmbeddedObject>
 					<Id>1586811672181</Id>
 					<Name><![CDATA[sink]]></Name>
-					<X>320</X><Y>290</Y>
+					<X>320</X><Y>245</Y>
 					<Label><X>-10</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1366,6 +1397,10 @@ tisHD.add(delayTime);]]></Code>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[double flowchartEntryDay = toTimeUnits(agent.getFlowchartEntryTime(), DAY);
+cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[destroyEntity]]></Name>
@@ -1429,7 +1464,7 @@ tisHD.add(delayTime);]]></Code>
     			<TimePlot>
 					<Id>1588384098751</Id>
 					<Name><![CDATA[plot1]]></Name>
-					<X>390</X><Y>30</Y>
+					<X>410</X><Y>0</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1447,23 +1482,23 @@ tisHD.add(delayTime);]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>590</Width>
-					<Height>190</Height>
+					<Width>640</Width>
+					<Height>150</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>30</XOffset>
 						<YOffset>10</YOffset>
-						<Width>550</Width>
-						<Height>120</Height>
+						<Width>510</Width>
+						<Height>110</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
 					</ChartArea>
 					<Legend>
-						<Place>SOUTH</Place>
+						<Place>WEST</Place>
 						<TextColor>-16777216</TextColor>
-						<Size>30</Size>
+						<Size>90</Size>
 					</Legend>
 					<Labels>
 						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
@@ -1479,7 +1514,7 @@ tisHD.add(delayTime);]]></Code>
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Arrival rates (per day)]]></Title>
+						<Title><![CDATA[Daily arrival rate]]></Title>
 					<Expression><![CDATA[arrivalRateDS]]></Expression>
 					<Color>-2354116</Color>
 					<Expression2><![CDATA[0]]></Expression2>
@@ -1495,7 +1530,7 @@ tisHD.add(delayTime);]]></Code>
     			<TimePlot>
 					<Id>1588384413489</Id>
 					<Name><![CDATA[plot]]></Name>
-					<X>390</X><Y>410</Y>
+					<X>410</X><Y>150</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1513,23 +1548,23 @@ tisHD.add(delayTime);]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>590</Width>
-					<Height>190</Height>
+					<Width>640</Width>
+					<Height>150</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>30</XOffset>
 						<YOffset>10</YOffset>
-						<Width>550</Width>
-						<Height>120</Height>
+						<Width>510</Width>
+						<Height>110</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
 					</ChartArea>
 					<Legend>
-						<Place>SOUTH</Place>
+						<Place>WEST</Place>
 						<TextColor>-16777216</TextColor>
-						<Size>30</Size>
+						<Size>90</Size>
 					</Legend>
 					<Labels>
 						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
@@ -1545,7 +1580,7 @@ tisHD.add(delayTime);]]></Code>
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Beds in use]]></Title>
+						<Title><![CDATA[# staying]]></Title>
 					<Expression><![CDATA[takenBedsDS]]></Expression>
 					<Color>-6632142</Color>
 					<Expression2><![CDATA[delay.size()]]></Expression2>
@@ -1554,7 +1589,7 @@ tisHD.add(delayTime);]]></Code>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[Waiting for bed]]></Title>
+						<Title><![CDATA[# queuing]]></Title>
 					<Expression><![CDATA[waitingDS]]></Expression>
 					<Color>-14774017</Color>
 					<Expression2><![CDATA[queue.size()]]></Expression2>
@@ -1570,7 +1605,7 @@ tisHD.add(delayTime);]]></Code>
 				<Text>
 					<Id>1596828114895</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>10</X><Y>10</Y>
+					<X>10</X><Y>-90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1592,7 +1627,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1596828346192</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>10</X><Y>50</Y>
+					<X>10</X><Y>-50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1613,7 +1648,7 @@ https://git.io/al_py]]></Text>
     			<Histogram>
 					<Id>1600281402024</Id>
 					<Name><![CDATA[chart]]></Name>
-					<X>390</X><Y>220</Y>
+					<X>490</X><Y>300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1631,30 +1666,30 @@ https://git.io/al_py]]></Text>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>590</Width>
-					<Height>180</Height>
+					<Width>560</Width>
+					<Height>150</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
-						<XOffset>30</XOffset>
+						<XOffset>40</XOffset>
 						<YOffset>10</YOffset>
-						<Width>550</Width>
-						<Height>120</Height>
+						<Width>510</Width>
+						<Height>110</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
 					</ChartArea>
 					<Legend>
-						<Place>SOUTH</Place>
+						<Place>WEST</Place>
 						<TextColor>-16777216</TextColor>
-						<Size>20</Size>
+						<Size>80</Size>
 					</Legend>
 					<Labels>
 						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
 						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
 						<TextColor>-12566464</TextColor>
 					</Labels>
-					<ShowLegend>true</ShowLegend>
+					<ShowLegend>false</ShowLegend>
 					<ShowPDF>true</ShowPDF>
 					<ShowCDF>false</ShowCDF>
 					<ShowMean>false</ShowMean>
@@ -1663,7 +1698,7 @@ https://git.io/al_py]]></Text>
 						<RelativeWidth>0.8</RelativeWidth>
 					</Bars>
 					<HistogramDataExpression>
-					<Expression><![CDATA[tisHD]]></Expression>
+					<Expression><![CDATA[predictedStayDurationHD]]></Expression>
 						<ColorPDF>-16777088</ColorPDF>
 						<ColorCDF>-13447886</ColorCDF>
 						<ColorLowPercent>-16728065</ColorLowPercent>
@@ -1677,7 +1712,7 @@ https://git.io/al_py]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1602294095457</Id>
 					<Name><![CDATA[slider]]></Name>
-					<X>50</X><Y>480</Y>
+					<X>50</X><Y>435</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1700,7 +1735,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602294112728</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>50</X><Y>510</Y>
+					<X>50</X><Y>465</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1722,7 +1757,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602294112729</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>300</X><Y>510</Y>
+					<X>300</X><Y>465</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1744,7 +1779,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602294112730</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>175</X><Y>510</Y>
+					<X>175</X><Y>465</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1766,7 +1801,7 @@ https://git.io/al_py]]></Text>
 				<Group>
 					<Id>1602295510912</Id>
 					<Name><![CDATA[clock]]></Name>
-					<X>300</X><Y>120</Y>
+					<X>330</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2042,7 +2077,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602365868335</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>50</X><Y>450</Y>
+					<X>50</X><Y>405</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2063,7 +2098,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602366028975</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>-410</X><Y>60</Y>
+					<X>-460</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2084,7 +2119,7 @@ https://git.io/al_py]]></Text>
 				<Text>
 					<Id>1602366046779</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>-260</X><Y>60</Y>
+					<X>-310</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2105,7 +2140,7 @@ https://git.io/al_py]]></Text>
 				<Group>
 					<Id>1602367360783</Id>
 					<Name><![CDATA[brain]]></Name>
-					<X>30</X><Y>405</Y>
+					<X>30</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2919,7 +2954,7 @@ https://git.io/al_py]]></Text>
 				<Group>
 					<Id>1602367374339</Id>
 					<Name><![CDATA[brain1]]></Name>
-					<X>290</X><Y>245</Y>
+					<X>290</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3733,7 +3768,7 @@ https://git.io/al_py]]></Text>
 				<Line>
 					<Id>1602367379526</Id>
 					<Name><![CDATA[line2]]></Name>
-					<X>35</X><Y>385.00000000000006</Y>
+					<X>35</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3757,7 +3792,7 @@ https://git.io/al_py]]></Text>
 				<Line>
 					<Id>1602367401033</Id>
 					<Name><![CDATA[line3]]></Name>
-					<X>270</X><Y>270</Y>
+					<X>270</X><Y>225</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3781,7 +3816,7 @@ https://git.io/al_py]]></Text>
 				<Rectangle>
 					<Id>1602367429385</Id>
 					<Name><![CDATA[rectangle]]></Name>
-					<X>40</X><Y>345</Y>
+					<X>40</X><Y>300</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3803,7 +3838,7 @@ https://git.io/al_py]]></Text>
 				<Rectangle>
 					<Id>1602367494093</Id>
 					<Name><![CDATA[rectangle1]]></Name>
-					<X>210</X><Y>270</Y>
+					<X>200</X><Y>225</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3816,12 +3851,140 @@ https://git.io/al_py]]></Text>
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
-					<Width>60</Width>
-					<Height>50</Height>
+					<Width>80</Width>
+					<Height>55</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
+    			<Histogram>
+					<Id>1603484263956</Id>
+					<Name><![CDATA[chart1]]></Name>
+					<X>490</X><Y>450</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1603526400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>560</Width>
+					<Height>150</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>40</XOffset>
+						<YOffset>10</YOffset>
+						<Width>510</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>false</ShowLegend>
+					<ShowPDF>true</ShowPDF>
+					<ShowCDF>false</ShowCDF>
+					<ShowMean>false</ShowMean>
+					<Bars>
+						<Direction>UP</Direction>
+						<RelativeWidth>0.8</RelativeWidth>
+					</Bars>
+					<HistogramDataExpression>
+					<Expression><![CDATA[cumulativeTisHD]]></Expression>
+						<ColorPDF>-16777088</ColorPDF>
+						<ColorCDF>-14774017</ColorCDF>
+						<ColorLowPercent>-32944</ColorLowPercent>
+						<ColorHighPercent>-13447886</ColorHighPercent>
+						<ColorMean>-3137392</ColorMean>
+						<LineWidth>1</LineWidth>						
+						<Title><![CDATA[tisHD (with wait time)]]></Title>							
+					</HistogramDataExpression>
+    			</Histogram>
+				<Text>
+					<Id>1605292468487</Id>
+					<Name><![CDATA[text5]]></Name>
+					<X>460</X><Y>360</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>270.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Predicted stay times
+(days)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1605292518927</Id>
+					<Name><![CDATA[text6]]></Name>
+					<X>460</X><Y>520</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>270.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Time in system
+(days)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1605292894823</Id>
+					<Name><![CDATA[text9]]></Name>
+					<X>-310</X><Y>250</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16776961</Color>
+					<Text><![CDATA[Datasets]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -5676,7 +5839,7 @@ return String.format("[["+placeholders+"]]",
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
-		<Width>1000</Width>
+		<Width>1050</Width>
 		<Height>600</Height>
 	</Frame>
 	<Database>
@@ -10117,8 +10280,8 @@ rot %= (2*PI);]]></OnDrawCode>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>4</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>
