@@ -8,6 +8,12 @@
 <Model>
 	<Id>1590593133127</Id>
 	<Name><![CDATA[Demo - Passing data types 2 (JSON)]]></Name>
+	<Description><![CDATA[This demo shows how you can use JSON (JavaScript Object Notation), a lightweight data-interchange format, to pass complex data structures between Java and Python. 
+There are three ways it's used: 
+1, loading a population from a local JSON file; 
+2, passing population data to a Python function to update a variable in each agent of the population; 
+3, writing population data to a new JSON file on an interval. 
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[passing_data_types_2]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>

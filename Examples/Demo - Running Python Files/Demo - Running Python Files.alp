@@ -8,8 +8,8 @@
 <Model>
 	<Id>1582302519625</Id>
 	<Name><![CDATA[Demo - Running Python Files]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
-This demo shows how you can use the `runFile` function to execute Python files without importing them.]]></Description>
+	<Description><![CDATA[This demo shows how to execute Python scripts directly, without having to 'import' them. It also demonstrates how this functionality is available both statically and non-statically. 
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___runfile]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

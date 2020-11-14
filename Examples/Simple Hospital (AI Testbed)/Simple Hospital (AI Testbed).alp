@@ -8,9 +8,10 @@
 <Model>
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
-In this (purposefully simple) model, patients arrive to a hospital, stay for a time, then leave.
-This model showcases how, with Pypeline, you can use simulation as a testbed for testing your trained AI policies. Two different neural networks drive this model.]]></Description>
+	<Description><![CDATA[This model demonstrates being able to use simulation as a testbed for evaluating trained AI politices in a dynamic environment. 
+It depicts a simplified hospital where patients arrive, stay for some time, then leave. Two neural networks are utilized: one for predicting the arrival rate of patients based on the last day's worth of arrival rates; the second is for predicting patient length of stay based on 24 attributes. 
+A slider is provided for you to experiment with dynamically adjusting hospital capacity. 
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[simple_hospital_ai_testbed]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>

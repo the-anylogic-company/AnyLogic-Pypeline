@@ -8,9 +8,10 @@
 <Model>
 	<Id>1582222207135</Id>
 	<Name><![CDATA[Demo - Basic Functions]]></Name>
-	<Description><![CDATA[[this model requires the Pypeline library to be installed]
-This demo shows usage of the basic Pypeline functions.
-It also shows how you can check the last 500 commands sent to the Communicator (using its built in `history` collection).]]></Description>
+	<Description><![CDATA[This demo shows usage of the basic functions available with the Pypeline library. 
+Animation is used to demonstrate the flow of commands between AnyLogic and the Python process running the background.
+Also shown is how Pypeline stores the last 500 commands sent to the Communicator using its built in `history` collection. -- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.
+]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___functions]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

@@ -8,11 +8,11 @@
 <Model>
 	<Id>1582306164627</Id>
 	<Name><![CDATA[Demo - Passing Data Types]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
-This demo shows how to pass different data types between Java and Python:
-- pass a Java object to Python, 
-- change the value in Python,
-- retrieve the value from Python and convert to a Java type.]]></Description>
+	<Description><![CDATA[This demo shows how to pass different data types between Java and Python, in three steps: 
+* each 'set' button passes a Java object to Python; 
+* each 'modify' button updates the value in Python; 
+* each 'get' button retrieves the value from Python and converts back into a Java type. 
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___passing_data_types]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

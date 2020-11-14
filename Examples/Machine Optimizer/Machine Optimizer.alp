@@ -8,14 +8,11 @@
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
-There are 3 types of machines (Type 1, 2, and 3).
-Each have different production costs.
-Each have three stages to be built (Stage 1, 2, and 3).
-Each stage has a different time requirement based on machine type.
-
-There are two constraints: the allotted number of machines built, and the allotted time for each stage.
-The goal is change the number of each type built, such that the production cost is minimized.]]></Description>
+	<Description><![CDATA[This model demonstrates solving a static optimization using the Python libraries "Numpy" and "Scipy". 
+In the model, there are three types of machines; each have their own production cost and are built in three stages, with each stage having a different time requirement per stage. 
+There are two constraints: the allotted number of machines built and the cumulative time allotted for each stage. 
+The goal is to change the number of each type built, such that the production cost is minimized.
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[machine_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

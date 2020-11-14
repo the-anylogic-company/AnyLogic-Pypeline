@@ -8,8 +8,9 @@
 <Model>
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
-	<Description><![CDATA[[this model requires Pypeline library to be installed]
-This model showcases an example of the Traveling Salesman problem. It uses Google's OR-tools Python library to optimize the order of a route, made up of a randomly selected number of cities.]]></Description>
+	<Description><![CDATA[This model showcases an example of a Traveling Salesman problem (TSP). In the TSP, a set of cities are present with one designated as the home location. Given an arbitrary number of cities to visit, the goal is to find the shortest route that starts and ends at the home location. 
+To optimize the order, the Python library OR-tools (by Google) is used. 
+-- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[pypeline___traveling_salesman]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
