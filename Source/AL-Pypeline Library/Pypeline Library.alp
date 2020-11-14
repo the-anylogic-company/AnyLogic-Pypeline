@@ -1573,7 +1573,11 @@ return map;]]></Body>
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1598473943538</Id>
 					<Name><![CDATA[agentType]]></Name>
-					<Description><![CDATA[Classifies an object based on its underlying class: `1` for single agents, `2` for agent populations, and `0` for non-agent types.]]></Description>
+					<Description><![CDATA[Classifies an object based on its underlying class: <br>
+`0` for entirely Java types,<br>
+`1` for single agents,<br>
+`2` for agent populations,<br>
+`3` for Java collections with agent elements]]></Description>
 					<X>300</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1587,6 +1591,9 @@ return map;]]></Body>
 	return 1;
 else if (agentObj instanceof AgentArrayList)
 	return 2;
+else if (agentObj instanceof Collection 
+	&& ((Collection)agentObj).size() > 0)
+	return 3;
 return 0;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="true">
@@ -1762,13 +1769,21 @@ Note that agents and agent populations are handled manually due to a recursive i
 					</Parameter>
 					<Body><![CDATA[String output = null;
 
-// Handle agent conversion
-if (agentType(object) > 0) {
-	//traceln("USING AGENT JSON CONVERSION");
-	output = toAgentJson(object, false, prettyprint);
+
+int type = agentType(object);
+if (type > 0) { // agent-type conversion
+	if (type < 3) { // single agents or agent populations
+		output = toAgentJson(object, false, prettyprint);
+	} else { // Java list containing agents
+		Collection collection = (Collection)object;
+		String[] list = (String[])collection.stream()
+			.map(a -> toJson(a, prettyprint))
+			.toArray(String[]::new);
+		String joiner = prettyprint ? ", " : ",";
+		output = "[" + String.join(joiner, list) + "]";
+	}
 	return output;
 }
-//traceln("Converting object of type '%s': %s", object.getClass(), object.toString());		
 // All other types should use object mapper
 try {
 	if (prettyprint)
@@ -2900,7 +2915,7 @@ public class PyException extends Exception {
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>4</VersionMinor>
-			<VersionBuild>0</VersionBuild>
+			<VersionBuild>1</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
