@@ -134,17 +134,6 @@ public PyCommunicator(PythonCommandType pythonCommandType) {
 	this(false, pythonCommandType, "", "", true, true);
 }
 
-@Deprecated
-/**
-@deprecated
-Initialize PyCommunicator object from the preferred version.
-Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
-Defaults to redirect Python output.
-*/
-public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt) {
-	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt, true);
-}
-
 /**
 Initialize PyCommunicator object from the preferred version.
 Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
@@ -168,23 +157,6 @@ public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOr
 		true);
 }
 
-@Deprecated
-/**
-@deprecated
-Initialize PyCommunicator object from the preferred version and an argument.
-Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
-Defaults to redirect Python output.
-*/
-public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath, boolean throwErrorOnFailedAttempt) {
-	this(false, 
-		pythonCommandType, 
-		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
-		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
-		throwErrorOnFailedAttempt,
-		true);
-}
-
-
 /**
 Initialize PyCommunicator object from the preferred version and an argument.
 Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
@@ -196,27 +168,6 @@ public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOr
 		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
 		throwErrorOnFailedAttempt,
 		redirectPyOutput);
-}
-
-@Deprecated
-/**
-* @deprecated
-* With the new parameter for custom command, the string type is now ambiguous.
-* Use PyCommunicator(PreferredPythonVersion, String) instead
-* 
-*/
-public PyCommunicator(String pythonExecPath) {
-	this(false, PYTHON_PATH, "", pythonExecPath, true, true);
-}
-
-@Deprecated
-/**
-* @deprecated
-* With the new parameter for custom command, the string type is now ambiguous.
-* Use PyCommunicator(PreferredPythonVersion, String, boolean) instead
-*/
-public PyCommunicator(String pythonExecPath, boolean throwErrorOnFailedAttempt) {
-	this(false, PYTHON_PATH, "", pythonExecPath, throwErrorOnFailedAttempt, true);
 }]]></AdditionalClassCode>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Files;
