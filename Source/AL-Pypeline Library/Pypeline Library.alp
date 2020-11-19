@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.0.202011181904" AlpVersion="8.7.0">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -1895,7 +1895,7 @@ return null;]]></Body>
 					<ReturnType><![CDATA[T]]></ReturnType>
 					<Id>1599503670262</Id>
 					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[A function specifically for converting the given JSON to an agent class.<br>
+					<Description><![CDATA[A function specifically for converting the given JSON to an agent.<br>
 (Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
 @param json A JSON string to be converted to an AL agent<br>
 @param clazz The class of the AL agent type to convert the provided string to<br>
@@ -2006,6 +2006,13 @@ return null;]]></Body>
 					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
 					<Id>1599504104781</Id>
 					<Name><![CDATA[fromPopulationJson]]></Name>
+					<Description><![CDATA[@deprecated
+Converts an agent from JSON and adds it to an existing population.
+@param json A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values
+@param agent_clazz The Java class for the agent type to convert to
+@param engine The AnyLogic engine
+@param owner The parent agent that the population belongs to
+@param population The population to add the agent to]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
 					<X>330</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2083,6 +2090,48 @@ if (contains) {
 	//traceln("Added: " + runResults(String.class, "os.environ['PATH']"));
 } else {
 	//traceln("Not adding!");
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
+					<Id>1605754486288</Id>
+					<Name><![CDATA[fromPopulationJson]]></Name>
+					<Description><![CDATA[Converts a list of agents from JSON and adds it to an existing population.
+@param json A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values
+@param agent_clazz The Java class for the agent type to convert to
+@param population The population to add the agent to]]></Description>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>330</X><Y>760</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[agent_clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[population]]></Name>
+						<Type><![CDATA[AgentArrayList]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
+// (e.g., "[{"_index":0}, {"_index":1}]")
+try {	
+	// To properly get entirety of single agent, need to convert array to JsonNode
+	JsonNode root = objmapper.readTree(json);
+	// Run each child json's string thru `fromAgentJson` and add to output array
+	for (int i = 0; i < root.size(); i++) {
+		JsonNode child = root.get(i);
+		String childJson = objmapper.writeValueAsString(child);
+		fromAgentJson(childJson, agent_clazz, population.getOwner().getEngine(), population.getOwner(), population);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
 }]]></Body>
 				</Function>
 			</Functions>
