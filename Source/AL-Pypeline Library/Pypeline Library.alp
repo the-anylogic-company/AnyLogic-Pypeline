@@ -84,15 +84,13 @@ Node 3: A history of recently ran commands  can be accessed through the variable
 private static List<Class<?>> classesToIgnore = Arrays.asList(
 	Color.class,
 	Font.class,
-	StatisticsDiscrete.class, // TODO - manually add this
-	HistogramData.class, // TODO - manually add this
 	Shape.class,
-	EventOriginator.class, // TODO - maybe add this? 
-	Statechart.class, // TODO - maybe add this?
-	IStatechartState.class, // TODO - maybe add this?
+	EventOriginator.class,
+	Statechart.class,
+	IStatechartState.class,
 	AbstractLinkToAgent.class,
 	Scale.class,
-	CustomDistribution.class // TODO - should include? only can ever provide a single sample
+	CustomDistribution.class
 	);
 private static List<String> pkgNamesToIgnore = Arrays.asList(
 	"com.anylogic.libraries.pypeline",
@@ -168,7 +166,84 @@ public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOr
 		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
 		throwErrorOnFailedAttempt,
 		redirectPyOutput);
-}]]></AdditionalClassCode>
+}
+
+
+
+static HashMap<String, Object> serializeHistogram1DData(HistogramData h1data) {
+	HashMap<String, Object> dataTable = new HashMap<>();
+
+	int count = h1data.count();
+	dataTable.put("count", count);
+	// Follow similar structure as in ALCloud: User can derive ranges based on min X and interval width
+	dataTable.put("lowerBound", h1data.getXMin());
+	dataTable.put("intervalWidth", h1data.getIntervalWidth());
+	int[] hits = IntStream.range(0, h1data.getNumberOfIntervals())
+			.map(i -> Math.round((float)h1data.getPDF(i)*count)).toArray();
+	dataTable.put("hits", hits);
+	// HSimpleData = User set explicit min/max. There may be data outside this range, so add counts of lower/upper range of interval
+	if (h1data instanceof HistogramSimpleData) {
+		HistogramSimpleData hdataSimple = (HistogramSimpleData) h1data;
+		dataTable.put("hitsOutLow", Math.round((float)hdataSimple.getPDFOutsideLow()*count));
+		dataTable.put("hitsOutHigh", Math.round((float)hdataSimple.getPDFOutsideHigh()*count));
+	}
+	// Add in other useful stats available from histogram
+	HashMap<String, Double> dtableStats = new HashMap<>();
+	dtableStats.put("min", h1data.min());
+	dtableStats.put("max", h1data.max());
+	dtableStats.put("mean", h1data.mean());
+	dtableStats.put("deviation", h1data.deviation());
+	dataTable.put("statistics", dtableStats);
+	
+	return dataTable;
+	
+}
+
+static HashMap<String, Object> serializeHistogram2DData(Histogram2DData h2data) {
+	HashMap<String, Object> dataTable = new HashMap<>();
+
+	// Follow similar structure as in ALCloud; user can derive interval size, etc. from available data
+	int nX = h2data.getNumberOfXIntervals();
+	int nY = h2data.getNumberOfYIntervals();
+	int[][] hits = new int[nY][nX];
+	int[] hitsOutLow = new int[nX];
+	int[] hitsOutHigh = new int[nX];
+	for (int x = 0; x < nX; x++) {
+		int xcount = h2data.count(x);
+		hitsOutLow[x] = Math.round((float)h2data.getPDFOutsideLow(x)*xcount);
+		hitsOutHigh[x] = Math.round((float)h2data.getPDFOutsideHigh(x)*xcount);
+		for (int y = 0; y < nY; y++) {
+			hits[y][x] = Math.round((float)h2data.getPDF(x, y)*xcount);
+		}
+	}
+	dataTable.put("hits", hits);
+	dataTable.put("hitsOutLow", hitsOutLow);
+	dataTable.put("hitsOutHigh", hitsOutHigh);
+	dataTable.put("xMin", h2data.getXMin());
+	dataTable.put("xMax", h2data.getXMax());
+	dataTable.put("yMin", h2data.getYMin());
+	dataTable.put("yMax", h2data.getYMax());
+	return dataTable;
+}
+
+static HashMap<String, Object> serializeStatisticsDiscrete(StatisticsDiscrete stat) {
+	String[] statRows = stat.toString().split("\n");
+	HashMap<String, Object> statMap = new HashMap<>();
+	Arrays.stream(statRows)
+		.map(s -> s.strip().split("\t"))
+		.forEach(s -> statMap.put(s[0], Double.valueOf(s[1])));
+	return statMap;
+}
+
+static HashMap<String, Object> serializeStatisticsContinuous(StatisticsContinuous stat) {
+	String[] statRows = stat.toString().split("\n");
+	HashMap<String, Object> statMap = new HashMap<>();
+	Arrays.stream(statRows)
+		.map(s -> s.strip().split("\t"))
+		.forEach(s -> statMap.put(s[0], Double.valueOf(s[1])));
+	return statMap;
+}
+]]></AdditionalClassCode>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Files;
 import java.io.IOException;
@@ -192,7 +267,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
-import com.anylogic.cloud.util.ExceptionUtils;]]></Import>
+import com.anylogic.cloud.util.ExceptionUtils;
+import java.util.stream.IntStream;]]></Import>
 			<StartupCode><![CDATA[initialize();
 generateProperties();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
@@ -1323,7 +1399,7 @@ Note that agents and agent populations are handled manually due to a recursive i
 @param clazz The class to convert the provided string to<br>
 @return The object of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
-					<X>300</X><Y>580</Y>
+					<X>300</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1505,6 +1581,8 @@ for (Field field : fields) {
 			}
 		}
 		//traceln("\t%s: Adding object of type: %s", name, value.getClass());
+		// try custom serializer
+		value = customClassSerializer(value);
 		map.put(name, value);
 	} catch (IllegalAccessException e) {
 		if (includeInvalidFields) {
@@ -1553,7 +1631,7 @@ return 0;]]></Body>
 					<Id>1598562546634</Id>
 					<Name><![CDATA[agentPopToList]]></Name>
 					<Description><![CDATA[Creates a list of Map objects, one for each converted agent in the population]]></Description>
-					<X>330</X><Y>550</Y>
+					<X>330</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1737,6 +1815,7 @@ if (type > 0) { // agent-type conversion
 }
 // All other types should use object mapper
 try {
+	//traceln("Using objmap for: " + object.getClass());
 	if (prettyprint)
 		output = objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 	else
@@ -1757,7 +1836,7 @@ return output;]]></Body>
 @param clazz The class of the AL agent type to convert the provided string to<br>
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>610</Y>
+					<X>300</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1803,7 +1882,7 @@ return null;]]></Body>
 @param owner The owner of the population (e.g., your root agent)<br>
 @return AgentArrayList An access-only ArrayList of the agents]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>670</Y>
+					<X>300</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1852,7 +1931,7 @@ return null;]]></Body>
 @param clazz The class of the AL agent type to convert the provided string to<br>
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>640</Y>
+					<X>330</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1911,7 +1990,7 @@ return null;]]></Body>
 					<Name><![CDATA[fromPopulationJson]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>700</Y>
+					<X>330</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1965,7 +2044,7 @@ Converts an agent from JSON and adds it to an existing population.
 @param owner The parent agent that the population belongs to
 @param population The population to add the agent to]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>730</Y>
+					<X>330</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2053,7 +2132,7 @@ if (contains) {
 @param agent_clazz The Java class for the agent type to convert to
 @param population The population to add the agent to]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>760</Y>
+					<X>330</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2084,6 +2163,33 @@ try {
 } catch (Exception e) {
 	e.printStackTrace();
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Object]]></ReturnType>
+					<Id>1605756231379</Id>
+					<Name><![CDATA[customClassSerializer]]></Name>
+					<Description><![CDATA[Tries to convert the given object to a serializable format that Jackson can understand.
+@return a generic object that should be serializable (or the original object if not handled)]]></Description>
+					<X>360</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (object instanceof StatisticsDiscrete) {
+	return serializeStatisticsDiscrete((StatisticsDiscrete)object);
+} else if (object instanceof StatisticsContinuous) {
+	return serializeStatisticsContinuous((StatisticsContinuous)object);
+} else if (object instanceof HistogramData) {
+	return serializeHistogram1DData((HistogramData)object);
+} else if (object instanceof Histogram2DData) {
+	return serializeHistogram2DData((Histogram2DData)object);
+}
+return object;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
