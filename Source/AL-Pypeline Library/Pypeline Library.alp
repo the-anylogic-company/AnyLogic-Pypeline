@@ -1024,7 +1024,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					<Id>1569878590739</Id>
 					<Name><![CDATA[run]]></Name>
 					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
-@param code the single line of code to be executed<br>
+@param code The single line of code to be executed<br>
 @return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
 					<X>600</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1049,7 +1049,7 @@ return attempt;]]></Body>
 					<Id>1569878595053</Id>
 					<Name><![CDATA[run]]></Name>
 					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
-@param lines the multi-lined code to run, with each line as its own argument<br>
+@param lines The multi-lined code to run, with each line as its own argument<br>
 @return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
 					<X>630</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1069,7 +1069,7 @@ return run(code);]]></Body>
 					<Id>1569878710125</Id>
 					<Name><![CDATA[runResults]]></Name>
 					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
-@param code the single line of code to be executed<br>
+@param code The single line of code to be executed<br>
 @return Attempt Contains the feedback of the returned value if no error, otherwise the error message]]></Description>
 					<X>600</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1119,7 +1119,10 @@ return runResults(code);]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[Attempt attempt = py.ping();
+					<Body><![CDATA[if (py == null)
+	return false;
+	
+Attempt attempt = py.ping();
 
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
 	error(attempt.getFeedback());
@@ -1251,7 +1254,7 @@ try {
 @param preferredVersion One of the options for which Python version to run the file<br>
 @param args The file path and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>300</Y>
+					<X>600</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1313,7 +1316,7 @@ return attempt;]]></Body>
 					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
 @param args The file path, and any arguments to run (flags and values should be separate strings)<br>
 @return Attempt with any outputs from running the file]]></Description>
-					<X>600</X><Y>360</Y>
+					<X>600</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1743,17 +1746,17 @@ return popList;]]></Body>
 					<Id>1598564953670</Id>
 					<Name><![CDATA[runResults]]></Name>
 					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
-@param return_type The Java class of the return type<br>
-@param code the single line of code to be executed<br>
+@param returnType The Java class of the return type<br>
+@param code The single line of code to be executed<br>
 @return T The output, in the type specified]]></Description>
 					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
-					<X>600</X><Y>210</Y>
+					<X>600</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[return_type]]></Name>
+						<Name><![CDATA[returnType]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1765,7 +1768,7 @@ history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
 	error(attempt.getFeedback());
-return attempt.getFeedback(return_type);]]></Body>
+return attempt.getFeedback(returnType);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1773,18 +1776,18 @@ return attempt.getFeedback(return_type);]]></Body>
 					<Id>1598565117046</Id>
 					<Name><![CDATA[runFile]]></Name>
 					<Description><![CDATA[Execute a Python file and get the output.<br>
-@param return_type The Java class of the return type<br>
+@param returnType The Java class of the return type<br>
 @param preferredVersion One of the options for which Python version to run the file<br>
 @param args The file path and any arguments to run (flags and values should be separate strings)<br>
 @return T The output, in the type specified]]></Description>
 					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
-					<X>630</X><Y>330</Y>
+					<X>630</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[return_type]]></Name>
+						<Name><![CDATA[returnType]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1796,7 +1799,7 @@ return attempt.getFeedback(return_type);]]></Body>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
 					<Body><![CDATA[Attempt attempt = runFile(preferredVersion, args);
-return attempt.getFeedback(return_type);]]></Body>
+return attempt.getFeedback(returnType);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1804,17 +1807,17 @@ return attempt.getFeedback(return_type);]]></Body>
 					<Id>1598565124530</Id>
 					<Name><![CDATA[runFile]]></Name>
 					<Description><![CDATA[Execute a Python file using the preferred version of the running environment.<br>
-@param return_type The Java class of the return type<br>
+@param returnType The Java class of the return type<br>
 @param args The file path, and any arguments to run (flags and values should be separate strings)<br>
 @return T The output, in the type specified]]></Description>
 					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
-					<X>630</X><Y>390</Y>
+					<X>630</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[return_type]]></Name>
+						<Name><![CDATA[returnType]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1822,7 +1825,7 @@ return attempt.getFeedback(return_type);]]></Body>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
 					<Body><![CDATA[Attempt attempt = runFile(args);
-return attempt.getFeedback(return_type);]]></Body>
+return attempt.getFeedback(returnType);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1830,17 +1833,17 @@ return attempt.getFeedback(return_type);]]></Body>
 					<Id>1598565381265</Id>
 					<Name><![CDATA[runResults]]></Name>
 					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
-@param return_type The Java class of the return type<br>
+@param returnType The Java class of the return type<br>
 @param lines The multi-lined code to run, with each line as its own argument<br>
 @return T The output, in the type specified]]></Description>
 					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
-					<X>630</X><Y>240</Y>
+					<X>630</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[return_type]]></Name>
+						<Name><![CDATA[returnType]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1848,7 +1851,7 @@ return attempt.getFeedback(return_type);]]></Body>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
 					<Body><![CDATA[String code = String.join("\n", lines);
-return runResults(return_type, code);]]></Body>
+return runResults(returnType, code);]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="true">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -2313,6 +2316,87 @@ try {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[disconnect();
 connect();]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1608074835580</Id>
+					<Name><![CDATA[run]]></Name>
+					<Description><![CDATA[ Execute a statement ("just run" / no expected return)<br>
+@param codeFmt The single line of code to be executed with String-formatted placeholders<br>
+@param args The objects to replace the placeholders with
+@return Attempt Contains no feedback if successful, otherwise the error message]]></Description>
+					<X>630</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[codeFmt]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[Object...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.format(codeFmt, args);
+return run(code);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1608074973466</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param returnType The Java class of the return type<br>
+@param codeFmt The single line of code to be executed with String-formatted placeholders<br>
+@param args The objects to replace the placeholders with<br>
+@return T The output, in the type specified]]></Description>
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<X>630</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[returnType]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[codeFmt]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[Object...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.format(codeFmt, args);
+return runResults(returnType, code);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Attempt]]></ReturnType>
+					<Id>1608075058127</Id>
+					<Name><![CDATA[runResults]]></Name>
+					<Description><![CDATA[Evaluate an expression ("get value" / expecting a return)<br>
+@param codeFmt The single line of code to be executed with String-formatted placeholders<br>
+@param args The objects to replace the placeholders with<br>
+@return T The output, in the type specified]]></Description>
+					<X>630</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[codeFmt]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[Object...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String code = String.format(codeFmt, args);
+return runResults(code);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
