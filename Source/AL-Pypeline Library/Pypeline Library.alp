@@ -119,7 +119,7 @@ public static boolean skipJsonifying(Class<?> clazz) {
 Initialize PyCommunicator object based on whether to load from properties.
 */
 public PyCommunicator(boolean loadLastWorkingConfig) {
-	this(loadLastWorkingConfig, null, null, null, true, true);
+	this(true, loadLastWorkingConfig, null, null, null, true, true);
 }
 
 /**
@@ -129,7 +129,7 @@ Defaults to throwing error on failed attempt.
 Defaults to redirect Python output.
 */
 public PyCommunicator(PythonCommandType pythonCommandType) {
-	this(false, pythonCommandType, "", "", true, true);
+	this(true, false, pythonCommandType, "", "", true, true);
 }
 
 /**
@@ -137,7 +137,7 @@ Initialize PyCommunicator object from the preferred version.
 Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
 */
 public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
-	this(false, pythonCommandType, "", "", throwErrorOnFailedAttempt, redirectPyOutput);
+	this(true, false, pythonCommandType, "", "", throwErrorOnFailedAttempt, redirectPyOutput);
 }
 
 /**
@@ -147,7 +147,7 @@ Defaults to throwing error on failed attempt.
 Defaults to redirect Python output.
 */
 public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath) {
-	this(false, 
+	this(true, false, 
 		pythonCommandType, 
 		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
 		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
@@ -160,7 +160,7 @@ Initialize PyCommunicator object from the preferred version and an argument.
 Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
 */
 public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
-	this(false, 
+	this(true, false, 
 		pythonCommandType, 
 		pythonCommandType.equals(PYTHON_OTHER) ? otherCommandOrPath : null, 
 		pythonCommandType.equals(PYTHON_PATH) ? otherCommandOrPath : null, 
@@ -507,7 +507,10 @@ try {
 						<DefaultValue Class="CodeValue">
 							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[enable ? connect() : disconnect();]]></OnChangeCode>
+						<OnChangeCode><![CDATA[if (enable)
+	connect();
+else
+	disconnect();]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>1608072595257</Id>
 							<Label><![CDATA[Enable connection]]></Label>
