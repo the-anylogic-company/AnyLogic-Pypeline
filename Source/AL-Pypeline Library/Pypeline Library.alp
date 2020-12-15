@@ -784,6 +784,7 @@ When viewed from the developer panel, standard output will be printed in <span s
 						<DefaultValue Class="CodeValue">
 							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
+						<OnChangeCode><![CDATA[py.redirectPyOutput = redirectPyOutput;]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>1597358663334</Id>
 							<Label><![CDATA[Redirect Python output]]></Label>
