@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.0.202011181904" AlpVersion="8.7.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.1.202012141828" AlpVersion="8.7.0">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -269,8 +269,7 @@ import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
 import com.anylogic.cloud.util.ExceptionUtils;
 import java.util.stream.IntStream;]]></Import>
-			<StartupCode><![CDATA[initialize();
-generateProperties();]]></StartupCode>
+			<StartupCode><![CDATA[if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
@@ -390,7 +389,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1574960246472</Id>
 					<Name><![CDATA[PYTHON]]></Name>
-					<X>80</X><Y>120</Y>
+					<X>80</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -405,7 +404,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1574960293631</Id>
 					<Name><![CDATA[PYTHON2]]></Name>
-					<X>80</X><Y>150</Y>
+					<X>80</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -420,7 +419,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1574960297045</Id>
 					<Name><![CDATA[PYTHON3]]></Name>
-					<X>80</X><Y>180</Y>
+					<X>80</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -435,7 +434,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1574960298125</Id>
 					<Name><![CDATA[PYTHON_OTHER]]></Name>
-					<X>80</X><Y>210</Y>
+					<X>80</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -450,7 +449,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1589490530972</Id>
 					<Name><![CDATA[PYTHON_PATH]]></Name>
-					<X>80</X><Y>240</Y>
+					<X>80</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -494,9 +493,35 @@ try {
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
+					<Id>1608072595259</Id>
+					<Name><![CDATA[enable]]></Name>
+					<X>50</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</DefaultValue>
+						<OnChangeCode><![CDATA[enable ? connect() : disconnect();]]></OnChangeCode>
+						<ParameterEditor>
+							<Id>1608072595257</Id>
+							<Label><![CDATA[Enable connection]]></Label>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
 					<Id>1589488014296</Id>
 					<Name><![CDATA[loadLastWorkingConfig]]></Name>
-					<X>50</X><Y>50</Y>
+					<X>50</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -512,9 +537,17 @@ try {
 							<Id>1589488014294</Id>
 							<Label><![CDATA[Load last working configuration]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
+							<DelimeterType>SEPARATOR</DelimeterType>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
@@ -525,7 +558,7 @@ try {
 If <i>(other)</i> is selected, you can specify the alias to Python.<br>
 If <i>(path)</i> is selected, you can specify the full path to the desired python executable.
 ]]></Description>
-					<X>50</X><Y>90</Y>
+					<X>50</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -541,6 +574,14 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 							<Id>1570726491558</Id>
 							<Label><![CDATA[Command to call Python]]></Label>
 							<EditorContolType>RADIO_BUTTONS</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<HideCondition>
 								<Id>0</Id>
 								<ParameterId>1589488014296</ParameterId>
@@ -587,7 +628,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 					<Id>1589488235619</Id>
 					<Name><![CDATA[pythonCommand]]></Name>
 					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
-					<X>50</X><Y>270</Y>
+					<X>50</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -603,6 +644,14 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 							<Id>1589488235617</Id>
 							<Label><![CDATA[Python command]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<HideCondition>
 								<Id>1589488235615</Id>
 								<ParameterId>1570726491560</ParameterId>
@@ -629,7 +678,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 					<Id>1578675862658</Id>
 					<Name><![CDATA[pythonExecPath]]></Name>
 					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
-					<X>50</X><Y>310</Y>
+					<X>50</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -645,6 +694,14 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 							<Id>1578675862656</Id>
 							<Label><![CDATA[Python executable path]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<HideCondition>
 								<Id>0</Id>
 								<ParameterId>1570726491560</ParameterId>
@@ -671,7 +728,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 					<Id>1582299117563</Id>
 					<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 					<Description><![CDATA[Decides whether to throw an AnyLogic model error if any command does not execute successfully.<br>]]></Description>
-					<X>50</X><Y>350</Y>
+					<X>50</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -687,6 +744,14 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 							<Id>1582299117561</Id>
 							<Label><![CDATA[Throw error on failed attempt]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<HideCondition>
 								<Id>0</Id>
 								<ParameterId>1589488014296</ParameterId>
@@ -707,7 +772,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 					<Description><![CDATA[Whether to redirect output coming from Python to the AnyLogic console.<br>
 If true, anything sent by Python to the standard output (e.g., print statements) or non-halting standard error (e.g., warnings) will be printed to the AnyLogic console.<br>
 When viewed from the developer panel, standard output will be printed in <span style="color:green;">green</span> and standard error will be printed in <span style="color:red;">red</span>.<br>]]></Description>
-					<X>50</X><Y>390</Y>
+					<X>50</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -723,6 +788,14 @@ When viewed from the developer panel, standard output will be printed in <span s
 							<Id>1597358663334</Id>
 							<Label><![CDATA[Redirect Python output]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<HideCondition>
+								<Id>0</Id>
+								<ParameterId>1608072595259</ParameterId>
+								<Operation>EQUALS</Operation>
+								<Value Class="CodeValue">
+									<Code><![CDATA[false]]></Code>
+								</Value>
+							</HideCondition>
 							<HideCondition>
 								<Id>0</Id>
 								<ParameterId>1589488014296</ParameterId>
@@ -1532,11 +1605,13 @@ for (Field field : fields) {
 	}
 	
 	try {
-		//field.trySetAccessible(); 
+		field.trySetAccessible(); 
 		value = field.get(agent);
 		//traceln("\tValue is of type: %s", value.getClass());
-		if (value == null)
+		if (value == null) {
+			//traceln("\tSkipping!");
 			continue;
+		}
 		
 		// skip if value is top-level agent
 		if (value.equals(agent.getRootAgent())) {
@@ -1585,6 +1660,7 @@ for (Field field : fields) {
 		value = customClassSerializer(value);
 		map.put(name, value);
 	} catch (IllegalAccessException e) {
+		//traceln("\terrorred!!!!!");
 		if (includeInvalidFields) {
 			map.put(name, null);
 		}
@@ -2191,6 +2267,51 @@ try {
 }
 return object;]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1608072623170</Id>
+					<Name><![CDATA[connect]]></Name>
+					<Description><![CDATA[Connects to the local Python installation (based on the currently set parameters).]]></Description>
+					<X>50</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[initialize();
+generateProperties();]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1608072627145</Id>
+					<Name><![CDATA[disconnect]]></Name>
+					<Description><![CDATA[Disconnects from the local Python installation.]]></Description>
+					<X>50</X><Y>530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Allow the existing Python environment to die gracefully
+try {
+	py.close();
+} catch (Exception e) {
+	e.printStackTrace();
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1608073708521</Id>
+					<Name><![CDATA[reset]]></Name>
+					<X>50</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[disconnect();
+connect();]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -2344,6 +2465,9 @@ return object;]]></Body>
 			</Presentation>
 
 			<Parameters>			
+				<Parameter>
+					<ParameterName><![CDATA[enable]]></ParameterName>
+				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[loadLastWorkingConfig]]></ParameterName>
 				</Parameter>
