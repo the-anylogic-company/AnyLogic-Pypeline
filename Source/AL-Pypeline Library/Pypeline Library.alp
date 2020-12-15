@@ -691,7 +691,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[// e.g., "C:\\Program Files\\Python37\\python.exe"]]></Code>
+							<Code><![CDATA[// e.g., "C:\\anaconda3\\envs\\MyEnv\\python.exe"]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1578675862656</Id>
@@ -1614,17 +1614,14 @@ for (Field field : fields) {
 		//traceln("\tValue is of type: %s", value.getClass());
 		if (value == null) {
 			//traceln("\tSkipping!");
-			continue;
 		}
-		
 		// skip if value is top-level agent
-		if (value.equals(agent.getRootAgent())) {
+		else if (value.equals(agent.getRootAgent())) {
 			//traceln("\tSkipping!");
 			continue;
 		}
-		
 		// apply this agent func for single agents
-		if (value instanceof Agent) {
+		else if (value instanceof Agent) {
 			// skip if already seen
 			if (seenAgents.contains(value)) {
 				//traceln("\tSkipping!");
@@ -2260,7 +2257,8 @@ try {
 						<Name><![CDATA[object]]></Name>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (object instanceof StatisticsDiscrete) {
+					<Body><![CDATA[
+if (object instanceof StatisticsDiscrete) {
 	return serializeStatisticsDiscrete((StatisticsDiscrete)object);
 } else if (object instanceof StatisticsContinuous) {
 	return serializeStatisticsContinuous((StatisticsContinuous)object);
