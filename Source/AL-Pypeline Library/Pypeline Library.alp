@@ -1225,17 +1225,6 @@ if (loadLastWorkingConfig) {
 	importProperties();
 }
 
-// Handle variations of [minimally problematic] inconsistencies by warning user.
-// AFAIK, these are only possible to trigger when creating the communicator from a constructor.
-if (pythonCommand != null && !pythonCommandType.equals(PYTHON_OTHER)) {
-	warning("Custom alias provided ('%s') but type is set to %s; assuming type as desired setting and overriding command parameter with adjusted value. To use custom alias, set the type to `%s`.",
-		pythonCommand, pythonCommandType, PYTHON_OTHER);
-}
-if (pythonExecPath != null && !pythonCommandType.equals(PYTHON_PATH)) {
-	warning("Custom path provided ('%s') but type is set to %s; assuming type as desired setting and overriding path parameter with adjusted value. To use custom path, set the type to `%s`.",
-		pythonExecPath, pythonCommandType, PYTHON_PATH);
-}
-
 // Handle variations of [largely problematic] inconsistencies by throwing an error
 if (pythonCommandType.equals(PYTHON_OTHER) && pythonCommand == null) {
 	error("Type was set to 'other' [alias] but no alternate alias was provided!");
@@ -1249,14 +1238,25 @@ switch (pythonCommandType) {
 	case PYTHON:
 	case PYTHON2:
 	case PYTHON3:
-		set_pythonCommand(PySubProcess.convertToCommand(pythonCommandType));
+		String newCommand = PySubProcess.convertToCommand(pythonCommandType);
+		// Handle variations of [minimally problematic] inconsistencies by warning user.
+		if (pythonCommand != null && !pythonCommand.equals(newCommand)) {
+			warning("Overriding previous Python command (%s) with corrected command (%s), based on set command type.", pythonCommand, newCommand);
+		}
+		set_pythonCommand(newCommand);
 		// don't break; also set the exec path
 	case PYTHON_OTHER:
+		String newExecPath = null;
 		try {
-			set_pythonExecPath(PySubProcess.findPythonPath(pythonCommand));
+			newExecPath = PySubProcess.findPythonPath(pythonCommand);
+			// Handle variations of [minimally problematic] inconsistencies by warning user.
+			if (pythonExecPath != null && !pythonExecPath.equals(newExecPath)) {
+				warning("Overriding previous Python executable path (%s) with corrected path (%s), based on set command type.", pythonExecPath, newExecPath);
+			}
 		} catch (PyException e) {
 			error(e, "Failed to find Python executable path based on Python command: " + String.format(pythonCommand));
 		}
+		set_pythonExecPath(newExecPath);
 	case PYTHON_PATH:
 		break;
 }
