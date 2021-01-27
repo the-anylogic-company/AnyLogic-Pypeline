@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.1.202012141828" AlpVersion="8.7.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.2.202012241846" AlpVersion="8.7.0">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -16,6 +16,10 @@
 		<OptionList>
 			<Id>1574961034301</Id>
 			<Name><![CDATA[PythonCommandType]]></Name>
+			<Description><![CDATA[Option list for choosing the method to connecting to Python.<br>
+<code>PYTHON</code>, <code>PYTHON2</code>, and <code>PYTHON3</code> all represent the command used to call Python from a termianl (using the commands <code>python</code>, <code>python2</code>, and <code>python3</code>, respectively).<br>
+<code>PYTHON_OTHER</code> is used to indicate an 'other' command alias.<br>
+<code>PYTHON_PATH</code> is used to indicate that an absolute path will be given to the desired Python executable.]]></Description>
 			<Option>
 				<Id>1574961050485</Id>
 				<Name><![CDATA[PYTHON]]></Name>
@@ -116,36 +120,46 @@ public static boolean skipJsonifying(Class<?> clazz) {
 }
 
 /**
-Initialize PyCommunicator object based on whether to load from properties.
-*/
+Initialize the PyCommunicator object with an abbreviated constructor.<br><br>
+<b>Use case:</b> when wanting to load all settings from the stored configuration file.<br><br>
+Defaults to throwing an error when a Python command fails and redirecting Python output to the AnyLogic console.<br><br>
+@param loadLastWorkingConfig whether to use the configuration from the last working setup (pass true) or the default settings (pass false)
+**/
 public PyCommunicator(boolean loadLastWorkingConfig) {
-	this(true, loadLastWorkingConfig, null, null, null, true, true);
+	this(true, loadLastWorkingConfig, PythonCommandType.PYTHON, null, null, true, true);
 }
 
 /**
-Initialize PyCommunicator object from the preferred version.
-Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
-Defaults to throwing error on failed attempt.
-Defaults to redirect Python output.
-*/
+Initialize the PyCommunicator object with an abbreviated constructor.<br><br>
+<b>Use case:</b> when wanting to call Python with one of the built-in aliases.<br><br>
+Defaults to throwing an error when a Python command fails and redirecting Python output to the AnyLogic console.<br><br>
+@param pythonCommandType the option for the desired Python command 
+	(<code>PYTHON</code> for <code>`python`</code>, <code>PYTHON2</code> for <code>`python2`, or <code>PYTHON3</code> for <code>`python3`</code>)
+**/
 public PyCommunicator(PythonCommandType pythonCommandType) {
-	this(true, false, pythonCommandType, "", "", true, true);
+	this(true, false, pythonCommandType, null, null, true, true);
 }
 
 /**
-Initialize PyCommunicator object from the preferred version.
-Only applicable when using `PYTHON_AUTO`, `PYTHON_2` or `PYTHON_3`.
-*/
+Initialize the PyCommunicator object with an abbreviated constructor.<br><br>
+<b>Use case:</b> when wanting to call Python with one of the built-in aliases and to specify further parameter options.<br><br>
+@param pythonCommandType the option for the desired Python command 
+	(<code>PYTHON</code> for <code>`python`</code>, <code>PYTHON2</code> for <code>`python2`</code>, or <code>PYTHON3</code> for <code>`python3`</code>)
+@param throwErrorOnFailedAttempt whether to throw an error when a Python command fails
+@param redirectPyOutput whether to pipe prints, warnings, and errors from Python to the AnyLogic console
+**/
 public PyCommunicator(PythonCommandType pythonCommandType, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
 	this(true, false, pythonCommandType, "", "", throwErrorOnFailedAttempt, redirectPyOutput);
 }
 
 /**
-Initialize PyCommunicator object from the preferred version and argument.
-Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
-Defaults to throwing error on failed attempt.
-Defaults to redirect Python output.
-*/
+Initialize the PyCommunicator object with an abbreviated constructor.<br><br>
+<b>Use case:</b> when wanting to call Python with a custom command alias <i>or</i> by specifying the path to an executable.<br><br>
+Defaults to throwing an error when a Python command fails and redirecting Python output to the AnyLogic console.<br><br>
+@param pythonCommandType the option for the desired Python command
+	(<code>PYTHON_OTHER</code> for a custom command or <code>PYTHON_PATH</code> to specify the full path)
+@param otherCommandOrPath the custom command or full path of the desired Python to execute
+**/
 public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath) {
 	this(true, false, 
 		pythonCommandType, 
@@ -156,9 +170,15 @@ public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOr
 }
 
 /**
-Initialize PyCommunicator object from the preferred version and an argument.
-Only applicable when using `PYTHON_OTHER` or `PYTHON_PATH`.
-*/
+Initialize PyCommunicator object from the preferred version and an argument.<br><br>
+<b>Use case:</b> when wanting to call Python with a custom command alias <i>or</i> by specifying the path to an executable, 
+and wanting to specify further parameter options.<br><br>
+@param pythonCommandType the option for the desired Python command
+	(<code>PYTHON_OTHER</code> for a custom command or <code>PYTHON_PATH</code> to specify the full path)
+@param otherCommandOrPath the custom command or full path of the desired Python to execute
+@param throwErrorOnFailedAttempt whether to throw an error when a Python command fails
+@param redirectPyOutput whether to pipe prints, warnings, and errors from Python to the AnyLogic console
+**/
 public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOrPath, boolean throwErrorOnFailedAttempt, boolean redirectPyOutput) {
 	this(true, false, 
 		pythonCommandType, 
@@ -269,7 +289,8 @@ import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
 import com.anylogic.cloud.util.ExceptionUtils;
 import java.util.stream.IntStream;]]></Import>
-			<StartupCode><![CDATA[if (enable) connect();]]></StartupCode>
+			<StartupCode><![CDATA[traceln("%s, %s, %s", pythonCommandType, pythonCommand, pythonExecPath);
+if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
@@ -479,7 +500,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1597361797787</Id>
 					<Name><![CDATA[objmapper]]></Name>
-					<Description><![CDATA[An instance of Jackson's `ObjectMapper` class; used in the `toJson` and `fromJson` functions.]]></Description>
+					<Description><![CDATA[An instance of Jackson's <code>ObjectMapper</code> class; used in the <code>toJson</code> and <code>fromJson</code> functions.]]></Description>
 					<X>300</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -630,7 +651,9 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 				<Variable Class="Parameter">
 					<Id>1589488235619</Id>
 					<Name><![CDATA[pythonCommand]]></Name>
-					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
+					<Description><![CDATA[The full path to the desired python executable.<br>
+The input of this parameter is used when <code>pythonCommandType</code> is set to "(other)" / <code>PythonCommandType.PYTHON_OTHER</code>.<br>
+For other settings, this parameter's value will be updated to reflect the executable path of the active Python being used.]]></Description>
 					<X>50</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -680,7 +703,10 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 				<Variable Class="Parameter">
 					<Id>1578675862658</Id>
 					<Name><![CDATA[pythonExecPath]]></Name>
-					<Description><![CDATA[The full path to the desired python executable.<br>]]></Description>
+					<Description><![CDATA[The absolute path to the Python executable that is desired to be connected to.<br>
+The input of this parameter is used when <code>pythonCommandType</code> is set to "(path)" / <code>PythonCommandType.PYTHON_PATH</code>.<br>
+For other settings, this parameter's value will be updated to reflect the executable path of the active Python being used.
+]]></Description>
 					<X>50</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -730,7 +756,8 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 				<Variable Class="Parameter">
 					<Id>1582299117563</Id>
 					<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
-					<Description><![CDATA[Decides whether to throw an AnyLogic model error if any command does not execute successfully.<br>]]></Description>
+					<Description><![CDATA[Decides whether to throw an AnyLogic model error if any command does not execute successfully.<br>
+In other words: if set to true, errors from Python will cause model-halting errors in AnyLogic.<br>]]></Description>
 					<X>50</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -773,8 +800,9 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 					<Id>1597358663336</Id>
 					<Name><![CDATA[redirectPyOutput]]></Name>
 					<Description><![CDATA[Whether to redirect output coming from Python to the AnyLogic console.<br>
-If true, anything sent by Python to the standard output (e.g., print statements) or non-halting standard error (e.g., warnings) will be printed to the AnyLogic console.<br>
-When viewed from the developer panel, standard output will be printed in <span style="color:green;">green</span> and standard error will be printed in <span style="color:red;">red</span>.<br>]]></Description>
+If true, any print statements or warnings from Python will be printed to the AnyLogic console.<br>
+When viewed from the developer panel, standard output will be printed in <span style="color:green;">green</span> and standard error will be printed in <span style="color:red;">red</span>.<br>
+You may change this parameter during run-time to override the initial value.]]></Description>
 					<X>50</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -787,7 +815,8 @@ When viewed from the developer panel, standard output will be printed in <span s
 						<DefaultValue Class="CodeValue">
 							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[py.redirectPyOutput = redirectPyOutput;]]></OnChangeCode>
+						<OnChangeCode><![CDATA[if (py != null)
+	py.redirectPyOutput = redirectPyOutput;]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>1597358663334</Id>
 							<Label><![CDATA[Redirect Python output]]></Label>
@@ -1159,6 +1188,9 @@ return null;]]></Body>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1581007322208</Id>
 					<Name><![CDATA[toString]]></Name>
+					<Description><![CDATA[Convert this object (PyCommunicator) to a human readable string of text.<br>
+This is the text that appears when you print the object to the console and also what appears in the inspection window when you click on the icon during a running model.
+@return the complete Python version (major.minor.patch) and path to Python executable (separated by a newline) if Python is connected to, otherwise "null"]]></Description>
 					<X>-100</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1171,8 +1203,11 @@ return null;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1581016103424</Id>
 					<Name><![CDATA[initialize]]></Name>
-					<Description><![CDATA[Uses the currently set value for the preferred Python version (and optionally, the path to the executable) to initialize the Python environment.<br>
-If there is already a running Python environment, this will first try to close it gracefully before creating a new environment.]]></Description>
+					<Description><![CDATA[Uses the currently set parameter values to initialize the Python environment.<br>
+The parameters will be loaded from properties or the last working configuration if desired (i.e., <code>loadLastWorkingConfig</code> is set to true).<br>
+Based on the type of command (i.e., value of <code>pythonCommandType</code>), the path parameter (<code>pythonExecPath</code>) will be attempted to be found before creating the Python subproces.<br>
+If there is already a running Python environment, this will first try to close it gracefully before creating a new environment.<br>
+@throws RuntimeException If the path to Python executable cannot be found or was not provided, if a directory was passed and there are zero or more than one 'python' executables, or if there was a problem with setting up the Python subprocess]]></Description>
 					<X>300</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1191,6 +1226,24 @@ if (loadLastWorkingConfig) {
 	importProperties();
 }
 
+// Handle variations of [minimally problematic] inconsistencies by warning user.
+// AFAIK, these are only possible to trigger when creating the communicator from a constructor.
+if (pythonCommand != null && !pythonCommandType.equals(PYTHON_OTHER)) {
+	warning("Custom alias provided ('%s') but type is set to %s; assuming type as desired setting and overriding command parameter with adjusted value. To use custom alias, set the type to `%s`.",
+		pythonCommand, pythonCommandType, PYTHON_OTHER);
+}
+if (pythonExecPath != null && !pythonCommandType.equals(PYTHON_PATH)) {
+	warning("Custom path provided ('%s') but type is set to %s; assuming type as desired setting and overriding path parameter with adjusted value. To use custom path, set the type to `%s`.",
+		pythonExecPath, pythonCommandType, PYTHON_PATH);
+}
+
+// Handle variations of [largely problematic] inconsistencies by throwing an error
+if (pythonCommandType.equals(PYTHON_OTHER) && pythonCommand == null) {
+	error("Type was set to 'other' [alias] but no alternate alias was provided!");
+} else if (pythonCommandType.equals(PYTHON_PATH) && pythonExecPath == null) {
+	error("Type was set to [custom] 'path' but no path was provided!");
+}
+
 // Synchronize parameters based on provided parameters
 String pathToServerPy = createServerPy();
 switch (pythonCommandType) {
@@ -1198,6 +1251,7 @@ switch (pythonCommandType) {
 	case PYTHON2:
 	case PYTHON3:
 		set_pythonCommand(PySubProcess.convertToCommand(pythonCommandType));
+		// don't break; also set the exec path
 	case PYTHON_OTHER:
 		try {
 			set_pythonExecPath(PySubProcess.findPythonPath(pythonCommand));
@@ -1208,6 +1262,7 @@ switch (pythonCommandType) {
 		break;
 }
 
+// The executable path is a requirement. If it's not found, throw an error.
 if (pythonExecPath == null) {
 	String msg = "Could not find any Python executable based on your preferred input (" + pythonCommandType + ")";
 	msg += "\nNOTE: Please check your system PATH. This can be printed out in AnyLogic by executing the code: `traceln(System.getenv(\"PATH\"));`";
@@ -1215,8 +1270,7 @@ if (pythonExecPath == null) {
 }
 
 File f = new File(pythonExecPath);
-if (!f.exists()) {
-	// handle when path does not exist
+if (!f.exists()) { // passed executable path is not found, throw an error.
 	String msg = "No Python executable is located at: " + pythonExecPath;
 	msg += "\nConsult the user guide for more information.";
 	if (pythonExecPath.contains("Microsoft\\WindowsApps")) {
@@ -1227,11 +1281,11 @@ if (!f.exists()) {
 } else if (!f.isFile()) {
 	// user pasted a directory. Check for python.exe or just python
 	File[] potentials = f.listFiles((dir, name) -> name.toLowerCase().equals("python.exe") || name.toLowerCase().equals("python"));
-	// no results or > 1 result == fail
+	// Fail if there are no results or > 1 result (i.e., ambiguous option)
 	if (potentials.length != 1) {
 		String msg = "The specified path to the Python executable is not a file: " + pythonExecPath;
-		msg += "\nTried to find 'python.exe' or 'python', but couldn't locate a single result!";
-		msg += "\nPlease append the file to execute and try again.";
+		msg += "\nTried to find 'python.exe' or 'python', but couldn't locate a **single** result!";
+		msg += "\nPlease append the desired executable and try again.";
 		error(msg);
 	}
 	// update with corrected path
@@ -1353,7 +1407,8 @@ return attempt;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588104859912</Id>
 					<Name><![CDATA[importProperties]]></Name>
-					<Description><![CDATA[Tries to import the properties file and load it into the model's parameters; if the properties file does not exist, the `generateProperties` function is called.]]></Description>
+					<Description><![CDATA[Tries to import the properties file and load it into the model's parameters; if the properties file does not exist, the `generateProperties` function is called.<br>
+The default properties file is named "pypeline.properties" and is located next to the Pypeline jar file.]]></Description>
 					<X>300</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1375,6 +1430,13 @@ if (!f.exists())
 try (InputStream input = new FileInputStream(filename)) {
 	Properties prop = new Properties();
 	prop.load(input);
+	
+	set_enable(
+		Boolean.valueOf(prop.getProperty("enable", "true")).booleanValue()
+	);
+	set_loadLastWorkingConfig(
+		Boolean.valueOf(prop.getProperty("load_last", "false")).booleanValue()
+	);
 	set_pythonCommandType(
 		PythonCommandType.valueOf(prop.getProperty("command_type"))
 	);
@@ -1399,7 +1461,7 @@ try (InputStream input = new FileInputStream(filename)) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588105438239</Id>
 					<Name><![CDATA[generateProperties]]></Name>
-					<Description><![CDATA[Builds the properties file at the default properties path (`getDefaultPropertiesPath`) and saves the current parameter values.]]></Description>
+					<Description><![CDATA[Builds the properties file at the default properties path (<code>getDefaultPropertiesPath</code>) and saves the current parameter values.]]></Description>
 					<X>300</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1411,6 +1473,8 @@ try {
     Properties prop = new Properties();
 
     // set the properties value
+    prop.setProperty("enable", String.valueOf(enable));
+    prop.setProperty("load_last", String.valueOf(loadLastWorkingConfig));
     prop.setProperty("command_type", String.valueOf(pythonCommandType));
     prop.setProperty("command", String.valueOf(pythonCommand));
     prop.setProperty("exec_path", String.valueOf(pythonExecPath));
@@ -1511,7 +1575,11 @@ return output;]]></Body>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1598376672663</Id>
 					<Name><![CDATA[toAgentJson]]></Name>
-					<Description><![CDATA[As Agent-types cannot be used with ObjectMapper by default due to a recursive error, this function extracts as much useful information as possible.]]></Description>
+					<Description><![CDATA[As Agent-types cannot be used with ObjectMapper by default due to a recursive error, this function extracts as much useful information as possible.<br>
+@param agentObj The agent to be converted to JSON<br>
+@param includeNullFields Whether to include any fields (variables, objects) whose values are null<br>
+@param prettyprint Whether to output the JSON in "pretty" format (with newlines, tabs, etc.)<br>
+@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
 					<X>300</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1522,7 +1590,7 @@ return output;]]></Body>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
 					<Parameter>
-						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Name><![CDATA[includeNullFields]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1544,14 +1612,14 @@ seenAgents.add(agentObj);
 // passed object is a population of agents
 if (type == 2) {
 	AgentArrayList<Agent> pop = (AgentArrayList) agentObj;
-	ArrayList<?> popList = agentPopToList(pop, includeInvalidFields, seenAgents);
+	ArrayList<?> popList = agentPopToList(pop, includeNullFields, seenAgents);
 	return PyCommunicator.toJson(popList, prettyprint);
 }
 
 // passed object is a single agent
 Agent agent = (Agent) agentObj;
 //traceln("Converting: %s (type: %s)", agent.getName(), agent.getClass());
-HashMap<String, Object> map = agentToMap(agent, includeInvalidFields, seenAgents);
+HashMap<String, Object> map = agentToMap(agent, includeNullFields, seenAgents);
 //traceln("...as map: %s\n", map);
 return PyCommunicator.toJson(map, prettyprint);]]></Body>
 				</Function>
@@ -1571,7 +1639,7 @@ return PyCommunicator.toJson(map, prettyprint);]]></Body>
 						<Type><![CDATA[Agent]]></Type>
 					</Parameter>
 					<Parameter>
-						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Name><![CDATA[includeNullFields]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1631,7 +1699,7 @@ for (Field field : fields) {
 				continue;
 			}
 			//traceln("\tIS AGENT; CONVERTING TO MAP!");
-			value = agentToMap((Agent)value, includeInvalidFields, seenAgents);
+			value = agentToMap((Agent)value, includeNullFields, seenAgents);
 		}
 		// apply other agent func for populations 
 		else if (value instanceof AgentArrayList) {
@@ -1641,7 +1709,7 @@ for (Field field : fields) {
 				continue;
 			}
 			//traceln("\tIS AGENTPOP; CONVERTING TO LIST!");
-			value = agentPopToList((AgentArrayList)value, includeInvalidFields, seenAgents);
+			value = agentPopToList((AgentArrayList)value, includeNullFields, seenAgents);
 		}
 		// handle when value is a collection/map holding an incompatible AnyLogic type
 		else if (value instanceof Collection || value instanceof Map) {
@@ -1665,7 +1733,7 @@ for (Field field : fields) {
 		map.put(name, value);
 	} catch (IllegalAccessException e) {
 		//traceln("\terrorred!!!!!");
-		if (includeInvalidFields) {
+		if (includeNullFields) {
 			map.put(name, null);
 		}
 	}
@@ -1721,7 +1789,7 @@ return 0;]]></Body>
 						<Type><![CDATA[AgentArrayList<Agent>]]></Type>
 					</Parameter>
 					<Parameter>
-						<Name><![CDATA[includeInvalidFields]]></Name>
+						<Name><![CDATA[includeNullFields]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
 					<Parameter>
@@ -1735,7 +1803,7 @@ ArrayList<HashMap<String, Object>> popList = new ArrayList<>();
 agentPop.forEach(a -> {
 	if (!seenAgents.contains(a)) {
 		seenAgents.add(a);
-		popList.add( PyCommunicator.agentToMap(a, includeInvalidFields, seenAgents) );
+		popList.add( PyCommunicator.agentToMap(a, includeNullFields, seenAgents) );
 	}
 });
 return popList;]]></Body>
@@ -1859,7 +1927,7 @@ return runResults(returnType, code);]]></Body>
 					<Id>1598643746896</Id>
 					<Name><![CDATA[toJson]]></Name>
 					<Description><![CDATA[@param object Any data type that can be converted to JSON<br>
-@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)
+@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
 @return The JSON form of the given object, or `null` if an error was encountered<br>
 <br>
 Note that agents and agent populations are handled manually due to a recursive issue.<br>]]></Description>
@@ -2006,7 +2074,7 @@ return null;]]></Body>
 					<Id>1599503670262</Id>
 					<Name><![CDATA[fromAgentJson]]></Name>
 					<Description><![CDATA[A function specifically for converting the given JSON to an agent.<br>
-(Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
+Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
 @param json A JSON string to be converted to an AL agent<br>
 @param clazz The class of the AL agent type to convert the provided string to<br>
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
@@ -2250,6 +2318,7 @@ try {
 					<Id>1605756231379</Id>
 					<Name><![CDATA[customClassSerializer]]></Name>
 					<Description><![CDATA[Tries to convert the given object to a serializable format that Jackson can understand.
+@param object The variable to be converted
 @return a generic object that should be serializable (or the original object if not handled)]]></Description>
 					<X>360</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2277,7 +2346,7 @@ return object;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1608072623170</Id>
 					<Name><![CDATA[connect]]></Name>
-					<Description><![CDATA[Connects to the local Python installation (based on the currently set parameters).]]></Description>
+					<Description><![CDATA[Connects to the local Python installation based on the currently set parameters.]]></Description>
 					<X>50</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2291,7 +2360,8 @@ generateProperties();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1608072627145</Id>
 					<Name><![CDATA[disconnect]]></Name>
-					<Description><![CDATA[Disconnects from the local Python installation.]]></Description>
+					<Description><![CDATA[Disconnects from the local Python installation.<br>
+Executing this function sever the connection to Python. To reconnect, the <code>connect</code> function will need to be called.]]></Description>
 					<X>50</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2300,15 +2370,21 @@ generateProperties();]]></Body>
 					<Body><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
+	// Then set the object to null
+	py = null;
 } catch (Exception e) {
 	e.printStackTrace();
-}]]></Body>
+}
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1608073708521</Id>
 					<Name><![CDATA[reset]]></Name>
+					<Description><![CDATA[First disconnects from the active Python installation, then reconnects to it.<br>
+Executing this function sever the connection to Python and then reestablish it. This will create a fresh/clean Python environment using the same Python installation previously used.<br>
+If it's desired to change the Python environment that's connected to, first call <code>disconnect</code>, then ]]></Description>
 					<X>50</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2403,6 +2479,7 @@ return runResults(code);]]></Body>
 				<AgentLink>
 					<Id>1569858524850</Id>
 					<Name><![CDATA[connections]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
