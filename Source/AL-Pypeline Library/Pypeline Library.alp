@@ -289,8 +289,7 @@ import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
 import com.anylogic.cloud.util.ExceptionUtils;
 import java.util.stream.IntStream;]]></Import>
-			<StartupCode><![CDATA[traceln("%s, %s, %s", pythonCommandType, pythonCommand, pythonExecPath);
-if (enable) connect();]]></StartupCode>
+			<StartupCode><![CDATA[if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
@@ -1198,7 +1197,7 @@ This is the text that appears when you print the object to the console and also 
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return py == null ? "null" : py.activePyVersion + "\n" + py.activePyPath;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1581016103424</Id>
@@ -1296,7 +1295,7 @@ try {
 	py = new PySubProcess(pathToServerPy, pythonExecPath, redirectPyOutput);
 	modifyPathAsNeeded();
 } catch (Exception e) {
-	error(e, "Problem with setting up Python Subprocess:");
+	error(e, "Problem with setting up Python Subprocess");
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="true">
@@ -2752,7 +2751,7 @@ public class PySubProcess {
      * @throws IOException
      * @throws Exception
      */
-    private void initConnection(String pathToServerPy) throws IOException, PyException, InterruptedException {
+    private void initConnection(String pathToServerPy) throws IOException, PyException, InterruptedException {    	
     	// First find/validate the path to the server.py file
     	final String serverPyFile = "server.py";
     	File workingDirectory = new File(System.getProperty("user.dir"));
@@ -2778,10 +2777,11 @@ public class PySubProcess {
 		String portLine = null;
 		BufferedReader pbInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		portLine = pbInput.readLine();
+		
 		if (portLine == null) {
 			//BufferedReader pbError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 			String errorMsg = IOUtils.toString(proc.getErrorStream());
-			throw new IOException("Input returned null; Error stream line reads: " + errorMsg);
+			throw new IOException("Python process failed to properly start. This process needs to be started by a 'live' agent. Error message from process: '" + errorMsg + "'");
 		}
 		
 		int port = Integer.MIN_VALUE;
@@ -2841,10 +2841,13 @@ public class PySubProcess {
      * @return Attempt
      */
     public Attempt ping() {
+    	
+    	if (socket.isClosed())
+    		return new Attempt(Attempt.RESULT_ERROR, "Python subprocess has been shutdown.");
+    	
     	try {
 	    	out.write(pingMsg);
 			out.flush();
-
 	    	return readAttemptResult();
     	} catch (Throwable e) { // catchall
     		return new Attempt(e);
