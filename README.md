@@ -8,21 +8,21 @@ It can be used for cases such as:
 * Using simulation as a testbed for testing trained artificial intelligence policies
 
 ## Getting Started
-These instructions will get Pypeline integrated with AnyLogic. They are described more thoroughly in the provided user guide.
+These instructions will get Pypeline integrated with AnyLogic. They are described more thoroughly in the provided wiki (which is what the user guide migrated to).
 
 ### Prerequisites
 You need to have AnyLogic with any valid license (PLE, University, or Professional) and a version of Python installed on your machine.
 
 ### Installation
 
-1. Download the `Pypeline.jar` file (see `Export` folder of this repository) and place it somewhere it won't be moved (or accidently deleted).
+1. Download the `Pypeline.jar` file (from the [releases](https://github.com/t-wolfeadam/AnyLogic-Pypeline/releases)) and place it somewhere it won't be moved (or accidently deleted).
 2. Add it to your AnyLogic palette. A step-by-step explanation of how to do this is available in the AnyLogic help article ["Managing Libraries"](https://help.anylogic.com/topic/com.anylogic.help/html/libraries/managing-libraries.html?cp=3_5_4). 
 3. You should see a new palette item for Pypeline with the custom Python Communicator agent.
 
 ## Quick start guide
 This section goes over testing the connection works and a simple tutorial.
 
-*For a full explanation of how to use, including a deeper description of the available functions, please refer to the user guide document. *
+*For a full explanation of how to use, including a deeper description of the available functions, please refer to the wiki. *
 
 ### Testing connection
 To ensure proper connection is made, first run a simple test:
@@ -31,7 +31,7 @@ To ensure proper connection is made, first run a simple test:
 3. Run the model
   1. In your running model, click the Communicator object
   2. The inspection window should show the version of Python and the path to the Python executable that's being run. 
-> If you do not see this, or you receive an error, please refer to the troubleshooting section of the full user guide.
+> If you do not see this, or you receive an error, please refer to the troubleshooting section of the wiki.
 
 ### Basic tutorial
 Building on the model made in the previous section, try the following:
