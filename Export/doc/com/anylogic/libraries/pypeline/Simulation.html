@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -302,7 +302,7 @@ extends com.anylogic.engine.ExperimentSimulation&lt;<a href="PyCommunicator.html
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -344,30 +344,25 @@ extends com.anylogic.engine.ExperimentSimulation&lt;<a href="PyCommunicator.html
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDestroy_xjal()">onDestroy_xjal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setup(com.anylogic.engine.gui.IExperimentHost)">setup</a></span>&#8203;(com.anylogic.engine.gui.IExperimentHost&nbsp;_e)</code></th>
 <td class="colLast">
 <div class="block">Experiment setup</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupEngine(com.anylogic.engine.Engine)">setupEngine</a></span>&#8203;(com.anylogic.engine.Engine&nbsp;engine)</code></th>
 <td class="colLast">
 <div class="block">Engine setup</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupRootParameters(com.anylogic.libraries.pypeline.PyCommunicator,boolean)">setupRootParameters</a></span>&#8203;(<a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&nbsp;self,
                    boolean&nbsp;callOnChangeActions)</code></th>
@@ -386,7 +381,7 @@ extends com.anylogic.engine.ExperimentSimulation&lt;<a href="PyCommunicator.html
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.anylogic.engine.Experiment</h3>
-<code>close, destroy_xjal, error, errorInModel, finalize, getCommandLineArguments, getExperimentHost, getMutexRead_xjal, getMutexWrite_xjal, getName, getRunCount, getSnapshotFileName, getStep, internalFillConfig, isCommandEnabled, isLoadRootFromSnapshot, j, onBeforeSimulationRun, onDestroy, onEngineFinished, onError, onError, reset, setCommandLineArguments_xjal, setLoadRootFromSnapshot, setName, warning, warning</code></li>
+<code>close, destroy_xjal, error, errorInModel, finalize, getCommandLineArguments, getExperimentHost, getMutexRead_xjal, getMutexWrite_xjal, getName, getRunCount, getSnapshotFileName, getStep, h, internalFillConfig, isCommandEnabled, isLoadRootFromSnapshot, onBeforeSimulationRun, onDestroy, onEngineFinished, onError, onError, reset, setCommandLineArguments_xjal, setLoadRootFromSnapshot, setName, warning, warning</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.anylogic.engine.Utilities">
@@ -610,16 +605,6 @@ public&nbsp;void&nbsp;onDestroy_xjal()</pre>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onDestroy_xjal</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.ExperimentSimulation&lt;<a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;</code></dd>
 </dl>
-</li>
-</ul>
-<a id="main(java.lang.String[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>main</h4>
-<pre class="methodSignature">@AnyLogicInternalCodegenAPI
-public static&nbsp;void&nbsp;main&#8203;(java.lang.String[]&nbsp;args)</pre>
 </li>
 </ul>
 <a id="initDefaultRandomNumberGenerator(com.anylogic.engine.Engine)">

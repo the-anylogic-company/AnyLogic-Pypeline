@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.4.202104291518" AlpVersion="8.7.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.7.202109242224" AlpVersion="8.7.0">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -977,7 +977,12 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "",
 "    def read_string(self):",
 "        length = self.read_int()",
-"        return self.read(length).decode('utf-8')",
+"        bin_data = self.read(length)",
+"        try:",
+"            str_data = bin_data.decode(\"utf-8\")",
+"        except UnicodeDecodeError:",
+"            str_data = bin_data.decode(\"ISO-8859-1\")",
+"        return str_data",
 "",
 "",
 "class ConnectionWriter:",
