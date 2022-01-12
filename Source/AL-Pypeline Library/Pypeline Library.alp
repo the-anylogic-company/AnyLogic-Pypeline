@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.7.202109242224" AlpVersion="8.7.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.9.202112171527" AlpVersion="8.7.3">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -294,6 +294,8 @@ if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	py.close();
+} catch (NullPointerException e) {
+	// ignore (problem with initializing `py`)
 } catch (Exception e) {
 	e.printStackTrace();
 }]]></DestroyCode>
@@ -1318,18 +1320,35 @@ switch (pythonCommandType) {
 
 // The executable path is a requirement. If it's not found, throw an error.
 if (pythonExecPath == null) {
-	String msg = "Could not find any Python executable based on your preferred input (" + pythonCommandType + ")";
-	msg += "\nNOTE: Please check your system PATH. This can be printed out in AnyLogic by executing the code: `traceln(System.getenv(\"PATH\"));`";
+	String prefInput = pythonCommandType.toString() + (pythonCommandType.equals(PYTHON_OTHER) ? " - '"+pythonCommand+"'" : "");
+
+	String msg = "Could not find any Python executable based on your preferred input (" + prefInput + ").";
+	msg += "\nPlease check your system or user \"PATH\" variable. This can be printed out in AnyLogic by executing the code: `traceln(System.getenv(\"PATH\"));`";
+	msg += "\nNote: If you modify the path variable, you may need to restart AnyLogic for the changes to take effect.";
 	error(msg);
 }
 
+
 File f = new File(pythonExecPath);
+// Handle when the executable cannot be found or accessed.
 if (!f.exists()) { // passed executable path is not found, throw an error.
-	String msg = "No Python executable is located at: " + pythonExecPath;
-	msg += "\nConsult the user guide for more information.";
-	if (pythonExecPath.contains("Microsoft\\WindowsApps")) {
-		msg += "\nNOTE: The `python3` command is tied to the MS version of Python (which you don't have installed)."
-				+ "\nIf desired, you can disable it from Settings > Apps & Features > App execution aliases.";
+	boolean autodetected = !pythonCommandType.equals(PYTHON_PATH);
+	String msg = (autodetected ? "Autodetected" : "Specified") + " Python (at " + pythonExecPath + ") ";
+	
+	boolean isWinStore = pythonExecPath.contains("Microsoft\\WindowsApps");
+	if (isWinStore) {
+		msg += "is from the Microsoft App store, but non-Microsoft programs do not have executable permissions; use a non-Microsoft version of Python.";
+		msg += "\nIf you have one installed, configure your user PATH or disable App store aliases to Python in your settings app.";
+		msg += "\nNote: If you modify the path variable, you may need to restart AnyLogic for the changes to take effect.";
+	} else {
+		msg += "cannot be found or accessed.";
+		if (autodetected) {
+			// likely a permissions error
+			msg += " There may be a permissions issue or problem with the alias.";
+		} else {
+			// likely a typo
+			msg += " Check the path for typos or the permissions of the specified executable.";
+		}
 	}
 	error(msg);
 } else if (!f.isFile()) {
@@ -3906,7 +3925,7 @@ public class CustomAnnotationIntrospector extends JacksonAnnotationIntrospector 
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>6</VersionMinor>
-			<VersionBuild>0</VersionBuild>
+			<VersionBuild>1</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
