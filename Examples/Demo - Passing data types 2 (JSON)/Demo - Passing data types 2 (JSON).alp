@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.9.202112171527" AlpVersion="8.7.3">
 <Model>
 	<Id>1590593133127</Id>
 	<Name><![CDATA[Demo - Passing data types 2 (JSON)]]></Name>
@@ -237,7 +237,7 @@ pyCommunicator.run("from priceGenerator import update_agent_data");]]></StartupC
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[String json = pyCommunicator.toJson(companies, true);
-String filename = String.format("companydata_%04.0f-%04.0f.json", filename);
+String filename = String.format("companydata_%04.0f-%04.0f.json", time() - 100, time());
 
 traceln("Dumping company data to: " + filename);
 
@@ -332,19 +332,8 @@ String jsonInput = pyCommunicator.runResults(String.class, "file.read()");
 // close the file in python
 pyCommunicator.run("file.close()");
 
-// use PyCommunicator helper function to convert to usable java object;
-// specify `Object` as inner type of values since they can be either 
-//		strings (for name) or double (for volatility)
-List<HashMap<String, Object>> inputData = pyCommunicator.fromJson(jsonInput, List.class);
-for (HashMap<String, Object> data : inputData) {
-	// To convert to correct type, use type-casting
-	String name = (String)data.get("name");
-	double volatility = (double)data.get("volatility");
-	
-	// volatility isn't a parameter in the Company agent type, so manually modify
-	Company newCompany = add_companies(name);
-	newCompany.stockListing.set_volatility(volatility);
-}]]></Body>
+pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -408,6 +397,9 @@ for (HashMap<String, Object> data : inputData) {
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[enable]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -450,7 +442,7 @@ for (HashMap<String, Object> data : inputData) {
 					</QuantityColumn>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>0</Id>
+					<Id>1642027966648</Id>
 					<Name><![CDATA[companies]]></Name>
 					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1788,7 +1780,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1642027966656</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>50</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3441,8 +3433,8 @@ Additionally, you can use the provided buttons to manually print the JSON format
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>4</VersionMinor>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
