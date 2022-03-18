@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":9,"i54":9,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":9,"i55":9,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10,"i76":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -146,7 +146,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>com.anylogic.engine.AgentConstants</code>, <code>com.anylogic.engine.EnvironmentConstants</code>, <code>com.anylogic.engine.internal.n</code>, <code>java.io.Serializable</code></dd>
+<dd><code>com.anylogic.engine.AgentConstants</code>, <code>com.anylogic.engine.EnvironmentConstants</code>, <code>com.anylogic.engine.internal.a</code>, <code>java.io.Serializable</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">PyCommunicator</span>
@@ -383,6 +383,11 @@ extends com.anylogic.engine.Agent</pre>
  In other words: if set to true, errors from Python will cause model-halting errors in AnyLogic.<br></div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.util.LinkedHashSet&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#warnedParameters">warnedParameters</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.anylogic.engine.Agent">
@@ -607,13 +612,18 @@ and wanting to specify further parameter options.<br><br></div>
 <td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
              java.lang.Class&lt;T&gt;&nbsp;clazz)</code></th>
-<td class="colLast">
-<div class="block">Converts a JSON string of parameter mapping to a nonstarted instance of the agent.<br><br>
- Agent will be added to the built-in default population.<br><br>
- (Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br><br></div>
-</td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
+             java.lang.Class&lt;T&gt;&nbsp;clazz,
+             com.anylogic.engine.Agent&nbsp;anyAgent)</code></th>
+<td class="colLast">
+<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br></div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
              java.lang.Class&lt;T&gt;&nbsp;clazz,
@@ -624,22 +634,22 @@ and wanting to specify further parameter options.<br><br></div>
  Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br><br></div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromJson(java.lang.String,java.lang.Class)">fromJson</a></span>&#8203;(java.lang.String&nbsp;json,
         java.lang.Class&lt;T&gt;&nbsp;clazz)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>java.util.ArrayList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">fromPopulationJson</a></span>&#8203;(java.lang.String&nbsp;json,
                   java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                  com.anylogic.engine.Agent&nbsp;owner)</code></th>
+                  com.anylogic.engine.Agent&nbsp;anyAgent)</code></th>
 <td class="colLast">
 <div class="block">A function specifically for converting the given JSON to an arraylist of agents.<br><br></div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">fromPopulationJson</a></span>&#8203;(java.lang.String&nbsp;json,
                   java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
@@ -648,79 +658,79 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Converts a list of agents from JSON and adds it to an existing population.<br></div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultPropertiesPath()">getDefaultPropertiesPath</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.elements.IElementDescriptor&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementDesciptors()">getElementDesciptors</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.markup.Level[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLevels()">getLevels</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>com.anylogic.engine.presentation.ShapeModelElementsGroup</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModelElementsShape()">getModelElementsShape</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameter(java.lang.String)">getParameter</a></span>&#8203;(java.lang.String&nbsp;_name_xjal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameterNames()">getParameterNames</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.AgentList&lt;? extends <a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPopulation()">getPopulation</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPresentationShape()">getPresentationShape</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.Scale</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScale()">getScale</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewAreas(java.util.Map)">getViewAreas</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.presentation.ViewArea&gt;&nbsp;_output)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#instantiateBaseStructure_xjal()">instantiateBaseStructure_xjal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isConnected()">isConnected</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attempts to ping the Python server to see if it's still alive and ready to receive commands<br><br></div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmbeddedAgentPresentationVisible(com.anylogic.engine.Agent)">isEmbeddedAgentPresentationVisible</a></span>&#8203;(com.anylogic.engine.Agent&nbsp;_a)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPublicPresentationDefined()">isPublicPresentationDefined</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_enable()">onChange_enable</a></span>()</code></th>
 <td class="colLast">
@@ -730,12 +740,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_enable()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_enable_xjal(boolean)">onChange_enable_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_loadLastWorkingConfig()">onChange_loadLastWorkingConfig</a></span>()</code></th>
 <td class="colLast">
@@ -745,12 +755,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_loadLastWorkingConfig()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_loadLastWorkingConfig_xjal(boolean)">onChange_loadLastWorkingConfig_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommand()">onChange_pythonCommand</a></span>()</code></th>
 <td class="colLast">
@@ -760,12 +770,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonCommand()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommand_xjal(java.lang.String)">onChange_pythonCommand_xjal</a></span>&#8203;(java.lang.String&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommandType()">onChange_pythonCommandType</a></span>()</code></th>
 <td class="colLast">
@@ -775,12 +785,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonCommandType()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommandType_xjal(com.anylogic.libraries.pypeline.PythonCommandType)">onChange_pythonCommandType_xjal</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonExecPath()">onChange_pythonExecPath</a></span>()</code></th>
 <td class="colLast">
@@ -790,12 +800,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonExecPath()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonExecPath_xjal(java.lang.String)">onChange_pythonExecPath_xjal</a></span>&#8203;(java.lang.String&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_redirectPyOutput()">onChange_redirectPyOutput</a></span>()</code></th>
 <td class="colLast">
@@ -805,12 +815,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_redirectPyOutput()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_redirectPyOutput_xjal(boolean)">onChange_redirectPyOutput_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_throwErrorOnFailedAttempt()">onChange_throwErrorOnFailedAttempt</a></span>()</code></th>
 <td class="colLast">
@@ -820,22 +830,22 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_throwErrorOnFailedAttempt()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_throwErrorOnFailedAttempt_xjal(boolean)">onChange_throwErrorOnFailedAttempt_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDestroy()">onDestroy</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onOwnerChanged_xjal()">onOwnerChanged_xjal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onShapeClick(int,int,double,double)">onShapeClick</a></span>&#8203;(int&nbsp;_shape,
             int&nbsp;index,
@@ -843,12 +853,12 @@ and wanting to specify further parameter options.<br><br></div>
             double&nbsp;clicky)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onStartup()">onStartup</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reset()">reset</a></span>()</code></th>
 <td class="colLast">
@@ -856,21 +866,21 @@ and wanting to specify further parameter options.<br><br></div>
  Executing this function sever the connection to Python and then reestablish it.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String)">run</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String...)">run</a></span>&#8203;(java.lang.String...&nbsp;lines)</code></th>
 <td class="colLast">
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String,java.lang.Object...)">run</a></span>&#8203;(java.lang.String&nbsp;codeFmt,
    java.lang.Object...&nbsp;args)</code></th>
@@ -878,7 +888,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>static <a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String...)">runFile</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;preferredVersion,
        java.lang.String...&nbsp;args)</code></th>
@@ -886,7 +896,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file and get the output.<br><br></div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.Class,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String...)">runFile</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
        <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;preferredVersion,
@@ -895,7 +905,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file and get the output.<br><br></div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.Class,java.lang.String...)">runFile</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
        java.lang.String...&nbsp;args)</code></th>
@@ -903,14 +913,14 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file using the preferred version of the running environment.<br><br></div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.String...)">runFile</a></span>&#8203;(java.lang.String...&nbsp;args)</code></th>
 <td class="colLast">
 <div class="block">Execute a Python file using the preferred version of the running environment.<br><br></div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String&nbsp;code)</code></th>
@@ -918,7 +928,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String...)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String...&nbsp;lines)</code></th>
@@ -926,7 +936,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String,java.lang.Object...)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String&nbsp;codeFmt,
@@ -935,21 +945,21 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String)">runResults</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String...)">runResults</a></span>&#8203;(java.lang.String...&nbsp;lines)</code></th>
 <td class="colLast">
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String,java.lang.Object...)">runResults</a></span>&#8203;(java.lang.String&nbsp;codeFmt,
           java.lang.Object...&nbsp;args)</code></th>
@@ -957,54 +967,54 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_enable(boolean)">set_enable</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_loadLastWorkingConfig(boolean)">set_loadLastWorkingConfig</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonCommand(java.lang.String)">set_pythonCommand</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonCommandType(com.anylogic.libraries.pypeline.PythonCommandType)">set_pythonCommandType</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonExecPath(java.lang.String)">set_pythonExecPath</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_redirectPyOutput(boolean)">set_redirectPyOutput</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_throwErrorOnFailedAttempt(boolean)">set_throwErrorOnFailedAttempt</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParameter(java.lang.String,java.lang.Object,boolean)">setParameter</a></span>&#8203;(java.lang.String&nbsp;_name_xjal,
             java.lang.Object&nbsp;_value_xjal,
             boolean&nbsp;_callOnChange_xjal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParametersToDefaultValues()">setParametersToDefaultValues</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i72" class="altColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupPlainVariables_xjal()">setupPlainVariables_xjal</a></span>()</code></th>
 <td class="colLast">
@@ -1012,7 +1022,7 @@ and wanting to specify further parameter options.<br><br></div>
  <em>This method isn't designed to be called by user and may be removed in future releases.</em></div>
 </td>
 </tr>
-<tr id="i73" class="rowColor">
+<tr id="i74" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson(java.lang.Object)">toJson</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
 <td class="colLast">
@@ -1020,7 +1030,7 @@ and wanting to specify further parameter options.<br><br></div>
  Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
 </td>
 </tr>
-<tr id="i74" class="altColor">
+<tr id="i75" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson(java.lang.Object,boolean)">toJson</a></span>&#8203;(java.lang.Object&nbsp;object,
       boolean&nbsp;prettyprint)</code></th>
@@ -1029,7 +1039,7 @@ and wanting to specify further parameter options.<br><br></div>
  Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
 </td>
 </tr>
-<tr id="i75" class="rowColor">
+<tr id="i76" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -1259,6 +1269,15 @@ and wanting to specify further parameter options.<br><br></div>
  And to get the Attempt used in the most recent command: <code>history.get(0).getSecond()</code><br><br>
  <br><br>
  Provided as reference for the end-user; for example, if they execute multiple commands sequentially and want the outputs without having to create an object for each call.<br></div>
+</li>
+</ul>
+<a id="warnedParameters">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>warnedParameters</h4>
+<pre>public static&nbsp;java.util.LinkedHashSet&lt;java.lang.String&gt; warnedParameters</pre>
 </li>
 </ul>
 <a id="scale">
@@ -2213,9 +2232,6 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <h4>fromAgentJson</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;T&nbsp;fromAgentJson&#8203;(java.lang.String&nbsp;json,
                                                                     java.lang.Class&lt;T&gt;&nbsp;clazz)</pre>
-<div class="block">Converts a JSON string of parameter mapping to a nonstarted instance of the agent.<br><br>
- Agent will be added to the built-in default population.<br><br>
- (Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br><br></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>json</code> - A JSON string to be converted to an AL agent<br><br></dd>
@@ -2233,13 +2249,13 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <h4>fromPopulationJson</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;java.util.ArrayList&nbsp;fromPopulationJson&#8203;(java.lang.String&nbsp;json,
                                                                                            java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                                                                                           com.anylogic.engine.Agent&nbsp;owner)</pre>
+                                                                                           com.anylogic.engine.Agent&nbsp;anyAgent)</pre>
 <div class="block">A function specifically for converting the given JSON to an arraylist of agents.<br><br></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>json</code> - A JSON string to be converted (should be a list of dicts, mapping parameter name to value)<br><br></dd>
 <dd><code>agent_clazz</code> - The class of the AL agent type<br><br></dd>
-<dd><code>owner</code> - The owner of the population (e.g., your root agent)<br><br></dd>
+<dd><code>anyAgent</code> - Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).<br></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>AgentArrayList An access-only ArrayList of the agents</dd>
 </dl>
@@ -2281,7 +2297,7 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>json</code> - A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values<br></dd>
 <dd><code>agent_clazz</code> - The Java class for the agent type to convert to<br></dd>
-<dd><code>population</code> - The population to add the agent to</dd>
+<dd><code>population</code> - The population to add the agents to</dd>
 </dl>
 </li>
 </ul>
@@ -2371,6 +2387,26 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <dd><code>args</code> - The objects to replace the placeholders with<br><br></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>T The output, in the type specified</dd>
+</dl>
+</li>
+</ul>
+<a id="fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fromAgentJson</h4>
+<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;T&nbsp;fromAgentJson&#8203;(java.lang.String&nbsp;json,
+                                                                    java.lang.Class&lt;T&gt;&nbsp;clazz,
+                                                                    com.anylogic.engine.Agent&nbsp;anyAgent)</pre>
+<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br></div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>json</code> - A JSON string to be converted to an AL agent<br><br></dd>
+<dd><code>clazz</code> - The class of the AL agent type to convert the provided string to<br><br></dd>
+<dd><code>anyAgent</code> - Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).<br></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The agent of the specified type (or `null` if errors were encountered)</dd>
 </dl>
 </li>
 </ul>
