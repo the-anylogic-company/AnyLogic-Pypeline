@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.9.202112171527" AlpVersion="8.7.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.10.202202091651" AlpVersion="8.7.3">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -1097,6 +1097,21 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1647639493087</Id>
+					<Name><![CDATA[warnedParameters]]></Name>
+					<X>300</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="true">
+						<CollectionClass><![CDATA[LinkedHashSet]]></CollectionClass>
+						<ElementClass><![CDATA[String]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -2117,7 +2132,11 @@ return output;
 					<ReturnType><![CDATA[T]]></ReturnType>
 					<Id>1599336077784</Id>
 					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[Converts a JSON string of parameter mapping to a nonstarted instance of the agent.<br>
+					<Description><![CDATA[@deprecated
+
+<b>Note:</b> This function will create a "dead" agent (not active or part of the engine). Pass in any valid agent to the third argument to properly initiate it.<br>
+<br>
+Converts a JSON string of parameter mapping to a nonstarted instance of the agent.<br>
 Agent will be added to the built-in default population.<br>
 (Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
 @param json A JSON string to be converted to an AL agent<br>
@@ -2137,7 +2156,7 @@ Agent will be added to the built-in default population.<br>
 						<Name><![CDATA[clazz]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
-					<Body><![CDATA[return fromAgentJson(json, clazz, null);]]></Body>
+					<Body><![CDATA[return fromAgentJson(json, clazz, new Agent());]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -2147,10 +2166,10 @@ Agent will be added to the built-in default population.<br>
 					<Description><![CDATA[A function specifically for converting the given JSON to an arraylist of agents.<br>
 @param json A JSON string to be converted (should be a list of dicts, mapping parameter name to value)<br>
 @param agent_clazz The class of the AL agent type<br>
-@param owner The owner of the population (e.g., your root agent)<br>
+@param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return AgentArrayList An access-only ArrayList of the agents]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>700</Y>
+					<X>300</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2164,7 +2183,7 @@ Agent will be added to the built-in default population.<br>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
 					<Parameter>
-						<Name><![CDATA[owner]]></Name>
+						<Name><![CDATA[anyAgent]]></Name>
 						<Type><![CDATA[Agent]]></Type>
 					</Parameter>
 					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
@@ -2252,7 +2271,11 @@ try {
 		// don't include custom key added to agent json in `agentPopToList`
 		if (!name.equals("_index")) {
 			boolean result = myAgent.setParameter(name, value, false);
-			if (!result) traceln("WARNING: Parameter " + name + " not found!");
+			// alert user, but only once per run
+			if (!result && !warnedParameters.contains(name)) {
+				traceln("ONE-TIME WARNING: Parameter " + name + " not found!");
+				warnedParameters.add(name);
+			}
 		}
 	});
 	
@@ -2276,7 +2299,7 @@ return null;]]></Body>
 					<Name><![CDATA[fromPopulationJson]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>730</Y>
+					<X>330</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2331,7 +2354,7 @@ Converts an agent from JSON and adds it to an existing population.
 @param population The population to add the agent to]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>760</Y>
+					<X>330</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2417,9 +2440,9 @@ if (contains) {
 					<Description><![CDATA[Converts a list of agents from JSON and adds it to an existing population.
 @param json A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values
 @param agent_clazz The Java class for the agent type to convert to
-@param population The population to add the agent to]]></Description>
+@param population The population to add the agents to]]></Description>
 					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>790</Y>
+					<X>330</X><Y>820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2658,6 +2681,77 @@ try (InputStream input = new FileInputStream(filename)) {
 	error(e, "Exception when reading properties file");
 }
 return prop;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[T]]></ReturnType>
+					<Id>1647635313284</Id>
+					<Name><![CDATA[fromAgentJson]]></Name>
+					<Description><![CDATA[Converts a JSON string of parameter mapping to a "living" agent.<br>
+@param json A JSON string to be converted to an AL agent<br>
+@param clazz The class of the AL agent type to convert the provided string to<br>
+@param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
+@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<X>330</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[anyAgent]]></Name>
+						<Type><![CDATA[Agent]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Convert json to hashmap for name/value lookup
+HashMap<String, Object> paramLookup = fromJson(json, HashMap.class);
+
+try {
+	T myAgent = clazz
+			.getDeclaredConstructor()
+			.newInstance();
+	
+	// User may have only passed a subset of parameters,
+	//	so try to set them all to defaults first.
+	// Note: cannot always call this because will throw null exception when default values 
+	//	reference function that require non-static usage (e.g., random functions)
+	try {
+		myAgent.setParametersToDefaultValues();
+	} catch (NullPointerException e) {
+		// At least mark as set
+		myAgent.markParametersAreSet();
+	}
+	
+	paramLookup.forEach( (name,value) -> {
+		// don't include custom key added to agent json in `agentPopToList`
+		if (!name.equals("_index")) {
+			boolean result = myAgent.setParameter(name, value, false);
+			// alert user, but only once per run
+			if (!result && !warnedParameters.contains(name)) {
+				traceln("ONE-TIME WARNING: Parameter " + name + " not found!");
+				warnedParameters.add(name);
+			}
+		}
+	});
+	
+	// only try to create/start if the agent is part of the engine.
+	// (in deprecated func, passing `null` to 3rd arg is ambiguous with other func,
+	//		 so had to pass `new Agent()` which wouldnt be connected to the engine)
+	if (anyAgent.getEngine() != null)
+		myAgent.createAndStart(anyAgent);
+	
+	return myAgent;
+} catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
+	e.printStackTrace();
+}
+return null;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -3924,8 +4018,8 @@ public class CustomAnnotationIntrospector extends JacksonAnnotationIntrospector 
 				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
-			<VersionMinor>6</VersionMinor>
-			<VersionBuild>1</VersionBuild>
+			<VersionMinor>7</VersionMinor>
+			<VersionBuild>0</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
