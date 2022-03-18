@@ -1,0 +1,7 @@
+{
+	"name": "Chiefton",
+	"isMale": true,
+	"companyRank": 1,
+	"salary": 5105999.01,
+	"favoriteNumbers": [5, 55, 555, 5555, 55556]
+}

@@ -1,0 +1,38 @@
+[
+	{
+		"reqRank": 1,
+		"reqWorker": null,
+		"duration": 305.5,
+		"__comment": "only for a boss"
+	},
+	{
+		"reqRank": 3,
+		"reqWorker": null,
+		"duration": 1.25,
+		"__comment": "for any employee (non-boss/manager)"
+	},
+	{
+		"reqRank": 3,
+		"reqWorker": null,
+		"duration": 1.05,
+		"__comment": "for any employee (non-boss/manager)"
+	},
+	{
+		"reqRank": 3,
+		"reqWorker": null,
+		"duration": 1.23,
+		"__comment": "for any employee (non-boss/manager)"
+	},
+	{
+		"reqRank": 3,
+		"reqWorker": "Randy",
+		"duration": 1.25,
+		"__comment": "only for an employee named 'Randy'"
+	},
+	{
+		"reqRank": 0,
+		"reqWorker": "Chiefton",
+		"duration": 0.333,
+		"__comment": "for **any** worker named 'Chiefton'"
+	}
+]
