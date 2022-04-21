@@ -272,7 +272,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 
 import java.lang.reflect.Modifier;]]></Import>
-			<StartupCode><![CDATA[logger.setUseParentHandlers(false);
+			<StartupCode><![CDATA[/*logger.setUseParentHandlers(false);
 ConsoleHandler handler = new ConsoleHandler();
 handler.setFormatter(new SimpleFormatter() {
             private static final String format = "[%1$tT.%1$tN] [%2$-7s] %3$s %n";
@@ -289,7 +289,7 @@ handler.setFormatter(new SimpleFormatter() {
 handler.setLevel(LOG_LEVEL);
 logger.addHandler(handler);
 logger.setLevel(LOG_LEVEL);
-
+*/
 if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
@@ -518,6 +518,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1615911970658</Id>
 					<Name><![CDATA[LOG_LEVEL]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-150</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -533,6 +534,7 @@ try {
 				<Variable Class="PlainVariable">
 					<Id>1615912017437</Id>
 					<Name><![CDATA[logger]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-150</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1131,7 +1133,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 						<Name><![CDATA[code]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
-					<Body><![CDATA[logger.finer("ENTRY run(" + code + ")");
+					<Body><![CDATA[//logger.finer("ENTRY run(" + code + ")");
 
 Attempt attempt = py.exec(code);
 history.add(0, new Pair<>(code, attempt));
@@ -1140,7 +1142,7 @@ if (throwErrorOnFailedAttempt && !attempt.isSuccessful()) {
 	error(attempt.getFeedback()); // new lines aren't printing properly, TODO - look into that
 }
 
-logger.finer("EXIT run(" + attempt + ")");
+//logger.finer("EXIT run(" + attempt + ")");
 return attempt;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1381,7 +1383,7 @@ if (!f.exists()) { // passed executable path is not found, throw an error.
 }
 
 try {
-	py = new PySubProcess(pathToServerPy, pythonExecPath, redirectPyOutput, LOG_LEVEL);
+	py = new PySubProcess(pathToServerPy, pythonExecPath, redirectPyOutput, null); //LOG_LEVEL);
 	modifyPathAsNeeded();
 } catch (Exception e) {
 	error(e, "Problem with setting up Python Subprocess");
@@ -3042,7 +3044,7 @@ public class PySubProcess {
 	
 	public ExecutorService executor = null;
 	
-	private final static Logger logger = Logger.getLogger(PyCommunicator.class.getName());
+	//private final static Logger logger = Logger.getLogger(PySubProcess.class.getName());
     
     /**
      * 
@@ -3050,8 +3052,8 @@ public class PySubProcess {
      * @param pathToServerPy
      */
     public PySubProcess(String pathToServerPy, String pathToPyExe, boolean redirectPyOutput, java.util.logging.Level logLevel) throws IOException, PyException, InterruptedException {
-    	logger.setUseParentHandlers(false);
-    	ConsoleHandler handler = new ConsoleHandler();
+    	//logger.setUseParentHandlers(false);
+    	/*ConsoleHandler handler = new ConsoleHandler();
     	handler.setLevel(logLevel);
     	handler.setFormatter(new SimpleFormatter() {
             private static final String format = "[%1$tT.%1$tN] [%2$-7s] %3$s %n";
@@ -3064,9 +3066,9 @@ public class PySubProcess {
                         lr.getMessage()
                 );
             }
-        });
-    	logger.addHandler(handler);
-    	logger.setLevel(logLevel);
+        });*/
+    	//logger.addHandler(handler);
+    	//logger.setLevel(logLevel);
     	
     	activePyPath = pathToPyExe;
     	activePyVersion = getPythonVersion(activePyPath);
@@ -3082,7 +3084,7 @@ public class PySubProcess {
      * @throws Exception
      */
     private void initConnection(String pathToServerPy) throws IOException, PyException, InterruptedException {
-    	logger.info("Initializing connection");
+    	//logger.info("Initializing connection");
     	
     	// First find/validate the path to the server.py file
     	final String serverPyFile = "server.py";
@@ -3173,7 +3175,7 @@ public class PySubProcess {
      * @return Attempt
      */
     public Attempt ping() {
-    	logger.finer("ENTRY ping");
+    	//logger.finer("ENTRY ping");
     	Attempt outcome = null;
     	if (socket.isClosed())
     		outcome = new Attempt(Attempt.RESULT_ERROR, "Python subprocess has been shutdown.");
@@ -3186,7 +3188,7 @@ public class PySubProcess {
 	    		outcome = new Attempt(e);
 	    	}
     	}
-    	logger.finer(String.format("EXIT ping(%s)", outcome));
+    	//logger.finer(String.format("EXIT ping(%s)", outcome));
     	return outcome;
     	
     }
@@ -3197,24 +3199,24 @@ public class PySubProcess {
      * @return Attempt With empty feedback if successful, otherwise the error message
      */
     public Attempt exec(String stmt) {
-    	logger.finer("ENTRY exec(" + stmt + ")");
+    	//logger.finer("ENTRY exec(" + stmt + ")");
     	Attempt outcome = null;
     	try {
-    		logger.fine("Outputting exec message");
+    		//logger.fine("Outputting exec message");
     		
-    		logger.finest("Writing exec message");
+    		//logger.finest("Writing exec message");
 			out.write(execMsg);
-			logger.finest("Writing string statement");
+			//logger.finest("Writing string statement");
 			writeString(stmt);
-			logger.finest("Flushing");
+			//logger.finest("Flushing");
 			out.flush();
 			
-			logger.fine("Reading attempt result");
+			//logger.fine("Reading attempt result");
 			outcome = readAttemptResult();
     	} catch (Throwable e) { // catchall
     		outcome = new Attempt(e);
     	}
-    	logger.finer(String.format("EXIT exec(%s)", outcome));
+    	//logger.finer(String.format("EXIT exec(%s)", outcome));
     	return outcome;
 	}
 	
@@ -3224,47 +3226,47 @@ public class PySubProcess {
      * @return Attempt With a feedback of the returned value if no error, otherwise the error message
      */
 	public Attempt eval(String expr) {
-		logger.finer("ENTRY eval(" + expr + ")");
+		//logger.finer("ENTRY eval(" + expr + ")");
 		Attempt outcome = null;
 		try {
-			logger.fine("Outputting eval message");
+			//logger.fine("Outputting eval message");
 			
-			logger.finest("Writing eval message");
+			//logger.finest("Writing eval message");
 			out.write(evalMsg);
-			logger.finest("Writing string expression");
+			//logger.finest("Writing string expression");
 			writeString(expr);
-			logger.finest("Flushing");
+			//logger.finest("Flushing");
 			out.flush();
 			
-			logger.fine("Reading attempt result");
+			//logger.fine("Reading attempt result");
 	    	outcome = readAttemptResult();
 		} catch (Exception e) {
 			outcome = new Attempt(e);
 		}
-		logger.finer(String.format("EXIT eval(%s)", outcome));
+		//logger.finer(String.format("EXIT eval(%s)", outcome));
 		return outcome;
 	}
     
     private Attempt readAttemptResult() throws IOException {
-    	logger.finer("ENTRY readAttemptResult");
+    	//logger.finer("ENTRY readAttemptResult");
     	// Continue to dump standard input and standard error of process until received data from Python.
     	// Unhandled warn statements will block process from continuing (and are piped to standard error)
-    	logger.finest("Printing until in is no longer available");
+    	//logger.finest("Printing until in is no longer available");
     	while (in.available() == 0) {
     		printStdout();
     		printStderr();
     	}
-    	logger.finest("Reading byte");
+    	//logger.finest("Reading byte");
     	byte resultCode = readByte();
-    	logger.finest("Reading string");
+    	//logger.finest("Reading string");
     	String feedback = readString();
     	
-    	logger.finest("Printing stdout/err");
+    	//logger.finest("Printing stdout/err");
     	printStdout();
     	printStderr();
     	
     	Attempt outcome = new Attempt(resultCode, feedback);
-    	logger.finer(String.format("EXIT readAttemptResult(%s)", outcome));
+    	//logger.finer(String.format("EXIT readAttemptResult(%s)", outcome));
     	return outcome;
     }
     
