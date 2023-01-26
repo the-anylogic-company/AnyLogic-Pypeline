@@ -47,7 +47,7 @@ pyCommunicator.run("x = 3.14");
 
 2. Drag in another button, set its label to "get x", and in its **Action** field, type the following code:
 ```java
-Attempt xValue = pyCommunicator.runResults(double.class, "x");
+double xValue = pyCommunicator.runResults(double.class, "x");
 traceln(xValue);
 ```
 > The `runResults` function is used when you want to retrieve a value from Python.
