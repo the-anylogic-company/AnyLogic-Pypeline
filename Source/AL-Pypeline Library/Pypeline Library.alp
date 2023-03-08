@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.10.202202091651" AlpVersion="8.7.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -76,7 +76,7 @@ You can query the success and feedback using the <code>isSuccessful</code> and <
 In addition to single-line Python code, you can also pass multiline Python code in the form of multiple arguments<br>
 Note 2: For multiline code, make sure all the number of spaces you use for each indentation are consistent.<br>
 <br>
-Node 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
+Note 3: A history of recently ran commands  can be accessed through the variable <code>history</code> located within this object.]]></Description>
 			<AdditionalClassCode><![CDATA[private static final String[][] condaPaths = new String[][]{
 	{"Library", "mingw-w64", "bin"},
 	{"Library", "usr", "bin"},
@@ -160,8 +160,6 @@ public PyCommunicator(PythonCommandType pythonCommandType, String otherCommandOr
 		throwErrorOnFailedAttempt,
 		redirectPyOutput);
 }
-
-
 
 static HashMap<String, Object> serializeHistogram1DData(HistogramData h1data) {
 	HashMap<String, Object> dataTable = new HashMap<>();
@@ -1284,7 +1282,7 @@ If there is already a running Python environment, this will first try to close i
 					<X>300</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Allow the existing Python environment (if one is created) to die gracefully
 if (py != null) {
@@ -2820,7 +2818,7 @@ return null;]]></Body>
 				<Text>
 					<Id>1620233139644</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>410</X><Y>450</Y>
+					<X>450</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -4021,7 +4019,7 @@ public class CustomAnnotationIntrospector extends JacksonAnnotationIntrospector 
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>7</VersionMinor>
-			<VersionBuild>0</VersionBuild>
+			<VersionBuild>1</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>

@@ -27,6 +27,9 @@ def get_objects(n_callcenters):
     return objects
 
 def initialize(n_callcenters, ymax=1):
+    """ Build the web app page @ http://localhost:10101/callcenters
+    Note: Requires the `waved` executable to be actively running. """
+    
     global page
     global cards
 

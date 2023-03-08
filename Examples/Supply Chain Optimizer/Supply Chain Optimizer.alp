@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
 <Model>
 	<Id>1599155584007</Id>
 	<Name><![CDATA[Supply Chain Optimizer]]></Name>
@@ -395,6 +395,7 @@ pyCommunicator.run(
 HashMap<String, Double> infoData = pyCommunicator.runResults(
 	HashMap.class,
 	"json_data['info']");
+
 traceln("[%s] %s", time(WEEK), infoData);
 
 // Get JSON for Orders population and use provided function to convert.
@@ -403,8 +404,7 @@ String ordersJsonData = pyCommunicator.runResults(
 	"json_data['orders']");
 
 // Call population json function which will add the orders to the provided population (i.e., no return)
-pyCommunicator.fromPopulationJson(ordersJsonData, Order.class, 
-									getEngine(), this, orders);
+pyCommunicator.fromPopulationJson(ordersJsonData, Order.class, orders);
 
 // Print orders agents for debugging purposes
 //traceln(ordersJsonData.replace("}, {", "},\n\t{").replace("[{", "[\n\t{") + "\n");
@@ -573,6 +573,7 @@ currentViewIndex = viewIndex;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<StatisticsItem>
+						<Id>1653492638650</Id>
 						<Name><![CDATA[totalDemand]]></Name>
 						<Type>sum</Type>
 						<Expression><![CDATA[item.demand]]></Expression>
@@ -698,6 +699,7 @@ currentViewIndex = viewIndex;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<StatisticsItem>
+						<Id>1653492638657</Id>
 						<Name><![CDATA[totalProduct]]></Name>
 						<Type>sum</Type>
 						<Expression><![CDATA[item.output]]></Expression>
@@ -945,6 +947,9 @@ currentViewIndex = viewIndex;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[enable]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1203,7 +1208,7 @@ currentViewIndex = viewIndex;]]></Body>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[traceln(PyCommunicator.toJson(this, true));]]></ActionCode>
+						<ActionCode><![CDATA[traceln(pyCommunicator.toJson(this, true));]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -1213,7 +1218,7 @@ currentViewIndex = viewIndex;]]></Body>
 				<Text>
 					<Id>1599424938690</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-420</X><Y>200</Y>
+					<X>310</X><Y>760</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1223,17 +1228,15 @@ currentViewIndex = viewIndex;]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[* At the end of each week, the model is sent to the solver
+					<Text><![CDATA[* At the end of each week, the model state is sent to the solver
 * Returned values include performance indicators of solver and list of orders
-* Each order then seizes the fleet at its respective factory/warehouse, who then fulfills the order.
-
-]]></Text>
+* Each order then seizes the fleet at its respective factory/warehouse, who then fulfills the order.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>10</Size>
 						<Style>0</Style>
 					</Font>
-					<Alignment>RIGHT</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 				<EmbeddedObjectPresentation>
 					<Id>1599175257543</Id>
@@ -1346,6 +1349,7 @@ currentViewIndex = viewIndex;]]></Body>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[Factory supply]]></Title>
+					<Id>1653492638640</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-65536</Color>
 					<Expression2><![CDATA[factories.totalProduct()]]></Expression2>
@@ -1355,6 +1359,7 @@ currentViewIndex = viewIndex;]]></Body>
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[Customer demand]]></Title>
+					<Id>1653492638641</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-14774017</Color>
 					<Expression2><![CDATA[limitMin(0, customers.totalDemand())]]></Expression2>
@@ -2010,69 +2015,6 @@ Remove 'temp' files after usage]]></Text>
 						<Link>useDot</Link>
 	 				</ExtendedProperties>
 				</Control>
-				<Text>
-					<Id>1602549434445</Id>
-					<Name><![CDATA[text19]]></Name>
-					<X>40</X><Y>120</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model is incomplete.]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>26</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1602549434450</Id>
-					<Name><![CDATA[text20]]></Name>
-					<X>40</X><Y>160</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Run at your own risk!]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>18</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1602549434453</Id>
-					<Name><![CDATA[text21]]></Name>
-					<X>210</X><Y>160</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[(There's not actually any risk)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 			</Presentation>
 
 				</Level>
@@ -2899,7 +2841,7 @@ shapesHideWhenClosed
 								<Code><![CDATA[unit.truckAnim.setVisible(false);
 unit.setSpace(main);
 unit.setLocation(this);
-unit.presentation.setScale(0.5);]]></Code>
+//unit.presentation.setScale(0.5);]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -5411,7 +5353,7 @@ shapesHideWhenClosed
 								<Code><![CDATA[unit.truckAnim.setVisible(false);
 unit.setSpace(main);
 unit.setLocation(this);
-unit.presentation.setScale(0.5);]]></Code>
+//unit.presentation.setScale(0.5);]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -8032,7 +7974,8 @@ res.progressRectangle.setVisible(false);
 demand -= agent.amount;
 demandLevelHistory.add(demand);
 
-//traceln("%s | %s | Dropped off! Customer now expecting: %5.2f / %5.2f", agent, this, (demand-(amountReceived%demand)), demand);]]></Code>
+traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f", 
+	agent, this, agent.amount, demand);]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -9677,7 +9620,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<Id>1599507526263</Id>
 					<Name><![CDATA[truckAnim]]></Name>
 					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+					<Label><X>6.667</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
@@ -9704,7 +9647,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Rectangle>
 					<Id>1599252944124</Id>
 					<Name><![CDATA[_ps86]]></Name>
-					<X>13</X><Y>-8</Y>
+					<X>8.667</X><Y>-5.44</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9717,8 +9660,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>2</Width>
-					<Height>17</Height>
+					<Width>1.333</Width>
+					<Height>11.56</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-12566464</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9726,7 +9669,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Curve ControlPoints="true">
 					<Id>1599252944126</Id>
 					<Name><![CDATA[_ps87]]></Name>
-					<X>26</X><Y>-9</Y>
+					<X>17.333</X><Y>-6.12</Y>
 					<Label><X>-20</X><Y>40</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9747,18 +9690,18 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>2</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-2</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>-2</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>1.36</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>2.04</Y><Z>0</Z></Point>
+					   <Point><X>-0.667</X><Y>0.68</Y><Z>0</Z></Point>
+					   <Point><X>-1.333</X><Y>-0.68</Y><Z>0</Z></Point>
+					   <Point><X>-0.667</X><Y>-1.36</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>true</Closed>
 				</Curve>
 				<Curve ControlPoints="true">
 					<Id>1599252944128</Id>
 					<Name><![CDATA[_ps88]]></Name>
-					<X>26</X><Y>10</Y>
+					<X>17.333</X><Y>6.8</Y>
 					<Label><X>-20</X><Y>40</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9779,18 +9722,18 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>2</Y><Z>0</Z></Point>
-					   <Point><X>-2</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>-1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-3</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>-2</Y><Z>0</Z></Point>
+					   <Point><X>-0.667</X><Y>1.36</Y><Z>0</Z></Point>
+					   <Point><X>-1.333</X><Y>0.68</Y><Z>0</Z></Point>
+					   <Point><X>-0.667</X><Y>-0.68</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-2.04</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>-1.36</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>true</Closed>
 				</Curve>
 				<Curve ControlPoints="true">
 					<Id>1599252944130</Id>
 					<Name><![CDATA[_ps89]]></Name>
-					<X>15</X><Y>-8</Y>
+					<X>10</X><Y>-5.44</Y>
 					<Label><X>-20</X><Y>40</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9812,21 +9755,21 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>12</X><Y>17</Y><Z>0</Z></Point>
-					   <Point><X>13</X><Y>16</Y><Z>0</Z></Point>
-					   <Point><X>15</X><Y>14</Y><Z>0</Z></Point>
-					   <Point><X>15</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>13</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>12</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>10</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>8</X><Y>11.56</Y><Z>0</Z></Point>
+					   <Point><X>8.667</X><Y>10.88</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>9.52</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>2.04</Y><Z>0</Z></Point>
+					   <Point><X>8.667</X><Y>0.68</Y><Z>0</Z></Point>
+					   <Point><X>8</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>6.667</X><Y>0</Y><Z>0</Z></Point>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>true</Closed>
@@ -9834,7 +9777,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<RoundedRectangle>
 					<Id>1599252944132</Id>
 					<Name><![CDATA[_ps90]]></Name>
-					<X>16</X><Y>-6</Y>
+					<X>10.667</X><Y>-4.08</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9847,8 +9790,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>9</Width>
-					<Height>13</Height>
+					<Width>6</Width>
+					<Height>8.84</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-9066808</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9857,7 +9800,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Rectangle>
 					<Id>1599252944134</Id>
 					<Name><![CDATA[_ps91]]></Name>
-					<X>-29</X><Y>-8</Y>
+					<X>-19.333</X><Y>-5.44</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9870,8 +9813,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>2</Width>
-					<Height>17</Height>
+					<Width>1.333</Width>
+					<Height>11.56</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-12566464</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9879,7 +9822,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Rectangle>
 					<Id>1599252944136</Id>
 					<Name><![CDATA[_ps92]]></Name>
-					<X>-27</X><Y>-9</Y>
+					<X>-18</X><Y>-6.12</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9892,8 +9835,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>41</Width>
-					<Height>19</Height>
+					<Width>27.333</Width>
+					<Height>12.92</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-4144960</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9901,7 +9844,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<RoundedRectangle>
 					<Id>1599252944138</Id>
 					<Name><![CDATA[_ps93]]></Name>
-					<X>-26</X><Y>-7</Y>
+					<X>-17.333</X><Y>-4.76</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9914,8 +9857,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>39</Width>
-					<Height>15</Height>
+					<Width>26</Width>
+					<Height>10.2</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9924,7 +9867,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Curve ControlPoints="true">
 					<Id>1599252944140</Id>
 					<Name><![CDATA[_ps94]]></Name>
-					<X>25</X><Y>8</Y>
+					<X>16.667</X><Y>5.44</Y>
 					<Label><X>-20</X><Y>40</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9946,21 +9889,21 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>-2</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>-2</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>-3</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>-7</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>-11</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>-13</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>-13</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>-15</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-15</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-15</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>-15</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>-11</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>-7</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>-3</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>1.333</X><Y>-1.36</Y><Z>0</Z></Point>
+					   <Point><X>1.333</X><Y>-1.36</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>-2.04</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>-4.76</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>-7.48</Y><Z>0</Z></Point>
+					   <Point><X>1.333</X><Y>-8.84</Y><Z>0</Z></Point>
+					   <Point><X>1.333</X><Y>-8.84</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>-10.2</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-10.2</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-10.2</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-10.2</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>-7.48</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>-4.76</Y><Z>0</Z></Point>
+					   <Point><X>0.667</X><Y>-2.04</Y><Z>0</Z></Point>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>true</Closed>
@@ -9971,7 +9914,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<RoundedRectangle>
 					<Id>1599259733582</Id>
 					<Name><![CDATA[progressRectangle]]></Name>
-					<X>13</X><Y>8</Y>
+					<X>8.667</X><Y>5.44</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -9984,8 +9927,8 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>39</Width>
-					<Height>15</Height>
+					<Width>26.52</Width>
+					<Height>10</Height>
 					<Rotation>180.0</Rotation>
 					<FillColor>-6632142</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -9994,7 +9937,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 				<Text>
 					<Id>1599598540994</Id>
 					<Name><![CDATA[textHolding]]></Name>
-					<X>-5</X><Y>-5</Y>
+					<X>-3.333</X><Y>-3.4</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10149,39 +10092,7 @@ public class Edge {
 import java.util.regex.Matcher;
 import java.text.DecimalFormat;
 import java.util.stream.IntStream;]]></Import>
-			<StartupCode><![CDATA[init();
-// // // // // // // // // // //
-/*
-traceln("Node pts:");
-trace("[");
-for (Node n : nodes) {
-	trace((n.x-0.375)*100 + ", ");
-}
-traceln("],");
-
-trace("[");
-for (Node n : nodes) {
-	trace(-(n.y-0.25)*100 + ", ");
-}
-traceln("],");
-
-traceln("Edge pts:");
-for (int i = 0; i < edges.size(); i++) {
-	Edge e = edges.get(i);
-	
-	trace("[");
-	for (double[] pt : e.xy) {
-		trace((pt[0]-0.375)*100 + ", ");
-	}
-	traceln("],");
-	
-	trace("[");
-	for (double[] pt : e.xy) {
-		trace(-(pt[1]-0.25)*100 + ", ");
-	}
-	traceln("],");
-}
-*/]]></StartupCode>
+			<StartupCode><![CDATA[init();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1599872428958</Id>
@@ -10638,12 +10549,19 @@ return -(edges.get(index).labely-minY) * multiplier + (maxY-minY)*multiplier;]]>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1600028908405</Id>
 					<Name><![CDATA[updateVisibility]]></Name>
-					<X>-150</X><Y>100</Y>
+					<X>-150</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Replicated groups do not allow `index` in "Visible" conditional, so need to set here
+//traceln("[%s] nodes x%s; outlines x%s, %s, %s", time(SECOND), nodes.size(), outlineF.size(), outlineW.size(), outlineC.size());
+if (nodes.size() != outlineF.size()) {
+	// should be the same, but isn't for some reason (maybe delay in animation update).
+	// try again in the next event.
+	updateEvent.restart(1, MINUTE);
+	return;
+}
 for (int n = 0; n < nodes.size(); n++) {
 	String label = nodes.get(n).label.substring(0, 1);
 	outlineF.get(n).setVisible(label.equals("F"));
@@ -13014,7 +12932,7 @@ polyline1.setRotation(rotRad);]]></ActionCode>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1653492638894</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>50</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -13204,7 +13122,7 @@ polyline1.setRotation(rotRad);]]></ActionCode>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>3</VersionMinor>
+		<VersionMinor>7</VersionMinor>
 		<VersionBuild>1</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>

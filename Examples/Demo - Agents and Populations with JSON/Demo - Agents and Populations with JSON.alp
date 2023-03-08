@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.4.202104291518" AlpVersion="8.7.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
 <Model>
 	<Id>1628719855639</Id>
 	<Name><![CDATA[Demo - Agents and Populations with JSON]]></Name>
@@ -17,9 +17,6 @@
 			<Id>1628719855645</Id>
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<Import><![CDATA[import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;]]></Import>
 			<StartupCode><![CDATA[pyCommunicator.run("from agent_generator import new_factories_json, new_order_json");
 
 // Build initial set of factories
@@ -187,7 +184,7 @@ traceln(pyCommunicator.toJson(factories(0).serviceTimes));]]></StartupCode>
 						<Name><![CDATA[count]]></Name>
 						<Type><![CDATA[int]]></Type>
 					</Parameter>
-					<Body><![CDATA[// construct multiple factories to initialize the model with
+					<Body><![CDATA[// Construct one or more factories
 String factoriesJson = pyCommunicator.runResults("new_factories_json(%s)", count).getFeedback();
 traceln("Received: %s\n", factoriesJson);
 
@@ -876,7 +873,7 @@ traceln();]]></Body>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[// Default is false
+						<ActionCode><![CDATA[// Default is setting pretty-print to false
 traceln(
 	pyCommunicator.toJson(this)
 );]]></ActionCode>
@@ -3725,7 +3722,7 @@ to automatically add the agents to!]]></Text>
 				<FinalDate><![CDATA[1631318400000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	
 			</ModelTimeProperties>
-			<BypassInitialScreen>true</BypassInitialScreen>
+			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
 	<ModelResources>
@@ -3748,9 +3745,9 @@ to automatically add the agents to!]]></Text>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>7</VersionMinor>
+		<VersionBuild>1</VersionBuild>
     </RequiredLibraryReference>
 </Model>
 </AnyLogicWorkspace>

@@ -67,15 +67,16 @@ def append(x: float, y: float, z: float) -> None:
     fig.canvas.draw()
     fig.canvas.flush_events()
 
-# won't execute unless this file is directly run
-# (importing this file wont trigger)
+# this won't execute unless this file is directly run
+# (i.e., importing this file won't trigger)
 if __name__ == "__main__":
     # test inputs, moving, appending
     from random import randint
     from time import time
     
     set_inputs(100, -2, 5e-9)
-    move_figure(0, 100)
+    move_figure(980, 150)
+    
 
     # try timing point drawing
     _start = time()

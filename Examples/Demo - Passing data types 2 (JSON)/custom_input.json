@@ -1,18 +1,14 @@
 [ 
 	{
-		"name" : "Dapple",
-		"volatility": 6.67
+		"name" : "Dapple"
 	},
 	{
-		"name": "Macrosoft",
-		"volatility": 2.5
+		"name": "Macrosoft"
 	},
 	{
-		"name": "Shmesla",
-		"volatility": 7.89
+		"name": "Shmesla"
 	},
 	{
-		"name": "Aloebaba",
-		"volatility": 1.1
+		"name": "Aloebaba"
 	}
 ]
