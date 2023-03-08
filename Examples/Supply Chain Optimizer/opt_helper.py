@@ -15,7 +15,7 @@ def parse_input(raw_model_data):
 
     # get item quantities (e.g., input/demand, output, storage/capacity) for each population
     factory_outputs = [x['output'] for x in factory_data]
-    warehouse_capacities = [x['capacity'] for x in warehouse_data]
+    warehouse_capacities = [x['capacity']-x['holding'] for x in warehouse_data]
     customer_demands = [x['demand'] for x in customer_data]
 
     # build shipping costs array:
