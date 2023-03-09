@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.10.202202091651" AlpVersion="8.7.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -271,7 +271,11 @@ import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 
-import java.lang.reflect.Modifier;]]></Import>
+import java.lang.reflect.Modifier;
+
+import static anylogic_jsonifier_library.ALJsonifier.fromJson;
+import static anylogic_jsonifier_library.ALJsonifier.fromAgentJson;
+import static anylogic_jsonifier_library.ALJsonifier.fromPopulationJson;]]></Import>
 			<StartupCode><![CDATA[/*logger.setUseParentHandlers(false);
 ConsoleHandler handler = new ConsoleHandler();
 handler.setFormatter(new SimpleFormatter() {
@@ -500,22 +504,6 @@ try {
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1597361797787</Id>
-					<Name><![CDATA[objmapper]]></Name>
-					<Description><![CDATA[An instance of Jackson's <code>ObjectMapper</code> class; used in the <code>toJson</code> and <code>fromJson</code> functions.]]></Description>
-					<X>300</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="true">
-						<Type><![CDATA[ObjectMapper]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ObjectMapper()]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1615911970658</Id>
 					<Name><![CDATA[LOG_LEVEL]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -548,9 +536,9 @@ try {
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1619465912215</Id>
+					<Id>1678317670400</Id>
 					<Name><![CDATA[jsonFilter]]></Name>
-					<X>300</X><Y>370</Y>
+					<X>300</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -558,7 +546,7 @@ try {
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[JsonFilter]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new JsonFilter(objmapper, true)]]></Code>
+							<Code><![CDATA[jsonifier.jsonFilter]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -1099,21 +1087,6 @@ Provided as reference for the end-user; for example, if they execute multiple co
 					</Properties>
 
 				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1647639493087</Id>
-					<Name><![CDATA[warnedParameters]]></Name>
-					<X>300</X><Y>880</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="true">
-						<CollectionClass><![CDATA[LinkedHashSet]]></CollectionClass>
-						<ElementClass><![CDATA[String]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -1540,6 +1513,7 @@ for (String clz : prop.getProperty("json_class_filter", "").split(",")) {
 		warning("Class listed in filter but not found: %s", clz);
 	}
 }
+
 jsonFilter.clearPackages();
 // note: no package verification
 jsonFilter.include(prop.getProperty("json_package_filter", "").split(","));]]></Body>
@@ -1602,326 +1576,6 @@ try {
 	ex.printStackTrace();
 }
 return file;]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1597362027154</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON.<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
-					<X>330</X><Y>460</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Body><![CDATA[return toJson(object, false);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[T]]></ReturnType>
-					<Id>1597362055799</Id>
-					<Name><![CDATA[fromJson]]></Name>
-					<Description><![CDATA[@param json A JSON string to be converted to a Java object<br>
-@param clazz The class to convert the provided string to<br>
-@return The object of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
-					<X>300</X><Y>610</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Body><![CDATA[// use specialized function for agent types
-if (Agent.class.isAssignableFrom(clazz) || AgentList.class.isAssignableFrom(clazz)) {
-	try {
-		throw new Exception("Need to use `fromAgentJson` or `fromPopulationJson` for converting agents/agent populations (returning null)");
-	} catch (Exception e) {e.printStackTrace();}
-	return null;
-}
-	
-T output = null;
-try {
-	output = objmapper.readValue(json, clazz);
-} catch (IOException e) {
-	e.printStackTrace();
-}
-return output;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1598376672663</Id>
-					<Name><![CDATA[toAgentJson]]></Name>
-					<Description><![CDATA[As Agent-types cannot be used with ObjectMapper by default due to a recursive error, this function extracts as much useful information as possible.<br>
-You may use `toJson` for all types; this function serves to let you specify if you want to include 'null' fields.<br>
-@param agentObj The agent to be converted to JSON<br>
-@param includeNullFields Whether to include any fields (variables, objects) whose values are null<br>
-@param prettyprint Whether to output the JSON in "pretty" format (with newlines, tabs, etc.)<br>
-@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>300</X><Y>490</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[agentObj]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[includeNullFields]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[prettyprint]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Body><![CDATA[ObjectAgentType type = agentType(agentObj);
-/* // removed after making this func 'default'
-// sanity check:
-if (type.equals(ObjectAgentType.JAVA)) {
-	// passed object is not an agent;
-	// just use `toJson`
-	return toJson(agentObj, prettyprint);
-}*/
-
-HashSet<Object> seenAgents = new HashSet<>();
-// add to seen set
-seenAgents.add(agentObj);
-
-// for populations, convert to normal array list, then jsonify it
-if (type.equals(ObjectAgentType.AGENT_POPULATION)) {
-	AgentArrayList<Agent> pop = (AgentArrayList) agentObj;
-	ArrayList<?> popList = agentPopToList(pop, includeNullFields, seenAgents);
-	return toJson(popList, prettyprint);
-}
-
-// passed object is a single agent
-Agent agent = (Agent) agentObj;
-//traceln("Converting: %s (type: %s)", agent.getName(), agent.getClass());
-HashMap<String, Object> map = agentToMap(agent, includeNullFields, seenAgents);
-//traceln("...as map: %s\n", map);
-return toJson(map, prettyprint);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[HashMap<String, Object>]]></ReturnType>
-					<Id>1598473547292</Id>
-					<Name><![CDATA[agentToMap]]></Name>
-					<Description><![CDATA[Extracts all public fields from the given agent and puts it into a varname-to-varvalue map. ]]></Description>
-					<X>330</X><Y>550</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[agent]]></Name>
-						<Type><![CDATA[Agent]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[includeNullFields]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[seenAgents]]></Name>
-						<Type><![CDATA[HashSet<Object>]]></Type>
-					</Parameter>
-					<Body><![CDATA[//traceln("Converting agent '%s' of type: %s", agent.getName(), agent.getClass());
-
-// field mapping, name to value
-HashMap<String, Object> map = new HashMap<>();
-
-// store index if part of population (individual agents will have index of -1)
-//	(using internal prefixes ["_"], to not confuse w/any potential user vars of the same name)
-if (agent.getIndex() >= 0) {
-	// new: dont add index if part of default population
-	if (agent.getPopulation() != null && !agent.getDefaultPopulation().equals(agent.getPopulation()))
-		map.put("_index", agent.getIndex());
-}
-
-// generic agents should return immediately
-if (agent.getClass().equals(Agent.class)) {
-	return map;
-}
-
-// for custom agent types, use reflection to get all fields inside of agent
-Field[] fields = agent.getClass().getFields();
-String name;
-Object value;
-for (Field field : fields) {
-	name = field.getName();
-	
-	//traceln("Examining field named '%s' (type: %s)...", name, field.getType());
-	//traceln("  -> %s - %s", field.getType().getPackageName(), field.getType().getSimpleName());
-	
-	// skip known internal or problematic fields
-	//	(e.g., for the scale, connections, internal datasets, etc.)
-	// also skip common classes with assumed insignificance (e.g., shapes)
-	if (jsonFilter.skipJsonifying(name, field.getType())) {
-		//traceln("\tSkipping!");
-		continue;
-	}
-	
-	// skip for constants/enums
-	if (Modifier.isStatic(field.getModifiers())) {
-		//traceln("\tSkipping!");
-		continue;
-	}
-	
-	// skip for agent populations with types that hshould be filtered
-	//if (value instanceof AgentArrayList)
-	
-	try {
-		field.trySetAccessible(); 
-		value = field.get(agent);
-		//traceln("\tValue is of type: %s", value.getClass());
-		if (value == null) {
-			//traceln("\tSkipping!");
-		}
-		// skip if value is top-level agent
-		else if (value.equals(agent.getRootAgent())) {
-			//traceln("\tSkipping!");
-			continue;
-		}
-		// apply this agent func for single agents
-		else if (value instanceof Agent) {
-			// skip if already seen
-			if (seenAgents.contains(value)) {
-				//traceln("\tSkipping!");
-				continue;
-			}
-			//traceln("\tIS AGENT; CONVERTING TO MAP!");
-			seenAgents.add((Agent)value); // XXX - Added to resolve stackoverflow when using toJson with no filters
-			value = agentToMap((Agent)value, includeNullFields, seenAgents);
-		}
-		// apply other agent func for populations 
-		else if (value instanceof AgentArrayList) {
-			// skip if already seen
-			if (seenAgents.contains(value)) {
-				//traceln("\tSkipping!");
-				continue;
-			}
-			//traceln("\tIS AGENTPOP; CONVERTING TO LIST!");
-			
-			value = agentPopToList((AgentArrayList)value, includeNullFields, seenAgents);
-		}
-		// handle when value is a collection/map holding an incompatible AnyLogic type
-		else if (value instanceof Collection || value instanceof Map) {
-			boolean skip = false;
-			//traceln("\tCollection named '%s', of type %s", name, value.getClass());
-			for (java.lang.reflect.Type type : ((ParameterizedType)field.getGenericType()).getActualTypeArguments()) {
-				//traceln("\t\tType named: %s of class %s", type.getTypeName(), type.getClass());
-				if (jsonFilter.skipJsonifying( (Class)type )) {
-					skip = true;
-					break;
-				}
-			}
-			if (skip) {
-				//traceln("\tSkipping!");
-				continue;
-			}
-		}
-		//traceln("\t%s: Adding object of type: %s", name, value.getClass());
-		// try custom serializer
-		value = customClassSerializer(value);
-		map.put(name, value);
-	} catch (IllegalAccessException e) {
-		//traceln("\terrorred!!!!!");
-		if (includeNullFields) {
-			map.put(name, null);
-		}
-	}
-}
-
-//traceln(":: summary of types ::");
-//map.forEach((k,v) -> traceln("'%s' -> %s (from: %s)", k, v.getClass().getSimpleName(), v.getClass().getPackageName()));
-//traceln(":: ................ ::");
-
-return map;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="true">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[ObjectAgentType]]></ReturnType>
-					<Id>1598473943538</Id>
-					<Name><![CDATA[agentType]]></Name>
-					<Description><![CDATA[Classifies an object based on its underlying class: <br>
-`0` for entirely Java types,<br>
-`1` for single agents,<br>
-`2` for agent populations,<br>
-`3` for Java collections with agent elements]]></Description>
-					<X>300</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[agentObj]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Body><![CDATA[// TODO does type-3 return as expected? might need to use getComponentType/instanceof
-if (agentObj instanceof Agent)
-	return ObjectAgentType.AGENT_SINGLE;
-else if (agentObj instanceof AgentArrayList)
-	return ObjectAgentType.AGENT_POPULATION;
-else if (agentObj instanceof Collection 
-	&& ((Collection)agentObj).size() > 0)
-	return ObjectAgentType.AGENT_COLLECTION;
-return ObjectAgentType.JAVA;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[ArrayList<HashMap<String, Object>>]]></ReturnType>
-					<Id>1598562546634</Id>
-					<Name><![CDATA[agentPopToList]]></Name>
-					<Description><![CDATA[Creates a list of Map objects, one for each converted agent in the population]]></Description>
-					<X>330</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[agentPop]]></Name>
-						<Type><![CDATA[AgentArrayList<Agent>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[includeNullFields]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[seenAgents]]></Name>
-						<Type><![CDATA[HashSet<Object>]]></Type>
-					</Parameter>
-					<Body><![CDATA[//traceln("Converting pop of size %s, type: %s", agentPop.size(), agentPop.getClass());
-//traceln("=> %s", jsonFilter.skipJsonifying(agentPop.get(0).getClass()));
-
-// convert each individual agent in the population into a hashmap
-ArrayList<HashMap<String, Object>> popList = new ArrayList<>();
-// first check for filter
-if (agentPop.size() > 0 && jsonFilter.skipJsonifying(agentPop.get(0).getClass())) {
-	return popList;
-}
-
-agentPop.forEach(a -> {
-	if (!seenAgents.contains(a)) {
-		seenAgents.add(a);
-		popList.add( agentToMap(a, includeNullFields, seenAgents) );
-	}
-});
-return popList;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -2036,366 +1690,6 @@ return attempt.getFeedback(returnType);]]></Body>
 					<Body><![CDATA[String code = String.join("\n", lines);
 return runResults(returnType, code);]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1598643746896</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON.<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
-@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
-					<X>300</X><Y>430</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[prettyprint]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Body><![CDATA[ObjectAgentType type = agentType(object);
-String output = null;
-HashSet<Object> seenAgents = new HashSet<>(); // used in AL types
-switch (type) {
-	case JAVA:
-	// standard types use basic object mapper (after passing thru custom serializer)
-		object = customClassSerializer(object);
-		try {
-			output = prettyprint
-						? objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(object)
-						: objmapper.writeValueAsString(object);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		break;
-	case AGENT_SINGLE:
-	// singleton agents use specialized function
-		seenAgents.add(object);
-		HashMap<String, Object> map = agentToMap((Agent)object, false, seenAgents);
-		output = toJson(map, prettyprint);
-		break;
-	case AGENT_POPULATION:
-	// agent-populations convert to a standard list before outputting
-		seenAgents.add(object);
-		AgentArrayList<Agent> pop = (AgentArrayList) object;
-		ArrayList<?> popList = agentPopToList(pop, false, seenAgents);
-		output = toJson(popList, prettyprint);
-		break;
-	case AGENT_COLLECTION:
-	// java list with agent-contents; 
-	// 	use specialized functions for content and manually construct list
-		Collection collection = (Collection)object;
-		String[] list = (String[])collection.stream()
-			.map(a -> toJson(a, prettyprint))
-			.toArray(String[]::new);
-		String joiner = prettyprint ? ", " : ",";
-		output = "[" + String.join(joiner, list) + "]";
-		break;
-}
-return output;
-
-/*
-if (!type.equals(ObjectAgentType.JAVA)) { // agent-ish types
-	if (type.equals(ObjectAgentType.AGENT_COLLECTION)) { // Java list containing agents
-		// XXX - this IS callled when toJson(population) but NOT when toJson(agent with population inside)?!
-		// Note: apprently when this is called, subelements are a hashmap...?
-		Collection collection = (Collection)object;
-		String[] list = (String[])collection.stream()
-			.map(a -> toJson(a, prettyprint))
-			.toArray(String[]::new);
-		String joiner = prettyprint ? ", " : ",";
-		output = "[" + String.join(joiner, list) + "]";
-	} else { // single agent or pop of agents
-		output = toAgentJson(object, false, prettyprint);
-	}
-	return output;
-}
-
-// All other types should use object mapper
-try {
-	if (prettyprint)
-		output = objmapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
-	else
-		output = objmapper.writeValueAsString(object);
-} catch (JsonProcessingException e) {
-	e.printStackTrace();
-}
-return output;
-*/]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[T]]></ReturnType>
-					<Id>1599336077784</Id>
-					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[@deprecated
-
-<b>Note:</b> This function will create a "dead" agent (not active or part of the engine). Pass in any valid agent to the third argument to properly initiate it.<br>
-<br>
-Converts a JSON string of parameter mapping to a nonstarted instance of the agent.<br>
-Agent will be added to the built-in default population.<br>
-(Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
-@param json A JSON string to be converted to an AL agent<br>
-@param clazz The class of the AL agent type to convert the provided string to<br>
-@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>640</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Body><![CDATA[return fromAgentJson(json, clazz, new Agent());]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[ArrayList]]></ReturnType>
-					<Id>1599341550432</Id>
-					<Name><![CDATA[fromPopulationJson]]></Name>
-					<Description><![CDATA[A function specifically for converting the given JSON to an arraylist of agents.<br>
-@param json A JSON string to be converted (should be a list of dicts, mapping parameter name to value)<br>
-@param agent_clazz The class of the AL agent type<br>
-@param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
-@return AgentArrayList An access-only ArrayList of the agents]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>730</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[agent_clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[anyAgent]]></Name>
-						<Type><![CDATA[Agent]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
-// (e.g., "[{"_index":0}, {"_index":1}]")
-try {	
-	// To properly get entirety of single agent, need to convert array to JsonNode
-	JsonNode root = objmapper.readTree(json);
-	// Build the output array based on the number of agent jsons detected
-	ArrayList<T> newPop = new ArrayList();
-	// Run each child json's string thru `fromAgentJson` and add to output array
-	for (int i = 0; i < root.size(); i++) {
-		JsonNode child = root.get(i);
-		String childJson = objmapper.writeValueAsString(child);
-		T childAgent = fromAgentJson(childJson, agent_clazz);
-		newPop.add(childAgent);
-	}
-	return newPop;
-} catch (Exception e) {
-	e.printStackTrace();
-}
-
-return null;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[T]]></ReturnType>
-					<Id>1599503670262</Id>
-					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[Converts a JSON string of parameter mapping to a "living" agent.<br>
-The agent will be added to the specified population.<br>
-Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br>
-@param json A JSON string to be converted to an AL agent<br>
-@param clazz The class of the AL agent type to convert the provided string to<br>
-@param population The population to add this agent to
-@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>670</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[population]]></Name>
-						<Type><![CDATA[AgentArrayList]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Convert json to hashmap for name/value lookup
-HashMap<String, Object> paramLookup = fromJson(json, HashMap.class);
-
-// Agent is "generic" when not alive/started
-boolean genericAgent = population == null;
-
-try {
-	T myAgent;
-	if (genericAgent) {
-		myAgent = clazz
-				.getDeclaredConstructor()
-				.newInstance();
-	} else {
-		myAgent = clazz
-					.getDeclaredConstructor(Engine.class, Agent.class, AgentList.class)
-					.newInstance(population.getOwner().getEngine(), population.getOwner(), population);
-		population._add(myAgent);
-	}
-	
-	// User may have only passed a subset of parameters,
-	//	so try to set them all to defaults first.
-	// Note: cannot always call this because will throw null exception when default values 
-	//	reference function that require non-static usage (e.g., random functions)
-	try {
-		myAgent.setParametersToDefaultValues();
-	} catch (NullPointerException e) {
-		// At least mark as set
-		myAgent.markParametersAreSet();
-	}
-	
-	paramLookup.forEach( (name,value) -> {
-		// don't include custom key added to agent json in `agentPopToList`
-		if (!name.equals("_index")) {
-			boolean result = myAgent.setParameter(name, value, false);
-			// alert user, but only once per run
-			if (!result && !warnedParameters.contains(name)) {
-				traceln("ONE-TIME WARNING: Parameter " + name + " not found!");
-				warnedParameters.add(name);
-			}
-		}
-	});
-	
-	// Create and start if "living" agent
-	if (!genericAgent) {
-		int index = population.size();
-		population.callCreate(myAgent, index);
-		myAgent.start();
-	}
-	
-	return myAgent;
-} catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
-	e.printStackTrace();
-}
-return null;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
-					<Id>1599503959400</Id>
-					<Name><![CDATA[fromPopulationJson]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>760</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[agent_clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[engine]]></Name>
-						<Type><![CDATA[Engine]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[owner]]></Name>
-						<Type><![CDATA[Agent]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
-// (e.g., "[{"_index":0}, {"_index":1}]")
-try {	
-	// To properly get entirety of single agent, need to convert array to JsonNode
-	JsonNode root = objmapper.readTree(json);
-	// Build the output array based on the number of agent jsons detected
-	AgentArrayList<T> newPop = new AgentArrayList(owner);
-	// Run each child json's string thru `fromAgentJson` and add to output array
-	for (int i = 0; i < root.size(); i++) {
-		JsonNode child = root.get(i);
-		String childJson = objmapper.writeValueAsString(child);
-		fromAgentJson(childJson, agent_clazz, engine, owner, newPop);
-	}
-	return newPop;
-} catch (Exception e) {
-	e.printStackTrace();
-}
-
-return null;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
-					<Id>1599504104781</Id>
-					<Name><![CDATA[fromPopulationJson]]></Name>
-					<Description><![CDATA[@deprecated
-Converts an agent from JSON and adds it to an existing population.
-@param json A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values
-@param agent_clazz The Java class for the agent type to convert to
-@param engine The AnyLogic engine
-@param owner The parent agent that the population belongs to
-@param population The population to add the agent to]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>790</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[agent_clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[engine]]></Name>
-						<Type><![CDATA[Engine]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[owner]]></Name>
-						<Type><![CDATA[Agent]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[population]]></Name>
-						<Type><![CDATA[AgentArrayList]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
-// (e.g., "[{"_index":0}, {"_index":1}]")
-try {	
-	// To properly get entirety of single agent, need to convert array to JsonNode
-	JsonNode root = objmapper.readTree(json);
-	// Run each child json's string thru `fromAgentJson` and add to output array
-	for (int i = 0; i < root.size(); i++) {
-		JsonNode child = root.get(i);
-		String childJson = objmapper.writeValueAsString(child);
-		fromAgentJson(childJson, agent_clazz, engine, owner, population);
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-}]]></Body>
-				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
@@ -2433,89 +1727,6 @@ if (contains) {
 } else {
 	//traceln("Not adding!");
 }]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[AgentArrayList]]></ReturnType>
-					<Id>1605754486288</Id>
-					<Name><![CDATA[fromPopulationJson]]></Name>
-					<Description><![CDATA[Converts a list of agents from JSON and adds it to an existing population.
-@param json A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values
-@param agent_clazz The Java class for the agent type to convert to
-@param population The population to add the agents to]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>820</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[agent_clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[population]]></Name>
-						<Type><![CDATA[AgentArrayList]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Expected JSON is an array, where each element represents an agent's JSON
-// (e.g., "[{"_index":0}, {"_index":1}]")
-try {	
-	// To properly get entirety of single agent, need to convert array to JsonNode
-	JsonNode root = objmapper.readTree(json);
-	// Run each child json's string thru `fromAgentJson` and add to output array
-	for (int i = 0; i < root.size(); i++) {
-		JsonNode child = root.get(i);
-		String childJson = objmapper.writeValueAsString(child);
-		fromAgentJson(childJson, agent_clazz, population);
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="true">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[Object]]></ReturnType>
-					<Id>1605756231379</Id>
-					<Name><![CDATA[customClassSerializer]]></Name>
-					<Description><![CDATA[Tries to convert the given object to a serializable format that Jackson can understand.
-@param object The variable to be converted
-@return a generic object that should be serializable (or the original object if not handled)]]></Description>
-					<X>360</X><Y>580</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Body><![CDATA[if (object == null)
-	return null;
-
-if (object.getClass().isArray()) {
-	// no package names, just return object now
-	return object;
-}
-
-// quick-check since all currently handled types are analysis objects
-if (!object.getClass().getPackage().getName().equals("com.anylogic.engine.analysis")) {
-	return object;
-}
-
-if (object instanceof StatisticsDiscrete) {
-	return serializeStatisticsDiscrete((StatisticsDiscrete)object);
-} else if (object instanceof StatisticsContinuous) {
-	return serializeStatisticsContinuous((StatisticsContinuous)object);
-} else if (object instanceof HistogramData) {
-	return serializeHistogram1DData((HistogramData)object);
-} else if (object instanceof Histogram2DData) {
-	return serializeHistogram2DData((Histogram2DData)object);
-}
-return object;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -2684,18 +1895,63 @@ try (InputStream input = new FileInputStream(filename)) {
 }
 return prop;]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1678317253530</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[Converts the given object to JSON.<br>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>
+@param object Any data type that can be converted to JSON<br>
+@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
+					<X>320</X><Y>450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[return jsonifier.toJson(object, false);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1678317253534</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[Converts the given object to JSON.<br>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>
+@param object Any data type that can be converted to JSON<br>
+@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
+@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
+					<X>300</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[prettyprint]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[return jsonifier.toJson(object, prettyprint);]]></Body>
+				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[T]]></ReturnType>
-					<Id>1647635313284</Id>
+					<Id>1678317253544</Id>
 					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[Converts a JSON string of parameter mapping to a "living" agent.<br>
-@param json A JSON string to be converted to an AL agent<br>
+					<Description><![CDATA[Converts a JSON string of parameter mapping to an active agent, initialized from the root level agent.<br>
+This function will only work if called from the AnyLogic editor with the ALJsonifier object created as an agent itself (i.e., not programmatically) or manually initialized by calling its `createAndStart` function.<br>
+@param json A JSON string to be converted to an AL agent **or** a path to a file with this information<br>
 @param clazz The class of the AL agent type to convert the provided string to<br>
-@param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
-					<X>330</X><Y>700</Y>
+					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>                 	
+					<X>300</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2708,52 +1964,60 @@ return prop;]]></Body>
 						<Name><![CDATA[clazz]]></Name>
 						<Type><![CDATA[Class<T>]]></Type>
 					</Parameter>
+					<Body><![CDATA[return jsonifier.fromAgentJson(json, clazz, getRootAgent());]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1678317253546</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[Converts the given object to JSON and write it to the given file (will overwrite it if it exists) without pretty printing.<br>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>
+@param object Any data type that can be converted to JSON<br>
+@param file The path to the desried JSON output file; can be relative to the working directory]]></Description>
+					<X>320</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[anyAgent]]></Name>
-						<Type><![CDATA[Agent]]></Type>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[// Convert json to hashmap for name/value lookup
-HashMap<String, Object> paramLookup = fromJson(json, HashMap.class);
-
-try {
-	T myAgent = clazz
-			.getDeclaredConstructor()
-			.newInstance();
-	
-	// User may have only passed a subset of parameters,
-	//	so try to set them all to defaults first.
-	// Note: cannot always call this because will throw null exception when default values 
-	//	reference function that require non-static usage (e.g., random functions)
-	try {
-		myAgent.setParametersToDefaultValues();
-	} catch (NullPointerException e) {
-		// At least mark as set
-		myAgent.markParametersAreSet();
-	}
-	
-	paramLookup.forEach( (name,value) -> {
-		// don't include custom key added to agent json in `agentPopToList`
-		if (!name.equals("_index")) {
-			boolean result = myAgent.setParameter(name, value, false);
-			// alert user, but only once per run
-			if (!result && !warnedParameters.contains(name)) {
-				traceln("ONE-TIME WARNING: Parameter " + name + " not found!");
-				warnedParameters.add(name);
-			}
-		}
-	});
-	
-	// only try to create/start if the agent is part of the engine.
-	// (in deprecated func, passing `null` to 3rd arg is ambiguous with other func,
-	//		 so had to pass `new Agent()` which wouldnt be connected to the engine)
-	if (anyAgent.getEngine() != null)
-		myAgent.createAndStart(anyAgent);
-	
-	return myAgent;
-} catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
-	e.printStackTrace();
-}
-return null;]]></Body>
+					<Parameter>
+						<Name><![CDATA[file]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[jsonifier.toJson(object, false, file);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1678317253548</Id>
+					<Name><![CDATA[toJson]]></Name>
+					<Description><![CDATA[Converts the given object to JSON and write it to a file (it will overwrite if it exists).<br>
+Note that agents and agent populations are handled manually due to a recursive issue.<br>
+@param object Any data type that can be converted to JSON<br>
+@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
+@param file The path to the desried JSON output file; can be relative to the working directory]]></Description>
+					<X>300</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[object]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[prettyprint]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[file]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[jsonifier.toJson(object, prettyprint, file);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -2779,6 +2043,70 @@ return null;]]></Body>
 				</AgentLink>
 			</AgentLinks>
 
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>1678316796061</Id>
+					<Name><![CDATA[jsonifier]]></Name>
+					<X>300</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<PresentationId>1678386882228</PresentationId>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[anylogic_jsonifier_library]]></PackageName>
+						<ClassName><![CDATA[ALJsonifier]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[anylogic_jsonifier_library]]></PackageName>
+							<ClassName><![CDATA[ALJsonifier]]></ClassName>
+							<ItemName><![CDATA[1665787765897]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
 
 			<Presentation>
 				<Level>
@@ -2817,27 +2145,25 @@ return null;]]></Body>
 					</ImageFiles>
 					<OriginalSize>true</OriginalSize>
 				</Image>
-				<Text>
-					<Id>1620233139644</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>410</X><Y>450</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+				<EmbeddedObjectPresentation>
+					<Id>1678386882228</Id>
+					<Name><![CDATA[jsonifier_presentation]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[TODO custom function to load specific properties]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
 			</Presentation>
 
 				</Level>
@@ -3649,353 +2975,6 @@ public class PyException extends Exception {
     }
 }]]></Text>
 		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1619464778612</Id>
-			<Name><![CDATA[JsonFilter]]></Name>
-			<Text><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-/**
- * JsonFilter
- */	
-public class JsonFilter {
-	private ObjectMapper parent;
-	
-	/**
-	 * Purely a reference for what classes are included in this class's usage of "default classes".
-	 */
-	public final static HashSet<Class<?>> defaultIgnorableClasses = new HashSet<>(Arrays.asList(
-			Color.class,
-			Font.class,
-			Shape.class,
-			EventOriginator.class,
-			Statechart.class,
-			IStatechartState.class,
-			AbstractLinkToAgent.class,
-			Scale.class,
-			CustomDistribution.class
-			));
-	
-	/**
-	 * Purely a reference for what packages are included in this class's usage of "default packages".
-	 */
-	public final static HashSet<String> defaultIgnorablePackages = new HashSet<>(Arrays.asList(
-		"com.anylogic.libraries.pypeline",
-		"com.anylogic.libraries.processmodeling",
-		"com.anylogic.libraries.material_handling",
-		"com.anylogic.libraries.pedestrian",
-		"com.anylogic.libraries.rail",
-		"com.anylogic.libraries.road",
-		"com.anylogic.libraries.fluid",
-		"com.anylogic.engine.markup",
-		"com.anylogic.engine.connectivity",
-		"com.anylogic.engine.presentation"
-		));
-	
-	/**
-	 * The active set of classes to skip JSON-conversion.
-	 * When deciding whether to ignore a class, this is what is checked against.
-	 */
-	private HashSet<Class<?>> ignorableClasses = new HashSet<>();
-	
-	/**
-	 * The active set of packages for which classes directly in the package are skipped in JSON-conversion.
-	 * When deciding whether to ignore a class in a specific package, this is what is checked against.
-	 */
-	private HashSet<String> ignorablePackages = new HashSet<>();
-	
-	private boolean convertGeneratedObjects = false;
-	
-	
-	/**
-	 * Create a new filter object that accepts classes + packages that are _not_ in the default sets.
-	 */
-	public JsonFilter(ObjectMapper parentMapper) {
-		this(parentMapper, true);
-	}
-	
-	/**
-	 * Create a new filter object.
-	 * @param loadDefault Whether to load the default set of classes + packages
-	 */
-	public JsonFilter(ObjectMapper parentMapper, boolean loadDefault) {
-		// TODO should throw an error if parent mapper is null?
-		this.parent = parentMapper;
-		if (loadDefault) {
-			for (Class<?> c : defaultIgnorableClasses)
-				ignorableClasses.add(c);
-			for (String p : defaultIgnorablePackages)
-				ignorablePackages.add(p);
-		}
-	}
-	
-	/**
-	 * Determines whether a field should be omitted from being converted to JSON, based on info about it.
-	 * To qualify based on the name is based on known patterns of variable names that are generated by AnyLogic.
-	 * 
-	 * @param name The name of the field
-	 * @return true if it should *not* be included
-	 */
-	public boolean skipJsonifying(String name) {
-		if (name.endsWith("_xjal") || name.startsWith("__")) {
-			return !convertGeneratedObjects;
-		}
-		return false;
-	}
-	
-	/**
-	 * Determines whether a field should be omitted from being converted to JSON, based on info about it.
-	 * To qualify for being "inside" the package, the exact class must be inside the package.
-	 * To qualify for being a class, the class must be assignable from the one in the filter
-	 * 		(i.e., it can either be the same class as the one in the filter or a child class of it).
-	 * @param clazz
-	 * @return true if the provided class, or the package it's inside, is included in this object's filters
-	 */
-	public boolean skipJsonifying(Class<?> clazz) {
-		boolean skip = false;
-		if (ignorablePackages.contains(clazz.getPackageName())) {
-			skip = true;
-		} else {
-			for (Class<?> clsToIgnore : ignorableClasses) {
-				if (clsToIgnore.isAssignableFrom(clazz)) {
-					skip = true;
-					break;
-				}
-			}
-		}
-		return skip;
-	}
-	
-	/**
-	 * Determines whether a field should be omitted from being converted to JSON, based on info about it.
-	 * To qualify based on the name is based on known patterns of variable names that are generated by AnyLogic.
-	 * To qualify for being "inside" the package, the exact class must be inside the package.
-	 * To qualify for being a class, the class must be assignable from the one in the filter
-	 * 		(i.e., it can either be the same class as the one in the filter or a child class of it).
-	 * 
-	 * @param name
-	 * @param clazz
-	 * @return true if the provided field should not be included in the outputted JSON
-	 */
-	public boolean skipJsonifying(String name, Class<?> clazz) {
-		return skipJsonifying(name) || skipJsonifying(clazz);
-	}
-	
-	/**
-	 * Gets the packages whose classes are ignored when JSON-ifying.
-	 * This is a copy; adding/removing from the returned set will *not* change the filter.
-	 * @return a set of fully qualified package names
-	 */
-	public HashSet<String> getIgnorablePackages() {
-		return new HashSet<>(ignorablePackages);
-	}
-	
-	/**
-	 * Gets the classes that are ignored when JSON-ifying.
-	 * This is a copy; adding/removing from the returned set will *not* change the filter.
-	 * @return a set of classes
-	 */
-	public HashSet<Class<?>> getIgnorableClasses() {
-		return new HashSet<>(ignorableClasses);
-	}
-	
-	/**
-	 * Various objects are auto-generated and added to your model by AnyLogic in response to certain user-defined objects/properties.
-	 * See `setGeneratedInclusion` for an example.
-	 * 
-	 * @return Whether auto-generated objects are included in the outputted JSON
-	 */
-	public boolean isGeneratedIncluded() {
-		return this.convertGeneratedObjects;
-	}
-	
-	/**
-	 * Various objects are auto-generated and added to your model by AnyLogic in response to certain user-defined objects/properties.
-	 * For example, adding a Plot object with 3 lines set to the 'Value' type (i.e., not referencing a defined dataset)
-	 * 		will autogenerate 3 DataSets with the name structure `_X_expressionN_dataSet_xjal`,
-	 * 		where 'X' is the name of the plot and N is a number between 0 and 2 (for each of the 3 lines).
-	 * This method lets you set whether you want to include those objects in the conversion to JSON.
-	 * Setting this to false will do its best to ensure only user-added objects are in the outputted JSON.
-	 * 		Specifically, it will exclude any objects suffixed with "_xjal".
-	 * 
-	 * @param include Whether to include generated objects in the JSON conversion.
-	 * @return a reference to this object
-	 */
-	public JsonFilter setGeneratedInclusion(boolean include) {
-		convertGeneratedObjects = include;
-		return this.update();
-	}
-	
-	/**
-	 * Includes the provided package(s) in the filter, 
-	 * 	*preventing* any classes directly in that package to be converted to JSON (does not check subpackages).
-	 * @param pkgs One or more fully qualified package name
-	 * @return a reference to this object
-	 */
-	public JsonFilter include(String... pkgs) {
-		for (String pkg : pkgs)
-			ignorablePackages.add(pkg);
-		return this.update();
-	}
-	
-	/**
-	 * Includes the provided classes(s) in the filter, 
-	 * 	*preventing* any instances of it, or any subclasses of it, to be converted to JSON.
-	 * @param classes One or more classes
-	 * @return a reference to this object
-	 */
-	public JsonFilter include(Class<?>... classes) {
-		for (Class<?> cls : classes)
-			ignorableClasses.add(cls);
-		return this.update();
-	}
-	
-	/**
-	 * Excludes the provided package(s) from the filter, 
-	 * 	*allowing* classes directly in the package to be converted to JSON (does not check subpackages).
-	 * @param pkgs One or more fully qualified package name
-	 * @return a reference to this object
-	 */
-	public JsonFilter exclude(String... pkgs) {
-		for (String pkg : pkgs)
-			ignorablePackages.remove(pkg);
-		return this.update();
-	}
-	
-	/**
-	 * Excludes the provided classes(s) in the filter, 
-	 * 	*allowing* any instances of it, or any subclasses of it, to be converted to JSON.
-	 * @param classes One or more classes
-	 * @return a reference to this object
-	 */
-	public JsonFilter exclude(Class<?>... classes) {
-		for (Class<?> cls : classes)
-			ignorableClasses.remove(cls);
-		return this.update();
-	}
-	
-	/**
-	 * Removes all packages from the current filter (allowing classes from all packages).
-	 * This is *NOT* reccomended, as many AnyLogic objects are not configured to be JSON-serializable.
-	 * @return a reference to this object
-	 */
-	public JsonFilter clearPackages() {
-		ignorablePackages.clear();
-		return this.update();
-	}
-	
-	/**
-	 * Removes all classes from the current filter (allowing all classes).
-	 * This is *NOT* reccomended, as many AnyLogic objects are not configured to be JSON-serializable.
-	 * @return a reference to this object
-	 */
-	public JsonFilter clearClasses() {
-		ignorablePackages.clear();
-		return this.update();
-	}
-	
-	/**
-	 * Resets the set of packages, reverting to the default set.
-	 * @return a reference to this object
-	 */
-	public JsonFilter resetPackages() {
-		clearPackages();
-		for (String p : defaultIgnorablePackages)
-			ignorablePackages.add(p);
-		return this.update();
-	}
-	
-	/**
-	 * Resets the set of packages, reverting to the default set.
-	 * @return a reference to this object
-	 */
-	public JsonFilter resetClasses() {
-		clearClasses();
-		for (Class<?> c : defaultIgnorableClasses)
-			ignorableClasses.add(c);
-		return this.update();
-	}
-	
-	private JsonFilter update() {
-		// TODO - do you need to create a new one each time?
-		// TODO - confirm this works as expected
-		parent.setAnnotationIntrospector(new CustomAnnotationIntrospector(this));
-		return this;
-	}
-	
-
-	@Override
-	public String toString() {
-		return String.format("JsonFilter[%s classes, %s packages]", ignorableClasses.size(), ignorablePackages.size());
-	}
-
-}]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1620232637722</Id>
-			<Name><![CDATA[CustomAnnotationIntrospector]]></Name>
-			<Text><![CDATA[import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
-
-
-
-/**
- * CustomAnnotationIntrospector
- */	
-public class CustomAnnotationIntrospector extends JacksonAnnotationIntrospector implements Serializable {
-
-	private final JsonFilter filter;
-
-    /**
-     * Default constructor
-     */
-    public CustomAnnotationIntrospector() {
-    	filter = null;
-    }
-
-    /**
-     * Constructor initializing the fields
-     */
-    public CustomAnnotationIntrospector(JsonFilter filter) {
-		this.filter = filter;
-    }
-    
-    @Override
-    public boolean hasIgnoreMarker(AnnotatedMember a) {
-    	//traceln("Checking ignore marker");
-    	if (super.hasIgnoreMarker(a))
-    		return true;
-    	if (filter == null)
-    		return false;
-    	return a.getAnnotation(AnyLogicInternalCodegenAPI.class) != null;
-    }
-    
-    @Override
-    protected boolean _isIgnorable(Annotated a) {
-    	//traceln("Checking ignorable");
-    	if (super._isIgnorable(a))
-    		return true;
-    	if (filter == null)
-    		return false;
-    	return filter.skipJsonifying(a.getRawType());
-    }
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
-}]]></Text>
-		</JavaClass>
 	</JavaClasses>
 	<Libraries>
 		<!--   =========   Library   ========  -->
@@ -4046,6 +3025,12 @@ public class CustomAnnotationIntrospector extends JacksonAnnotationIntrospector 
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
+    </RequiredLibraryReference>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[anylogic_jsonifier_library]]></LibraryName>
+		<VersionMajor>0</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
