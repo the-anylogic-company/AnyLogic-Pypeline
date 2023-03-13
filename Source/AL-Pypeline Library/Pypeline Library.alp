@@ -1503,20 +1503,23 @@ set_redirectPyOutput(
 	Boolean.valueOf(prop.getProperty("redirect_py_output", "true"))
 );
 
-// reset filter's classes then add in ones from properties.
+jsonFilter.setMode(Boolean.valueOf(prop.getProperty("json_blacklist_mode", "true")), false);
+jsonFilter.includeGenerated(Boolean.valueOf(prop.getProperty("json_generated_option", "true")));
+// clear each property then add it back in manually
+jsonFilter.clearNames();
+jsonFilter.includeNames(prop.getProperty("json_name_filter", "").split(","));
 
 jsonFilter.clearClasses();
 for (String clz : prop.getProperty("json_class_filter", "").split(",")) {
 	try { // runs verification
-		jsonFilter.include(Class.forName(clz));
+		jsonFilter.includeClasses(Class.forName(clz));
 	} catch (ClassNotFoundException e) {
 		warning("Class listed in filter but not found: %s", clz);
 	}
 }
 
 jsonFilter.clearPackages();
-// note: no package verification
-jsonFilter.include(prop.getProperty("json_package_filter", "").split(","));]]></Body>
+jsonFilter.includePackages(prop.getProperty("json_package_filter", "").split(","));]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1542,8 +1545,11 @@ try {
     prop.setProperty("exec_path", String.valueOf(pythonExecPath));
     prop.setProperty("throw_error_on_failed_attempt", String.valueOf(throwErrorOnFailedAttempt));
 	prop.setProperty("redirect_py_output", String.valueOf(redirectPyOutput));
-    prop.setProperty("json_class_filter", jsonFilter.getIgnorableClasses().stream().map(s -> s.getName()).collect(Collectors.joining(",")));
-    prop.setProperty("json_package_filter", jsonFilter.getIgnorablePackages().stream().collect(Collectors.joining(",")));
+	prop.setProperty("json_blacklist_mode", String.valueOf(jsonFilter.isInBlacklistMode()));
+	prop.setProperty("json_generated_option", String.valueOf(jsonFilter.isGeneratedIncluded()));
+	prop.setProperty("json_name_filter", jsonFilter.getIncludedNames().stream().collect(Collectors.joining(",")));
+    prop.setProperty("json_class_filter", jsonFilter.getIncludedClasses().stream().map(s -> s.getName()).collect(Collectors.joining(",")));
+    prop.setProperty("json_package_filter", jsonFilter.getIncludedPackages().stream().collect(Collectors.joining(",")));
     // save properties to project root folder
     prop.store(output, null);
 
