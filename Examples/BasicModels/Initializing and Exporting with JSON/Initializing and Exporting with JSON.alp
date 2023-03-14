@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
 <Model>
 	<Id>1590593133127</Id>
-	<Name><![CDATA[Passing data types 2 (JSON)]]></Name>
+	<Name><![CDATA[Initializing and Exporting with JSON]]></Name>
 	<Description><![CDATA[This demo shows how you can use JSON (JavaScript Object Notation), a lightweight data-interchange format, to pass complex data structures between Java and Python. 
 There are three ways it's used: 
 1, loading a population from a local JSON file; 
@@ -15,7 +15,7 @@ There are three ways it's used:
 3, writing population data to a new JSON file on an interval. 
 -- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
-	<JavaPackageName><![CDATA[passing_data_types_2]]></JavaPackageName>
+	<JavaPackageName><![CDATA[initializing_and_exporting_with_json]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
@@ -30,14 +30,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.NumericNode;]]></Import>
-			<StartupCode><![CDATA[if (doLoadFromJson) // Populate companies from 'custom_input.json'
-	loadFromJson();
-
-// Add companies' datasets to the plot
-setupPlot();
-
-// Import local python file
-pyCommunicator.run("from priceGenerator import update_agent_data");]]></StartupCode>
+			<StartupCode><![CDATA[// run all initialize functions to setup the model
+// (Python-related logic is in the first two)
+initializeAgents();
+initializeSettings();
+initializeCharts();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1590593133131</Id>
@@ -130,87 +127,11 @@ pyCommunicator.run("from priceGenerator import update_agent_data");]]></StartupC
 			</ScaleRuler>
 			<CurrentLevel>1590593133132</CurrentLevel>
 			<ConnectionsId>1590593133128</ConnectionsId>
-			<Variables>
-				<Variable Class="Parameter">
-					<Id>1599149682700</Id>
-					<Name><![CDATA[doLoadFromJson]]></Name>
-					<X>50</X><Y>100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1599149682698</Id>
-							<Label><![CDATA[Load agents from data]]></Label>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1598897220655</Id>
-					<Name><![CDATA[numCompanies]]></Name>
-					<X>50</X><Y>50</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[3]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1598897220653</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1598643011761</Id>
-					<Name><![CDATA[companyTypes]]></Name>
-					<X>50</X><Y>450</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[String]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-						<CollectionInitializer Class="CodeValue">
-							<Code><![CDATA[{"Aerospace", "Automotive", "Chemical", "Computer", 
-"Construction", "Education", "Electric", "Energy", 
-"Entertainment", "Film", "Financial", "Fishing",
-"Food", "Healthcare", "Insurance", 
-"Music", "Petroleum", "Pharmaceutical", 
-"Real estate", "Software", "Sports", "Steel", 
-"Technology", "Telecom", "Textile", "Tobacco", 
-"Water"}]]></Code>
-						</CollectionInitializer>
-					</Properties>
-
-				</Variable>
-			</Variables>
 			<Events>
 				<Event>
 					<Id>1598643550678</Id>
-					<Name><![CDATA[periodicSave]]></Name>
-					<X>50</X><Y>300</Y>
+					<Name><![CDATA[saveToFile]]></Name>
+					<X>50</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -227,113 +148,104 @@ pyCommunicator.run("from priceGenerator import update_agent_data");]]></StartupC
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1598688000000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[100]]></Code>
+							<Code><![CDATA[toTimeoutInCalendar(MONTH, 3)]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[100]]></Code>
+							<Code><![CDATA[toTimeoutInCalendar(MONTH, 3)]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[String json = pyCommunicator.toJson(companies, true);
-String filename = String.format("companydata_%04.0f-%04.0f.json", time() - 100, time());
+					<Action><![CDATA[String filename = String.format("stocks-%4dQ%d.json", getYear(), floorDiv(getMonth(), 3)+1); // e.g., stocks-2020Q3
 
-traceln("Dumping company data to: " + filename);
+// use the built-in function to convert the 'stocks' population to JSON (with pretty printing),
+//	then save it to the specified file.
+pyCom.toJson(stocks, true, filename);
 
-pyCommunicator.run(
-	String.format("with open('%s', 'w') as f:", filename), 
-	String.format("  f.write('''%s''')", json)
-);]]></Action>
-				</Event>
-				<Event>
-					<Id>1598894038624</Id>
-					<Name><![CDATA[updatePrices]]></Name>
-					<X>50</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1598947200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0.99]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[// convert "companies" population to JSON format:
-String companyJson = pyCommunicator.toJson(companies);
-
-// build python command to run:
-// (pass in json as quoted string; parsing will happen in python script)
-String cmd = String.format("update_agent_data('%s')", companyJson);
-
-// get updated values, then iterate thru companies and apply the changes
-HashMap<String, Double> updatedValues = pyCommunicator.runResults(HashMap.class, cmd);
-
-/*
-// Alt method, using `fromJson` function
-String updateJson = pyCommunicator.runResults(cmd).getFeedback();
-HashMap<String, Double> updatedValues = pyCommunicator.fromJson(updateJson, HashMap.class);
-*/
-
-companies.forEach(company -> {
-	double updatedValue = updatedValues.get(company.name);
-	company.stockListing.value = updatedValue;
-});]]></Action>
+traceln("Saved model state to: %s", filename);]]></Action>
 				</Event>
 			</Events>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1599149330442</Id>
-					<Name><![CDATA[setupPlot]]></Name>
-					<X>-200</X><Y>50</Y>
+					<Id>1678745137448</Id>
+					<Name><![CDATA[initializeAgents]]></Name>
+					<X>50</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int size = companies.size();
-for (Company company : companies) {
-	plot.addDataSet(company.stockListing.priceHistory, company.name, 
-		spectrumColor(company.getIndex(), size), 
+					<Body><![CDATA[// Import the local Python file
+pyCom.run("import helper");
+
+// Have Python save population data as a JSON file, which the built-in library can read directly from
+pyCom.run("helper.save_latest_data('latest_inputs.json')"); // will save to the specified file
+pyCom.jsonifier.fromPopulationJson("latest_inputs.json", CompanyStock.class, stocks);
+
+
+// <ALTERNATIVE METHOD>
+/*
+// Get the JSON string data from Python, which the built-in library can parse itself
+String popData = pyCom.runResults(String.class, "helper.get_latest_data()");
+pyCom.jsonifier.fromPopulationJson(popData, CompanyStock.class, stocks);
+*/]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1678745145204</Id>
+					<Name><![CDATA[initializeCharts]]></Name>
+					<X>50</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Add companies' datasets to the plot
+int size = stocks.size();
+for (CompanyStock stock : stocks) {
+	plot.addDataSet(stock.priceHistory, stock.name, 
+		spectrumColor(stock.getIndex(), size), 
 		true, false, Chart.INTERPOLATION_LINEAR, 1.5, Chart.POINT_NONE);
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1599149735580</Id>
-					<Name><![CDATA[loadFromJson]]></Name>
-					<X>-200</X><Y>100</Y>
+					<Id>1678745149792</Id>
+					<Name><![CDATA[initializeSettings]]></Name>
+					<X>50</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// open file in Python
-pyCommunicator.run("file = open('custom_input.json')");
-// read contents (in json form)
-String jsonInput = pyCommunicator.runResults(String.class, "file.read()");
-// close the file in python
-pyCommunicator.run("file.close()");
+					<Body><![CDATA[// update the JSON filter to remove objects we don't want to cluter the output with
+// note: the default is in blacklist mode, so "including" means excluding from the output
+pyCom.jsonFilter
+	.includeNames(
+		"priceChange", // current value of flow
+		"initialPrice", // parameter
+		"volatility" // parameter
+	)
+	.includeClasses(
+		TableFunction.class // data object used in logic
+	)
+	.includeGenerated(true) // don't save the auto-generated datasets for the stock and flow
+	;
 
-pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
-]]></Body>
+
+// <ALTERNATIVE METHOD>
+/*
+// switch the filter to whitelist mode and only keep the objects we want
+pyCom.jsonFilter
+	.setMode(false, false) // not blacklist & don't load default
+	.includeNames(
+		"name", // agent's company name
+		"stockPrice", // current stock price
+		"priceHistory" // dataset of history
+	);
+*/]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -361,9 +273,9 @@ pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
 			<EmbeddedObjects>
 				<EmbeddedObject>
 					<Id>1590605038476</Id>
-					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>440</X><Y>30</Y>
-					<Label><X>-35</X><Y>-10</Y></Label>
+					<Name><![CDATA[pyCom]]></Name>
+					<X>30</X><Y>30</Y>
+					<Label><X>45</X><Y>20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -443,21 +355,21 @@ pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1642027966648</Id>
-					<Name><![CDATA[companies]]></Name>
-					<X>50</X><Y>150</Y>
+					<Name><![CDATA[stocks]]></Name>
+					<X>50</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1591804037829</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-						<ClassName><![CDATA[Company]]></ClassName>
+						<PackageName><![CDATA[initializing_and_exporting_with_json]]></PackageName>
+						<ClassName><![CDATA[CompanyStock]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-							<ClassName><![CDATA[Company]]></ClassName>
+							<PackageName><![CDATA[initializing_and_exporting_with_json]]></PackageName>
+							<ClassName><![CDATA[CompanyStock]]></ClassName>
 							<ItemName><![CDATA[1591803895756]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
@@ -465,10 +377,16 @@ pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
 						<Parameter>
 							<Name><![CDATA[name]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[initialPrice]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[volatility]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[doLoadFromJson ? 0 : numCompanies]]></Code>
+						<Code><![CDATA[10]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
@@ -498,7 +416,7 @@ pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
-					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationType>EMPTY</InitializationType>
 					<InitializationDatabaseTableQuery>
 						<TableReference>
 						</TableReference>
@@ -584,44 +502,22 @@ pyCommunicator.fromPopulationJson(jsonInput, Company.class, companies);
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1598641387406</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>40</X><Y>170</Y>
+					<X>30</X><Y>140</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
+					<BasicProperties Width="120" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[String json = pyCommunicator.toJson(companies, true);
+						<ActionCode><![CDATA[String json = pyCom.toJson(stocks, true);
 traceln(json);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[print json]]></LabelText>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1598643402059</Id>
-					<Name><![CDATA[button1]]></Name>
-					<X>40</X><Y>470</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[String json = pyCommunicator.toJson(companyTypes);
-traceln(json);]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[print json]]></LabelText>
+						<LabelText><![CDATA[print JSON state]]></LabelText>
 					</ExtendedProperties>
 				</Control>
 				<Text>
@@ -672,8 +568,8 @@ https://git.io/al_py]]></Text>
 				</Level>
 				<EmbeddedObjectPresentation>
 					<Id>1591804037829</Id>
-					<Name><![CDATA[companies_presentation]]></Name>
-					<X>250</X><Y>50</Y>
+					<Name><![CDATA[stocks_presentation]]></Name>
+					<X>250</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -695,7 +591,7 @@ https://git.io/al_py]]></Text>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1591803895758</Id>
-			<Name><![CDATA[Company]]></Name>
+			<Name><![CDATA[CompanyStock]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[assignIconColors();
 textCompany.setText(name);]]></StartupCode>
@@ -792,6 +688,41 @@ textCompany.setText(name);]]></StartupCode>
 			<CurrentLevel>1591803895757</CurrentLevel>
 			<ConnectionsId>1591803895753</ConnectionsId>
 			<Variables>
+				<Variable Class="StockVariable">
+					<Id>1678742061866</Id>
+					<Name><![CDATA[stockPrice]]></Name>
+					<X>360</X><Y>150</Y>
+					<Label><X>-15</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Array="false">
+					<EquationStyle>classic</EquationStyle>
+					<Width>20</Width>
+					<Height>20</Height>
+						<InitialValue><![CDATA[initialPrice]]></InitialValue>
+						<Color/>
+					</Properties>
+				</Variable>
+				<Variable Class="Flow">
+					<Id>1678742075741</Id>
+					<Name><![CDATA[priceChange]]></Name>
+					<X>240</X><Y>150</Y>
+					<Label><X>-35</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TargetId="1678742061866" External="false" Constant="false" Array="false">
+						<Formula><![CDATA[(volatility/100.) * direction() //uniform() * ]]></Formula>
+						<Color/>
+						<ValveIndex>1</ValveIndex>
+						<Points>
+							<Point><X>0</X><Y>0</Y></Point>
+							<Point><X>50</X><Y>0</Y></Point>
+							<Point><X>120</X><Y>0</Y></Point>
+						</Points>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1591814178944</Id>
 					<Name><![CDATA[name]]></Name>
@@ -805,10 +736,61 @@ textCompany.setText(name);]]></StartupCode>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[randomFrom(main.companyTypes) + "Company#" + uniform_discr(0,9) + (getIndex()+1)]]></Code>
+							<Code><![CDATA["???"]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1591814178942</Id>
+							<Label><![CDATA[name]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1678741288757</Id>
+					<Name><![CDATA[initialPrice]]></Name>
+					<X>50</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[uniform(0.3, 0.7)]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1678741288755</Id>
+							<Label><![CDATA[Initial price (normalized)]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1678740445943</Id>
+					<Name><![CDATA[volatility]]></Name>
+					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[triangular(2, 10, 5)]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1678740445941</Id>
+							<Label><![CDATA[Volatility]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -817,6 +799,38 @@ textCompany.setText(name);]]></StartupCode>
 					</Properties>                 
 				</Variable>
 			</Variables>
+			<Dependences>
+				<Link SourceId="1678740445943" TargetId="1678742075741" Polarity="null">
+					<Height>26.028</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>240</X><Y>0</Y></Direction>
+					<Id>1678742763107</Id>
+					<Name><![CDATA[volatility - priceChange]]></Name>
+					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1678741288757" TargetId="1678742061866" Polarity="null">
+					<Height>52.455</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>310</X><Y>50</Y></Direction>
+					<Id>1678744028820</Id>
+					<Name><![CDATA[initialPrice - stockPrice]]></Name>
+					<X>50</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+			</Dependences>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -851,7 +865,75 @@ for (ShapePolyLine window : new ShapePolyLine[]{plWindow1a, plWindow1b, plWindow
 	
 plOutline.setLineColor(c_dark);]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1678742618234</Id>
+					<Name><![CDATA[direction]]></Name>
+					<X>360</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return uniform() >= modLookup(stockPrice) ? 1 : -1;]]></Body>
+				</Function>
 			</Functions>
+			<TableFunctions>
+				<TableFunction AccessType="public" StaticFunction="false">
+					<Id>1678742317033</Id>
+					<Name><![CDATA[modLookup]]></Name>
+					<X>360</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>STEP</InterpolationMethod>
+					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
+					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
+					<ValuesQuery>
+						<TableReference>
+						</TableReference>
+							<ArgumentColumnReference>
+							</ArgumentColumnReference>
+							<ValueColumnReference>
+							</ValueColumnReference>
+					</ValuesQuery>
+// arguments and values
+					<Argument><![CDATA[0.0]]></Argument>
+					<Argument><![CDATA[1.0]]></Argument>
+					<Argument><![CDATA[-1.0E-5]]></Argument>
+					<Value><![CDATA[0.5]]></Value>
+					<Value><![CDATA[0.8]]></Value>
+					<Value><![CDATA[0.2]]></Value>
+				</TableFunction>
+			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1678740445933</Id>
+					<Name><![CDATA[priceHistory]]></Name>
+					<X>50</X><Y>200</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1598688000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<VerticalAxisExpression><![CDATA[stockPrice]]></VerticalAxisExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1591803895753</Id>
@@ -884,80 +966,11 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[passing_data_types_2]]></PackageName>
+						<PackageName><![CDATA[initializing_and_exporting_with_json]]></PackageName>
 						<ClassName><![CDATA[Main]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
 			</ContainerLinks>
-			<EmbeddedObjects>
-				<EmbeddedObject>
-					<Id>1598642859212</Id>
-					<Name><![CDATA[stockListing]]></Name>
-					<X>50</X><Y>100</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-						<ClassName><![CDATA[StockListing]]></ClassName>
-					</ActiveObjectClass>
-					<GenericParameterSubstitute>
-						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-							<ClassName><![CDATA[StockListing]]></ClassName>
-							<ItemName><![CDATA[1598642751650]]></ItemName>
-						</GenericParameterSubstituteReference>
-					</GenericParameterSubstitute>
-					<Parameters>
-						<Parameter>
-							<Name><![CDATA[startValue]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[volatility]]></Name>
-						</Parameter>
-					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
-					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
-					</Replication>
-					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-					<XCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</XCode>
-					<YCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</YCode>
-					<ZCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ZCode>
-					<ColumnCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ColumnCode>
-					<RowCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
-					<LocationNameCode Class="CodeValue">
-						<Code><![CDATA[""]]></Code>
-					</LocationNameCode>
-					<InitializationType>SPECIFIED_NUMBER</InitializationType>
-					<InitializationDatabaseTableQuery>
-						<TableReference>
-						</TableReference>
-					</InitializationDatabaseTableQuery>
-					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-					<QuantityColumn>
-					</QuantityColumn>
-				</EmbeddedObject>
-			</EmbeddedObjects>
 
 			<Presentation>
 				<Level>
@@ -987,7 +1000,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[$X.XX]]></Text>
-					<TextCode><![CDATA[String.format("$%4.2f", stockListing.value)]]></TextCode>
+					<TextCode><![CDATA[String.format("$%4.2f", stockPrice)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>10</Size>
@@ -1420,292 +1433,12 @@ plOutline.setLineColor(c_dark);]]></Body>
 			</Presentation>
 
 		</ActiveObjectClass>
-		<!--   =========   Active Object Class   ========  -->
-		<ActiveObjectClass>
-			<Id>1598642751652</Id>
-			<Name><![CDATA[StockListing]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<Generic>false</Generic>
-			<GenericParameter>
-				<Id>1598642751650</Id>
-				<Name><![CDATA[1598642751650]]></Name>
-				<GenericParameterValue Class="CodeValue">
-					<Code><![CDATA[T extends Agent]]></Code>
-				</GenericParameterValue>
-				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
-			</GenericParameter>
-			<FlowChartsUsage>ENTITY</FlowChartsUsage>
-			<SamplesToKeep>100</SamplesToKeep>
-			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
-			<ElementsLimitValue>100</ElementsLimitValue>
-			<MakeDefaultViewArea>true</MakeDefaultViewArea>
-			<SceneGridColor/>
-			<SceneBackgroundColor/>
-			<SceneSkybox>null</SceneSkybox>
-			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
-				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
-				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
-				<RotateAnimationVertically>false</RotateAnimationVertically>
-				<VelocityCode Class="CodeUnitValue">
-					<Code><![CDATA[10]]></Code>
-					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
-				</VelocityCode>
-				<PhysicalLength Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalLength>
-				<PhysicalWidth Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalWidth>
-				<PhysicalHeight Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalHeight>
-			</AgentProperties>
-			<EnvironmentProperties>
-					<EnableSteps>false</EnableSteps>
-					<StepDurationCode Class="CodeUnitValue">
-						<Code><![CDATA[1.0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-					</StepDurationCode>
-					<SpaceType>CONTINUOUS</SpaceType>
-					<WidthCode><![CDATA[500]]></WidthCode>
-					<HeightCode><![CDATA[500]]></HeightCode>
-					<ZHeightCode><![CDATA[0]]></ZHeightCode>
-					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
-					<RowsCountCode><![CDATA[100]]></RowsCountCode>
-					<NeigborhoodType>MOORE</NeigborhoodType>
-					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
-					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
-					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
-					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
-					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
-					<MCode><![CDATA[10]]></MCode>
-			</EnvironmentProperties>
-			<DatasetsCreationProperties>
-				<AutoCreate>true</AutoCreate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1598688000000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</RecurrenceCode>
-			</DatasetsCreationProperties>
-			<ScaleRuler>
-				<Id>1598642751648</Id>
-				<Name><![CDATA[scale]]></Name>
-				<X>0</X><Y>-150</Y>
-				<PublicFlag>false</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<Length>100</Length>
-				<Rotation>0</Rotation>
-				<ScaleType>BASED_ON_LENGTH</ScaleType>
-				<ModelLength>10</ModelLength>
-				<LengthUnits>METER</LengthUnits>
-				<Scale>10</Scale>
-				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
-			</ScaleRuler>
-			<CurrentLevel>1598642751651</CurrentLevel>
-			<ConnectionsId>1598642751647</ConnectionsId>
-			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1598642774834</Id>
-					<Name><![CDATA[value]]></Name>
-					<X>50</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[startValue]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1598642774853</Id>
-					<Name><![CDATA[startValue]]></Name>
-					<X>50</X><Y>100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[uniform(0.3, 0.7)]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1598642774851</Id>
-							<Label><![CDATA[startValue]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1598642774856</Id>
-					<Name><![CDATA[volatility]]></Name>
-					<X>50</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[triangular(2, 10, 5)]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1598642774854</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-			</Variables>
-			<AnalysisData>
-    			<DataSet>
-					<Id>1598642774842</Id>
-					<Name><![CDATA[priceHistory]]></Name>
-					<X>50</X><Y>250</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>true</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1598688000000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>true</FreezeXAxis>
-					<VerticalAxisExpression><![CDATA[value]]></VerticalAxisExpression>
-					<SamplesToKeep>100</SamplesToKeep>
-				</DataSet>
-			</AnalysisData>
-			<AgentLinks>
-				<AgentLink>
-					<Id>1598642751647</Id>
-					<Name><![CDATA[connections]]></Name>
-					<X>200</X><Y>-150</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<HandleReceiveInConnections>false</HandleReceiveInConnections>
-					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
-					<AgentLinkBidirectional>true</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
-					<LineStyle>SOLID</LineStyle>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineZOrder>UNDER_AGENTS</LineZOrder>
-					<LineArrow>NONE</LineArrow>
-					<LineArrowPosition>END</LineArrowPosition>
-				</AgentLink>
-			</AgentLinks>
-
-			<ContainerLinks>
-				<ContainerLink>
-					<Id>1598642861396</Id>
-					<Name><![CDATA[company]]></Name>
-					<X>100</X><Y>-50</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-						<ClassName><![CDATA[Company]]></ClassName>
-					</ActiveObjectClass>
-				</ContainerLink>
-				<ContainerLink>
-					<Id>1598642861399</Id>
-					<Name><![CDATA[main]]></Name>
-					<X>50</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[passing_data_types_2]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
-					</ActiveObjectClass>
-				</ContainerLink>
-			</ContainerLinks>
-
-			<Presentation>
-				<Level>
-					<Id>1598642751651</Id>
-					<Name><![CDATA[level]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>0</Z>
-					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
-
-			<Presentation>
-				<Text>
-					<Id>1605290446016</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>50</X><Y>30</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[(All updates are made in the update event in Main)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-			</Presentation>
-
-				</Level>
-			</Presentation>
-
-		</ActiveObjectClass>
 	</ActiveObjectClasses>	
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
 	<AbsoluteAccuracy>1.0E-5</AbsoluteAccuracy>
-	<FixedTimeStep>0.001</FixedTimeStep>
+	<FixedTimeStep>0.1</FixedTimeStep>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
@@ -1760,23 +1493,6 @@ plOutline.setLineColor(c_dark);]]></Body>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
 			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
-			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1598897079848</Id>
-					<Name><![CDATA[numCompanies]]></Name>
-					<X>-150</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[3]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-			</Variables>
 
 			<Presentation>
 				<Text>
@@ -1792,7 +1508,7 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - Passing data types 2 (JSON)]]></Text>
+					<Text><![CDATA[Initializing and Exporting with JSON]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -1800,143 +1516,10 @@ plOutline.setLineColor(c_dark);]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1598897293231</Id>
-					<Name><![CDATA[slider]]></Name>
-					<X>50</X><Y>400</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="450" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[1]]></MinValue>
-						<MaxValue><![CDATA[10]]></MaxValue>
-						<LinkTo>true</LinkTo>
-						<Link>numCompanies</Link>
-					</ExtendedProperties>
-				</Control>
-				<Text>
-					<Id>1598897316232</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>50</X><Y>370</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Number of companies:]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1598897330163</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>50</X><Y>430</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[min]]></Text>
-					<TextCode><![CDATA[slider.getMin()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1598897330164</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>500</X><Y>430</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[max]]></Text>
-					<TextCode><![CDATA[slider.getMax()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1598897330165</Id>
-					<Name><![CDATA[text4]]></Name>
-					<X>275</X><Y>430</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[value]]></Text>
-					<TextCode><![CDATA[slider.getValue()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1599150704712</Id>
-					<Name><![CDATA[checkbox]]></Name>
-					<X>50</X><Y>320</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="200" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[slider.setEnabled(!value);]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="14" Style="0"/>
-						<LabelText><![CDATA[Load from JSON file]]></LabelText>
-						<DefaultValueCode><![CDATA[false]]></DefaultValueCode>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
 				<Text>
 					<Id>1599152251443</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>50</X><Y>80</Y>
+					<X>50</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1946,21 +1529,20 @@ plOutline.setLineColor(c_dark);]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[The model consists of a population of Company agents, 
-    each with their own StockListing agent (representing a randomly fluctuating stock price). 
+					<Text><![CDATA[The model consists of a population of agents representing a company's stock price (randomly fluctuating with some volitility over time),
+   which is initialized from JSON using data from Python.
 
-This demo shows various ways you can use JSON in your model using Pypeline. It's used in 3 ways:
+In this case, Python is used as the medium to load some (hypothetically external) set of data,
+   with Pypeline's JSON features allowing to initialize agents from JSON objects that map parameter names to the intended values.
 
-1. Loading the Company population from a JSON file
-2. Generating the stock value of each company
-3. Saving the data from the companies to a JSON file every 100 days
+Additionally, the model will periodically save specific aspects of its state to a local JSON file. 
+This is customized using the JSON filter that allows for certain object names, classes, and/or packages to be filtered out 
+                                                                                                                                                                  (or in, depending on the configuration).
 
-Additionally, you can use the provided buttons to manually print the JSON format 
-    of the population or a collection to the AnyLogic console.
-]]></Text>
+The set of JSON features come from the AnyLogic JSONifier library which comes built into Pypeline. ]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>12</Size>
+						<Size>14</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -1968,7 +1550,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 				<Group>
 					<Id>1601493303461</Id>
 					<Name><![CDATA[companyIcon]]></Name>
-					<X>700</X><Y>80</Y>
+					<X>420</X><Y>380</Y>
 					<Label><X>17.222</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2365,7 +1947,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 				<Text>
 					<Id>1601493446766</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>700</X><Y>20</Y>
+					<X>380</X><Y>320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2375,18 +1957,18 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Company]]></Text>
+					<Text><![CDATA[CompanyStock]]></Text>
 					<Font>
 						<Name>Verdana</Name>
 						<Size>16</Size>
 						<Style>1</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
 					<Id>1601493519452</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>750</X><Y>128</Y>
+					<X>470</X><Y>418</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2404,310 +1986,10 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Text>
-					<Id>1601493534945</Id>
-					<Name><![CDATA[text8]]></Name>
-					<X>750</X><Y>170</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[StockListing]]></Text>
-					<Font>
-						<Name>Verdana</Name>
-						<Size>16</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Group>
-					<Id>1601493885596</Id>
-					<Name><![CDATA[groupNameIcon]]></Name>
-					<X>733</X><Y>138</Y>
-					<Label><X>6.428</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Oval>
-					<Id>1601493756965</Id>
-					<Name><![CDATA[oval]]></Name>
-					<X>0</X><Y>-0.315</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>7</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1644806</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
-				<Curve ControlPoints="true">
-					<Id>1601493620784</Id>
-					<Name><![CDATA[curve]]></Name>
-					<X>-3.214</X><Y>-5.035</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>3.146</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>0</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Curve>
-				<Curve ControlPoints="true">
-					<Id>1601493725387</Id>
-					<Name><![CDATA[curve1]]></Name>
-					<X>3.214</X><Y>-5.035</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>3.146</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>-3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>9.44</Y><Z>0</Z></Point>
-					   <Point><X>3.214</X><Y>0</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Curve>
-				<Line>
-					<Id>1601493750492</Id>
-					<Name><![CDATA[line]]></Name>
-					<X>-1.928</X><Y>1.258</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>3.928</Dx>
-					<Dy>0</Dy>
-					<Dz>0</Dz>
-				</Line>
-			</Presentation>
-
-				</Group>
-				<Group>
-					<Id>1601494464133</Id>
-					<Name><![CDATA[groupAgentIcon]]></Name>
-					<X>733</X><Y>181</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Oval>
-					<Id>1601493997274</Id>
-					<Name><![CDATA[oval1]]></Name>
-					<X>-0.5</X><Y>-0.5</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>7</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-2668986</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
-				<Group>
-					<Id>1601494385527</Id>
-					<Name><![CDATA[groupPerson]]></Name>
-					<X>-1</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Oval>
-					<Id>1601494045972</Id>
-					<Name><![CDATA[oval2]]></Name>
-					<X>0.5</X><Y>-4</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor/>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>1.5</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
-				<Curve ControlPoints="true">
-					<Id>1601494086751</Id>
-					<Name><![CDATA[curve2]]></Name>
-					<X>-3</X><Y>-2</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>0.1</LineWidth>
-					<LineColor/>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>7</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>8</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>8</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>7</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>6</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>6</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>2</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>4</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>6</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>6</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>5</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>4</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>4</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>3</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>4</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>6</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>5</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>4</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>2</Y><Z>0</Z></Point>
-					   <Point><X>2</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>1</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>1</Y><Z>0</Z></Point>
-					   <Point><X>-1</X><Y>0</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>true</Closed>
-				</Curve>
-			</Presentation>
-
-				</Group>
-			</Presentation>
-
-				</Group>
 				<Group>
 					<Id>1601494524946</Id>
 					<Name><![CDATA[groupAgentIcon1]]></Name>
-					<X>645</X><Y>30</Y>
+					<X>365</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2853,7 +2135,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 				<Group>
 					<Id>1601494702587</Id>
 					<Name><![CDATA[groupParameterIcon]]></Name>
-					<X>765</X><Y>230</Y>
+					<X>455</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2917,7 +2199,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 				<Group>
 					<Id>1601494736908</Id>
 					<Name><![CDATA[groupParameterIcon1]]></Name>
-					<X>765</X><Y>265</Y>
+					<X>455</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2978,10 +2260,139 @@ Additionally, you can use the provided buttons to manually print the JSON format
 			</Presentation>
 
 				</Group>
+				<Polyline>
+					<Id>1601495178610</Id>
+					<Name><![CDATA[polyline2]]></Name>
+					<X>420</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>20</X><Y>20</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>false</Closed>
+				</Polyline>
+				<Polyline>
+					<Id>1601495186959</Id>
+					<Name><![CDATA[polyline4]]></Name>
+					<X>420</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>20</X><Y>20</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>false</Closed>
+				</Polyline>
+				<Polyline>
+					<Id>1601495188626</Id>
+					<Name><![CDATA[polyline5]]></Name>
+					<X>420</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>20</X><Y>20</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>false</Closed>
+				</Polyline>
+				<Text>
+					<Id>1601495204926</Id>
+					<Name><![CDATA[text9]]></Name>
+					<X>475</X><Y>450</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[initialPrice]]></Text>
+					<Font>
+						<Name>Verdana</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1601495206475</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>475</X><Y>480</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[volitility]]></Text>
+					<Font>
+						<Name>Verdana</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 				<Group>
-					<Id>1601494814286</Id>
-					<Name><![CDATA[groupVarIcon]]></Name>
-					<X>765</X><Y>300</Y>
+					<Id>1678828712827</Id>
+					<Name><![CDATA[groupParameterIcon2]]></Name>
+					<X>455</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2993,7 +2404,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 
 			<Presentation>
 				<Oval>
-					<Id>1601494743646</Id>
+					<Id>1678828712829</Id>
 					<Name><![CDATA[oval7]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>0</X><Y>0</Y></Label>
@@ -3011,14 +2422,67 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<RadiusX>7</RadiusX>
 					<RadiusY>40</RadiusY>
 					<Rotation>0.0</Rotation>
-					<FillColor>-3308225</FillColor>
+					<FillColor>-2302756</FillColor>
 					<FillMaterial>null</FillMaterial>
 				</Oval>
-				<Polyline>
-					<Id>1601494767367</Id>
-					<Name><![CDATA[polyline]]></Name>
-					<X>-3</X><Y>-4</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+				<Arc>
+					<Id>1678828712831</Id>
+					<Name><![CDATA[arc2]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Dz>0</Dz>
+					<Rotation>0.0</Rotation>
+					<RadiusX>9</RadiusX>
+					<RadiusY>40</RadiusY>
+					<StartAngle>-22.5</StartAngle>
+					<Angle>-45.0</Angle>
+					<FillColor>-16777216</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Arc>
+			</Presentation>
+
+				</Group>
+				<Text>
+					<Id>1678828860519</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>25</X><Y>320</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[{
+  "name": "Shmapple",
+  "initialPrice": 0.5,
+  "volitility": 9.5
+}]]></Text>
+					<Font>
+						<Name>Consolas</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1678828919173</Id>
+					<Name><![CDATA[rectangle]]></Name>
+					<X>15</X><Y>310</Y>
+					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
@@ -3027,29 +2491,95 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
 					<LineWidth>2</LineWidth>
-					<LineColor>-1</LineColor>
+					<LineColor>-16776961</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>DOTTED</LineStyle>
+					<Width>240</Width>
+					<Height>230</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Rectangle>
+					<Id>1678829018064</Id>
+					<Name><![CDATA[rectangle1]]></Name>
+					<X>345</X><Y>310</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>2</LineWidth>
+					<LineColor>-16776961</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>DOTTED</LineStyle>
+					<Width>310</Width>
+					<Height>230</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Polyline>
+					<Id>1678829040377</Id>
+					<Name><![CDATA[polyline]]></Name>
+					<X>265</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<BeginArrowSize>1</BeginArrowSize>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
+					<FillColor>-16776961</FillColor>
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>3</X><Y>9</Y><Z>0</Z></Point>
-					   <Point><X>6</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>40</Y><Z>0</Z></Point>
+					   <Point><X>70</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>-20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
-					<Closed>false</Closed>
+					<Closed>true</Closed>
 				</Polyline>
-			</Presentation>
-
-				</Group>
+				<Text>
+					<Id>1678829180942</Id>
+					<Name><![CDATA[text12]]></Name>
+					<X>475</X><Y>510</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[priceHistory]]></Text>
+					<Font>
+						<Name>Verdana</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 				<Group>
-					<Id>1601495154376</Id>
+					<Id>1678829180953</Id>
 					<Name><![CDATA[groupDSIcon]]></Name>
-					<X>765</X><Y>335</Y>
+					<X>455</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3061,8 +2591,8 @@ Additionally, you can use the provided buttons to manually print the JSON format
 
 			<Presentation>
 				<Rectangle>
-					<Id>1601495154378</Id>
-					<Name><![CDATA[rectangle]]></Name>
+					<Id>1678829180955</Id>
+					<Name><![CDATA[rectangle2]]></Name>
 					<X>-2.5</X><Y>-11</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -3083,7 +2613,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Oval>
-					<Id>1601495154380</Id>
+					<Id>1678829180957</Id>
 					<Name><![CDATA[oval8]]></Name>
 					<X>-0.5</X><Y>0</Y>
 					<Label><X>0</X><Y>0</Y></Label>
@@ -3105,7 +2635,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<FillMaterial>null</FillMaterial>
 				</Oval>
 				<Polyline>
-					<Id>1601495154382</Id>
+					<Id>1678829180959</Id>
 					<Name><![CDATA[polyline1]]></Name>
 					<X>-3</X><Y>4</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3140,38 +2670,9 @@ Additionally, you can use the provided buttons to manually print the JSON format
 
 				</Group>
 				<Polyline>
-					<Id>1601495178610</Id>
-					<Name><![CDATA[polyline2]]></Name>
-					<X>700</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Polyline>
-				<Polyline>
-					<Id>1601495182809</Id>
+					<Id>1678829206071</Id>
 					<Name><![CDATA[polyline3]]></Name>
-					<X>700</X><Y>150</Y>
+					<X>665</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3188,20 +2689,24 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
+					<FillColor>-16776961</FillColor>
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>40</Y><Z>0</Z></Point>
+					   <Point><X>70</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>-20</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
-					<Closed>false</Closed>
+					<Closed>true</Closed>
 				</Polyline>
-				<Polyline>
-					<Id>1601495186959</Id>
-					<Name><![CDATA[polyline4]]></Name>
-					<X>730</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+				<Rectangle>
+					<Id>1678829229242</Id>
+					<Name><![CDATA[rectangle3]]></Name>
+					<X>745</X><Y>310</Y>
+					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
@@ -3209,56 +2714,52 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
+					<LineWidth>2</LineWidth>
+					<LineColor>-16776961</LineColor>
 					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
+					<LineStyle>DOTTED</LineStyle>
+					<Width>245</Width>
+					<Height>230</Height>
+					<Rotation>0.0</Rotation>
 					<FillColor/>
 					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Polyline>
-				<Polyline>
-					<Id>1601495188626</Id>
-					<Name><![CDATA[polyline5]]></Name>
-					<X>730</X><Y>235</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+				</Rectangle>
+				<Text>
+					<Id>1678829244796</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>755</X><Y>320</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Polyline>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[{
+  "name": "Shmapple",
+  "priceHistory": {
+    "xmin" : 0.0,
+    "xmax" : 90.0,
+    "ymin" : 0.22,
+    "ymax" : 0.76,
+    "plainDataValues": 
+      [[0, 0.5], [1, 0.75], 
+          ..., [90, 0.66]]
+  }
+}]]></Text>
+					<Font>
+						<Name>Consolas</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 				<Polyline>
-					<Id>1601495190627</Id>
+					<Id>1678829297402</Id>
 					<Name><![CDATA[polyline6]]></Name>
-					<X>730</X><Y>270</Y>
+					<X>420</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3279,44 +2780,15 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
-					</Points>
-					<Closed>false</Closed>
-				</Polyline>
-				<Polyline>
-					<Id>1601495192130</Id>
-					<Name><![CDATA[polyline7]]></Name>
-					<X>730</X><Y>305</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<FillColor/>
-					<FillMaterial>null</FillMaterial>
-					<Points>
-					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>30</Y><Z>0</Z></Point>
-					   <Point><X>20</X><Y>30</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>20</Y><Z>0</Z></Point>
+					   <Point><X>20</X><Y>20</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>false</Closed>
 				</Polyline>
 				<Text>
-					<Id>1601495204926</Id>
-					<Name><![CDATA[text9]]></Name>
-					<X>785</X><Y>220</Y>
+					<Id>1678830111663</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>10</X><Y>280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3326,18 +2798,18 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Starting value]]></Text>
+					<Text><![CDATA[Simplified workflow]]></Text>
 					<Font>
-						<Name>Verdana</Name>
-						<Size>16</Size>
-						<Style>0</Style>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>3</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1601495206475</Id>
-					<Name><![CDATA[text10]]></Name>
-					<X>785</X><Y>255</Y>
+					<Id>1678830130288</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>255</X><Y>295</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3346,19 +2818,40 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Volitility]]></Text>
+					<Color>-16776961</Color>
+					<Text><![CDATA[Input JSON]]></Text>
 					<Font>
-						<Name>Verdana</Name>
-						<Size>16</Size>
-						<Style>0</Style>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>3</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>1601495207812</Id>
+					<Id>1678830151831</Id>
+					<Name><![CDATA[text8]]></Name>
+					<X>655</X><Y>295</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16776961</Color>
+					<Text><![CDATA[Simulated agent]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>3</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1678830163344</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>785</X><Y>290</Y>
+					<X>990</X><Y>295</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3367,51 +2860,18 @@ Additionally, you can use the provided buttons to manually print the JSON format
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Current value]]></Text>
+					<Color>-16776961</Color>
+					<Text><![CDATA[Output JSON]]></Text>
 					<Font>
-						<Name>Verdana</Name>
-						<Size>16</Size>
-						<Style>0</Style>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>3</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1601495209516</Id>
-					<Name><![CDATA[text12]]></Name>
-					<X>785</X><Y>325</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[History]]></Text>
-					<Font>
-						<Name>Verdana</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>RIGHT</Alignment>
 				</Text>
 			</Presentation>
 
 			<Parameters>			
-				<Parameter>
-					<ParameterName><![CDATA[doLoadFromJson]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[checkbox.isSelected()]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[numCompanies]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[numCompanies]]></Code>
-					</ParameterValue>
-				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -3423,7 +2883,7 @@ Additionally, you can use the provided buttons to manually print the JSON format
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Never]]></StopOption>
-				<InitialDate><![CDATA[1590537600000]]></InitialDate>	
+				<InitialDate><![CDATA[1577836800000]]></InitialDate>	
 				<InitialTime><![CDATA[0.0]]></InitialTime>	
 				<FinalDate><![CDATA[1593216000000]]></FinalDate>	
 				<FinalTime><![CDATA[100.0]]></FinalTime>	

@@ -1,3 +1,0 @@
-{
-	"bonus_percent": 0.25
-}
