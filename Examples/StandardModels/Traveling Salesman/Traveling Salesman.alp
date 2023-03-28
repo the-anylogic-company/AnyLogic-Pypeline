@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
@@ -19,7 +19,6 @@ To optimize the order, the Python library OR-tools (by Google) is used.
 		<ActiveObjectClass>
 			<Id>1582063467932</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.time.Instant;
 import java.time.Duration;]]></Import>
 			<StartupCode><![CDATA[// assign index of home facility
@@ -36,8 +35,8 @@ pyCom.run(
 	)
 );
 
-if (newOrderOnStartup)
-	buildNewOrder();]]></StartupCode>
+// start the loop of ordering
+buildNewOrder();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1582063467930</Id>
@@ -56,7 +55,6 @@ if (newOrderOnStartup)
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -134,7 +132,7 @@ if (newOrderOnStartup)
 				<Variable Class="PlainVariable">
 					<Id>1582072184262</Id>
 					<Name><![CDATA[home_index]]></Name>
-					<X>1500</X><Y>200</Y>
+					<X>1500</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -142,30 +140,6 @@ if (newOrderOnStartup)
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1582132778302</Id>
-					<Name><![CDATA[newOrderOnStartup]]></Name>
-					<X>1500</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1582132778300</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
 				</Variable>
 			</Variables>
 			<Functions>
@@ -629,50 +603,6 @@ send(o, truck);]]></Body>
 					<Latitude>37.714577345621315</Latitude>
 					<Longitude>-96.80318601254599</Longitude>
 				</EmbeddedObjectPresentation>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582071427554</Id>
-					<Name><![CDATA[button]]></Name>
-					<X>1280</X><Y>570</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[truck.inState(Truck.idle)]]></EnableExpression>
-						<ActionCode><![CDATA[buildNewOrder();]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[new order]]></LabelText>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582128829667</Id>
-					<Name><![CDATA[checkbox]]></Name>
-					<X>1280</X><Y>600</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="110" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[nonstop orders]]></LabelText>
-						<DefaultValueCode><![CDATA[true]]></DefaultValueCode>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
 				<Group>
 					<Id>1582129264810</Id>
 					<Name><![CDATA[clock]]></Name>
@@ -943,7 +873,6 @@ https://git.io/al_py]]></Text>
 		<ActiveObjectClass>
 			<Id>1582063785154</Id>
 			<Name><![CDATA[Facility]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1582063785152</Id>
@@ -962,7 +891,6 @@ https://git.io/al_py]]></Text>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -1910,7 +1838,6 @@ https://git.io/al_py]]></Text>
 		<ActiveObjectClass>
 			<Id>1582064606927</Id>
 			<Name><![CDATA[Truck]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1582064606925</Id>
@@ -1929,7 +1856,6 @@ https://git.io/al_py]]></Text>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -2204,9 +2130,8 @@ main.facilities(facIndex).partOfRoute = false;]]></Action>
 currentOrder = null;
 ordersCompleted++;
 
-// auto-add a new order, depending on checkbox
-if (main.checkbox.isSelected())
-	main.buildNewOrder();]]></Action>
+// auto-add a new order
+main.buildNewOrder();]]></Action>
 						<Timeout Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
@@ -2587,7 +2512,6 @@ if (main.checkbox.isSelected())
 		<ActiveObjectClass>
 			<Id>1582064613479</Id>
 			<Name><![CDATA[Order]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.util.stream.Collectors;
 import java.time.Instant;
 import java.time.Duration;]]></Import>
@@ -2609,7 +2533,6 @@ import java.time.Duration;]]></Import>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -2864,7 +2787,6 @@ return toVisit;]]></Body>
 		<SimulationExperiment ActiveObjectClassId="1582063467932">
 			<Id>1582063467934</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -2913,28 +2835,6 @@ return toVisit;]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1582132752754</Id>
-					<Name><![CDATA[checkbox]]></Name>
-					<X>50</X><Y>430</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="170" Height="40">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="14" Style="0"/>
-						<LabelText><![CDATA[New order on startup]]></LabelText>
-						<LinkTo>true</LinkTo>
-						<Link>newOrderOnStartup</Link>
-	 				</ExtendedProperties>
-				</Control>
 				<Text>
 					<Id>1582330175055</Id>
 					<Name><![CDATA[text2]]></Name>
@@ -5551,12 +5451,6 @@ The list is passed to the truck via a message. A statechart is used to have the 
 			</Presentation>
 
 			<Parameters>			
-				<Parameter>
-					<ParameterName><![CDATA[newOrderOnStartup]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[newOrderOnStartup]]></Code>
-					</ParameterValue>
-				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
