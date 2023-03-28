@@ -4,9 +4,13 @@ from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from collections import deque
 
-# Provides better graph drawing (e.g., moving chart w/o locking thread)
-# But requires PyQt5 to be installed
-#use('Qt5Agg')
+try:
+    # Provides better graph drawing (e.g., moving chart w/o locking thread)
+    # But requires PyQt5 to be installed
+    use('Qt5Agg')
+except (ModuleNotFoundError, ValueError):
+    # Use whatever is default
+    pass
 
 # creation of figure
 fig = plt.figure()
