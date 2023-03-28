@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from experiment screen]]></Name>
@@ -16,9 +16,6 @@
 		<ActiveObjectClass>
 			<Id>1604941166235</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<DestroyCode><![CDATA[traceln("On destroy: For parameters (%s, %3.1f, %3.1f), utilization = %4.1f%%, mean queue time = %4.1f seconds\n",
-	numWorkers, arrivalRate, meanDelayTime, workerUtilization*100., queueTimeHD.mean());]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1604941166233</Id>
@@ -37,7 +34,6 @@
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -115,7 +111,7 @@
 				<Output>
 					<Id>1604941328473</Id>
 					<Name><![CDATA[workerUtilization]]></Name>
-					<X>200</X><Y>450</Y>
+					<X>450</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -137,7 +133,7 @@
 				<Variable Class="Parameter">
 					<Id>1604941178042</Id>
 					<Name><![CDATA[numWorkers]]></Name>
-					<X>50</X><Y>50</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -149,7 +145,6 @@
 						<DefaultValue Class="CodeValue">
 							<Code><![CDATA[2]]></Code>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[//workerPool.set_capacity(numWorkers);]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>1604941178040</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -162,7 +157,7 @@
 				<Variable Class="Parameter">
 					<Id>1604941185148</Id>
 					<Name><![CDATA[arrivalRate]]></Name>
-					<X>50</X><Y>100</Y>
+					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -173,38 +168,11 @@
 						<UnitOfValue Class="RateUnits"><![CDATA[PER_SECOND]]></UnitOfValue>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[1.0]]></Code>
 							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[//source.set_rate(arrivalRate);]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>1604941185146</Id>
-							<EditorContolType>UNIT_EDITOR</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1604941192890</Id>
-					<Name><![CDATA[meanDelayTime]]></Name>
-					<X>50</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[]]></Type>
-						<UnitType><![CDATA[TIME]]></UnitType>
-						<UnitOfValue Class="TimeUnits"><![CDATA[SECOND]]></UnitOfValue>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1604941192888</Id>
 							<EditorContolType>UNIT_EDITOR</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -217,7 +185,7 @@
 				<Connector>
 					<Id>1604941244731</Id>
 					<Name><![CDATA[connector]]></Name>
-					<X>0</X><Y>0</Y>
+					<X>0</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -250,7 +218,7 @@
 				<Connector>
 					<Id>1604941293980</Id>
 					<Name><![CDATA[connector1]]></Name>
-					<X>0</X><Y>0</Y>
+					<X>0</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -285,7 +253,7 @@
     			<HistogramData>
 					<Id>1604941352750</Id>
 					<Name><![CDATA[queueTimeHD]]></Name>
-					<X>200</X><Y>500</Y>
+					<X>450</X><Y>400</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -316,7 +284,7 @@
     			<DataSet>
 					<Id>1604941650158</Id>
 					<Name><![CDATA[queueSizeDS]]></Name>
-					<X>200</X><Y>550</Y>
+					<X>450</X><Y>450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -363,7 +331,7 @@
 				<EmbeddedObject>
 					<Id>1604941216877</Id>
 					<Name><![CDATA[source]]></Name>
-					<X>130</X><Y>290</Y>
+					<X>130</X><Y>340</Y>
 					<Label><X>-5</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -559,7 +527,7 @@
 				<EmbeddedObject>
 					<Id>1604941226901</Id>
 					<Name><![CDATA[workerPool]]></Name>
-					<X>210</X><Y>380</Y>
+					<X>210</X><Y>430</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -820,7 +788,7 @@
 				<EmbeddedObject>
 					<Id>1604941243731</Id>
 					<Name><![CDATA[service]]></Name>
-					<X>210</X><Y>280</Y>
+					<X>210</X><Y>330</Y>
 					<Label><X>-5</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -869,11 +837,7 @@
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[triangular(
-	meanDelayTime(SECOND)*0.5,
-	meanDelayTime(SECOND),
-	meanDelayTime(SECOND)*2
-)]]></Code>
+								<Code><![CDATA[triangular(0.75, 2.5, 4)]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
@@ -1036,7 +1000,7 @@
 				<EmbeddedObject>
 					<Id>1604941292620</Id>
 					<Name><![CDATA[sink]]></Name>
-					<X>310</X><Y>290</Y>
+					<X>310</X><Y>340</Y>
 					<Label><X>-10</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1118,7 +1082,7 @@
     			<Histogram>
 					<Id>1604941422513</Id>
 					<Name><![CDATA[chart]]></Name>
-					<X>420</X><Y>40</Y>
+					<X>650</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1182,7 +1146,7 @@
     			<Plot>
 					<Id>1604941673216</Id>
 					<Name><![CDATA[plot]]></Name>
-					<X>420</X><Y>320</Y>
+					<X>650</X><Y>320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1244,6 +1208,28 @@
 					<HorScaleToExpression><![CDATA[1]]></HorScaleToExpression>
 					<HorScaleType>AUTO</HorScaleType>
     			</Plot>
+				<Text>
+					<Id>1680014507503</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>30</X><Y>20</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[This is just a simple queueing model. 
+All Pypeline related features can be found in the experiments.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -1297,284 +1283,57 @@
 		</Outputs>
 	</RunConfiguration>
 	<Experiments>	
-		<!--   =========   Simulation Experiment   ========  -->
-		<SimulationExperiment ActiveObjectClassId="1604941166235">
-			<Id>1604941166237</Id>
-			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
-			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
-			<MaximumMemory>512</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
-			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<SeedValue>1</SeedValue>
-			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
-			<VmArgs><![CDATA[]]></VmArgs>
-			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
-			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1604941505321</Id>
-					<Name><![CDATA[nw]]></Name>
-					<X>-150</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[2]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1604941513663</Id>
-					<Name><![CDATA[ar]]></Name>
-					<X>-150</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1604941516982</Id>
-					<Name><![CDATA[dt]]></Name>
-					<X>-150</X><Y>300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-			</Variables>
-
-			<Presentation>
-				<Text>
-					<Id>1628727904234</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>50</X><Y>30</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - Python from experiment screen]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>24</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1604941487596</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>150</X><Y>175</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[# workers]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1604941531592</Id>
-					<Name><![CDATA[editbox]]></Name>
-					<X>160</X><Y>170</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>nw</Link>
-					</ExtendedProperties>
-				</Control>
-				<Text>
-					<Id>1604941541695</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>150</X><Y>240</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[arrival rate
-(per second)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1604941559892</Id>
-					<Name><![CDATA[editbox1]]></Name>
-					<X>160</X><Y>240</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>ar</Link>
-					</ExtendedProperties>
-				</Control>
-				<Text>
-					<Id>1604941580289</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>150</X><Y>320</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[mean delay time
-(seconds)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1604941580291</Id>
-					<Name><![CDATA[editbox2]]></Name>
-					<X>160</X><Y>315</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>dt</Link>
-					</ExtendedProperties>
-				</Control>
-			</Presentation>
-
-			<Parameters>			
-				<Parameter>
-					<ParameterName><![CDATA[numWorkers]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[nw]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[arrivalRate]]></ParameterName>
-					<ParameterValue Class="CodeUnitValue">
-						<Code><![CDATA[ar]]></Code>
-						<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[meanDelayTime]]></ParameterName>
-					<ParameterValue Class="CodeUnitValue">
-						<Code><![CDATA[dt]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-					</ParameterValue>
-				</Parameter>
-			</Parameters>			
-			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Demo - Python from experiment screen : Simulation]]></Title>	
-				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
-				<RealTimeScale>1.0</RealTimeScale>
-			</PresentationProperties>
-			<ModelTimeProperties>
-				<StopOption><![CDATA[Stop at specified time]]></StopOption>
-				<InitialDate><![CDATA[1604880000000]]></InitialDate>	
-				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1607472000000]]></FinalDate>	
-				<FinalTime><![CDATA[100.0]]></FinalTime>	
-			</ModelTimeProperties>
-			<BypassInitialScreen>false</BypassInitialScreen>
-		</SimulationExperiment>
 		<!--   =========  Parameter Variation Experiment   ========  -->
 		<ParamVariationExperiment ActiveObjectClassId="1604941166235">
 			<Id>1604941718807</Id>
 			<Name><![CDATA[ParametersVariation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import com.anylogic.libraries.pypeline.PyCommunicator;
-import com.anylogic.libraries.pypeline.PythonCommandType;]]></Import>
+import com.anylogic.libraries.pypeline.PythonCommandType;
+import java.io.File;
+import java.awt.Desktop;]]></Import>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<BeforeSimulationRunCode><![CDATA[// Need to start the python communicator agent per sim run.
-// (Change the arguments if your setup is different)
+			<BeforeEachExperimentRunCode><![CDATA[// Mark this as being a new run everytime the user clicks the "Play" button
+isNewExperimentRun = true;]]></BeforeEachExperimentRunCode>
+			<BeforeSimulationRunCode><![CDATA[// As the PyCommunicator is technically an agent, it needs an active agent reference to execute commands.
+// This is also where we set the properties of it, via constructor arguments
+// 		(Change them as needed if your setup is different)
+// Note: The connection is lost after a model run completes, which is why we need to reinitialize it each time.
 pyCommunicator = new PyCommunicator(PythonCommandType.PYTHON);
 pyCommunicator.createAndStart(root);
 
-pyCommunicator.run("from get_inputs_PV import get_num_workers, get_arrival_rate, get_mean_delay_time");
+// Import all the necessary functions in the local Python script
+pyCommunicator.run("from io_manager import get_num_workers, get_arrival_rate, reset, log_outputs, save_results");
 
-trace("Setting run #%s with parameter values...", getCurrentIteration());
-root.numWorkers = pyCommunicator.runResults(int.class, "get_num_workers(%s)", getCurrentIteration());
-root.arrivalRate = pyCommunicator.runResults(int.class, "get_arrival_rate(%s)", getCurrentIteration());
-root.meanDelayTime = pyCommunicator.runResults(int.class, "get_mean_delay_time(%s)", getCurrentIteration());
-traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]></BeforeSimulationRunCode>
+// Each time the experiment is re-run, clear the last set of data points
+if (isNewExperimentRun) {
+	pyCommunicator.run("reset()");
+	isNewExperimentRun = false;
+}
+
+// Assign the inputs based on results from Python (AL indexes the iteration by 1 but Python expects 0, so subtract 1)
+root.numWorkers = pyCommunicator.runResults(int.class, "get_num_workers(%s)", getCurrentIteration()-1);
+root.arrivalRate = pyCommunicator.runResults(double.class, "get_arrival_rate(%s)", getCurrentIteration()-1);]]></BeforeSimulationRunCode>
+			<AfterSimulationRunCode><![CDATA[// Tell Python to store the results in a local file
+pyCommunicator.run("log_outputs(%s, %s, %s)", root.numWorkers, root.arrivalRate, root.queueTimeHD.mean());
+
+// After the last run, save the results to an image and automatically open it up in your default image viewer.
+// The Python function will return a String, which will either be the filename or "None" if the libraries couldn't be imported.
+if (getCurrentIteration() == getMaximumIterations()) {
+	String filename = pyCommunicator.runResults(String.class, "save_results()");
+	if (filename.equals("None")) {
+		getExperimentHost().showMessageDialog("Could not show results due to import failing. Please check dependencies and try again.");
+	} else {
+		// Use the default image viewer or alert the user if something went wrong
+		try {
+		 	Desktop.getDesktop().open(new File(filename));
+		 } catch(Exception e){
+		 	getExperimentHost().showMessageDialog("Failed to open the image due the the following error: " + e.getMessage());
+		 }
+	}
+}]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
@@ -1583,13 +1342,32 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 				<Variable Class="PlainVariable">
 					<Id>1604942713005</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>300</X><Y>100</Y>
+					<X>50</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[PyCommunicator]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[// intentionally not assigned to anything at the start;
+// see the callbacks in the experiment properties]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1680020431068</Id>
+					<Name><![CDATA[isNewExperimentRun]]></Name>
+					<X>50</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 			</Variables>
@@ -1608,7 +1386,7 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - Python from experiment screen : ParametersVariation]]></Text>
+					<Text><![CDATA[Demo - Python from experiment screen]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -1816,19 +1594,21 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>1628727904248</Id>
-					<Name><![CDATA[text8]]></Name>
-					<X>50</X><Y>210</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+					<Id>1680014652365</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>240</X><Y>290</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-12171190</Color>
-					<Text><![CDATA[meanDelayTime]]></Text>
+					<Color>-16777216</Color>
+					<Text><![CDATA[The PyCommunicator needs to be a variable because it is technically an agent,
+       and agents cannot be dragged in the same way as in the model itself.
+It's initialized the Action fields before each simulation run.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -1836,26 +1616,102 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Text>
-					<Id>1628727904249</Id>
-					<Name><![CDATA[text9]]></Name>
-					<X>240</X><Y>210</Y>
+				<Line>
+					<Id>1680031619484</Id>
+					<Name><![CDATA[line1]]></Name>
+					<X>170</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>60</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Polyline>
+					<Id>1680031631773</Id>
+					<Name><![CDATA[polyline]]></Name>
+					<X>170</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-16777216</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>-5</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Text>
+					<Id>1680031663074</Id>
+					<Name><![CDATA[text11]]></Name>
+					<X>270</X><Y>100</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<VisibleCode><![CDATA[getCurrentIteration() > 0]]></VisibleCode>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-12042869</Color>
-					<Text><![CDATA[?]]></Text>
-					<TextCode><![CDATA[format( meanDelayTime )]]></TextCode>
+					<Color>-12490271</Color>
+					<Text><![CDATA[This experiment will run through combinations of the parameters based on values received from Python.
+After each run, it will send the outputs to Python to save to a local file.
+At the end, if you have the optional dependencies, an image of a 3D plot (generated from Python) will be opened.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
-						<Style>0</Style>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1680031837503</Id>
+					<Name><![CDATA[text8]]></Name>
+					<X>990</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
+https://git.io/al_py
+Optional library dependencies: 'matplotlib' and 'numpy']]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
 					</Font>
 					<Alignment>RIGHT</Alignment>
 				</Text>
@@ -1863,21 +1719,15 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 
 			<AllowParallelEvaluations>false</AllowParallelEvaluations>
 			<UseFreeformParameters>true</UseFreeformParameters>
-			<NumberOfRuns>10</NumberOfRuns>
+			<NumberOfRuns>9</NumberOfRuns>
 			<FreeformParamValue>	
 				<Id>1604941178042</Id>
 				<Expression Class="CodeValue">
-					<Code><![CDATA[0]]></Code>
+					<Code><![CDATA[0 // intentionally left at 0; assigned in the callbacks]]></Code>
 				</Expression>
 			</FreeformParamValue>
 			<FreeformParamValue>	
 				<Id>1604941185148</Id>
-				<Expression Class="CodeValue">
-					<Code><![CDATA[0]]></Code>
-				</Expression>
-			</FreeformParamValue>
-			<FreeformParamValue>	
-				<Id>1604941192890</Id>
 				<Expression Class="CodeValue">
 					<Code><![CDATA[0]]></Code>
 				</Expression>
@@ -1888,10 +1738,6 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 			</RangeVariationParamValue>
 			<RangeVariationParamValue>	
 				<Id>1604941185148</Id>
-				<Type>FIXED</Type>
-			</RangeVariationParamValue>
-			<RangeVariationParamValue>	
-				<Id>1604941192890</Id>
 				<Type>FIXED</Type>
 			</RangeVariationParamValue>
 			<ModelTimeProperties>
@@ -1918,36 +1764,6 @@ traceln("%s, %s, %s", root.numWorkers, root.arrivalRate, root.meanDelayTime);]]>
 				<ExpressionForConfidenceComputation><![CDATA[0]]></ExpressionForConfidenceComputation>
 			</ReplicationsProperties>
 		</ParamVariationExperiment>	
-		<!--   =========  Custom Experiment   ========  -->
-		<CustomExperiment>
-			<Id>1628727904250</Id>
-			<Name><![CDATA[CustomExperiment]]></Name>
-			<MaximumMemory>512</MaximumMemory>
-			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
-			<VmArgs><![CDATA[]]></VmArgs>
-			<Code><![CDATA[
-Engine engine = createEngine();
-engine.setTimeUnit( SECOND );
-engine.getDefaultRandomGenerator().setSeed( 1 );
-engine.setStartTime( 0.0 );
-engine.setStartDate( toDate( 2020, NOVEMBER, 9, 0, 0, 0 ) );
-engine.setStopTime( 100.0 );
-
-Main root = new Main( engine, null, null );
-root.setParametersToDefaultValues();
-
-PyCommunicator pycom = new PyCommunicator(PythonCommandType.PYTHON);
-pycom.createAndStart(root);
-pycom.run("x=120+3");
-int x = pycom.runResults(int.class, "x");
-traceln(x);
-
-engine.start( root );
-
-engine.runFast();
-engine.stop();
-]]></Code>
-		</CustomExperiment>
 	</Experiments>
 	<ModelResources>
 		<Resource>
@@ -1969,9 +1785,9 @@ engine.stop();
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>7</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
 </Model>
 </AnyLogicWorkspace>
