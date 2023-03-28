@@ -21,7 +21,13 @@ To optimize the order, the Python library OR-tools (by Google) is used.
 			<Name><![CDATA[Main]]></Name>
 			<Import><![CDATA[import java.time.Instant;
 import java.time.Duration;]]></Import>
-			<StartupCode><![CDATA[// assign index of home facility
+			<StartupCode><![CDATA[// halt progress if logical inconsistency
+long numHomeFacilities = facilities.stream().filter(f -> f.isHomeFacility).count();
+if (numHomeFacilities != 1) {
+	error("There can only be 1 facility marked as being the 'home', not %s. Fix the database table and try again.", numHomeFacilities);
+}
+
+// assign index of home facility
 home_index = facilities.findFirst(h -> h.isHomeFacility).getIndex();
 
 // perform python imports and initialize solver object
@@ -1966,8 +1972,8 @@ https://git.io/al_py]]></Text>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
 						<EntryAction><![CDATA[Facility home = main.facilities.findFirst(h -> h.isHomeFacility);
-
-jumpTo( home.getLatitude(), home.getLongitude() );]]></EntryAction>
+if (home != null) // this should always be true, but just in case
+	jumpTo( home.getLatitude(), home.getLongitude() );]]></EntryAction>
 						<FillColor/>
 					</Properties>
 				</StatechartElement>
