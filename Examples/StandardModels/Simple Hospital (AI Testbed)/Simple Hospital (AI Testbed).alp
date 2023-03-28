@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
@@ -20,10 +20,9 @@ A slider is provided for you to experiment with dynamically adjusting hospital c
 		<ActiveObjectClass>
 			<Id>1586797690572</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[// Import class from local file to use in calling the trained neural network models
 pyCom.run("from nn_model_parser import HospitalPredictor",
-		"predictor = HospitalPredictor()");]]></StartupCode>
+		  "predictor = HospitalPredictor()");]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1586797690570</Id>
@@ -42,7 +41,6 @@ pyCom.run("from nn_model_parser import HospitalPredictor",
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -611,7 +609,7 @@ else
 					<Id>1586798228917</Id>
 					<Name><![CDATA[pyCom]]></Name>
 					<X>30</X><Y>50</Y>
-					<Label><X>10</X><Y>-5</Y></Label>
+					<Label><X>0</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -650,6 +648,9 @@ else
 							<Value Class="CodeValue">
 								<Code><![CDATA[false]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[enable]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -693,7 +694,7 @@ else
 					</QuantityColumn>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>0</Id>
+					<Id>1680031873537</Id>
 					<Name><![CDATA[patients]]></Name>
 					<X>50</X><Y>155</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1516,6 +1517,7 @@ cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[Daily arrival rate]]></Title>
+					<Id>1680031873185</Id>
 					<Expression><![CDATA[arrivalRateDS]]></Expression>
 					<Color>-2354116</Color>
 					<Expression2><![CDATA[0]]></Expression2>
@@ -1582,6 +1584,7 @@ cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[# staying]]></Title>
+					<Id>1680031873187</Id>
 					<Expression><![CDATA[takenBedsDS]]></Expression>
 					<Color>-6632142</Color>
 					<Expression2><![CDATA[delay.size()]]></Expression2>
@@ -1591,6 +1594,7 @@ cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[# queuing]]></Title>
+					<Id>1680031873188</Id>
 					<Expression><![CDATA[waitingDS]]></Expression>
 					<Color>-14774017</Color>
 					<Expression2><![CDATA[queue.size()]]></Expression2>
@@ -1699,6 +1703,7 @@ https://git.io/al_py]]></Text>
 						<RelativeWidth>0.8</RelativeWidth>
 					</Bars>
 					<HistogramDataExpression>
+					<Id>1680031873191</Id>
 					<Expression><![CDATA[predictedStayDurationHD]]></Expression>
 						<ColorPDF>-16777088</ColorPDF>
 						<ColorCDF>-13447886</ColorCDF>
@@ -3911,6 +3916,7 @@ https://git.io/al_py]]></Text>
 						<RelativeWidth>0.8</RelativeWidth>
 					</Bars>
 					<HistogramDataExpression>
+					<Id>1680031873272</Id>
 					<Expression><![CDATA[cumulativeTisHD]]></Expression>
 						<ColorPDF>-16777088</ColorPDF>
 						<ColorCDF>-14774017</ColorCDF>
@@ -3996,7 +4002,6 @@ https://git.io/al_py]]></Text>
 		<ActiveObjectClass>
 			<Id>1586799909151</Id>
 			<Name><![CDATA[Patient]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import com.google.common.base.Strings;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -4016,7 +4021,6 @@ https://git.io/al_py]]></Text>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -4102,10 +4106,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586801490493</Id>
 					<Name><![CDATA[neutrophilsMean]]></Name>
-					<X>-150</X><Y>750</Y>
+					<X>-250</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4117,10 +4121,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586801502809</Id>
 					<Name><![CDATA[neutrophilsStddev]]></Name>
-					<X>-150</X><Y>770</Y>
+					<X>-250</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4132,10 +4136,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810679767</Id>
 					<Name><![CDATA[sodiumMean]]></Name>
-					<X>-150</X><Y>800</Y>
+					<X>-250</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4147,10 +4151,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810679769</Id>
 					<Name><![CDATA[sodiumStddev]]></Name>
-					<X>-150</X><Y>820</Y>
+					<X>-250</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4162,10 +4166,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810681910</Id>
 					<Name><![CDATA[glucoseMean]]></Name>
-					<X>-150</X><Y>850</Y>
+					<X>-250</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4177,10 +4181,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810681912</Id>
 					<Name><![CDATA[glucoseStddev]]></Name>
-					<X>-150</X><Y>870</Y>
+					<X>-250</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4192,10 +4196,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810688686</Id>
 					<Name><![CDATA[bloodureanitroMean]]></Name>
-					<X>-150</X><Y>900</Y>
+					<X>-250</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4207,10 +4211,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810688688</Id>
 					<Name><![CDATA[bloodureanitroStddev]]></Name>
-					<X>-150</X><Y>920</Y>
+					<X>-250</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4222,10 +4226,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810690831</Id>
 					<Name><![CDATA[creatinineMean]]></Name>
-					<X>-150</X><Y>950</Y>
+					<X>-250</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4237,10 +4241,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810690833</Id>
 					<Name><![CDATA[creatinineStddev]]></Name>
-					<X>-150</X><Y>970</Y>
+					<X>-250</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4252,10 +4256,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810693134</Id>
 					<Name><![CDATA[bmiMean]]></Name>
-					<X>-150</X><Y>1000</Y>
+					<X>-250</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4267,10 +4271,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810693136</Id>
 					<Name><![CDATA[bmiStddev]]></Name>
-					<X>-150</X><Y>1020</Y>
+					<X>-250</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4282,10 +4286,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810694798</Id>
 					<Name><![CDATA[pulseMean]]></Name>
-					<X>-150</X><Y>1050</Y>
+					<X>-250</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4297,10 +4301,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810694800</Id>
 					<Name><![CDATA[pulseStddev]]></Name>
-					<X>-150</X><Y>1070</Y>
+					<X>-250</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4312,10 +4316,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810696462</Id>
 					<Name><![CDATA[respirationMean]]></Name>
-					<X>-150</X><Y>1100</Y>
+					<X>-250</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4327,10 +4331,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586810696464</Id>
 					<Name><![CDATA[respirationStddev]]></Name>
-					<X>-150</X><Y>1120</Y>
+					<X>-250</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4342,10 +4346,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586811080223</Id>
 					<Name><![CDATA[hematocriticMean]]></Name>
-					<X>-150</X><Y>700</Y>
+					<X>-250</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4357,10 +4361,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1586811080225</Id>
 					<Name><![CDATA[hematocriticStddev]]></Name>
-					<X>-150</X><Y>720</Y>
+					<X>-250</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
@@ -4555,10 +4559,10 @@ https://git.io/al_py]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1602362900199</Id>
 					<Name><![CDATA[skinTone]]></Name>
-					<X>-125</X><Y>50</Y>
+					<X>50</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[Color]]></Type>        
@@ -5811,6 +5815,27 @@ return String.format("[["+placeholders+"]]",
 					<Dy>0</Dy>
 					<Dz>0</Dz>
 				</Line>
+				<Text>
+					<Id>1680034878341</Id>
+					<Name><![CDATA[text11]]></Name>
+					<X>-260</X><Y>160</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16776961</Color>
+					<Text><![CDATA[Reference values (for normalizing)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -5825,7 +5850,7 @@ return String.format("[["+placeholders+"]]",
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<Title><![CDATA[]]></Title>
-					<Width>1000</Width>
+					<Width>1050</Width>
 					<Height>600</Height>
 				</Area>
 			</Areas>
@@ -5882,7 +5907,6 @@ return String.format("[["+placeholders+"]]",
 		<SimulationExperiment ActiveObjectClassId="1586797690572">
 			<Id>1586797690574</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -6532,7 +6556,7 @@ root.getEngine().setStartDate(today);]]></BeforeSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031873550</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>50</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -10280,8 +10304,8 @@ rot %= (2*PI);]]></OnDrawCode>
 	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>4</VersionMinor>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>

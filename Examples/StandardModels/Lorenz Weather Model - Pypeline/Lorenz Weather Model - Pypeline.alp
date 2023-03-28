@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1162412338974</Id>
 	<Name><![CDATA[Lorenz Weather Model - Pypeline]]></Name>
@@ -19,9 +19,9 @@ This model also demonstrates Pypeline’s ability to function in parallel simula
 		<ActiveObjectClass>
 			<Id>1162412338975</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Paths;]]></Import>
-			<StartupCode><![CDATA[pyCom.run("import plotter");
+			<StartupCode><![CDATA[// Import local script
+pyCom.run("import plotter");
 
 // Set the inputs (updates title of 3D plot)
 pyCom.run(String.format("plotter.set_inputs(%s, %s, %s)", S, R, B));
@@ -48,7 +48,6 @@ pyCom.run(
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -495,6 +494,7 @@ pyCom.run(
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[try {
+	// call function in local Python script to include the new data
 	pyCom.run(String.format("plotter.append(%s, %s, %s)", X, Y, Z));
 } catch (Exception e) {
 	// user must have closed the matplotlib window, 
@@ -564,6 +564,9 @@ pyCom.run(
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[enable]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -1144,6 +1147,7 @@ pyCom.run(
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[X]]></Title>
+					<Id>1680031928188</Id>
 					<Expression><![CDATA[dsX]]></Expression>
 					<Color>-10496</Color>
 					<Expression2><![CDATA[X]]></Expression2>
@@ -1153,6 +1157,7 @@ pyCom.run(
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[Y]]></Title>
+					<Id>1680031928189</Id>
 					<Expression><![CDATA[dsY]]></Expression>
 					<Color>-47872</Color>
 					<Expression2><![CDATA[Y]]></Expression2>
@@ -1162,6 +1167,7 @@ pyCom.run(
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[Z]]></Title>
+					<Id>1680031928190</Id>
 					<Expression><![CDATA[dsZ]]></Expression>
 					<Color>-14774017</Color>
 					<Expression2><![CDATA[Z]]></Expression2>
@@ -1226,6 +1232,7 @@ pyCom.run(
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[X = f(Z)]]></Title>
+					<Id>1680031928192</Id>
 					<Expression><![CDATA[dsXZ]]></Expression>
 					<Color>-10496</Color>
 					<Expression2><![CDATA[X]]></Expression2>
@@ -1236,6 +1243,7 @@ pyCom.run(
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[Y = f(Z)]]></Title>
+					<Id>1680031928193</Id>
 					<Expression><![CDATA[dsYZ]]></Expression>
 					<Color>-47872</Color>
 					<Expression2><![CDATA[Y]]></Expression2>
@@ -1301,6 +1309,7 @@ pyCom.run(
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
 						<Title><![CDATA[Y = f(X)]]></Title>
+					<Id>1680031928195</Id>
 					<Expression><![CDATA[dsYX]]></Expression>
 					<Color>-65536</Color>
 					<Expression2><![CDATA[Y]]></Expression2>
@@ -1311,6 +1320,7 @@ pyCom.run(
 					</DatasetExpression>
 					<DatasetExpression>  
 						<Title><![CDATA[Z = f(X)]]></Title>
+					<Id>1680031928196</Id>
 					<Expression><![CDATA[dsZX]]></Expression>
 					<Color>-14774017</Color>
 					<Expression2><![CDATA[Z]]></Expression2>
@@ -1635,7 +1645,7 @@ https://git.io/al_py]]></Text>
 		</Inputs>
 		<Outputs>
     		<RunConfigurationOutput>
-				<Id>0</Id>
+				<Id>1680031928277</Id>
 				<Name><![CDATA[Plot]]></Name>
 				<OutputReference>
 					<PackageName><![CDATA[lorenz_weather_model_pypeline_test]]></PackageName>
@@ -1644,7 +1654,7 @@ https://git.io/al_py]]></Text>
 				</OutputReference>
     		</RunConfigurationOutput>
     		<RunConfigurationOutput>
-				<Id>0</Id>
+				<Id>1680031928278</Id>
 				<Name><![CDATA[Plot1]]></Name>
 				<OutputReference>
 					<PackageName><![CDATA[lorenz_weather_model_pypeline_test]]></PackageName>
@@ -1653,7 +1663,7 @@ https://git.io/al_py]]></Text>
 				</OutputReference>
     		</RunConfigurationOutput>
     		<RunConfigurationOutput>
-				<Id>0</Id>
+				<Id>1680031928279</Id>
 				<Name><![CDATA[Plot2]]></Name>
 				<OutputReference>
 					<PackageName><![CDATA[lorenz_weather_model_pypeline_test]]></PackageName>
@@ -1668,7 +1678,6 @@ https://git.io/al_py]]></Text>
 		<SimulationExperiment ActiveObjectClassId="1162412338975">
 			<Id>1162412338976</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
@@ -1680,7 +1689,7 @@ https://git.io/al_py]]></Text>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928258</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>40</X><Y>30</Y>
 					<Label><X>15</X><Y>0</Y></Label>
@@ -1701,7 +1710,7 @@ https://git.io/al_py]]></Text>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928259</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>40</X><Y>163</Y>
 					<Label><X>15</X><Y>0</Y></Label>
@@ -1887,10 +1896,9 @@ The Lorenz equations have been the subject of hundreds of research articles, and
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[This is a slightly modified version of the AnyLogic example model (original description seen below).
+					<Text><![CDATA[This is a slightly modified version of the built-in AnyLogic example model (original description seen below).
 The Python library "MatPlotLib" is used to show a live, 3D graph of the X, Y, and Z stocks in the SD model.
-Try changing the parameters on the fly or rotating the graph to see it from a different angle!
-]]></Text>
+Try changing the parameters on the fly or rotating the graph to see it from a different angle!]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -1941,7 +1949,6 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 		<ParamVariationExperiment ActiveObjectClassId="1162412338975">
 			<Id>1591381297137</Id>
 			<Name><![CDATA[ParametersVariation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -1953,7 +1960,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928260</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>40</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1974,7 +1981,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928261</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>50</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -1995,7 +2002,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928262</Id>
 					<Name><![CDATA[text2]]></Name>
 					<X>240</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2018,7 +2025,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928263</Id>
 					<Name><![CDATA[text3]]></Name>
 					<X>50</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2039,7 +2046,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Line>
-					<Id>0</Id>
+					<Id>1680031928264</Id>
 					<Name><![CDATA[line]]></Name>
 					<X>40</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2063,7 +2070,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Dz>0</Dz>
 				</Line>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928265</Id>
 					<Name><![CDATA[text4]]></Name>
 					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2084,7 +2091,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928266</Id>
 					<Name><![CDATA[text5]]></Name>
 					<X>240</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2107,7 +2114,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680031928267</Id>
 					<Name><![CDATA[rectangle]]></Name>
 					<X>40</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2129,7 +2136,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928268</Id>
 					<Name><![CDATA[text6]]></Name>
 					<X>50</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2150,7 +2157,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928269</Id>
 					<Name><![CDATA[text7]]></Name>
 					<X>240</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2173,7 +2180,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928270</Id>
 					<Name><![CDATA[text8]]></Name>
 					<X>50</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2194,7 +2201,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928271</Id>
 					<Name><![CDATA[text9]]></Name>
 					<X>240</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2217,7 +2224,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680031928272</Id>
 					<Name><![CDATA[rectangle1]]></Name>
 					<X>40</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2239,7 +2246,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928273</Id>
 					<Name><![CDATA[text10]]></Name>
 					<X>50</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2260,7 +2267,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928274</Id>
 					<Name><![CDATA[text11]]></Name>
 					<X>240</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2283,7 +2290,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928275</Id>
 					<Name><![CDATA[text12]]></Name>
 					<X>50</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2304,7 +2311,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680031928276</Id>
 					<Name><![CDATA[text13]]></Name>
 					<X>240</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -2449,8 +2456,8 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>4</VersionMinor>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
