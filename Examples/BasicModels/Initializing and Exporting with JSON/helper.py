@@ -15,9 +15,9 @@ COMPANY_TYPES = ["Aerospace", "Automotive", "Chemical", "Computer",
                 "Water"]
 
 
-def clear_last_run(pattern: str = "stocks-[\dQ]+\.json") -> None:
-    """Removes all logging JSON files (matching the provided pattern)
-        from the last time the model was run."""
+def clear_last_run(pattern: str = ".+?\.json") -> None:
+    """Removes all generated JSON files (matching the provided pattern)
+        from the last model run."""
     for file in os.listdir():
         if re.match(pattern, file):
             os.remove(file)
