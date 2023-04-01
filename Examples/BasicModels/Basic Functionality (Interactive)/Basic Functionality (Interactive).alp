@@ -264,7 +264,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1679336963300</CurrentLevel>
+			<CurrentLevel>1678920633762</CurrentLevel>
 			<ConnectionsId>1678914018157</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -1510,7 +1510,7 @@ ArrowAnimConfig config3 = new ArrowAnimConfig(arrowRR3, 0.5, 2, 20, null) {
 				}
 			};
 
-ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRROutcome) {
+ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRFOutput) {
 				@Override
 				public void onStage0() {
 					// execute the command here and  + planned amount to send
@@ -1523,11 +1523,13 @@ ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRROut
 					// update the amount to send if there wasn't any issue with it
 					if (outcome.getSecond() != null)
 						amount.set(outcome.getSecond().doubleValue());
+					
 				}
 				@Override
 				public void onStage2() {
 					// when not an error, start the arrow to show the outcome 
 					label.setVisible(true);
+					traceln("setting visible");
 					if (amount.get() > 0)
 						create_AnimateArrow(0, 0, 0, config3);
 				}
@@ -1537,7 +1539,7 @@ ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRROut
 				}
 			};
 			
-ArrowAnimConfig config1 = new ArrowAnimConfig(arrowRR1, 0.5, 2.8, 20, textRRQuery) {
+ArrowAnimConfig config1 = new ArrowAnimConfig(arrowRR1, 0.5, 2.8, 20, null) {
 		@Override
 		public void onStage2() {
 			// start the return arrow here
@@ -1662,13 +1664,15 @@ if (rrUseShorthand) {
 	queryBuilder.append("double.class, ");
 }
 queryBuilder.append("\"").append(rrExpression).append("\");");
-textRRQuery.setText(queryBuilder.toString());
+String queryText = queryBuilder.toString();
 
 // For code block: differs based on both whether using shorthand and whether to use extra error handling
 StringBuilder codeBuilder = new StringBuilder();
 if (rrUseShorthand) {
 	// add code shared by both cases first
-	codeBuilder.append("double amount =\nfluidSource.inject(amount);");
+	codeBuilder.append("double amount = ")
+				.append(queryText)
+				.append("\nfluidSource.inject(amount);");
 	// then wrap in handling if it's desired
 	if (rrExtraHandling) {
 		codeBuilder.insert(0, "try {\n    ") // prefix with try and indent first line
@@ -1677,7 +1681,9 @@ if (rrUseShorthand) {
 	}
 } else {
 	// add code shared by both cases first
-	codeBuilder.append("attempt =\ndouble amount = attempt.getFeedback(double.class);\nfluidSource.inject(amount);");
+	codeBuilder.append("attempt = ")
+				.append(queryText)
+				.append("\ndouble amount = attempt.getFeedback(double.class);\nfluidSource.inject(amount);");
 	// then wrap in handling if it's desired
 	if (rrExtraHandling) {
 		codeBuilder.insert(codeBuilder.indexOf("double"), "\nif (attempt.isSuccessful()) {\n    ") // insert if-check before start of second line
@@ -1685,19 +1691,7 @@ if (rrUseShorthand) {
 					.append("\n} else {\n    warning(attempt.getFeedback());\n}"); // else suffix
 	}
 }
-textRRCode.setText(codeBuilder.toString());
-
-// Update position of code.
-// When using shorthand, query text should be X offset
-//	(due to `double amount =` vs `attempt =`)
-// Code handling requires additional X and Y offset.
-double xoffset = rrUseShorthand ? 105 : 70;
-double yoffset = 0;
-if (rrUseShorthand && rrExtraHandling) {
-	xoffset += 25;
-	yoffset = 13;
-}
-textRRQuery.setPos(textRRCode.getX() + xoffset, textRRCode.getY() + yoffset);]]></Body>
+textRRCode.setText(codeBuilder.toString());]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1854,45 +1848,6 @@ animateRunFile();
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1679605257861</Id>
 					<Name><![CDATA[updateRunFileCode]]></Name>
-					<Description><![CDATA[NO VERBOSE AND NO SHORTCUT
-attempt = 
-
-
-
-
-double value = attempt.getFeedback(double.class);
-histogramData.add(value);
-
-NO VERBOSE AND SHORTCUT
-double value = 
-
-
-
-
-
-histogramData.add(value);
-
-VERBOSE AND NO SHORTCUT
-attempt = 
-
-
-
-
-String temp = attempt.getFeedback(String.class)
-                     .replaceFirst("[\\w\\W]*?\\s*(\\d+\\.\\d+$)", "$1");
-double value = Double.valueOf(temp);
-histogramData.add(value);
-
-VERBOSE AND SHORTCUT
-String temp = 
-
-
-
-
-
-temp = temp.replaceFirst("[\\w\\W]*?\\s*(\\d+\\.\\d+$)", "$1");
-double value = Double.valueOf(temp);
-histogramData.add(value);]]></Description>
 					<X>-190</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1903,8 +1858,6 @@ histogramData.add(value);]]></Description>
 // hide in case it's showing
 textRFOutput.setVisible(false);
 
-// Update based on other input options
-// Update code block before call to runFile for X-axis spacing reasons
 
 // [[ Code block ]]
 StringBuilder builderCode = new StringBuilder();
@@ -1917,8 +1870,30 @@ else if (rfVerbose || rfPrintHelp)
 else 
 	builderCode.append("double value = ");
 
-// add room for pyCom call code
-builderCode.append("\n".repeat(rfUseShortcut ? 5 : 4));
+// add pyCom call
+builderCode.append("pyCom.runFile(\n");
+if (rfUseShortcut) {
+	if (rfVerbose || rfPrintHelp)
+		builderCode.append("\t\tString.class,\n");
+	else
+		builderCode.append("\t\tdouble.class,\n");
+} 
+builderCode.append("\t\t\"my_distribution.py\",\n");
+if (rfPrintHelp) {
+	builderCode.append("\t\t\"--help\"");
+} else {
+	builderCode.append(String.format("\t\t\"%s\", \"%s\", \"%s\"", rfMin, rfAMode, rfMax));
+	// (purposefully didn't add newline to last append's line since we might have extra args)
+	if (rfUseCustomSeed || rfVerbose) {
+		if (rfUseCustomSeed) {
+			builderCode.append(", \"--seed\", \"").append(rfCustomSeed).append("\"");
+		}
+		if (rfVerbose) {
+			builderCode.append(", \"--verbose\"");
+		}
+	}
+}
+builderCode.append("\n").append(");\n\n");
 
 // processing feedback
 if (rfPrintHelp) {
@@ -1940,35 +1915,7 @@ if (rfPrintHelp) {
 // shared by all except when printing help
 if (!rfPrintHelp)
 	builderCode.append("histogramData.add(value);");
-textRFCode.setText(builderCode.toString());
-
-// [[ runFile call ]]
-StringBuilder builderQuery = new StringBuilder("pyCom.runFile(\n");
-if (rfUseShortcut) {
-	if (rfVerbose || rfPrintHelp)
-		builderQuery.append("\t\tString.class,\n");
-	else
-		builderQuery.append("\t\tdouble.class,\n");
-} 
-builderQuery.append("\t\t\"my_distribution.py\",\n");
-if (rfPrintHelp) {
-	builderQuery.append("\t\t\"--help\"");
-} else {
-	builderQuery.append(String.format("\t\t\"%s\", \"%s\", \"%s\"", rfMin, rfAMode, rfMax));
-	// (purposefully didn't add newline to last append's line since we might have extra args)
-	if (rfUseCustomSeed || rfVerbose) {
-		if (rfUseCustomSeed) {
-			builderQuery.append(", \"--seed\", \"").append(rfCustomSeed).append("\"");
-		}
-		if (rfVerbose) {
-			builderQuery.append(", \"--verbose\"");
-		}
-	}
-}
-
-builderQuery.append("\n").append(");");
-textRFQuery.setText(builderQuery.toString());
-textRFQuery.setX(textRFCode.getX() + textRFCode.getText().indexOf("\n")*7); // approx spacing mult]]></Body>
+textRFCode.setText(builderCode.toString());]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="true">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -3402,25 +3349,25 @@ For basic usage examples, see the online documentation and practical models (or 
 					<Alignment>CENTER</Alignment>
 				</Text>
 				<Text>
-					<Id>1680200154843</Id>
-					<Name><![CDATA[text59]]></Name>
-					<X>420</X><Y>20</Y>
+					<Id>1680218474958</Id>
+					<Name><![CDATA[textRFOutput2]]></Name>
+					<X>1030</X><Y>310</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[TODO consolidate generated code text fields now that the text itself isnt moving]]></Text>
+					<Text><![CDATA[RUHNRESUYTLS RESULT OUTCOME TEXT NOT SHOWING]]></Text>
 					<Font>
-						<Name>Calibri</Name>
-						<Size>14</Size>
+						<Name>Consolas</Name>
+						<Size>20</Size>
 						<Style>1</Style>
 					</Font>
-					<Alignment>CENTER</Alignment>
+					<Alignment>RIGHT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -5591,27 +5538,6 @@ updateRunResultCode();]]></ActionCode>
 					</ExtendedProperties>
 				</Control>
 				<Text>
-					<Id>1678923053328</Id>
-					<Name><![CDATA[textRRQuery]]></Name>
-					<X>350</X><Y>390</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16744448</Color>
-					<Text><![CDATA[pyCom.runResults(Type.class, "<CODE>")]]></Text>
-					<Font>
-						<Name>Consolas</Name>
-						<Size>12</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
 					<Id>1678923053330</Id>
 					<Name><![CDATA[textRROutcome]]></Name>
 					<X>980</X><Y>450</Y>
@@ -6052,7 +5978,7 @@ updateRunResultCode();]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
-					<Text><![CDATA[attempt = 
+					<Text><![CDATA[attempt = pyCom.runResults(Type.class, "<CODE>")
 
 if (attempt.isSuccessful()) {
    double amount = attempt.getFeedback(Double.class);
@@ -6869,30 +6795,6 @@ histogramData.reset();]]></ActionCode>
 						<LabelText><![CDATA[Submit]]></LabelText>
 					</ExtendedProperties>
 				</Control>
-				<Text>
-					<Id>1679604817708</Id>
-					<Name><![CDATA[textRFQuery]]></Name>
-					<X>435</X><Y>340</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16744448</Color>
-					<Text><![CDATA[pyCom.runFile(
-     "my_distribution.py", 
-     "5.0", "8.5", "15.0", "--seed", "42", "--verbose"
-);]]></Text>
-					<Font>
-						<Name>Consolas</Name>
-						<Size>12</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Curve ControlPoints="true">
 					<Id>1679604929862</Id>
 					<Name><![CDATA[curve2]]></Name>
@@ -7440,10 +7342,10 @@ printed in Python from the final printed value.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
-					<Text><![CDATA[double value = 
-
-
-
+					<Text><![CDATA[double value = pyCom.runFile(
+     "my_distribution.py", 
+     "5.0", "8.5", "15.0", "--seed", "42", "--verbose"
+);
 
 String temp = attempt.getFeedback(String.class)
                      .replaceFirst("[\\w\\W]*?\\s*(\\d+\\.\\d+$)", "$1");
