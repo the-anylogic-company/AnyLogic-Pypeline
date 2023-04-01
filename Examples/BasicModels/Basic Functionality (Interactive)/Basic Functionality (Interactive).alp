@@ -8,7 +8,11 @@
 <Model>
 	<Id>1678914018156</Id>
 	<Name><![CDATA[Basic Functionality (Interactive)]]></Name>
-	<Description><![CDATA[An interactive demo for learning about Pypeline usage.]]></Description>
+	<Description><![CDATA[This is an interactive simulation model that provides a hands-on learning experience with Pypeline through a variety of demos within a single model. It's designed to help you understand the basic usage of Pypeline, including the basic configuration options and some of the core functions.
+
+To get started, simply launch the model and use the forms to connect the PyCommunicator object to your local Python environment. In exploring the demos, you'll be able to input commands to be executed in the Python environment. Sample code is also generated for each input, allowing you to gain insights into how to effectively use Pypeline in your own projects.
+
+This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[basic_functionality__interactive_]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

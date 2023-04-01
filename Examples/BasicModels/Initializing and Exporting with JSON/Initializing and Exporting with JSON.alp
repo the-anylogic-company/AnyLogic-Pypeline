@@ -4,16 +4,13 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1590593133127</Id>
 	<Name><![CDATA[Initializing and Exporting with JSON]]></Name>
-	<Description><![CDATA[This demo shows how you can use JSON (JavaScript Object Notation), a lightweight data-interchange format, to pass complex data structures between Java and Python. 
-There are three ways it's used: 
-1, loading a population from a local JSON file; 
-2, passing population data to a Python function to update a variable in each agent of the population; 
-3, writing population data to a new JSON file on an interval. 
--- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
+	<Description><![CDATA[This model showcases the fundamentals of using Pypeline to be able to exchange intricate data structures between AnyLogic and Python via JSON (JavaScript Object Notation), a streamlined data-interchange format. Three features are demonstrated: creating agents or populations from a JSON string or file, serializing the model state as a JSON string or file, and the ability to customize the serialization to specify which elements are included or excluded.
+
+This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[initializing_and_exporting_with_json]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>

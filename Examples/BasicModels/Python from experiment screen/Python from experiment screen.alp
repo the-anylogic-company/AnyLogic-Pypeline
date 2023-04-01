@@ -8,6 +8,9 @@
 <Model>
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from experiment screen]]></Name>
+	<Description><![CDATA[While typical use cases of Pypeline involve interaction with Python from within the running model, there are some situations where it would be desirable to have that interaction externally, from an Experiment. This model demonstrates one such use case wherein Python is used to assign the values in a Paramters Variation Experiment. 
+
+This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine. Optional library dependencies: numpy and matplotlib.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___python_from_experiment_screen]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>

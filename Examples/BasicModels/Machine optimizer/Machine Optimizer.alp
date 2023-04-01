@@ -8,11 +8,9 @@
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
-	<Description><![CDATA[This model demonstrates solving a static optimization using the Python libraries "Numpy" and "Scipy". 
-In the model, there are three types of machines; each have their own production cost and are built in three stages, with each stage having a different time requirement per stage. 
-There are two constraints: the allotted number of machines built and the cumulative time allotted for each stage. 
-The goal is to change the number of each type built, such that the production cost is minimized.
--- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
+	<Description><![CDATA[This model demonstrates using Python for performing optimization during runtime to find the number of 3 machine types to build such that the production cost is minimized. As the focus of this model is to demonstrate a basic implementation using the Pypeline library, the scenario is completely static; you input the desired parameter values and click a button to trigger code that sends/retrieves values to/from Python. 
+
+This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine with the scipy and numpy libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[machine_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
