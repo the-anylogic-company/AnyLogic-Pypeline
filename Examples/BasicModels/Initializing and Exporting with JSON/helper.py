@@ -1,3 +1,5 @@
+import os
+import re
 import json
 import random
 ## random.seed(1)  # comment out for different results each time
@@ -11,6 +13,15 @@ COMPANY_TYPES = ["Aerospace", "Automotive", "Chemical", "Computer",
                 "Real estate", "Software", "Sports", "Steel", 
                 "Technology", "Telecom", "Textile", "Tobacco", 
                 "Water"]
+
+
+def clear_last_run(pattern: str = "stocks-[\dQ]+\.json") -> None:
+    """Removes all logging JSON files (matching the provided pattern)
+        from the last time the model was run."""
+    for file in os.listdir():
+        if re.match(pattern, file):
+            os.remove(file)
+
 
 def get_latest_data() -> str:
     """Get the "latest" data (e.g., from our internal company service),

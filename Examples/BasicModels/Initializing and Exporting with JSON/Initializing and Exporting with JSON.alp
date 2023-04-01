@@ -19,7 +19,20 @@ This model requires the Pypeline add-on library in your AnyLogic environment and
 		<ActiveObjectClass>
 			<Id>1590593133133</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<AdditionalClassCode><![CDATA[/**
+	Workaround for bug where an IndexOutOfBoundsException is not handled in the AL backend
+		when printing strings > a 14-bit word (16384 bytes).
+*/
+public void traceln(String input) {
+	final int MAX_LEN = 16383;
+	int len = input.length();
+	int i = 0;
+	while (i < len) {
+		String tmp = input.substring(i, Math.min(i + MAX_LEN, len));
+		System.out.println(tmp);
+		i += MAX_LEN;
+	}
+}]]></AdditionalClassCode>
 			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -50,7 +63,6 @@ initializeCharts();]]></StartupCode>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -127,8 +139,8 @@ initializeCharts();]]></StartupCode>
 			<Events>
 				<Event>
 					<Id>1598643550678</Id>
-					<Name><![CDATA[saveToFile]]></Name>
-					<X>50</X><Y>230</Y>
+					<Name><![CDATA[quarterlySerializeToFile]]></Name>
+					<X>50</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -174,8 +186,11 @@ traceln("Saved model state to: %s", filename);]]></Action>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Import the local Python file
-pyCom.run("import helper");
+					<Body><![CDATA[// Import the local Python file,
+//	and clear the last run's log files
+pyCom.run("import helper",
+			"helper.clear_last_run()");
+
 
 // Have Python save population data as a JSON file, which the built-in library can read directly from
 pyCom.run("helper.save_latest_data('latest_inputs.json')"); // will save to the specified file
@@ -200,6 +215,7 @@ pyCom.jsonifier.fromPopulationJson(popData, CompanyStock.class, stocks);
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Add companies' datasets to the plot
+// (This is purely AnyLogic code; nothing related to Python)
 int size = stocks.size();
 for (CompanyStock stock : stocks) {
 	plot.addDataSet(stock.priceHistory, stock.name, 
@@ -589,7 +605,6 @@ https://git.io/al_py]]></Text>
 		<ActiveObjectClass>
 			<Id>1591803895758</Id>
 			<Name><![CDATA[CompanyStock]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[assignIconColors();
 textCompany.setText(name);]]></StartupCode>
 			<Generic>false</Generic>
@@ -610,7 +625,6 @@ textCompany.setText(name);]]></StartupCode>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>false</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -1481,7 +1495,6 @@ plOutline.setLineColor(c_dark);]]></Body>
 		<SimulationExperiment ActiveObjectClassId="1590593133133">
 			<Id>1590593133135</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -2865,6 +2878,48 @@ The set of JSON features come from the AnyLogic JSONifier library which comes bu
 						<Style>3</Style>
 					</Font>
 					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1680380325715</Id>
+					<Name><![CDATA[text13]]></Name>
+					<X>300</X><Y>360</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16776961</Color>
+					<Text><![CDATA[fromAgentJson(...)]]></Text>
+					<Font>
+						<Name>Consolas</Name>
+						<Size>8</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1680380360155</Id>
+					<Name><![CDATA[text14]]></Name>
+					<X>700</X><Y>370</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16776961</Color>
+					<Text><![CDATA[toJson(...)]]></Text>
+					<Font>
+						<Name>Consolas</Name>
+						<Size>8</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
 				</Text>
 			</Presentation>
 
