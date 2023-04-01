@@ -796,27 +796,6 @@ update_nBuiltType3();]]></Body>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1574379033163</Id>
-					<Name><![CDATA[button]]></Name>
-					<X>480</X><Y>720</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[solveit();]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[solve!]]></LabelText>
-					</ExtendedProperties>
-				</Control>
 				<Text>
 					<Id>1574437072166</Id>
 					<Name><![CDATA[text]]></Name>
@@ -881,7 +860,7 @@ The goal is change the number of each type built,
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-8388608</Color>
-					<Text><![CDATA[Change any of the fields below and click the solve button
+					<Text><![CDATA[Change any of the fields below
 to re-run the optimization and update the outputs.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
@@ -1089,6 +1068,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1111,6 +1091,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1133,6 +1114,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1155,6 +1137,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1356,6 +1339,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1378,6 +1362,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1400,6 +1385,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1422,6 +1408,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1638,6 +1625,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1660,6 +1648,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1682,6 +1671,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1704,6 +1694,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -1995,6 +1986,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2017,6 +2009,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2039,6 +2032,7 @@ to re-run the optimization and update the outputs.]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -2237,6 +2231,7 @@ per stage (hours):]]></Text>
 						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[solveit();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
