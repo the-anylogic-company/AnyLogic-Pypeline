@@ -264,13 +264,13 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1678920633762</CurrentLevel>
+			<CurrentLevel>1679336963300</CurrentLevel>
 			<ConnectionsId>1678914018157</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1678914600785</Id>
 					<Name><![CDATA[selectedIndex]]></Name>
-					<X>-190</X><Y>-200</Y>
+					<X>-250</X><Y>-200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -285,7 +285,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915222434</Id>
 					<Name><![CDATA[enabled]]></Name>
-					<X>-850</X><Y>130</Y>
+					<X>-910</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -300,7 +300,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915234835</Id>
 					<Name><![CDATA[command]]></Name>
-					<X>-850</X><Y>160</Y>
+					<X>-910</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -315,7 +315,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915281488</Id>
 					<Name><![CDATA[throwOnFailed]]></Name>
-					<X>-850</X><Y>230</Y>
+					<X>-910</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -330,7 +330,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915289932</Id>
 					<Name><![CDATA[redirectOutput]]></Name>
-					<X>-850</X><Y>255</Y>
+					<X>-910</X><Y>255</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -345,7 +345,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915421683</Id>
 					<Name><![CDATA[altAlias]]></Name>
-					<X>-825</X><Y>180</Y>
+					<X>-885</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -357,7 +357,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915435846</Id>
 					<Name><![CDATA[altPath]]></Name>
-					<X>-825</X><Y>205</Y>
+					<X>-885</X><Y>205</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -369,7 +369,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678915645112</Id>
 					<Name><![CDATA[allowApply]]></Name>
-					<X>-850</X><Y>280</Y>
+					<X>-910</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -384,7 +384,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921108427</Id>
 					<Name><![CDATA[importLib]]></Name>
-					<X>-640</X><Y>130</Y>
+					<X>-700</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -399,7 +399,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921108429</Id>
 					<Name><![CDATA[varName]]></Name>
-					<X>-640</X><Y>160</Y>
+					<X>-700</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -414,7 +414,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921108431</Id>
 					<Name><![CDATA[varValue]]></Name>
-					<X>-640</X><Y>190</Y>
+					<X>-700</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -429,7 +429,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921108433</Id>
 					<Name><![CDATA[otherStmt]]></Name>
-					<X>-640</X><Y>220</Y>
+					<X>-700</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -444,7 +444,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921870991</Id>
 					<Name><![CDATA[runDoCombine]]></Name>
-					<X>-640</X><Y>260</Y>
+					<X>-700</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -459,7 +459,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678921887208</Id>
 					<Name><![CDATA[runUseFmt]]></Name>
-					<X>-640</X><Y>290</Y>
+					<X>-700</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -474,7 +474,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678922989497</Id>
 					<Name><![CDATA[arrowRun]]></Name>
-					<X>-640</X><Y>470</Y>
+					<X>-700</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -486,7 +486,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678922989499</Id>
 					<Name><![CDATA[arrowRR1]]></Name>
-					<X>-430</X><Y>410</Y>
+					<X>-490</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -498,7 +498,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678922989501</Id>
 					<Name><![CDATA[arrowRR2]]></Name>
-					<X>-430</X><Y>430</Y>
+					<X>-490</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -510,7 +510,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1678923053332</Id>
 					<Name><![CDATA[rrExpression]]></Name>
-					<X>-430</X><Y>300</Y>
+					<X>-490</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -525,7 +525,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679003199124</Id>
 					<Name><![CDATA[isAnimationActive]]></Name>
-					<X>-190</X><Y>-290</Y>
+					<X>-250</X><Y>-290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -540,7 +540,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679004810470</Id>
 					<Name><![CDATA[arrowRunOutput]]></Name>
-					<X>-640</X><Y>490</Y>
+					<X>-700</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -552,7 +552,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679508273579</Id>
 					<Name><![CDATA[rrUseShorthand]]></Name>
-					<X>-430</X><Y>130</Y>
+					<X>-490</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -567,7 +567,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679508283406</Id>
 					<Name><![CDATA[rrExtraHandling]]></Name>
-					<X>-430</X><Y>160</Y>
+					<X>-490</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -582,7 +582,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679592182760</Id>
 					<Name><![CDATA[arrowRR3]]></Name>
-					<X>-430</X><Y>450</Y>
+					<X>-490</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -594,7 +594,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604594796</Id>
 					<Name><![CDATA[rfPrintHelp]]></Name>
-					<X>-190</X><Y>130</Y>
+					<X>-250</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -609,7 +609,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604604143</Id>
 					<Name><![CDATA[rfVerbose]]></Name>
-					<X>-190</X><Y>160</Y>
+					<X>-250</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -624,7 +624,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604610301</Id>
 					<Name><![CDATA[rfUseCustomSeed]]></Name>
-					<X>-190</X><Y>190</Y>
+					<X>-250</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -639,7 +639,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604621662</Id>
 					<Name><![CDATA[rfCustomSeed]]></Name>
-					<X>-190</X><Y>220</Y>
+					<X>-250</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -654,7 +654,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604631748</Id>
 					<Name><![CDATA[rfMin]]></Name>
-					<X>-190</X><Y>250</Y>
+					<X>-250</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -669,7 +669,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604639117</Id>
 					<Name><![CDATA[rfAMode]]></Name>
-					<X>-190</X><Y>280</Y>
+					<X>-250</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -684,7 +684,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679604644838</Id>
 					<Name><![CDATA[rfMax]]></Name>
-					<X>-190</X><Y>310</Y>
+					<X>-250</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -699,7 +699,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1679605435877</Id>
 					<Name><![CDATA[rfUseShortcut]]></Name>
-					<X>-190</X><Y>340</Y>
+					<X>-250</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -714,7 +714,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1680189364869</Id>
 					<Name><![CDATA[arrowRF1]]></Name>
-					<X>-190</X><Y>490</Y>
+					<X>-250</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -726,7 +726,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1680189364871</Id>
 					<Name><![CDATA[arrowRF2]]></Name>
-					<X>-190</X><Y>510</Y>
+					<X>-250</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -738,7 +738,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1680194306621</Id>
 					<Name><![CDATA[doArrowLogging]]></Name>
-					<X>-190</X><Y>-270</Y>
+					<X>-250</X><Y>-270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -753,7 +753,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="PlainVariable">
 					<Id>1680214807410</Id>
 					<Name><![CDATA[dummy]]></Name>
-					<X>-850</X><Y>450</Y>
+					<X>-910</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -768,7 +768,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Variable Class="CollectionVariable">
 					<Id>1678914524124</Id>
 					<Name><![CDATA[tabNames]]></Name>
-					<X>-190</X><Y>-230</Y>
+					<X>-250</X><Y>-230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -794,7 +794,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679501589616</Id>
 					<Name><![CDATA[connector3]]></Name>
-					<X>-600</X><Y>730</Y>
+					<X>-660</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -827,7 +827,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679502488854</Id>
 					<Name><![CDATA[connector4]]></Name>
-					<X>-460</X><Y>780</Y>
+					<X>-520</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -860,7 +860,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679502752785</Id>
 					<Name><![CDATA[connector1]]></Name>
-					<X>-360</X><Y>780</Y>
+					<X>-420</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -893,7 +893,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679502752786</Id>
 					<Name><![CDATA[connector2]]></Name>
-					<X>-430</X><Y>780</Y>
+					<X>-490</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -927,7 +927,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679503238352</Id>
 					<Name><![CDATA[connector]]></Name>
-					<X>-500</X><Y>730</Y>
+					<X>-560</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -960,7 +960,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Connector>
 					<Id>1679503238353</Id>
 					<Name><![CDATA[connector5]]></Name>
-					<X>-530</X><Y>730</Y>
+					<X>-590</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -995,7 +995,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Event>
 					<Id>1680192016138</Id>
 					<Name><![CDATA[delayedNoAnimationCall]]></Name>
-					<X>-190</X><Y>550</Y>
+					<X>-250</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1039,7 +1039,7 @@ for (int i = 0; i < 25; i++)
 	4: Clean-up
 The first two arguments indicate the starting point of the animation.
 After which point the animation operates based on the last config argument (for object, position info, and timing), which are fixed and are not changed.]]></Description>
-					<X>-190</X><Y>-310</Y>
+					<X>-250</X><Y>-310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1172,7 +1172,7 @@ default: // post-easing out; cleanup
                  0.795, 0.265);
 (0,1)
 (.5,0)]]></Description>
-					<X>-190</X><Y>-370</Y>
+					<X>-250</X><Y>-370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1206,7 +1206,7 @@ create_AnimateUpdate(1./60, time+1./60);]]></Action>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678915719081</Id>
 					<Name><![CDATA[updateAllow]]></Name>
-					<X>-850</X><Y>310</Y>
+					<X>-910</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1229,7 +1229,7 @@ if (!shouldAllow)
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678918309530</Id>
 					<Name><![CDATA[toggleHelp]]></Name>
-					<X>-850</X><Y>340</Y>
+					<X>-910</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1254,7 +1254,7 @@ txt.setText(showing ? "?" : "X");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678919163729</Id>
 					<Name><![CDATA[onSettingChanged]]></Name>
-					<X>-850</X><Y>370</Y>
+					<X>-910</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1268,7 +1268,7 @@ buttonTestPrint.setEnabled(false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678920528819</Id>
 					<Name><![CDATA[onTabSelection]]></Name>
-					<X>-190</X><Y>-170</Y>
+					<X>-250</X><Y>-170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1327,7 +1327,7 @@ pyCom.run("import " + improtText,
 
 COMBINE, FORMAT
 pyCom.run("import %s\n%s = %s\n%s", importText, varName, varValue, otherStmt);]]></Description>
-					<X>-640</X><Y>350</Y>
+					<X>-700</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1380,7 +1380,7 @@ textRun.setText(builder.toString());]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678922989489</Id>
 					<Name><![CDATA[animateRun]]></Name>
-					<X>-640</X><Y>410</Y>
+					<X>-700</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1437,7 +1437,7 @@ textRunOutput.setText(attempts.stream().map(a -> String.format("=> %s", a.toStri
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678922989491</Id>
 					<Name><![CDATA[resetRunFields]]></Name>
-					<X>-640</X><Y>550</Y>
+					<X>-700</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1459,7 +1459,7 @@ editOther.setText("");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678922989493</Id>
 					<Name><![CDATA[resetRunResultsFields]]></Name>
-					<X>-430</X><Y>480</Y>
+					<X>-490</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1475,7 +1475,7 @@ editRRExpression.setText("");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678922989495</Id>
 					<Name><![CDATA[animateRunResults]]></Name>
-					<X>-430</X><Y>340</Y>
+					<X>-490</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1510,7 +1510,7 @@ ArrowAnimConfig config3 = new ArrowAnimConfig(arrowRR3, 0.5, 2, 20, null) {
 				}
 			};
 
-ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRFOutput) {
+ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRROutcome) {
 				@Override
 				public void onStage0() {
 					// execute the command here and  + planned amount to send
@@ -1519,7 +1519,7 @@ ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRFOut
 					textRROutcome.setText(
 						outcome.getFirst() != null ? outcome.getFirst().toString() : outcome.getSecond()
 					);
-					textRROutcome.setX(outcome.getFirst() != null ? 980 : arrowRR2.getX()); 
+					textRROutcome.setX(outcome.getFirst() != null ? 980 : arrowRR2.getX());
 					// update the amount to send if there wasn't any issue with it
 					if (outcome.getSecond() != null)
 						amount.set(outcome.getSecond().doubleValue());
@@ -1529,7 +1529,6 @@ ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRFOut
 				public void onStage2() {
 					// when not an error, start the arrow to show the outcome 
 					label.setVisible(true);
-					traceln("setting visible");
 					if (amount.get() > 0)
 						create_AnimateArrow(0, 0, 0, config3);
 				}
@@ -1557,7 +1556,7 @@ create_AnimateArrow(0.0, 0, 0, config1);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679336924453</Id>
 					<Name><![CDATA[onRunButton]]></Name>
-					<X>-640</X><Y>390</Y>
+					<X>-700</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1603,7 +1602,7 @@ resetRunFields();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679337047126</Id>
 					<Name><![CDATA[getTabXOffset]]></Name>
-					<X>-190</X><Y>-140</Y>
+					<X>-250</X><Y>-140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1621,7 +1620,7 @@ return 100*index;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679337917332</Id>
 					<Name><![CDATA[getHistoryLabelY]]></Name>
-					<X>-870</X><Y>660</Y>
+					<X>-930</X><Y>660</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1634,7 +1633,7 @@ return 100*index;]]></Body>
 for (int i = 0; i < index; i++) {
 	// normal spacing for new entry
 	y += 20; 
-	// extra spacing if the given entry is a multi-part message
+	// extra spacing if the given entry has multi-lined content
 	Pair<String,Attempt> entry = pyCom.history.get(pyCom.history.size() - i - 1);
 	int numNewLines = max(
 		entry.getFirst().replaceAll("[^\\n\\r]", "").length(),
@@ -1649,7 +1648,7 @@ return y;]]></Body>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1679508247105</Id>
 					<Name><![CDATA[updateRunResultCode]]></Name>
-					<X>-430</X><Y>240</Y>
+					<X>-490</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1698,7 +1697,7 @@ textRRCode.setText(codeBuilder.toString());]]></Body>
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1679511019464</Id>
 					<Name><![CDATA[updateCombos]]></Name>
-					<X>-430</X><Y>200</Y>
+					<X>-490</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1716,7 +1715,7 @@ rrExpression = comboRRVars.getValue();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679519027205</Id>
 					<Name><![CDATA[onRunResultsButton]]></Name>
-					<X>-430</X><Y>320</Y>
+					<X>-490</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1734,7 +1733,7 @@ animateRunResults();
 					<ReturnType><![CDATA[Pair<Attempt, Double>]]></ReturnType>
 					<Id>1679519041103</Id>
 					<Name><![CDATA[getRunResultsOutput]]></Name>
-					<X>-400</X><Y>360</Y>
+					<X>-460</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1772,7 +1771,7 @@ if (rrUseShorthand && rrExtraHandling) {
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1679521619672</Id>
 					<Name><![CDATA[resetRRArrows]]></Name>
-					<X>-430</X><Y>220</Y>
+					<X>-490</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1817,7 +1816,7 @@ arrowRR3.setEndY(ph_arrowRR3.getEndY());]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679605250228</Id>
 					<Name><![CDATA[onRunFileButton]]></Name>
-					<X>-190</X><Y>410</Y>
+					<X>-250</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1848,7 +1847,7 @@ animateRunFile();
 					<ReturnType><![CDATA[String]]></ReturnType>
 					<Id>1679605257861</Id>
 					<Name><![CDATA[updateRunFileCode]]></Name>
-					<X>-190</X><Y>390</Y>
+					<X>-250</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1928,7 +1927,7 @@ textRFCode.setText(builderCode.toString());]]></Body>
 @param p1 The 2nd point; the "handle" of the 1st assumed point (at (0,0))
 @param p2 The 3rd point; the "handle" of the 4th assumed point (at (1,1))
 @return The progression percent (e.g., of distance traveled); typically in range [0,1]]]></Description>
-					<X>-190</X><Y>-350</Y>
+					<X>-250</X><Y>-350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1960,7 +1959,7 @@ return ytime;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680189446965</Id>
 					<Name><![CDATA[animateRunFile]]></Name>
-					<X>-190</X><Y>430</Y>
+					<X>-250</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2043,7 +2042,7 @@ create_AnimateArrow(0.0, 0, 0, config1);]]></Body>
 					<ReturnType><![CDATA[Pair<Attempt, Double>]]></ReturnType>
 					<Id>1680189574241</Id>
 					<Name><![CDATA[getRunFileOutput]]></Name>
-					<X>-160</X><Y>450</Y>
+					<X>-220</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2088,7 +2087,7 @@ try {
 					<ReturnType><![CDATA[Object]]></ReturnType>
 					<Id>1680214734302</Id>
 					<Name><![CDATA[setupArrows]]></Name>
-					<X>-850</X><Y>470</Y>
+					<X>-910</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2120,7 +2119,7 @@ return null;]]></Body>
     			<HistogramData>
 					<Id>1679605161780</Id>
 					<Name><![CDATA[histogramData]]></Name>
-					<X>-190</X><Y>590</Y>
+					<X>-250</X><Y>590</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2260,7 +2259,7 @@ return null;]]></Body>
 				<EmbeddedObject>
 					<Id>1679414702951</Id>
 					<Name><![CDATA[fluidSource]]></Name>
-					<X>-650</X><Y>720</Y>
+					<X>-710</X><Y>720</Y>
 					<Label><X>-15</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2382,7 +2381,7 @@ return null;]]></Body>
 				<EmbeddedObject>
 					<Id>1679414706175</Id>
 					<Name><![CDATA[tank]]></Name>
-					<X>-500</X><Y>720</Y>
+					<X>-560</X><Y>720</Y>
 					<Label><X>0</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2536,7 +2535,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<EmbeddedObject>
 					<Id>1679499303987</Id>
 					<Name><![CDATA[valveOut]]></Name>
-					<X>-460</X><Y>770</Y>
+					<X>-520</X><Y>770</Y>
 					<Label><X>-10</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2636,7 +2635,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<EmbeddedObject>
 					<Id>1679499316803</Id>
 					<Name><![CDATA[fluidDispose]]></Name>
-					<X>-360</X><Y>760</Y>
+					<X>-420</X><Y>760</Y>
 					<Label><X>-35</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2705,7 +2704,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<EmbeddedObject>
 					<Id>1679501583102</Id>
 					<Name><![CDATA[bulkConveyorIn]]></Name>
-					<X>-600</X><Y>710</Y>
+					<X>-660</X><Y>710</Y>
 					<Label><X>-20</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2815,7 +2814,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<EmbeddedObject>
 					<Id>1679502751162</Id>
 					<Name><![CDATA[bulkConveyorOut]]></Name>
-					<X>-430</X><Y>760</Y>
+					<X>-490</X><Y>760</Y>
 					<Label><X>-20</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2925,7 +2924,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<EmbeddedObject>
 					<Id>1679503236131</Id>
 					<Name><![CDATA[valveIn]]></Name>
-					<X>-530</X><Y>720</Y>
+					<X>-590</X><Y>720</Y>
 					<Label><X>-10</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3032,7 +3031,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<Z>0</Z>
-					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+					<LevelVisibility>ALWAYS_SHOW</LevelVisibility>
 
 			<Presentation>
 				<Group>
@@ -3202,7 +3201,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1678921142053</Id>
 					<Name><![CDATA[text25]]></Name>
-					<X>-860</X><Y>80</Y>
+					<X>-920</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3223,7 +3222,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1678921174320</Id>
 					<Name><![CDATA[text26]]></Name>
-					<X>-650</X><Y>80</Y>
+					<X>-710</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3244,7 +3243,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1679337908985</Id>
 					<Name><![CDATA[text37]]></Name>
-					<X>-880</X><Y>620</Y>
+					<X>-940</X><Y>620</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3265,7 +3264,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1679604550319</Id>
 					<Name><![CDATA[text51]]></Name>
-					<X>-430</X><Y>80</Y>
+					<X>-490</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3286,7 +3285,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1679604581869</Id>
 					<Name><![CDATA[text52]]></Name>
-					<X>-200</X><Y>80</Y>
+					<X>-260</X><Y>80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3307,7 +3306,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1680104300340</Id>
 					<Name><![CDATA[text58]]></Name>
-					<X>-200</X><Y>-410</Y>
+					<X>-260</X><Y>-410</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3328,7 +3327,7 @@ tankRefreshWarning.setVisible(false);]]></Code>
 				<Text>
 					<Id>1679589811723</Id>
 					<Name><![CDATA[text49]]></Name>
-					<X>-440</X><Y>10</Y>
+					<X>-500</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3347,27 +3346,6 @@ For basic usage examples, see the online documentation and practical models (or 
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
-					<Id>1680218474958</Id>
-					<Name><![CDATA[textRFOutput2]]></Name>
-					<X>1030</X><Y>310</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[RUHNRESUYTLS RESULT OUTCOME TEXT NOT SHOWING]]></Text>
-					<Font>
-						<Name>Consolas</Name>
-						<Size>20</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -4911,8 +4889,8 @@ updateRunCode();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
 					<Text><![CDATA[pyCom.run("import mylibrary");
-pyCom.run("");
-pyCom.run(...);]]></Text>
+pyCom.run("myvar = mylibrary.get_value()");
+pyCom.run("print(myvar)");]]></Text>
 					<Font>
 						<Name>Consolas</Name>
 						<Size>12</Size>
@@ -4923,7 +4901,7 @@ pyCom.run(...);]]></Text>
 				<Line>
 					<Id>1678921108425</Id>
 					<Name><![CDATA[ph_arrowRun]]></Name>
-					<X>630</X><Y>410</Y>
+					<X>630</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -4941,7 +4919,7 @@ pyCom.run(...);]]></Text>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
 					<Dx>230</Dx>
-					<Dy>-60</Dy>
+					<Dy>-50</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Curve ControlPoints="true">
@@ -7388,7 +7366,7 @@ delayedNoAnimationCall.restart();]]></ActionCode>
 				<Line>
 					<Id>1680189315584</Id>
 					<Name><![CDATA[ph_arrowRF1]]></Name>
-					<X>630</X><Y>340</Y>
+					<X>560</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -7405,7 +7383,7 @@ delayedNoAnimationCall.restart();]]></ActionCode>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>240</Dx>
+					<Dx>310</Dx>
 					<Dy>0</Dy>
 					<Dz>0</Dz>
 				</Line>
@@ -7430,7 +7408,7 @@ delayedNoAnimationCall.restart();]]></ActionCode>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
 					<Dx>0</Dx>
-					<Dy>60</Dy>
+					<Dy>57</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Text>
@@ -7672,20 +7650,6 @@ pyCom.history.get(pyCom.history.size() - index - 1).getSecond()]]></TextCode>
 
 				</Level>
 			</Presentation>
-			<Areas>
-				<Area>
-					<Id>1680118523584</Id>
-					<Name><![CDATA[viewArea]]></Name>
-					<X>1010</X><Y>0</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Title><![CDATA[]]></Title>
-					<Width>1000</Width>
-					<Height>600</Height>
-				</Area>
-			</Areas>
 
 		</ActiveObjectClass>
 	</ActiveObjectClasses>	
@@ -7972,10 +7936,6 @@ There are more nuanced use cases and more complex features available as well (re
 		<Resource>
 			<Path><![CDATA[my_distribution.py]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[spark-core-2.9.3.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>

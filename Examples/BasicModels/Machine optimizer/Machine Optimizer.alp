@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.6.0.202008201426" AlpVersion="8.5.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
@@ -21,7 +21,6 @@ The goal is to change the number of each type built, such that the production co
 		<ActiveObjectClass>
 			<Id>1574374744731</Id>
 			<Name><![CDATA[Main]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[viewArea.navigateTo();
 
 // import statements
@@ -52,7 +51,6 @@ solveit();]]></StartupCode>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -739,6 +737,9 @@ update_nBuiltType3();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[enable]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -2447,7 +2448,6 @@ https://git.io/al_py]]></Text>
 		<SimulationExperiment ActiveObjectClassId="1574374744731">
 			<Id>1574374744733</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -2459,7 +2459,7 @@ https://git.io/al_py]]></Text>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114013</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>50</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3154,7 +3154,6 @@ The goal is change the number of each type built,
 		<ParamVariationExperiment ActiveObjectClassId="1574374744731">
 			<Id>1574377858825</Id>
 			<Name><![CDATA[ParametersVariation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
@@ -3170,7 +3169,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 
 			<Presentation>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114014</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>40</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3191,7 +3190,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114015</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>50</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3212,7 +3211,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114016</Id>
 					<Name><![CDATA[text2]]></Name>
 					<X>240</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3235,7 +3234,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114017</Id>
 					<Name><![CDATA[text3]]></Name>
 					<X>50</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3256,7 +3255,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Line>
-					<Id>0</Id>
+					<Id>1680378114018</Id>
 					<Name><![CDATA[line]]></Name>
 					<X>40</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3280,7 +3279,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Dz>0</Dz>
 				</Line>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114019</Id>
 					<Name><![CDATA[text4]]></Name>
 					<X>50</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3301,7 +3300,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114020</Id>
 					<Name><![CDATA[text5]]></Name>
 					<X>240</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3324,7 +3323,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114021</Id>
 					<Name><![CDATA[rectangle]]></Name>
 					<X>40</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3346,7 +3345,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114022</Id>
 					<Name><![CDATA[text6]]></Name>
 					<X>50</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3367,7 +3366,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114023</Id>
 					<Name><![CDATA[text7]]></Name>
 					<X>240</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3390,7 +3389,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114024</Id>
 					<Name><![CDATA[text8]]></Name>
 					<X>50</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3411,7 +3410,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114025</Id>
 					<Name><![CDATA[text9]]></Name>
 					<X>240</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3434,7 +3433,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114026</Id>
 					<Name><![CDATA[rectangle1]]></Name>
 					<X>40</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3456,7 +3455,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114027</Id>
 					<Name><![CDATA[text10]]></Name>
 					<X>50</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3477,7 +3476,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114028</Id>
 					<Name><![CDATA[text11]]></Name>
 					<X>240</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3500,7 +3499,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114029</Id>
 					<Name><![CDATA[text12]]></Name>
 					<X>50</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3521,7 +3520,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114030</Id>
 					<Name><![CDATA[text13]]></Name>
 					<X>240</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3544,7 +3543,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114031</Id>
 					<Name><![CDATA[rectangle2]]></Name>
 					<X>40</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3566,7 +3565,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114032</Id>
 					<Name><![CDATA[text14]]></Name>
 					<X>50</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3587,7 +3586,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114033</Id>
 					<Name><![CDATA[text15]]></Name>
 					<X>240</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3610,7 +3609,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114034</Id>
 					<Name><![CDATA[text16]]></Name>
 					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3631,7 +3630,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114035</Id>
 					<Name><![CDATA[text17]]></Name>
 					<X>240</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3654,7 +3653,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114036</Id>
 					<Name><![CDATA[rectangle3]]></Name>
 					<X>40</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3676,7 +3675,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114037</Id>
 					<Name><![CDATA[text18]]></Name>
 					<X>50</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3697,7 +3696,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114038</Id>
 					<Name><![CDATA[text19]]></Name>
 					<X>240</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3720,7 +3719,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114039</Id>
 					<Name><![CDATA[text20]]></Name>
 					<X>50</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3741,7 +3740,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114040</Id>
 					<Name><![CDATA[text21]]></Name>
 					<X>240</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3764,7 +3763,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114041</Id>
 					<Name><![CDATA[rectangle4]]></Name>
 					<X>40</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3786,7 +3785,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114042</Id>
 					<Name><![CDATA[text22]]></Name>
 					<X>50</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3807,7 +3806,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114043</Id>
 					<Name><![CDATA[text23]]></Name>
 					<X>240</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3830,7 +3829,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114044</Id>
 					<Name><![CDATA[text24]]></Name>
 					<X>50</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3851,7 +3850,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114045</Id>
 					<Name><![CDATA[text25]]></Name>
 					<X>240</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3874,7 +3873,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114046</Id>
 					<Name><![CDATA[rectangle5]]></Name>
 					<X>40</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3896,7 +3895,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114047</Id>
 					<Name><![CDATA[text26]]></Name>
 					<X>50</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3917,7 +3916,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114048</Id>
 					<Name><![CDATA[text27]]></Name>
 					<X>240</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3940,7 +3939,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114049</Id>
 					<Name><![CDATA[text28]]></Name>
 					<X>50</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3961,7 +3960,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114050</Id>
 					<Name><![CDATA[text29]]></Name>
 					<X>240</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -3984,7 +3983,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114051</Id>
 					<Name><![CDATA[rectangle6]]></Name>
 					<X>40</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4006,7 +4005,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114052</Id>
 					<Name><![CDATA[text30]]></Name>
 					<X>50</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4027,7 +4026,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114053</Id>
 					<Name><![CDATA[text31]]></Name>
 					<X>240</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4050,7 +4049,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114054</Id>
 					<Name><![CDATA[text32]]></Name>
 					<X>50</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4071,7 +4070,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114055</Id>
 					<Name><![CDATA[text33]]></Name>
 					<X>240</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4094,7 +4093,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>RIGHT</Alignment>
 				</Text>
 				<Rectangle>
-					<Id>0</Id>
+					<Id>1680378114056</Id>
 					<Name><![CDATA[rectangle7]]></Name>
 					<X>40</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4116,7 +4115,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114057</Id>
 					<Name><![CDATA[text34]]></Name>
 					<X>50</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4137,7 +4136,7 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>0</Id>
+					<Id>1680378114058</Id>
 					<Name><![CDATA[text35]]></Name>
 					<X>240</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -4209,21 +4208,21 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 					</ReplicationCode>
 					<ShowLegend>true</ShowLegend>
 					<DataItem>
+					<Id>1680378114002</Id>
 					<Expression><![CDATA[0]]></Expression>
 					<Color>-65536</Color>
-					<Expression2Flag>true</Expression2Flag>
 						<Title><![CDATA[num type 1]]></Title>
 					</DataItem>
 					<DataItem>
+					<Id>1680378114003</Id>
 					<Expression><![CDATA[0]]></Expression>
 					<Color>-8388480</Color>
-					<Expression2Flag>true</Expression2Flag>
 						<Title><![CDATA[num type 2]]></Title>
 					</DataItem>
 					<DataItem>
+					<Id>1680378114004</Id>
 					<Expression><![CDATA[0]]></Expression>
 					<Color>-16776961</Color>
-					<Expression2Flag>true</Expression2Flag>
 						<Title><![CDATA[num type 3]]></Title>
 					</DataItem>
 					<ScaleToExpression><![CDATA[999]]></ScaleToExpression>
@@ -4487,8 +4486,8 @@ chart.get(idx).get(2).setValue(root.nBuiltType3);]]></AfterSimulationRunCode>
 	</Experiments>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>4</VersionMinor>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
