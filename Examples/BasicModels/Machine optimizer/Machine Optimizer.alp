@@ -134,7 +134,7 @@ solveit();]]></StartupCode>
 					<Type><![CDATA[double]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[pyCom.runResults("result.fun").getFeedback(Double.class)]]></Code>
+						<Code><![CDATA[pyCom.runResults(double.class, "result.fun")]]></Code>
 					</Value>
 					<ComputationMoment>MANUALLY</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -154,7 +154,7 @@ solveit();]]></StartupCode>
 					<Type><![CDATA[int]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[pyCom.runResults("int(round(result.x[0]))").getFeedback(Integer.class)]]></Code>
+						<Code><![CDATA[pyCom.runResults(int.class, "int(round(result.x[0]))")]]></Code>
 					</Value>
 					<ComputationMoment>MANUALLY</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -174,7 +174,7 @@ solveit();]]></StartupCode>
 					<Type><![CDATA[int]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[pyCom.runResults("int(round(result.x[1]))").getFeedback(Integer.class)]]></Code>
+						<Code><![CDATA[pyCom.runResults(int.class, "int(round(result.x[1]))")]]></Code>
 					</Value>
 					<ComputationMoment>MANUALLY</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -194,7 +194,7 @@ solveit();]]></StartupCode>
 					<Type><![CDATA[int]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[pyCom.runResults("int(round(result.x[2]))").getFeedback(Integer.class)]]></Code>
+						<Code><![CDATA[pyCom.runResults(int.class, "int(round(result.x[2]))")]]></Code>
 					</Value>
 					<ComputationMoment>MANUALLY</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -647,24 +647,24 @@ pyCom.run("A_eq = np.array([[1, 1, 1]])");
 
 // assigning `b_eq`, the 1-D array of values representing the RHS of each equality constraint (row) in A_eq.
 // i.e., solving: `A_eq` * [x_1, x_2, x_3] = allottedMachinesBuilt
-pyCom.run(String.format("b_eq = np.array([%s])", allottedMachinesBuilt));
+pyCom.run("b_eq = np.array([%s])", allottedMachinesBuilt);
 
 // assigning `A_ub`, the 2-D array which, when matrix-multiplied by x, gives the values of the upper-bound inequality constraints at x;
-pyCom.run(String.format("A_ub = np.array([ [%s,%s,%s], [%s,%s,%s], [%s,%s,%s] ])", 
+pyCom.run("A_ub = np.array([ [%s,%s,%s], [%s,%s,%s], [%s,%s,%s] ])", 
 	reqTimeStage1Type1(MINUTE), reqTimeStage1Type2(MINUTE), reqTimeStage1Type3(MINUTE),
 	reqTimeStage2Type1(MINUTE), reqTimeStage2Type2(MINUTE), reqTimeStage2Type3(MINUTE),
 	reqTimeStage3Type1(MINUTE), reqTimeStage3Type2(MINUTE), reqTimeStage3Type3(MINUTE)	
-	));
+	);
 	
 // assigning `b_ub`, the 1-D array of values representing the upper-bound of each inequality constraint (row) in A_ub;
-pyCom.run(String.format("b_ub = np.array([%s, %s, %s])",
+pyCom.run("b_ub = np.array([%s, %s, %s])",
 	allottedTimeStage1(MINUTE), allottedTimeStage2(MINUTE), allottedTimeStage3(MINUTE)
-	));
+	);
 
 // assigning `c`, the coefficients of the linear objective function to be minimized;
-pyCom.run(String.format("c = np.array([%s, %s, %s])",
+pyCom.run("c = np.array([%s, %s, %s])",
 	costProduceType1, costProduceType2, costProduceType3
-	));
+	);
 
 pyCom.run("result = linprog(c, A_eq = A_eq, b_eq = b_eq, A_ub = A_ub, b_ub = b_ub, bounds=(0,None))");
 
