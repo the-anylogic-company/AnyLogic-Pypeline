@@ -630,18 +630,51 @@ solveit();]]></StartupCode>
 					</Properties>                 
 				</Variable>
 			</Variables>
+			<DynamicEvents>
+				<DynamicEventClass>
+					<Id>1680393430989</Id>
+					<Name><![CDATA[AnimateUpdate]]></Name>
+					<X>300</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[progress]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Action><![CDATA[// Purely aesthetic functionality to indicate that the solver was requeried
+
+// ease in exponentially
+double fraction = progress == 0 ? 0 : pow(2, 10*progress-10);
+
+textBuilt1.setScale(fraction);
+textBuilt1.setColor(transparent(textBuilt1.getColor(), fraction));
+textBuilt2.setScale(fraction);
+textBuilt2.setColor(transparent(textBuilt2.getColor(), fraction));
+textBuilt3.setScale(fraction);
+textBuilt3.setColor(transparent(textBuilt3.getColor(), fraction));
+
+if (progress < 1) {
+	create_AnimateUpdate(1./60, progress + 0.025);
+}]]></Action>
+				</DynamicEventClass>
+			</DynamicEvents>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1597356974171</Id>
 					<Name><![CDATA[solveit]]></Name>
-					<X>300</X><Y>500</Y>
+					<X>300</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// assigning `A_eq`, the 2-D array which, when matrix-multiplied by x, gives the values of the equality constraints at x;
+					<Body><![CDATA[// hide results until animation shows them at end
+prepForAnimation();
+
+// assigning `A_eq`, the 2-D array which, when matrix-multiplied by x, gives the values of the equality constraints at x;
 // because each machine type is considered 1 unit, these values are not parameterized.
 pyCom.run("A_eq = np.array([[1, 1, 1]])");
 
@@ -672,7 +705,25 @@ pyCom.run("result = linprog(c, A_eq = A_eq, b_eq = b_eq, A_ub = A_ub, b_ub = b_u
 update_objFunc();
 update_nBuiltType1();
 update_nBuiltType2();
-update_nBuiltType3();]]></Body>
+update_nBuiltType3();
+
+// visually alert user of changes
+create_AnimateUpdate(0, 1./3);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680467712545</Id>
+					<Name><![CDATA[prepForAnimation]]></Name>
+					<X>300</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// set all text objects as transparent (will be updated by animation)
+textBuilt1.setColor(transparent(textBuilt1.getColor(), 0));
+textBuilt2.setColor(transparent(textBuilt2.getColor(), 0));
+textBuilt3.setColor(transparent(textBuilt3.getColor(), 0));]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -2306,7 +2357,7 @@ https://git.io/al_py]]></Text>
 				</Text>
 				<Text>
 					<Id>1597356736857</Id>
-					<Name><![CDATA[text20]]></Name>
+					<Name><![CDATA[textBuilt1]]></Name>
 					<X>280</X><Y>960</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -2328,7 +2379,7 @@ https://git.io/al_py]]></Text>
 				</Text>
 				<Text>
 					<Id>1597356765138</Id>
-					<Name><![CDATA[text21]]></Name>
+					<Name><![CDATA[textBuilt2]]></Name>
 					<X>600</X><Y>960</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -2350,7 +2401,7 @@ https://git.io/al_py]]></Text>
 				</Text>
 				<Text>
 					<Id>1597356767714</Id>
-					<Name><![CDATA[text22]]></Name>
+					<Name><![CDATA[textBuilt3]]></Name>
 					<X>920</X><Y>960</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
