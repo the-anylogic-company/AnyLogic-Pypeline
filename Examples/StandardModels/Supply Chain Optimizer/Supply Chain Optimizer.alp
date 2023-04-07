@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1599155584007</Id>
 	<Name><![CDATA[Supply Chain Optimizer]]></Name>
@@ -43,7 +43,6 @@ static List<Color> tab10Colormap = List.of(
 );
 
 ]]></AdditionalClassCode>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.util.stream.Collectors;]]></Import>
 			<StartupCode><![CDATA[//setupPlots();
 pyCommunicator.run("from opt_helper import find_solution, generate_dot",
@@ -66,7 +65,6 @@ pyCommunicator.run("from opt_helper import find_solution, generate_dot",
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -449,19 +447,15 @@ orders.stream()
 						<Name><![CDATA[pyVarSolution]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
-					<Body><![CDATA[
+					<Body><![CDATA[graph.update();
+/*
 pyCommunicator.run(
 				  "with open('temp.dot','w') as f:",
 	String.format("    f.write(generate_dot(%s))", pyVarSolution)
 );
 
 int result = 0;
-///*
-result = pyCommunicator.runResults(
-	int.class,
-	"os.system('dot -Tpng -otemp.png temp.dot')"
-);
-//*/
+
 result = pyCommunicator.runResults(
 	int.class,
 	"os.system('dot -Tplain -otemp.plain temp.dot')"
@@ -474,10 +468,11 @@ if (result == 0) {
 		String.class,
 		"temp"
 	);
-	graph.set_plainOutput(dot);
+	//graph.set_plainOutput(dot);
 } else {
 	error("Problem running dot executable. Verify it's on your system path or install from: https://www.graphviz.org/download/");
-}]]></Body>
+}
+*/]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1074,31 +1069,25 @@ currentViewIndex = viewIndex;]]></Body>
 					</QuantityColumn>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>1599889623750</Id>
+					<Id>1680714012602</Id>
 					<Name><![CDATA[graph]]></Name>
-					<X>30</X><Y>855</Y>
-					<Label><X>-30</X><Y>-30</Y></Label>
+					<X>0</X><Y>820</Y>
+					<Label><X>-10</X><Y>-35</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
+					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
-						<ClassName><![CDATA[SCGraph]]></ClassName>
+						<ClassName><![CDATA[SCGraph1]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
-							<ClassName><![CDATA[SCGraph]]></ClassName>
-							<ItemName><![CDATA[1599872428958]]></ItemName>
+							<ClassName><![CDATA[SCGraph1]]></ClassName>
+							<ItemName><![CDATA[1680713635114]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
 					<Parameters>
-						<Parameter>
-							<Name><![CDATA[plainOutput]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[multiplier]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -1996,7 +1985,7 @@ Remove 'temp' files after usage]]></Text>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1600287239290</Id>
 					<Name><![CDATA[checkbox]]></Name>
-					<X>0</X><Y>810</Y>
+					<X>-210</X><Y>790</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2063,7 +2052,6 @@ Remove 'temp' files after usage]]></Text>
 		<ActiveObjectClass>
 			<Id>1599155818952</Id>
 			<Name><![CDATA[Factory]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[List<Tuple> rows = selectFrom(costs)
 	.where(costs.source_type.eq("f"))
 	.where(costs.source_index.eq(getIndex()))
@@ -2096,7 +2084,6 @@ for (Tuple row : rows) {
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -4509,7 +4496,6 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 		<ActiveObjectClass>
 			<Id>1599155843697</Id>
 			<Name><![CDATA[Warehouse]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[List<Tuple> rows = selectFrom(costs)
 	.where(costs.source_type.eq("w"))
 	.where(costs.source_index.eq(getIndex()))
@@ -4540,7 +4526,6 @@ for (Tuple row : rows) {
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -7368,7 +7353,6 @@ set_capacity(newCapacity);]]></OnClickCode>
 		<ActiveObjectClass>
 			<Id>1599155879099</Id>
 			<Name><![CDATA[Customer]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1599155879097</Id>
@@ -7387,7 +7371,6 @@ set_capacity(newCapacity);]]></OnClickCode>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -8729,7 +8712,6 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 		<ActiveObjectClass>
 			<Id>1599252787095</Id>
 			<Name><![CDATA[Order]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<StartupCode><![CDATA[setLocation(source);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -8749,7 +8731,6 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -9421,7 +9402,6 @@ inProgress = true;]]></Body>
 		<ActiveObjectClass>
 			<Id>1599252944120</Id>
 			<Name><![CDATA[Vehicle]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1599252944118</Id>
@@ -9440,7 +9420,6 @@ inProgress = true;]]></Body>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -10087,11 +10066,13 @@ public class Edge {
 		return String.format("[%s -> %s, '%s', %s points]", tailLabel, headLabel, label, numPoints);
 	}
 }]]></AdditionalClassCode>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.text.DecimalFormat;
-import java.util.stream.IntStream;]]></Import>
+import java.util.stream.IntStream;
+import com.paypal.digraph.parser.GraphParser;
+import com.paypal.digraph.parser.GraphNode;
+import com.paypal.digraph.parser.GraphEdge;]]></Import>
 			<StartupCode><![CDATA[init();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -10111,7 +10092,6 @@ import java.util.stream.IntStream;]]></Import>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -10387,7 +10367,24 @@ Returns:
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if (plainOutput == null || plainOutput.isEmpty())
 	return;
-	
+
+// Use regular expression to search thru the generated dot file for the info needed to build the graph locally.
+// TODO switch to digraph parser library..?
+/*
+GraphParser parser = new GraphParser(new FileInputStream("src/test/resources/test1.dg"));
+Map<String, GraphNode> nodes = parser.getNodes();
+Map<String, GraphEdge> edges = parser.getEdges();	
+traceln("--- nodes:");
+for (GraphNode node : nodes.values()) {
+	traceln(node.getId() + " " + node.getAttributes());
+}
+
+traceln("--- edges:");
+for (GraphEdge edge : edges.values()) {
+	traceln(edge.getNode1().getId() + "->" + edge.getNode2().getId() + " " + edge.getAttributes());
+}
+*/
+
 try {
 	Matcher matG = graphPattern.matcher(plainOutput);
 	if (matG.find())
@@ -10643,19 +10640,6 @@ return rads;]]></Body>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
 						<ClassName><![CDATA[MainTest]]></ClassName>
-					</ActiveObjectClass>
-				</ContainerLink>
-				<ContainerLink>
-					<Id>1599889625448</Id>
-					<Name><![CDATA[main]]></Name>
-					<X>150</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
-						<ClassName><![CDATA[Main]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
 			</ContainerLinks>
@@ -11094,7 +11078,6 @@ traceln("(%6.2f, %6.2f) -> (%6.2f, %6.2f) = (%6.2f, %6.2f) => %6.2f deg", xn2, y
 		<ActiveObjectClass>
 			<Id>1599874310464</Id>
 			<Name><![CDATA[MainTest]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
@@ -11119,7 +11102,6 @@ import java.io.IOException;]]></Import>
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -12812,6 +12794,1055 @@ polyline1.setRotation(rotRad);]]></ActionCode>
 			</Presentation>
 
 		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1680713635119</Id>
+			<Name><![CDATA[SCGraph1]]></Name>
+			<AdditionalClassCode><![CDATA[public double minX = 9999, maxX = -9999, minY = 9999, maxY = -9999;
+
+public class GraphInfo {
+	double scale;
+	double width;
+	double height;
+	
+	public GraphInfo(String scale, String width, String height) {
+		this.scale = Double.valueOf(scale);
+		this.width = Double.valueOf(width);
+		this.height = Double.valueOf(height);
+	}
+	
+	public String toString() {
+		return String.format("[%s, %s, %s]", scale, width, height);
+	}
+	
+	/**
+	 * Scales the given x (from the original output) to a new width. 
+	*/
+	public double scaleX(double x, double newWidth) {
+		double ratioX = (x-minX) / width;
+		double scaled = ratioX*newWidth;
+		return scaled;
+	}
+	
+	/**
+	 * Scales the given y (from the original output) to a new height. 
+	*/
+	public double scaleY(double y, double newHeight, boolean flip) {
+		double ratioY = (y-minY) / height;
+		double scaled = ratioY*newHeight;
+		if (flip)
+			scaled = newHeight - scaled;
+		return scaled;
+	}
+	
+	public double scaleY(double y, double newHeight) {
+		return scaleY(y, newHeight, true);
+	}
+}
+
+public class Node implements Comparable {
+	private final static String typeOrder = "FWC";
+	
+	String label;
+	double x;
+	double y;
+	
+	public Node(String label, String x, String y) {
+		this.label = label;
+		this.x = Double.valueOf(x);
+		this.y = Double.valueOf(y);
+		
+		minX = min(minX, this.x);
+		minY = min(minY, this.y);
+		maxX = max(maxX, this.x);
+		maxY = max(maxY, this.y);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("[%s, %s, %s]", label, x, y);
+	}
+	
+	@Override
+	public int compareTo(Object other) {
+		Node that = (Node) other;
+		int t1 = typeOrder.indexOf(this.label.substring(0, 1));
+		int t2 = typeOrder.indexOf(that.label.substring(0, 1));
+		int c = 0;
+		if (t1 == t2) {
+			// same type, compare based on number
+			c = ((int)this.label.charAt(1)) - ((int)that.label.charAt(1));
+		} else {
+			// different types, comapre by index
+			c = t1 - t2;
+		}
+		return c;
+	}
+	
+	
+}
+
+public class Edge {
+	DecimalFormat decfmt = new DecimalFormat("0.##");
+
+	String tailLabel;
+	String headLabel;
+	int numPoints;
+	double[][] xy;
+	String label;
+	double labelx;
+	double labely;
+	
+	public Edge(String tailLabel, String headLabel, String numPoints, String points, String label, String labelx, String labely) {
+		this.tailLabel = tailLabel;
+		this.headLabel = headLabel;
+		this.numPoints = Integer.valueOf(numPoints);
+		this.xy = new double[this.numPoints][2];
+		String[] ptsList = points.split(" ");
+		for (int i = 0; i < this.numPoints; i++) {
+			this.xy[i][0] = Double.valueOf(ptsList[i*2]);
+			this.xy[i][1] = Double.valueOf(ptsList[i*2+1]);
+			
+			minX = min(minX, this.xy[i][0]);
+			minY = min(minY, this.xy[i][1]);
+			maxY = max(maxY, this.xy[i][1]);
+		}
+		
+		this.label = decfmt.format(Double.valueOf(label));
+		this.labelx = Double.valueOf(labelx);
+		this.labely = Double.valueOf(labely);
+	}
+	
+	public String toString() {
+		return String.format("[%s -> %s, '%s', %s points]", tailLabel, headLabel, label, numPoints);
+	}
+}]]></AdditionalClassCode>
+			<Import><![CDATA[import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.text.DecimalFormat;
+import java.util.stream.IntStream;
+import com.paypal.digraph.parser.GraphParser;
+import com.paypal.digraph.parser.GraphNode;
+import com.paypal.digraph.parser.GraphEdge;]]></Import>
+			<StartupCode><![CDATA[// setup the proper group position and text position / content for the icon nodes
+
+// for factories
+groupF.createShapes(); textF.createShapes(); // force replication update
+IntStream.range(0, groupF.size()).forEach(i -> {
+	// set horizontal position, centered around the middle
+	double xpos = getNodeX(i, groupF.size());
+	groupF.get(i).setX(xpos);
+	// text object needs to be separate, as child-text objects in a parent-replicated-group share their content
+	textF.get(i).setText(main.factories.get(i).name);
+	textF.get(i).setX(xpos);
+});
+
+// do the same for warehouses
+groupW.createShapes(); textW.createShapes();
+IntStream.range(0, groupW.size()).forEach(i -> {
+	double xpos = getNodeX(i, groupW.size());
+	groupW.get(i).setX(xpos);
+	textW.get(i).setText(main.warehouses.get(i).name);
+	textW.get(i).setX(xpos);
+});
+
+// do the same for customers
+groupC.createShapes(); textC.createShapes();
+IntStream.range(0, groupC.size()).forEach(i -> {
+	double xpos = getNodeX(i, groupC.size());
+	groupC.get(i).setX(xpos);
+	textC.get(i).setText(main.customers.get(i).name);
+	textC.get(i).setX(xpos);
+});
+]]></StartupCode>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1680713635114</Id>
+				<Name><![CDATA[1680713635114]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<SceneSkybox>null</SceneSkybox>
+			<AgentProperties>
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>false</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1599897600000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1680713635115</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>10</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<CurrentLevel>1680713635153</CurrentLevel>
+			<ConnectionsId>1680713635186</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1680720444243</Id>
+					<Name><![CDATA[numOrders]]></Name>
+					<X>-270</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+			</Variables>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680713635127</Id>
+					<Name><![CDATA[getNodeX]]></Name>
+					<X>-300</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[index]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[popSize]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[final double XSTART = 25,
+			 XFINISH = rectRegion.getWidth()-XSTART;
+double offsetPer = (XFINISH - XSTART) / (popSize + 1);
+return offsetPer*(index+1) + XSTART;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[List<Point>]]></ReturnType>
+					<Id>1680720078915</Id>
+					<Name><![CDATA[interpolate]]></Name>
+					<X>-300</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[points]]></Name>
+						<Type><![CDATA[ArrayList<Point>]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[numIntermediaryPoints]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[List<Point> interpolatedPoints = new ArrayList<>();
+for (int i = 0; i < points.size() - 1; i++) {
+    Point p0 = points.get(i);
+    Point p1 = points.get(i + 1);
+    
+    //traceln("Going from %s -> %s....", p0, p1);
+
+    // Calculate tangent vectors
+    Point m0, m1;
+
+    if (i == 0) {
+        m0 = new Point(p1.x - p0.x, p1.y - p0.y);
+    } else {
+        Point pPrev = points.get(i - 1);
+        m0 = new Point((p1.x - pPrev.x) / 2, (p1.y - pPrev.y) / 2);
+    }
+
+    if (i == points.size() - 2) {
+        m1 = new Point(p1.x - p0.x, p1.y - p0.y);
+    } else {
+        Point pNext = points.get(i + 2);
+        m1 = new Point((pNext.x - p0.x) / 2, (pNext.y - p0.y) / 2);
+    }
+
+    // Generate interpolated points
+    for (int j = 0; j <= numIntermediaryPoints; j++) {
+        double t = (double) j / numIntermediaryPoints;
+        double h00 = (2 * t * t * t) - (3 * t * t) + 1;
+        double h10 = (t * t * t) - (2 * t * t) + t;
+        double h01 = (-2 * t * t * t) + (3 * t * t);
+        double h11 = (t * t * t) - (t * t);
+
+        double x = (h00 * p0.x) + (h10 * m0.x) + (h01 * p1.x) + (h11 * m1.x);
+        double y = (h00 * p0.y) + (h10 * m0.y) + (h01 * p1.y) + (h11 * m1.y);
+
+		Point np = new Point(x, y);
+        interpolatedPoints.add(np);
+        
+        //traceln("\t+ %s", np);
+    }
+}
+
+return interpolatedPoints;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[List<Point>]]></ReturnType>
+					<Id>1680720078921</Id>
+					<Name><![CDATA[drawCurve]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-300</X><Y>670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[List<Point> splinePoints = interpolate(points, intermediaries);
+Point p0 = splinePoints.get(0);
+
+polyline.setPos(p0);
+polyline.setNPoints(splinePoints.size());
+for (int i = 0; i < splinePoints.size(); i++) {
+	Point p = splinePoints.get(i);
+	polyline.setPoint(i, p.x-p0.x, p.y-p0.y, p.z-p0.z);
+}
+polyline.setVisible(true);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680720413955</Id>
+					<Name><![CDATA[update]]></Name>
+					<X>-300</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[numOrders = main.orders.size();
+edges.createShapes(); // force update
+textEdge.createShapes();
+
+for (Order order : main.orders) {
+	Point head = getNodePoint(order.source_type, order.source_index),
+		  tail = getNodePoint(order.destination_type, order.destination_index);
+
+	ArrayList<Point> anchors = new ArrayList<>();
+	if (typeTierDistance(order.source_type, order.destination_type) <= 1) {
+		// direct approach;
+		// shape curve to give appearance of pointing towards destination
+		Point mid = new Point(tail.x, tail.y - 40);
+		anchors.add(head);
+		//anchors.add(mid);
+		anchors.add(tail);
+		traceln("%s: %s -> %s", order, head, tail);
+	} else {
+		// need to go in between nodes in an intermediary layer/tier
+		
+		// just guess proper index right now because i can't be bothered
+		// also safeish to assume the intermediary layer is warehouse (b/c what else could it be)
+		// TODO should be based on destination index too (e.g., for shorter path; multiple destinations arc around same point right now)
+		int idxL = limitMin(0, order.source_index),
+			idxR = order.source_index+1;
+		Point midL = getNodePoint("w", idxL),
+			  midR = getNodePoint("w", idxR);
+		Point mid0 = new Point((midL.x+midR.x)/2., (midL.y+midR.y)/2.),
+			  mid1 = new Point(tail.x, tail.y - 40);
+		anchors.add(head);
+		anchors.add(mid0);
+		//anchors.add(mid1);
+		anchors.add(tail);
+		traceln("%s: %s -> %s -> %s", order, head, mid0, tail);
+	}
+	
+	List<Point> pts = interpolate(anchors, 20); // semiarbitrary number of intermediary points
+	
+	// update line pointing from order source to destination
+	ShapePolyLine line = edges.get(order.getIndex());
+	line.setLineColor(spectrumColor(order.getIndex(), main.orders.size()));
+	line.setNPoints(pts.size());
+	line.setPos(head.x, head.y, head.z);
+	for (int i = 0; i < pts.size(); i++) {
+		Point pt = pts.get(i);
+		line.setPoint(i, pt.x - head.x, pt.y - head.y, pt.z - head.z);
+	}
+	
+	// put text approximately in the middle of the line
+	int n = roundToInt(pts.size()*0.2);
+	Point textPt = getTextPoint(pts.get(n-1), pts.get(n), pts.get(n+1), 10); // semiarbitrary text offset
+	traceln("\tText @ %s", textPt);
+	textEdge.get(order.getIndex()).setPos(textPt);
+	textEdge.get(order.getIndex()).setText(order.amount);
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Point]]></ReturnType>
+					<Id>1680720591978</Id>
+					<Name><![CDATA[getNodePoint]]></Name>
+					<X>-300</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[type]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[index]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[ShapeGroup group = null;
+switch (type) {
+	case "f":
+		group = groupF.get(index);
+		break;
+	case "w":
+		group = groupW.get(index);
+		break;
+	case "c":
+		group = groupC.get(index);
+		break;
+	default:
+		error("Unknown type '%s'", type);
+}
+return new Point(group.getX(), group.getY());]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1680720773256</Id>
+					<Name><![CDATA[typeTierDistance]]></Name>
+					<X>-300</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[type1]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[type2]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[return abs(typeToTier(type1) - typeToTier(type2));]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1680720823505</Id>
+					<Name><![CDATA[typeToTier]]></Name>
+					<X>-260</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[type]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[// tier is a semi-arbitrary number that provides an ordinal value to the categories of the types
+int tier = 0;
+switch (type) {
+	case "f":
+		tier = 1;
+		break;
+	case "w":
+		tier = 2;
+		break;
+	case "c":
+		tier = 3;
+		break;
+	default:
+		error("Unknown type '%s'", type);
+}
+return tier;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Point]]></ReturnType>
+					<Id>1680818962648</Id>
+					<Name><![CDATA[getTextPoint]]></Name>
+					<X>-300</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[start]]></Name>
+						<Type><![CDATA[Point]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[middle]]></Name>
+						<Type><![CDATA[Point]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[end]]></Name>
+						<Type><![CDATA[Point]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[distance]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Approximate the distance from the midpoint by projecting from the triangle's center to the middle point.
+Point centroid = new Point((start.x + middle.x + end.x)/3., (start.y + middle.y + end.y)/3.);
+if (centroid.x == middle.x){
+	// special case when centroid in line with middle point (technically infinite slope)
+	return new Point(middle.x, middle.y + distance * signum(middle.y-centroid.y));
+}
+double slope = (centroid.y - middle.y) / (centroid.x - middle.x),
+		intercept = middle.y - slope*middle.x;
+double altX = middle.x + distance;
+return new Point(altX, slope*altX + intercept);]]></Body>
+				</Function>
+			</Functions>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1680713635186</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>150</X><Y>-100</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Order]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1680714015626</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
+
+			<Presentation>
+				<Level>
+					<Id>1680713635153</Id>
+					<Name><![CDATA[level]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+
+			<Presentation>
+				<Polyline>
+					<Id>1680716431220</Id>
+					<Name><![CDATA[edges]]></Name>
+					<X>230</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[numOrders]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>4</LineWidth>
+					<LineColor>-8355712</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>30</X><Y>-20</Y><Z>0</Z></Point>
+					   <Point><X>50</X><Y>-10</Y><Z>0</Z></Point>
+					   <Point><X>60</X><Y>-30</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>false</Closed>
+				</Polyline>
+				<Rectangle>
+					<Id>1680714476033</Id>
+					<Name><![CDATA[rectRegion]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<OnClickCode><![CDATA[_origin_VA.navigateTo();]]></OnClickCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>4</LineWidth>
+					<LineColor>-14774017</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>DASHED</LineStyle>
+					<Width>800</Width>
+					<Height>600</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1680713635169</Id>
+					<Name><![CDATA[textEdge]]></Name>
+					<X>310</X><Y>180</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[numOrders]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[XX.X]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Group>
+					<Id>1680714128507</Id>
+					<Name><![CDATA[groupC]]></Name>
+					<X>350</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.customers.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Oval>
+					<Id>1680713635159</Id>
+					<Name><![CDATA[oval]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-657931</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>37.25</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+				<Polyline>
+					<Id>1680713635165</Id>
+					<Name><![CDATA[outlineC]]></Name>
+					<X>-1</X><Y>23</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-14734530</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-5716507</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>28.214</X><Y>-14.13</Y><Z>0</Z></Point>
+					   <Point><X>28.214</X><Y>-31.087</Y><Z>0</Z></Point>
+					   <Point><X>14.107</X><Y>-48.043</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-45.217</Y><Z>0</Z></Point>
+					   <Point><X>-28.214</X><Y>-31.087</Y><Z>0</Z></Point>
+					   <Point><X>-28.214</X><Y>-14.13</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+			</Presentation>
+
+				</Group>
+				<Group>
+					<Id>1680714147304</Id>
+					<Name><![CDATA[groupW]]></Name>
+					<X>350</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.warehouses.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Oval>
+					<Id>1680714188830</Id>
+					<Name><![CDATA[oval1]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-657931</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>37.25</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+				<Polyline>
+					<Id>1680713635163</Id>
+					<Name><![CDATA[outlineW]]></Name>
+					<X>-5</X><Y>25</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-11913984</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-10496</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>35.034</X><Y>-17.371</Y><Z>0</Z></Point>
+					   <Point><X>35.034</X><Y>-32.571</Y><Z>0</Z></Point>
+					   <Point><X>21.896</X><Y>-47.771</Y><Z>0</Z></Point>
+					   <Point><X>8.759</X><Y>-45.6</Y><Z>0</Z></Point>
+					   <Point><X>-26.276</X><Y>-28.229</Y><Z>0</Z></Point>
+					   <Point><X>-26.276</X><Y>-13.029</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+			</Presentation>
+
+				</Group>
+				<Group>
+					<Id>1680714164618</Id>
+					<Name><![CDATA[groupF]]></Name>
+					<X>350</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.factories.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Oval>
+					<Id>1680714236411</Id>
+					<Name><![CDATA[oval3]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-657931</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>37.25</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+				<Curve ControlPoints="true">
+					<Id>1680713635161</Id>
+					<Name><![CDATA[outlineF]]></Name>
+					<X>28</X><Y>-2</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-12187648</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-507904</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>12.171</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>12.171</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>12.171</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>28.4</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>28.4</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>28.4</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>16.229</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>16.229</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>16.229</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>4.057</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>4.057</Y><Z>0</Z></Point>
+					   <Point><X>-57.474</X><Y>4.057</Y><Z>0</Z></Point>
+					   <Point><X>-49.263</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-49.263</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-49.263</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-45.158</X><Y>-6.086</Y><Z>0</Z></Point>
+					   <Point><X>-45.158</X><Y>-6.086</Y><Z>0</Z></Point>
+					   <Point><X>-45.158</X><Y>-6.086</Y><Z>0</Z></Point>
+					   <Point><X>-41.053</X><Y>-12.171</Y><Z>0</Z></Point>
+					   <Point><X>-41.053</X><Y>-12.171</Y><Z>0</Z></Point>
+					   <Point><X>-41.053</X><Y>-12.171</Y><Z>0</Z></Point>
+					   <Point><X>-36.947</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-36.947</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-36.947</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>-16.229</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>-16.229</Y><Z>0</Z></Point>
+					   <Point><X>-32.842</X><Y>-16.229</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-14.2</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-14.2</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-14.2</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-26.371</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-28.4</Y><Z>0</Z></Point>
+					   <Point><X>-28.737</X><Y>-30.429</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-30.429</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-28.4</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-26.371</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-20.526</X><Y>-10.143</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-8.114</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-20.286</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-22.314</Y><Z>0</Z></Point>
+					   <Point><X>-16.421</X><Y>-24.343</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-24.343</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-22.314</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-20.286</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-4.057</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-4.057</Y><Z>0</Z></Point>
+					   <Point><X>-8.211</X><Y>-4.057</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Curve>
+			</Presentation>
+
+				</Group>
+				<Text>
+					<Id>1680714327291</Id>
+					<Name><![CDATA[textF]]></Name>
+					<X>350</X><Y>90</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.factories.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[XX]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1680714313150</Id>
+					<Name><![CDATA[textW]]></Name>
+					<X>350</X><Y>290</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.warehouses.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[XX]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1680713635167</Id>
+					<Name><![CDATA[textC]]></Name>
+					<X>350</X><Y>490</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[main.customers.size()]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[XX]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+			</Presentation>
+
+				</Level>
+			</Presentation>
+
+		</ActiveObjectClass>
 	</ActiveObjectClasses>	
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
@@ -12920,7 +13951,6 @@ polyline1.setRotation(rotRad);]]></ActionCode>
 		<SimulationExperiment ActiveObjectClassId="1599155584013">
 			<Id>1599155584017</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
