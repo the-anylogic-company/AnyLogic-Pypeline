@@ -37,7 +37,7 @@ _Note: To run the Py4J test, you must first start the 'gateway.py' file_
 * **distanceData.json**: A "cache" of sorts, used to possibly save/retrieve data in use with test #3, Commandline.
 * **timings.xlsx**: The output Excel file containing recorded timing information
 * **py4j0.10.9.jar**: Required dependencies for test #2, Py4J
-* **jna*.jar, ortools*.jar, protobuf*.jar**: Required dependencies for test #4, Java
+* **jna-.jar, ortools-.jar, protobuf-.jar**: Required dependencies for test #4, Java
 
 ## Results
 

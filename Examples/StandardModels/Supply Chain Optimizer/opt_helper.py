@@ -24,6 +24,7 @@ def parse_input(raw_model_data):
     
     for factory in factory_data:
         # sort each pairs by key name before appending costs to respective lists
+        # (this should place it in sequential order)
         pairs_2w = sorted(factory['warehouseCostMap'].items(), key=itemgetter(0))
         costs_f2w += [x[1] for x in pairs_2w]
         
@@ -32,6 +33,7 @@ def parse_input(raw_model_data):
         
     for warehouse in warehouse_data:
         # sort pairs by key name before appending costs to respective list
+        # (this should place it in sequential order)
         pairs_2c = sorted(warehouse['customerCostMap'].items(), key=itemgetter(0))
         costs_w2c += [x[1] for x in pairs_2c]
 
