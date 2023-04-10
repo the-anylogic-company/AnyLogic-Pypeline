@@ -352,30 +352,27 @@ for (int i = 0; i < warehouseInstructions.size(); i++) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Convert "this" (i.e., Main) to JSON, then pass to Python.
-// Note that Python needs to sent the data as a string,
-//	hence the single quotes around the format placeholder (%s).
-String jsonInput = pyCommunicator.toJson(this);
+Object jsonInput = pyCommunicator.toJson(this);
 
 // `find_solution` has two returns: 
 //		1. The instance of the solver class
 //		2. A dictionary of keys to json strings
 //			-> This contains 'info' about the solver and the list of 'orders' agents
-pyCommunicator.run(
-	String.format("sln, json_data = find_solution(r'%s')", jsonInput));
+// Note that Python needs to sent the data as a string,
+//	hence the single quotes around the format placeholder (%s)
+pyCommunicator.run("sln, json_data = find_solution(r'%s')", jsonInput);
 
 // Get map detailing solution information (minimized cost, successful state, any error messages)
 HashMap<String, Double> infoData = pyCommunicator.runResults(
 	HashMap.class,
 	"json_data['info']");
 
-traceln("[%s] %s", time(WEEK), infoData);
-
 // Get JSON for Orders population and use provided function to convert.
 String ordersJsonData = pyCommunicator.runResults(
 	String.class,
 	"json_data['orders']");
 
-// Call population json function which will add the orders to the provided population (i.e., no return)
+// Convert the orders data to agents added to the population
 pyCommunicator.fromPopulationJson(ordersJsonData, Order.class, orders);
 
 // send the unprocessed orders to their respective agents
