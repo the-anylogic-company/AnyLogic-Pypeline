@@ -2422,6 +2422,63 @@ shapesHideWhenClosed
 					</Points>
 				</Connector>
 			</Connectors>
+			<Events>
+				<Event>
+					<Id>1681154659419</Id>
+					<Name><![CDATA[checkReadyStatus]]></Name>
+					<Description><![CDATA[As the production rate can change at any point by the user, it's impossible to predetermine how long the delay should be. The delay is instead set to only release the order when explicitly told to do so.
+
+This event starts counting down whenever a new order comes into the delay and is updated whenever the set production rate changes. When it fires, it will either release the waiting order if there is enough or restart itself if more time is required.]]></Description>
+					<X>340</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="userControls">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1664092800000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[Order order = delayForProduct.get(0);
+if( order.amount <= output ) {
+	// Have enough in stock, allow thru
+	delayForProduct.stopDelayForAll();
+} else {
+	// Schedule to be rechecked using a simple linear equation
+	
+	// Get the output rate (+ some buffer to avoid precision issues) in the model units
+	double outputPerUnit = toTimeUnits((order.amount - output) / outputRate, HOUR) * 1.01;
+	
+	// If the rate is 0, we want to essentially delay it indefinitely;
+	//	accomplish this by setting it to a very small value so the estimated time will be very large.
+	outputPerUnit = limitMin(0e-5, outputPerUnit);
+	
+	// Get the estimated time until (theoretically) ready.
+	double estimatedTime = (order.amount - output ) / outputPerUnit;	
+	
+	// Also set a lower bound to avoid unreasonably small timeouts (possible due to the continuous nature of SD)
+	estimatedTime = limitMin( toModelTime(5, MINUTE), estimatedTime );
+	
+	self.restart(estimatedTime);
+}]]></Action>
+				</Event>
+			</Events>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -3397,6 +3454,9 @@ unit.setLocation(this);
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[type]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.MANUAL]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[delayTime]]></Name>
@@ -3430,7 +3490,10 @@ unit.setLocation(this);
 								<Code><![CDATA[/*
 traceln("%s | %s | Waiting to fulfill. Currently %s product. At rate of %5.2f per %s, waiting %s hours",
 	agent, this, product, productionRate, getEngine().getTimeUnit().toString().toLowerCase(), delayTime);
-*/]]></Code>
+*/
+
+// check immediately
+checkReadyStatus.restart();]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -4340,7 +4403,7 @@ if (output < 0)
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[double newOutput = limitMin(outputRate(PER_WEEK)-10, 0);
+					<OnClickCode><![CDATA[double newOutput = limitMin(outputRate(PER_WEEK)-5, 0);
 set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -4371,7 +4434,7 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[double newOutput = limitMax(outputRate(PER_WEEK)+10, 1000);
+					<OnClickCode><![CDATA[double newOutput = limitMax(outputRate(PER_WEEK)+5, 1000);
 set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
