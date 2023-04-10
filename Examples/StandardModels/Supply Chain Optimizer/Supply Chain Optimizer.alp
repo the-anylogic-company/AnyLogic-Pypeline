@@ -1083,9 +1083,9 @@ currentViewIndex = viewIndex;]]></Body>
 					<Height>640</Height>
 					<GISShapes>
 					</GISShapes>
-					<Latitude>42.190365265468785</Latitude>
-					<Longitude>-91.4219905836474</Longitude>
-					<Scale>10000000</Scale>
+					<Latitude>40.84743288620851</Latitude>
+					<Longitude>-91.04128646975815</Longitude>
+					<Scale>7000000</Scale>
 					<BorderColor>-4144960</BorderColor>
 					<FillColor>-1</FillColor>
 					<ShowTiles>true</ShowTiles>
@@ -1129,29 +1129,6 @@ currentViewIndex = viewIndex;]]></Body>
 						<LabelText><![CDATA[print json]]></LabelText>
 					</ExtendedProperties>
 				</Control>
-				<Text>
-					<Id>1599424938690</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>310</X><Y>760</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[* At the end of each week, the model state is sent to the solver
-* Returned values include performance indicators of solver and list of orders
-* Each order then seizes the fleet at its respective factory/warehouse, who then fulfills the order.]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<EmbeddedObjectPresentation>
 					<Id>1599175257543</Id>
 					<Name><![CDATA[factories_presentation]]></Name>
@@ -1976,7 +1953,8 @@ Remove 'temp' files after usage]]></Text>
 		<ActiveObjectClass>
 			<Id>1599155818952</Id>
 			<Name><![CDATA[Factory]]></Name>
-			<StartupCode><![CDATA[List<Tuple> rows = selectFrom(costs)
+			<StartupCode><![CDATA[// load cost map data from db into map collection
+List<Tuple> rows = selectFrom(costs)
 	.where(costs.source_type.eq("f"))
 	.where(costs.source_index.eq(getIndex()))
 	.list();
@@ -2137,9 +2115,6 @@ for (Tuple row : rows) {
 							<Code><![CDATA[60]]></Code>
 							<Unit Class="RateUnits"><![CDATA[PER_WEEK]]></Unit>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[boolean shouldHide = outputRate > 0;
-shapesHideWhenClosed
-	.forEach(shape -> shape.setVisible(shouldHide));]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>0</Id>
 							<Label><![CDATA[Output rate]]></Label>
@@ -2200,24 +2175,6 @@ shapesHideWhenClosed
 						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
 						<ElementClass><![CDATA[Customer]]></ElementClass>
 						<ValueElementClass><![CDATA[Double]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1599608992565</Id>
-					<Name><![CDATA[shapesHideWhenClosed]]></Name>
-					<X>-150</X><Y>-105</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[ShapeMultiplePoints]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-						<CollectionInitializer Class="CodeValue">
-							<Code><![CDATA[{ _ps288, _ps292, _ps290, _ps291, _ps293, _ps296, _ps295, _ps294, _ps289 }]]></Code>
-						</CollectionInitializer>
 					</Properties>
 
 				</Variable>
@@ -4371,8 +4328,8 @@ if (output < 0)
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
-+##]]></Text>
-					<TextCode><![CDATA[String.format("%s\n+%2s", name, outputRate(PER_WEEK))]]></TextCode>
++## (##.#)]]></Text>
+					<TextCode><![CDATA[String.format("%s\n+%2.0f (%.1f)", name, outputRate(PER_WEEK), output)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -4459,6 +4416,49 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1681164496553</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>0</X><Y>12.5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[X / X (##.#%)]]></Text>
+					<TextCode><![CDATA[String.format("%s / %s (%.1f%%)", truckPool.idle(), truckPool.capacity, truckPool.utilization()*100.)]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1681165854060</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>420</X><Y>130</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[A record of output values at each step]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -4469,7 +4469,8 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 		<ActiveObjectClass>
 			<Id>1599155843697</Id>
 			<Name><![CDATA[Warehouse]]></Name>
-			<StartupCode><![CDATA[List<Tuple> rows = selectFrom(costs)
+			<StartupCode><![CDATA[// load cost map data from db into map collection
+List<Tuple> rows = selectFrom(costs)
 	.where(costs.source_type.eq("w"))
 	.where(costs.source_index.eq(getIndex()))
 	.list();
@@ -4603,9 +4604,6 @@ for (Tuple row : rows) {
 						<DefaultValue Class="CodeValue">
 							<Code><![CDATA[uniform_discr(15, 45)]]></Code>
 						</DefaultValue>
-						<OnChangeCode><![CDATA[boolean shouldHide = capacity == 0;
-shapesHideWhenClosed
-	.forEach(shape -> shape.setVisible(shouldHide));]]></OnChangeCode>
 						<ParameterEditor>
 							<Id>0</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -4651,24 +4649,6 @@ shapesHideWhenClosed
 						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
 						<ElementClass><![CDATA[Customer]]></ElementClass>
 						<ValueElementClass><![CDATA[Double]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1599609306923</Id>
-					<Name><![CDATA[shapesHideWhenClosed]]></Name>
-					<X>-210</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="true">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[ShapeMultiplePoints]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-						<CollectionInitializer Class="CodeValue">
-							<Code><![CDATA[{ _ps283, _ps282, _ps281, _ps279, _ps280 }]]></Code>
-						</CollectionInitializer>
 					</Properties>
 
 				</Variable>
@@ -7214,8 +7194,8 @@ holding -= agent.amount;]]></Code>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
-(##)]]></Text>
-					<TextCode><![CDATA[name + "\n" + roundToDecimal(capacity, 1)]]></TextCode>
+##.# / ##.#]]></Text>
+					<TextCode><![CDATA[String.format("%s\n%.1f / %.1f", name, holding, capacity)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -7302,6 +7282,49 @@ set_capacity(newCapacity);]]></OnClickCode>
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1681164586729</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>0</X><Y>12.5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[X / X (##.#%)]]></Text>
+					<TextCode><![CDATA[String.format("%s / %s (%.1f%%)", truckPool.idle(), truckPool.capacity, truckPool.utilization()*100.)]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1681166008383</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>220</X><Y>130</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[A record of held amount at each step]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -7897,7 +7920,8 @@ demandLevelHistory.add(newDemand);]]></AfterStepCode>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[Vehicle res = (Vehicle)agent.resourceUnits().get(0);
+								<Code><![CDATA[// update animation
+Vehicle res = (Vehicle)agent.resourceUnits().get(0);
 res.textHolding.setVisible(false);
 res.progressRectangle.setVisible(false);
 
@@ -8626,14 +8650,56 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
--## ± ##.#]]></Text>
-					<TextCode><![CDATA[String.format("%s\n%2d ± %4.1f", name, -demandMean, demandMean*0.25)]]></TextCode>
+-## ± ##.# (##.#)]]></Text>
+					<TextCode><![CDATA[String.format("%s\n%2d ± %4.1f (%.1f)", name, -demandMean, demandMean*0.25, demand)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1681165063229</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>220</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[The net amount expecting over time (updated on each step & on dropoff)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1681165108761</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>220</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[The new amount requested on each step]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -10706,6 +10772,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.factories.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupF.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupF.get(i).getX(), groupF.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10730,6 +10797,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.warehouses.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupW.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupW.get(i).getX(), groupW.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10754,6 +10822,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.customers.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupC.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupC.get(i).getX(), groupC.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10765,6 +10834,27 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1680900979790</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>10</X><Y>580</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Reflects the orders returned by the optimizer at the start of each week]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -11007,8 +11097,15 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777088</Color>
-					<Text><![CDATA[A large scale JSON example (or at least, larger than the demo model!)]]></Text>
+					<Color>-16777216</Color>
+					<Text><![CDATA[This model depicts a 3-echelon supply chain for a single product.
+Customers make weekly requests of varied amounts of the product created by factories, which can be stored within warehouses.
+There are costs associated with sending product for any combination down the chain 
+    (i.e., factories to warehouses or to customers, and warehouses to customers).
+All model data is retrieved from the database on startup, loaded in from the local Excel file.
+At the start of each week, the model state is sent to a Python optimizer as JSON text;
+the returned values include performance indicators of the solver and the list of orders (how much to send and to whom).
+Each order then seizes a vehicle at the respective factory/warehouse, who then goes on to fulfill the order.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
