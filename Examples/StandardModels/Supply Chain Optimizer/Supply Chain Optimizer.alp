@@ -5636,7 +5636,7 @@ res.progressRectangle.setVisible(false);
 
 holding += agent.amount;
 //traceln("%s | %s | Wh now holding %5.2f", agent, this, holding);
-if (holding >= queue.get(0).amount)
+if (queue.size() > 0 && holding >= queue.get(0).amount)
 	holdForProduct.unblock();]]></Code>
 							</Value>
 						</Parameter>
