@@ -404,7 +404,7 @@ graph.update();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1600039250436</Id>
 					<Name><![CDATA[navigateTo]]></Name>
-					<X>-200</X><Y>320</Y>
+					<X>-200</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -744,6 +744,13 @@ currentViewIndex = viewIndex;]]></Body>
 						<Code><![CDATA[4]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<StatisticsItem>
+						<Id>1681165424569</Id>
+						<Name><![CDATA[totalHolding]]></Name>
+						<Type>sum</Type>
+						<Expression><![CDATA[item.holding]]></Expression>
+						<Condition><![CDATA[]]></Condition>
+					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
@@ -953,6 +960,13 @@ currentViewIndex = viewIndex;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<StatisticsItem>
+						<Id>1680904208021</Id>
+						<Name><![CDATA[countNew]]></Name>
+						<Type>count</Type>
+						<Expression><![CDATA[]]></Expression>
+						<Condition><![CDATA[time()-item.birthtime == 0]]></Condition>
+					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[50.0 / 3.0 // average speed across 24hr of driving]]></Code>
@@ -1208,14 +1222,14 @@ currentViewIndex = viewIndex;]]></Body>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Width>920</Width>
-					<Height>360</Height>
+					<Height>300</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>75</XOffset>
 						<YOffset>10</YOffset>
 						<Width>835</Width>
-						<Height>300</Height>
+						<Height>240</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -1258,6 +1272,16 @@ currentViewIndex = viewIndex;]]></Body>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>3.0</LineWidth>
 					</DatasetExpression>
+					<DatasetExpression>  
+						<Title><![CDATA[Warehouse storage]]></Title>
+					<Id>1681165406158</Id>
+					<Expression><![CDATA[my_dataset2]]></Expression>
+					<Color>-16744448</Color>
+					<Expression2><![CDATA[warehouses.totalHolding()]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>3.0</LineWidth>
+					</DatasetExpression>
 					<SamplesToKeep>112</SamplesToKeep>
 					<TimeWindowExpression><![CDATA[4]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
@@ -1266,7 +1290,7 @@ currentViewIndex = viewIndex;]]></Body>
 				<Text>
 					<Id>1599678398955</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>1940</X><Y>470</Y>
+					<X>1770</X><Y>410</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1287,7 +1311,7 @@ currentViewIndex = viewIndex;]]></Body>
 				<Text>
 					<Id>1599678422744</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>1730</X><Y>510</Y>
+					<X>1730</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1313,7 +1337,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599678438643</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>1750</X><Y>510</Y>
+					<X>1750</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1321,7 +1345,7 @@ C5]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text3.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1346,7 +1370,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599678447686</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>1750</X><Y>490</Y>
+					<X>1750</X><Y>430</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1354,7 +1378,7 @@ C5]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text4.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1373,7 +1397,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599678468785</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>1670</X><Y>560</Y>
+					<X>1675</X><Y>500</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1394,7 +1418,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599678487972</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>1730</X><Y>600</Y>
+					<X>1730</X><Y>540</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1415,7 +1439,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599678496195</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>1750</X><Y>600</Y>
+					<X>1750</X><Y>540</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1423,7 +1447,7 @@ C5]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text7.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1444,7 +1468,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599685465908</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>1670</X><Y>660</Y>
+					<X>1675</X><Y>640</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1465,7 +1489,7 @@ C5]]></Text>
 				<Text>
 					<Id>1599685515091</Id>
 					<Name><![CDATA[text9]]></Name>
-					<X>1730</X><Y>630</Y>
+					<X>1730</X><Y>645</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1488,7 +1512,7 @@ F2]]></Text>
 				<Text>
 					<Id>1599685537318</Id>
 					<Name><![CDATA[text10]]></Name>
-					<X>1750</X><Y>630</Y>
+					<X>1750</X><Y>645</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1496,7 +1520,7 @@ F2]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text10.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1518,7 +1542,7 @@ F2]]></Text>
 				<Text>
 					<Id>1599686570466</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>1730</X><Y>670</Y>
+					<X>1730</X><Y>685</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1539,7 +1563,7 @@ F2]]></Text>
 				<Rectangle>
 					<Id>1599687360448</Id>
 					<Name><![CDATA[rectangle]]></Name>
-					<X>1740</X><Y>685</Y>
+					<X>1740</X><Y>700</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1547,7 +1571,7 @@ F2]]></Text>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<XCode><![CDATA[rectangle.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1565,7 +1589,7 @@ F2]]></Text>
 				<Text>
 					<Id>1599686573347</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>1750</X><Y>670</Y>
+					<X>1750</X><Y>685</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1573,7 +1597,7 @@ F2]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text12.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1581,15 +1605,14 @@ F2]]></Text>
 					<Color>-8355712</Color>
 					<Text><![CDATA[##]]></Text>
 					<TextCode><![CDATA[time(WEEK) <= index ? "" :
-	roundToDecimal(factories.stream()
-		.mapToDouble(fty -> fty.outputDS.getY(index))
-		.sum(), 1)
-
-/*time(WEEK) <= index ? "" :
-	Arrays.stream(text10.get(index).getText().split("\n"))
-		.mapToDouble(Double::valueOf)
-		.sum()
-*/]]></TextCode>
+	roundToDecimal(
+		factories.stream()
+			.mapToDouble(fty -> fty.outputDS.getY(index))
+			.sum()
+		+ warehouses.stream()
+			.mapToDouble(wh -> wh.holdingDS.getY(index))
+			.sum()
+	, 1)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -1600,7 +1623,7 @@ F2]]></Text>
 				<Text>
 					<Id>1599687203292</Id>
 					<Name><![CDATA[text13]]></Name>
-					<X>1750</X><Y>690</Y>
+					<X>1750</X><Y>705</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1608,7 +1631,7 @@ F2]]></Text>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<XCode><![CDATA[text13.get(0).getX()+50*index]]></XCode>
 					<ReplicationCode Class="CodeValue">
-						<Code><![CDATA[12]]></Code>
+						<Code><![CDATA[16]]></Code>
 					</ReplicationCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -1617,7 +1640,7 @@ F2]]></Text>
 					<ColorCode><![CDATA[text13.get(index).equals("!!!") ? red : gray]]></ColorCode>
 					<Text><![CDATA[##]]></Text>
 					<TextCode><![CDATA[time(WEEK) <= index ? "" : (
-	Double.valueOf(text12.get(index).getText()) >=  Double.valueOf(text7.get(index).getText()) 
+	Double.valueOf(text12.get(index).getText()) >= Double.valueOf(text7.get(index).getText()) 
 	? "" : "!!!"
 	)]]></TextCode>
 					<Font>
@@ -1814,7 +1837,7 @@ Remove 'temp' files after usage]]></Text>
 				<Line>
 					<Id>1600045151186</Id>
 					<Name><![CDATA[line]]></Name>
-					<X>1735</X><Y>510</Y>
+					<X>1735</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1831,14 +1854,14 @@ Remove 'temp' files after usage]]></Text>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>635</Dx>
+					<Dx>865</Dx>
 					<Dy>0</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Line>
 					<Id>1600045190586</Id>
 					<Name><![CDATA[line1]]></Name>
-					<X>1735</X><Y>470</Y>
+					<X>1735</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1856,13 +1879,13 @@ Remove 'temp' files after usage]]></Text>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
 					<Dx>0</Dx>
-					<Dy>240</Dy>
+					<Dy>295</Dy>
 					<Dz>0</Dz>
 				</Line>
 				<Line>
 					<Id>1600045201756</Id>
 					<Name><![CDATA[line2]]></Name>
-					<X>1670</X><Y>620</Y>
+					<X>1670</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1879,7 +1902,7 @@ Remove 'temp' files after usage]]></Text>
 					<BeginArrowStyle>0</BeginArrowStyle>
 					<EndArrowSize>1</EndArrowSize>
 					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>700</Dx>
+					<Dx>930</Dx>
 					<Dy>0</Dy>
 					<Dz>0</Dz>
 				</Line>
@@ -1891,20 +1914,127 @@ Remove 'temp' files after usage]]></Text>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[Locations display name & info:
+Factory:
+Warehouse: 
+Customer:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1680896906958</Id>
+					<Name><![CDATA[text20]]></Name>
+					<X>915</X><Y>45</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[
+Output
+Max capacity 
+Demand range]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1681166127274</Id>
+					<Name><![CDATA[text21]]></Name>
+					<X>1730</X><Y>565</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[W1
+W2
+W3
+W4]]></Text>
+					<TextCode><![CDATA[warehouses.stream().map(wh -> wh.name).collect(Collectors.joining("\n"))]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Line>
+					<Id>1681166149373</Id>
+					<Name><![CDATA[line3]]></Name>
+					<X>1700</X><Y>640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[use dot]]></LabelText>
-						<DefaultValueCode><![CDATA[false]]></DefaultValueCode>
-						<LinkTo>true</LinkTo>
-						<Link>useDot</Link>
-	 				</ExtendedProperties>
-				</Control>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>DOTTED</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>900</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Text>
+					<Id>1681166167969</Id>
+					<Name><![CDATA[text22]]></Name>
+					<X>1750</X><Y>565</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<XCode><![CDATA[text22.get(0).getX()+50*index]]></XCode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[16]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[##
+##
+##
+##]]></Text>
+					<TextCode><![CDATA[time(WEEK) <= index ? "" :
+	warehouses.stream()
+		.map(wh -> String.format("%5.1f", wh.holdingDS.getY(index)))
+		.collect(Collectors.joining("\n"))]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -1993,7 +2123,7 @@ for (Tuple row : rows) {
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<AfterStepCode><![CDATA[outputDS.add(time(WEEK), output);]]></AfterStepCode>
+				<AfterStepCode><![CDATA[outputDS.update();]]></AfterStepCode>
 				<PhysicalLength Class="CodeUnitValue">
 					<Code><![CDATA[1]]></Code>
 					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
@@ -2471,7 +2601,9 @@ if( order.amount <= output ) {
 						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>12</SamplesToKeep>
+					<HorizontalAxisExpression><![CDATA[time(WEEK)]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[output]]></VerticalAxisExpression>
+					<SamplesToKeep>16</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
@@ -4507,6 +4639,7 @@ for (Tuple row : rows) {
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
+				<AfterStepCode><![CDATA[holdingDS.update();]]></AfterStepCode>
 				<PhysicalLength Class="CodeUnitValue">
 					<Code><![CDATA[1]]></Code>
 					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
@@ -4577,7 +4710,7 @@ for (Tuple row : rows) {
 				<Variable Class="PlainVariable">
 					<Id>1599334135988</Id>
 					<Name><![CDATA[holding]]></Name>
-					<X>150</X><Y>100</Y>
+					<X>200</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4999,6 +5132,32 @@ for (Tuple row : rows) {
 					<Body><![CDATA[return name;]]></Body>
 				</Function>
 			</Functions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1681166008390</Id>
+					<Name><![CDATA[holdingDS]]></Name>
+					<X>200</X><Y>150</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1599724800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0.01]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[7]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[time(WEEK)]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[holding]]></VerticalAxisExpression>
+					<SamplesToKeep>16</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1599155843692</Id>
@@ -5635,6 +5794,9 @@ res.textHolding.setVisible(false);
 res.progressRectangle.setVisible(false);
 
 holding += agent.amount;
+
+agent.isDroppedOff = true;
+
 //traceln("%s | %s | Wh now holding %5.2f", agent, this, holding);
 if (queue.size() > 0 && holding >= queue.get(0).amount)
 	holdForProduct.unblock();]]></Code>
@@ -7364,7 +7526,7 @@ set_capacity(newCapacity);]]></OnClickCode>
 int newDemand = roundToInt(triangular(demandMean*0.75, demandMean, demandMean*1.25));
 demandRequestSizes.add(time(WEEK), newDemand);
 demand += newDemand;
-demandLevelHistory.add(newDemand);]]></AfterStepCode>
+demandLevelHistory.update();]]></AfterStepCode>
 				<PhysicalLength Class="CodeUnitValue">
 					<Code><![CDATA[1]]></Code>
 					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
@@ -7665,7 +7827,7 @@ demandLevelHistory.add(newDemand);]]></AfterStepCode>
 					</RecurrenceCode>
 					<FreezeXAxis>true</FreezeXAxis>
 					<VerticalAxisExpression><![CDATA[demand]]></VerticalAxisExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>200</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1599679096463</Id>
@@ -7687,7 +7849,7 @@ demandLevelHistory.add(newDemand);]]></AfterStepCode>
 						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>12</SamplesToKeep>
+					<SamplesToKeep>16</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
@@ -7925,8 +8087,11 @@ Vehicle res = (Vehicle)agent.resourceUnits().get(0);
 res.textHolding.setVisible(false);
 res.progressRectangle.setVisible(false);
 
+// update model objects
 demand -= agent.amount;
-demandLevelHistory.add(demand);
+demandLevelHistory.update();
+
+agent.isDroppedOff = true;
 
 traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f", 
 	agent, this, agent.amount, demand);]]></Code>
@@ -8837,6 +9002,7 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 				<Variable Class="PlainVariable">
 					<Id>1599585586246</Id>
 					<Name><![CDATA[inProgress]]></Name>
+					<Description><![CDATA[Assigned to true once it was sent to an agent.]]></Description>
 					<X>450</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8846,6 +9012,37 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1680903393948</Id>
+					<Name><![CDATA[isDroppedOff]]></Name>
+					<Description><![CDATA[Set to true once it's considered "complete" (but will still remain alive while traveling back in the vehicle)]]></Description>
+					<X>450</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1680904105569</Id>
+					<Name><![CDATA[birthtime]]></Name>
+					<X>50</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[time()]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -9080,8 +9277,8 @@ return dest;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[return String.format("Order[%s%s -> %s%s | x%5.2f]", 
-	source_type, source_index, destination_type, destination_index, amount);]]></Body>
+					<Body><![CDATA[return String.format("Order[%s -> %s | x%5.2f]", 
+	getSource(), getDestination(), amount);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -9948,8 +10145,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 			<Name><![CDATA[SCGraph]]></Name>
 			<Import><![CDATA[import java.util.stream.IntStream;
 import java.util.stream.Collectors;]]></Import>
-			<StartupCode><![CDATA[setup();
-]]></StartupCode>
+			<StartupCode><![CDATA[setup();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1680713635114</Id>
@@ -10057,6 +10253,24 @@ import java.util.stream.Collectors;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1680889770201</Id>
+					<Name><![CDATA[fc2point]]></Name>
+					<Description><![CDATA[Key is a 2-length int array describing factory index and customer index. 
+The value is the point an edge should move through when the given factory ships to the given customer,
+so as to avoid any edges going through a node in the intermediary warehouse layer.]]></Description>
+					<X>-530</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
+						<ElementClass><![CDATA[Pair<Integer,Integer>]]></ElementClass>
+						<ValueElementClass><![CDATA[Point]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -10079,8 +10293,8 @@ import java.util.stream.Collectors;]]></Import>
 					</Parameter>
 					<Body><![CDATA[final double XSTART = 25,
 			 XFINISH = rectRegion.getWidth()-XSTART;
-double offsetPer = (XFINISH - XSTART) / (popSize + 1);
-return offsetPer*(index+1) + XSTART;]]></Body>
+double offsetPerObj = (XFINISH - XSTART) / (popSize + 1);
+return offsetPerObj*(index+1) + XSTART;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -10146,28 +10360,6 @@ return interpolatedPoints;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[List<Point>]]></ReturnType>
-					<Id>1680720078921</Id>
-					<Name><![CDATA[drawCurve]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-300</X><Y>670</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[List<Point> splinePoints = interpolate(points, intermediaries);
-Point p0 = splinePoints.get(0);
-
-polyline.setPos(p0);
-polyline.setNPoints(splinePoints.size());
-for (int i = 0; i < splinePoints.size(); i++) {
-	Point p = splinePoints.get(i);
-	polyline.setPoint(i, p.x-p0.x, p.y-p0.y, p.z-p0.z);
-}
-polyline.setVisible(true);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680720413955</Id>
 					<Name><![CDATA[update]]></Name>
@@ -10176,47 +10368,36 @@ polyline.setVisible(true);]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[numOrders = main.orders.size();
-edges.createShapes(); // force update
-textEdge.createShapes();
+					<Body><![CDATA[// force update the replicated edges/labels
+numOrders = main.orders.countNew();
+edges.createShapes();
+textEdgeFG.createShapes();
+textEdgeBG.createShapes();
 
+// create smoothly curving edges in graph for each order
+int shapeIndex = 0; // may be different from the order index if system is getting backed up
 for (Order order : main.orders) {
+	// skip over this order if it's not newly created
+	if (time()-order.birthtime > 0) continue;
+
+	// "anchors" == important points for the edge to move thru;
+	// at minimum this is the icons for the source and destination
 	Point head = getNodePoint(order.source_type, order.source_index),
 		  tail = getNodePoint(order.destination_type, order.destination_index);
-
-	ArrayList<Point> anchors = new ArrayList<>();
-	if (typeTierDistance(order.source_type, order.destination_type) <= 1) {
-		// direct approach;
-		// shape curve to give appearance of pointing towards destination
-		Point mid = new Point(tail.x, tail.y - 40);
-		anchors.add(head);
-		//anchors.add(mid);
-		anchors.add(tail);
-		traceln("%s: %s -> %s", order, head, tail);
-	} else {
-		// need to go in between nodes in an intermediary layer/tier
-		
-		// just guess proper index right now because i can't be bothered
-		// also safeish to assume the intermediary layer is warehouse (b/c what else could it be)
-		// TODO should be based on destination index too (e.g., for shorter path; multiple destinations arc around same point right now)
-		int idxL = limitMin(0, order.source_index),
-			idxR = order.source_index+1;
-		Point midL = getNodePoint("w", idxL),
-			  midR = getNodePoint("w", idxR);
-		Point mid0 = new Point((midL.x+midR.x)/2., (midL.y+midR.y)/2.),
-			  mid1 = new Point(tail.x, tail.y - 40);
-		anchors.add(head);
-		anchors.add(mid0);
-		//anchors.add(mid1);
-		anchors.add(tail);
-		traceln("%s: %s -> %s -> %s", order, head, mid0, tail);
+	ArrayList<Point> anchors = new ArrayList<>(List.of(head, tail));
+	if (!order.source_type.equals("w") && !order.destination_type.equals("w")) {
+		// edge moves thru the intermediary warehouse layer;
+		// use the ideal point already found in between two warehouse icons
+		anchors.add(1, fc2point.get(new Pair<>(order.source_index, order.destination_index)));
 	}
 	
+	// now convert the anchors to a list of smoothed points that make up the edge
 	List<Point> pts = interpolate(anchors, 20); // semiarbitrary number of intermediary points
 	
-	// update line pointing from order source to destination
-	ShapePolyLine line = edges.get(order.getIndex());
-	line.setLineColor(spectrumColor(order.getIndex(), main.orders.size()));
+	// update edge with the found points
+	Color color = spectrumColor(shapeIndex, numOrders);
+	ShapePolyLine line = edges.get(shapeIndex);
+	line.setLineColor(color);
 	line.setNPoints(pts.size());
 	line.setPos(head.x, head.y, head.z);
 	for (int i = 0; i < pts.size(); i++) {
@@ -10224,12 +10405,21 @@ for (Order order : main.orders) {
 		line.setPoint(i, pt.x - head.x, pt.y - head.y, pt.z - head.z);
 	}
 	
-	// put text approximately in the middle of the line
-	int n = roundToInt(pts.size()*0.2);
-	Point textPt = getTextPoint(pts.get(n-1), pts.get(n), pts.get(n+1), 10); // semiarbitrary text offset
-	traceln("\tText @ %s", textPt);
-	textEdge.get(order.getIndex()).setPos(textPt);
-	textEdge.get(order.getIndex()).setText(order.amount);
+	// put text in niceish point
+	int n = roundToInt(pts.size()*uniform(0.2, 0.25));
+	Point textPt = pts.get(n);
+	
+	ShapeText labelFG = textEdgeFG.get(shapeIndex),
+			  labelBG = textEdgeBG.get(shapeIndex);
+	labelFG.setPos(textPt);
+	labelFG.setText(order.amount);
+	
+	labelBG.setPos(textPt.add(new Point(1.1, 1.1)));
+	labelBG.setText(order.amount);
+	labelBG.setColor(color);
+	
+	// increment shape index for next valid order
+	shapeIndex++;
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -10269,29 +10459,9 @@ return new Point(group.getX(), group.getY());]]></Body>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[int]]></ReturnType>
-					<Id>1680720773256</Id>
-					<Name><![CDATA[typeTierDistance]]></Name>
-					<X>-300</X><Y>70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[type1]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[type2]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[return abs(typeToTier(type1) - typeToTier(type2));]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1680720823505</Id>
 					<Name><![CDATA[typeToTier]]></Name>
-					<X>-260</X><Y>90</Y>
+					<X>-300</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10354,6 +10524,112 @@ double slope = (centroid.y - middle.y) / (centroid.x - middle.x),
 double altX = middle.x + distance;
 return new Point(altX, slope*altX + intercept);]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680889939410</Id>
+					<Name><![CDATA[setup]]></Name>
+					<X>-550</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[setupNodes();
+setupEdgeLookup();]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680889947788</Id>
+					<Name><![CDATA[setupNodes]]></Name>
+					<X>-530</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// setup the proper group position and text position / content for the icon nodes
+
+// for factories
+groupF.createShapes(); textF.createShapes(); // force replication update
+IntStream.range(0, groupF.size()).forEach(i -> {
+	// set horizontal position, centered around the middle
+	double xpos = getNodeX(i, groupF.size());
+	groupF.get(i).setX(xpos);
+	// text object needs to be separate, as child-text objects in a parent-replicated-group share their content
+	textF.get(i).setText(main.factories.get(i).name);
+	textF.get(i).setX(xpos);
+});
+
+// do the same for warehouses
+groupW.createShapes(); textW.createShapes();
+IntStream.range(0, groupW.size()).forEach(i -> {
+	double xpos = getNodeX(i, groupW.size());
+	groupW.get(i).setX(xpos);
+	textW.get(i).setText(main.warehouses.get(i).name);
+	textW.get(i).setX(xpos);
+});
+
+// do the same for customers
+groupC.createShapes(); textC.createShapes();
+IntStream.range(0, groupC.size()).forEach(i -> {
+	double xpos = getNodeX(i, groupC.size());
+	groupC.get(i).setX(xpos);
+	textC.get(i).setText(main.customers.get(i).name);
+	textC.get(i).setX(xpos);
+});]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1680889954354</Id>
+					<Name><![CDATA[setupEdgeLookup]]></Name>
+					<X>-530</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Setup the map for mapping a factory -> customer order,
+//	to the point in the warehouse layer to move the edge thru.
+// Computed once on startup for (probably negligible) efficiency purposes.
+// It assumes there's at least one of each type in the model.
+
+// All candidates for X position an edge can go thru.
+// Subdivide the width and remove any that are too close to a warehouse's node.
+final List<Double> xWNodes = IntStream.range(0, groupW.size())
+									  .mapToDouble(i -> groupW.get(i).getX())
+									  .boxed()
+									  .collect(Collectors.toList());
+final int subdivisions = 100;
+final List<Double> xCandidates = IntStream.range(0, subdivisions)
+		 .mapToDouble(i -> rectRegion.getWidth()*(i*1./subdivisions))
+		 .filter(d -> xWNodes.stream().allMatch(x -> abs(x-d) > 45)) // based on oval radius
+		 .boxed()
+		 .collect(Collectors.toList());
+traceln("XS TO COMPARE: %s", xCandidates);
+
+// Store the Y positions for point referencing (taken from the first nodes; they should all be the same)
+final double yf = groupF.get(0).getY(),
+			 yw = groupW.get(0).getY(),
+			 yc = groupC.get(0).getY();
+// foreach fc combination...
+for (int f = 0; f < main.factories.size(); f++) {
+	double xf = getNodeX(f, main.factories.size());
+	for (int c = 0; c < main.customers.size(); c++) {
+		double xc = getNodeX(c, main.customers.size());
+		// based on the shortest total path length
+		double xBest = xCandidates.stream()
+							.min((x1, x2) -> Double.compare(
+												getDistance(xf, yf, x1, yw)+getDistance(x1, yw, xc, yc), 
+												getDistance(xf, yf, x2, yw)+getDistance(x2, yw, xc, yc)
+												))
+							.get();
+		// store mapping
+		Point pt = new Point(xBest, yw);
+		traceln("PUTTING [%s, %s] @ %s", f, c, pt);
+		fc2point.put(new Pair<>(f,c), pt);
+	}
+}]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -10407,6 +10683,30 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
+				<Text>
+					<Id>1680896112954</Id>
+					<Name><![CDATA[textEdgeBG]]></Name>
+					<X>311.2</X><Y>181.2</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<ReplicationCode Class="CodeValue">
+						<Code><![CDATA[numOrders]]></Code>
+					</ReplicationCode>
+					<EmbeddedIcon>true</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-8355712</Color>
+					<Text><![CDATA[XX.X]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 				<Polyline>
 					<Id>1680716431220</Id>
 					<Name><![CDATA[edges]]></Name>
@@ -10458,7 +10758,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<LineColor>-14774017</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
-					<Width>800</Width>
+					<Width>1000</Width>
 					<Height>600</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor/>
@@ -10466,7 +10766,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 				</Rectangle>
 				<Text>
 					<Id>1680713635169</Id>
-					<Name><![CDATA[textEdge]]></Name>
+					<Name><![CDATA[textEdgeFG]]></Name>
 					<X>310</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -10500,6 +10800,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.customers.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupC.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupC.get(i).getX(), groupC.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10517,8 +10818,8 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-657931</LineColor>
+					<LineWidth>2</LineWidth>
+					<LineColor>-2302756</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<RadiusX>37.25</RadiusX>
@@ -10575,6 +10876,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.warehouses.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupW.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupW.get(i).getX(), groupW.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10592,8 +10894,8 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-657931</LineColor>
+					<LineWidth>2</LineWidth>
+					<LineColor>-2894893</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<RadiusX>37.25</RadiusX>
@@ -10650,6 +10952,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.factories.size()]]></Code>
 					</ReplicationCode>
+					<OnClickCode><![CDATA[//IntStream.range(0, groupF.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupF.get(i).getX(), groupF.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10667,8 +10970,8 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-657931</LineColor>
+					<LineWidth>2</LineWidth>
+					<LineColor>-2894893</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<RadiusX>37.25</RadiusX>
@@ -10772,7 +11075,6 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.factories.size()]]></Code>
 					</ReplicationCode>
-					<OnClickCode><![CDATA[//IntStream.range(0, groupF.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupF.get(i).getX(), groupF.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10797,7 +11099,6 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.warehouses.size()]]></Code>
 					</ReplicationCode>
-					<OnClickCode><![CDATA[//IntStream.range(0, groupW.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupW.get(i).getX(), groupW.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -10822,7 +11123,6 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 					<ReplicationCode Class="CodeValue">
 						<Code><![CDATA[main.customers.size()]]></Code>
 					</ReplicationCode>
-					<OnClickCode><![CDATA[//IntStream.range(0, groupC.size()).forEach(i -> traceln("#%s @ %s, %s", i, groupC.get(i).getX(), groupC.get(i).getY()));]]></OnClickCode>
 					<EmbeddedIcon>true</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -11004,7 +11304,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 				<Text>
 					<Id>1602549211989</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>50</X><Y>120</Y>
+					<X>30</X><Y>650</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11025,7 +11325,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 				<Text>
 					<Id>1602549244232</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>50</X><Y>160</Y>
+					<X>30</X><Y>690</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11046,7 +11346,7 @@ return new Point(altX, slope*altX + intercept);]]></Body>
 				<Text>
 					<Id>1602549268787</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>220</X><Y>160</Y>
+					<X>200</X><Y>690</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
