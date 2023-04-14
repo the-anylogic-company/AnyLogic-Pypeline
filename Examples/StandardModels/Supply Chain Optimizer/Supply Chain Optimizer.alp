@@ -1909,7 +1909,7 @@ Remove 'temp' files after usage]]></Text>
 				<Text>
 					<Id>1680896671848</Id>
 					<Name><![CDATA[text19]]></Name>
-					<X>855</X><Y>45</Y>
+					<X>815</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1933,7 +1933,7 @@ Customer:]]></Text>
 				<Text>
 					<Id>1680896906958</Id>
 					<Name><![CDATA[text20]]></Name>
-					<X>915</X><Y>45</Y>
+					<X>875</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1944,9 +1944,9 @@ Customer:]]></Text>
 					<Rotation>0.0</Rotation>
 					<Color>-8355712</Color>
 					<Text><![CDATA[
-Output
-Max capacity 
-Demand range]]></Text>
+Stock + Production Rate
+Held / Max Amount
+Ordered + Demand Range]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>10</Size>
@@ -3991,6 +3991,51 @@ if (output < 0)
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
+				<Text>
+					<Id>1681227307027</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>1</X><Y>16</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[(+##/wk)]]></Text>
+					<TextCode><![CDATA[text1.getText()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>11</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1681227291095</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>1</X><Y>-49</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[XXXX
+##.#]]></Text>
+					<TextCode><![CDATA[text.getText()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 				<EmbeddedObjectPresentation>
 					<Id>1599257961340</Id>
 					<Name><![CDATA[trucksPop_presentation]]></Name>
@@ -4460,8 +4505,8 @@ if (output < 0)
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
-+## (##.#)]]></Text>
-					<TextCode><![CDATA[String.format("%s\n+%2.0f (%.1f)", name, outputRate(PER_WEEK), output)]]></TextCode>
+##.#]]></Text>
+					<TextCode><![CDATA[String.format("%s\n%.1f", name, output)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -4549,28 +4594,6 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 
 				</Group>
 				<Text>
-					<Id>1681164496553</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>0</X><Y>12.5</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[X / X (##.#%)]]></Text>
-					<TextCode><![CDATA[String.format("%s / %s (%.1f%%)", truckPool.idle(), truckPool.capacity, truckPool.utilization()*100.)]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
 					<Id>1681165854060</Id>
 					<Name><![CDATA[text2]]></Name>
 					<X>420</X><Y>130</Y>
@@ -4590,6 +4613,28 @@ set_outputRate(newOutput, PER_WEEK);]]></OnClickCode>
 						<Style>2</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1681226648493</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>0</X><Y>15</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-9868951</Color>
+					<Text><![CDATA[(+##/wk)]]></Text>
+					<TextCode><![CDATA[String.format("(+%2.0f/wk)", outputRate(PER_WEEK))]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>11</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
 				</Text>
 			</Presentation>
 
@@ -7089,6 +7134,51 @@ holding -= agent.amount;]]></Code>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
+				<Text>
+					<Id>1681227260468</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>21</X><Y>-26</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[/ ##.#]]></Text>
+					<TextCode><![CDATA[text1.getText()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1681227237814</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>1</X><Y>-46</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[XXXX
+##.#       ]]></Text>
+					<TextCode><![CDATA[text.getText()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 				<EmbeddedObjectPresentation>
 					<Id>1599259991038</Id>
 					<Name><![CDATA[trucksPop_presentation]]></Name>
@@ -7356,8 +7446,8 @@ holding -= agent.amount;]]></Code>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
-##.# / ##.#]]></Text>
-					<TextCode><![CDATA[String.format("%s\n%.1f / %.1f", name, holding, capacity)]]></TextCode>
+##.#       ]]></Text>
+					<TextCode><![CDATA[String.format("%s\n%.1f       ", name, holding)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -7445,28 +7535,6 @@ set_capacity(newCapacity);]]></OnClickCode>
 
 				</Group>
 				<Text>
-					<Id>1681164586729</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>0</X><Y>12.5</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[X / X (##.#%)]]></Text>
-					<TextCode><![CDATA[String.format("%s / %s (%.1f%%)", truckPool.idle(), truckPool.capacity, truckPool.utilization()*100.)]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
 					<Id>1681166008383</Id>
 					<Name><![CDATA[text2]]></Name>
 					<X>220</X><Y>130</Y>
@@ -7486,6 +7554,28 @@ set_capacity(newCapacity);]]></OnClickCode>
 						<Style>2</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1681226518372</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>20</X><Y>-27</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-9868951</Color>
+					<Text><![CDATA[/ ##.#]]></Text>
+					<TextCode><![CDATA[String.format("/ %.1f", capacity)]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
 				</Text>
 			</Presentation>
 
@@ -8487,6 +8577,28 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 
 			<Presentation>
 				<Text>
+					<Id>1681227200895</Id>
+					<Name><![CDATA[text5]]></Name>
+					<X>1</X><Y>11</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[(## ± ##.# /wk)]]></Text>
+					<TextCode><![CDATA[text4.getText()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
 					<Id>1600048519005</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>1</X><Y>-39</Y>
@@ -8500,7 +8612,7 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 					<Rotation>0.0</Rotation>
 					<Color>-1</Color>
 					<Text><![CDATA[XXXX
--## ± ##.#]]></Text>
+##.#]]></Text>
 					<TextCode><![CDATA[text.getText()]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
@@ -8815,8 +8927,8 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[XXXX
--## ± ##.# (##.#)]]></Text>
-					<TextCode><![CDATA[String.format("%s\n%2d ± %4.1f (%.1f)", name, -demandMean, demandMean*0.25, demand)]]></TextCode>
+##.#]]></Text>
+					<TextCode><![CDATA[String.format("%s\n%.1f", name, demand)]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -8865,6 +8977,28 @@ traceln("%s | %s | Dropped off %5.2f! Customer now expecting: %5.2f",
 						<Style>2</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1681226466126</Id>
+					<Name><![CDATA[text4]]></Name>
+					<X>0</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-9868951</Color>
+					<Text><![CDATA[(## ± ##.# /wk)]]></Text>
+					<TextCode><![CDATA[String.format("(%2d ± %4.1f /wk)", demandMean, demandMean*0.25)]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
 				</Text>
 			</Presentation>
 
@@ -10144,7 +10278,9 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 			<Id>1680713635119</Id>
 			<Name><![CDATA[SCGraph]]></Name>
 			<Import><![CDATA[import java.util.stream.IntStream;
-import java.util.stream.Collectors;]]></Import>
+import java.util.stream.Collectors;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;]]></Import>
 			<StartupCode><![CDATA[setup();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -10278,7 +10414,7 @@ so as to avoid any edges going through a node in the intermediary warehouse laye
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680713635127</Id>
 					<Name><![CDATA[getNodeX]]></Name>
-					<X>-300</X><Y>250</Y>
+					<X>-300</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10395,7 +10531,7 @@ for (Order order : main.orders) {
 	List<Point> pts = interpolate(anchors, 20); // semiarbitrary number of intermediary points
 	
 	// update edge with the found points
-	Color color = spectrumColor(shapeIndex, numOrders);
+	Color color = semiTransparent(typeToColor(order.source_type)); //spectrumColor(shapeIndex, numOrders);
 	ShapePolyLine line = edges.get(shapeIndex);
 	line.setLineColor(color);
 	line.setNPoints(pts.size());
@@ -10405,21 +10541,43 @@ for (Order order : main.orders) {
 		line.setPoint(i, pt.x - head.x, pt.y - head.y, pt.z - head.z);
 	}
 	
-	// put text in niceish point
-	int n = roundToInt(pts.size()*uniform(0.2, 0.25));
-	Point textPt = pts.get(n);
-	
+	// set text content and shadow color for label; position will be updated in the next phase
 	ShapeText labelFG = textEdgeFG.get(shapeIndex),
 			  labelBG = textEdgeBG.get(shapeIndex);
-	labelFG.setPos(textPt);
 	labelFG.setText(order.amount);
-	
-	labelBG.setPos(textPt.add(new Point(1.1, 1.1)));
 	labelBG.setText(order.amount);
 	labelBG.setColor(color);
 	
 	// increment shape index for next valid order
 	shapeIndex++;
+	
+}
+
+// set positions of all edge labels in this second pass,
+//	so extra logic can be added to avoid overlapping a label on two edges or on each other
+for (int i = 0; i < shapeIndex; i++) {
+	ShapePolyLine line = edges.get(i);
+	
+	// set of label position randomly near edge's start, 
+	//	repeating until it's in a valid relatively nonambiguous position
+	ShapeText labelFG = textEdgeFG.get(i),
+		      labelBG = textEdgeBG.get(i);
+	int attempts = 0;
+	do {
+		// within a certain % of the head, starting from outside the node's circle (~40px radius)
+		// (as the edge technically starts in the node's center)
+		double p = 40.0 / line.length();
+		Point textPt = line.getPosition(1.0-uniform(p, p + 0.1), 1.0, false, null);
+		// shift upwards so that the label is more on the edge
+		textPt = textPt.add(new Point(0d, -getTextBBOX(labelFG).getHeight()/2.0));
+
+		labelFG.setPos(textPt);
+		labelBG.setPos(textPt.add(new Point(1.1, 1.1)));
+		
+		attempts++;
+		
+	// keep repeating this while the the invalid conditions are true (or until the attempt limit is hit)
+	} while (invalidOverlaps(labelFG) && attempts < 20);
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -10486,43 +10644,6 @@ switch (type) {
 		error("Unknown type '%s'", type);
 }
 return tier;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[Point]]></ReturnType>
-					<Id>1680818962648</Id>
-					<Name><![CDATA[getTextPoint]]></Name>
-					<X>-300</X><Y>190</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[start]]></Name>
-						<Type><![CDATA[Point]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[middle]]></Name>
-						<Type><![CDATA[Point]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[end]]></Name>
-						<Type><![CDATA[Point]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[distance]]></Name>
-						<Type><![CDATA[double]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Approximate the distance from the midpoint by projecting from the triangle's center to the middle point.
-Point centroid = new Point((start.x + middle.x + end.x)/3., (start.y + middle.y + end.y)/3.);
-if (centroid.x == middle.x){
-	// special case when centroid in line with middle point (technically infinite slope)
-	return new Point(middle.x, middle.y + distance * signum(middle.y-centroid.y));
-}
-double slope = (centroid.y - middle.y) / (centroid.x - middle.x),
-		intercept = middle.y - slope*middle.x;
-double altX = middle.x + distance;
-return new Point(altX, slope*altX + intercept);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -10605,7 +10726,6 @@ final List<Double> xCandidates = IntStream.range(0, subdivisions)
 		 .filter(d -> xWNodes.stream().allMatch(x -> abs(x-d) > 45)) // based on oval radius
 		 .boxed()
 		 .collect(Collectors.toList());
-traceln("XS TO COMPARE: %s", xCandidates);
 
 // Store the Y positions for point referencing (taken from the first nodes; they should all be the same)
 final double yf = groupF.get(0).getY(),
@@ -10625,10 +10745,141 @@ for (int f = 0; f < main.factories.size(); f++) {
 							.get();
 		// store mapping
 		Point pt = new Point(xBest, yw);
-		traceln("PUTTING [%s, %s] @ %s", f, c, pt);
 		fc2point.put(new Pair<>(f,c), pt);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Color]]></ReturnType>
+					<Id>1681227932230</Id>
+					<Name><![CDATA[typeToColor]]></Name>
+					<X>-300</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[type]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[Color color = null;
+switch (type) {
+	case "f":
+		color = new Color(248, 64, 0);
+		break;
+	case "w":
+		color = gold;
+		break;
+	case "c":
+		color = new Color(168, 197, 229);
+		break;
+	default:
+		error("Unknown type '%s'", type);
+}
+return color;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[boolean]]></ReturnType>
+					<Id>1681496284414</Id>
+					<Name><![CDATA[invalidOverlaps]]></Name>
+					<X>-300</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[text]]></Name>
+						<Type><![CDATA[ShapeText]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Find bbox of text relative to itself and put its rectangle in the global coordinate system
+// Note that the method to find the bbox should be considered an approximation.
+// Ref: https://docs.oracle.com/javase/8/docs/api/java/awt/Font.html#getStringBounds-java.lang.String-java.awt.font.FontRenderContext-
+Rectangle2D bbox = getTextBBOX(text);
+
+// Check any of the nodes
+for (ReplicatedShape rs : new ReplicatedShape[]{groupF, groupW, groupC}) {
+	if (rs.contains(bbox.getMinX(), bbox.getMinY())
+		|| rs.contains(bbox.getMinX(), bbox.getMaxY())
+		|| rs.contains(bbox.getMaxX(), bbox.getMinY())
+		|| rs.contains(bbox.getMaxX(), bbox.getMaxY())
+		)
+		return true;
+}
+
+// Check any of the edges
+// (based on exceeding intersectin with more than 1 edge)
+int intersections = 0;
+for (int i = 0; i < edges.size(); i++) {
+	ShapePolyLine pline = edges.get(i);
+	// rough, but quick check to see if it's in the bbox of the polyline
+	if (!bbox.intersects(pline.getXMin(), pline.getYMin(), pline.getXMax()-pline.getXMin(), pline.getYMax()-pline.getYMin())) {
+		continue;
+	}
+	// more fine check along each segment of the polyline
+	for (int j = 0; j < pline.getNPoints()-1; j++) {
+		double x1 = pline.getX() + pline.getPointDx(j),
+			   y1 = pline.getY() + pline.getPointDy(j),
+			   x2 = pline.getX() + pline.getPointDx(j+1),
+			   y2 = pline.getY() + pline.getPointDy(j+1);
+		if (bbox.intersectsLine(x1, y1, x2, y2)) {
+			intersections++;
+			
+			// quick stop here
+			if (intersections > 1) {
+				return true;
+			}
+			
+			// go to next polyline
+			break;
+		}
+	}
+}
+
+// Check other text objects
+for (int i = 0; i < textEdgeFG.size(); i++) {
+	ShapeText other = textEdgeFG.get(i);
+	
+	// skip if this is the same text object (or if 'text' is the shadow)
+	if (abs(text.getX()-other.getX()) + abs(text.getY()-other.getY()) <= 2)
+		continue;
+		
+	// find bbox of other text for referencing it
+	Rectangle2D bbox2 = getTextBBOX(other);
+	
+	// can stop here if they intersect one another at all
+	if (bbox.intersects(bbox2)) {
+		return true;
+	}
+}
+return false;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Rectangle2D]]></ReturnType>
+					<Id>1681500871631</Id>
+					<Name><![CDATA[getTextBBOX]]></Name>
+					<X>-300</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[text]]></Name>
+						<Type><![CDATA[ShapeText]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Find bbox of text relative to itself and put its rectangle in the global coordinate system
+// Note that the method to find the bbox should be considered an approximation.
+// Ref: https://docs.oracle.com/javase/8/docs/api/java/awt/Font.html#getStringBounds-java.lang.String-java.awt.font.FontRenderContext-
+Rectangle2D bbox = text.getFont().getStringBounds(text.getText(), new FontRenderContext(null, true, true));
+double xoffset = text.getAlignment().equals(ALIGNMENT_LEFT) // alignment not embedded in font properties
+					? 0
+					: text.getAlignment().equals(ALIGNMENT_CENTER)
+						? bbox.getWidth()/2.
+						: bbox.getWidth();
+bbox.setRect(text.getX() - xoffset, text.getY(), bbox.getWidth(), bbox.getHeight());
+return bbox;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -10702,7 +10953,7 @@ for (int f = 0; f < main.factories.size(); f++) {
 					<Text><![CDATA[XX.X]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>12</Size>
+						<Size>14</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
@@ -10747,7 +10998,7 @@ for (int f = 0; f < main.factories.size(); f++) {
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<OnClickCode><![CDATA[_origin_VA.navigateTo();]]></OnClickCode>
@@ -10783,7 +11034,7 @@ for (int f = 0; f < main.factories.size(); f++) {
 					<Text><![CDATA[XX.X]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>12</Size>
+						<Size>14</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
