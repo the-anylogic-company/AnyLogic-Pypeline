@@ -7612,11 +7612,9 @@ set_capacity(newCapacity);]]></OnClickCode>
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<AfterStepCode><![CDATA[// generate new demand and add to expected remaining value
-int newDemand = roundToInt(triangular(demandMean*0.75, demandMean, demandMean*1.25));
-demandRequestSizes.add(time(WEEK), newDemand);
-demand += newDemand;
-demandLevelHistory.update();]]></AfterStepCode>
+				<AfterStepCode><![CDATA[// record how much we ordered this week and then reset it for the next
+demandRequestSizes.add(time(WEEK), recentDemand);
+recentDemand = 0;]]></AfterStepCode>
 				<PhysicalLength Class="CodeUnitValue">
 					<Code><![CDATA[1]]></Code>
 					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
@@ -7688,6 +7686,21 @@ demandLevelHistory.update();]]></AfterStepCode>
 					<Id>1599584262816</Id>
 					<Name><![CDATA[demand]]></Name>
 					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1681502975981</Id>
+					<Name><![CDATA[recentDemand]]></Name>
+					<X>200</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7881,6 +7894,45 @@ demandLevelHistory.update();]]></AfterStepCode>
 					</Points>
 				</Connector>
 			</Connectors>
+			<Events>
+				<Event>
+					<Id>1681501297610</Id>
+					<Name><![CDATA[newDemandRequest]]></Name>
+					<X>200</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1681545600000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[// average 1x/week, but up to 14 days between
+exponential(0, 14, 0, 1000)]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[// generate new demand
+int amount = roundToInt(triangular(demandMean*0.75, demandMean, demandMean*1.25));
+// add to expected remaining value and amount demanded this week
+demand += amount;
+recentDemand += amount;
+demandLevelHistory.update();]]></Action>
+				</Event>
+			</Events>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
