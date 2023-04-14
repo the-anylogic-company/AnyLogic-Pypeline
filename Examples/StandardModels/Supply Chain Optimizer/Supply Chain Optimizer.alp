@@ -185,162 +185,7 @@ static List<Color> tab10Colormap = List.of(
 					</Properties>
 				</Variable>
 			</Variables>
-			<Events>
-				<Event>
-					<Id>1599345699529</Id>
-					<Name><![CDATA[resetCustomerRequest]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_DAY]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1599379200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[7]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[// Once every week, allow customers to make another order
-// (for sometime in the following week)
-customers.forEach(cus -> cus.makeRequest.restart());]]></Action>
-				</Event>
-				<Event>
-					<Id>1599424823133</Id>
-					<Name><![CDATA[dateTilSunMidnight]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>180</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="userControls">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[uniform(1, 6)]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_SECOND]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1599379200000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0
-
-// start at next sunday]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[// should start at next sunday at 12am
-traceln(date());
-double til_midnight = getTimeoutToNextTime(0, 0, 0);
-int days_til_sun = 7 - (getDayOfWeek() % 8);
-double til_sunmidnight = til_midnight + toModelTime(1, DAY)*days_til_sun;
-traceln(addToDate(date(), getEngine().getTimeUnit(), til_sunmidnight));
-traceln();]]></Action>
-				</Event>
-			</Events>
 			<Functions>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1599260011600</Id>
-					<Name><![CDATA[runSolver__old]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Convert "this" (i.e., Main) to JSON, then pass to Python.
-// Note that Python needs to sent the data as a string,
-//	hence the single quotes around the format placeholder (%s).
-String json_data = pyCommunicator.toJson(this);
-HashMap<String, Object> solution = pyCommunicator.runResults(
-	HashMap.class,
-	String.format("find_solution('%s')", json_data)
-);
-
-/* `solution` has the following keys: 
-"cost" (double) -> the minimized cost
-"is_successful" (boolean) -> whether the optimization was without errors
-"message" (string) -> feedback from the optimizer (only relevant if failed)
-"factories" (List[Dict[str, List]]) -> 
-				a list of dictionaries; 
-				each list corresponds with factory in the pop,
-				with the inner dict's keys being 
-				'w' (for what to send to the warehouse)
-				or 'c' (for what to send to each customer)
-"warehouses" (List[Dict[str, List]]) -> 
-				same format as "factories", 
-				but only has 'c' key
-*/
-
-// Note that all values have to be type casted from "Object"
-//	to the type we know them to be.
-double cost = (double) solution.get("cost");
-boolean is_successful = (boolean) solution.get("is_successful");
-if (!is_successful) {
-	warning("Optimization failed; it reported: %s", solution.get("message"));
-}
-
-// Send orders to factories for delivering to warehouses and customers
-List<HashMap<String,List<Double>>> factoryInstructions = (List) solution.get("factories");
-for (int i = 0; i < factoryInstructions.size(); i++) {
-	HashMap<String,List<Double>> instructionMap = factoryInstructions.get(i);
-	List<Double> ordersForWarehouses = instructionMap.get("w");
-	for (int j = 0; j < ordersForWarehouses.size(); j++) {
-		// Factory `i` sending to Warehouse `j`
-		double amount = ordersForWarehouses.get(j);
-		if (amount > 0) {
-			send(new Order(factories(i), warehouses(j), amount), factories(i));
-		}
-	}
-	List<Double> ordersForCustomers = instructionMap.get("c");
-	for (int k = 0; k < ordersForCustomers.size(); k++) {
-		// Factory `i` sending to Customer `k`
-		double amount = ordersForCustomers.get(k);
-		if (amount > 0) {
-			send(new Order(factories(i), customers(k), amount), factories(i));
-		}
-	}
-}
-
-// Send orders to warehouses for delivering to customers
-List<HashMap<String,List<Double>>> warehouseInstructions = (List) solution.get("warehouses");
-for (int i = 0; i < warehouseInstructions.size(); i++) {
-	HashMap<String,List<Double>> instructionMap = warehouseInstructions.get(i);
-	List<Double> ordersForCustomers = instructionMap.get("c");
-	for (int j = 0; j < ordersForCustomers.size(); j++) {
-		// Warehouse `i` sending to Customer `j`
-		double amount = ordersForCustomers.get(j);
-		if (amount > 0) {
-			send(new Order(warehouses(i), customers(j), amount), warehouses(i));
-		}
-	}
-}]]></Body>
-				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
@@ -382,22 +227,6 @@ orders.stream()
 	
 // Update visualized network graph
 graph.update();]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1599675266185</Id>
-					<Name><![CDATA[setupPlots]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>270</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[customers.forEach(cus -> customerDemandPlot
-	.addDataSet(cus.demandLevelHistory, cus.name, tab10Colormap.get(cus.getIndex()), 
-	true, false, Chart.INTERPOLATION_LINEAR, 2.0, Chart.POINT_CIRCLE));
-	]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1649,36 +1478,6 @@ F2]]></Text>
 						<Style>2</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
-					<Id>1599854816805</Id>
-					<Name><![CDATA[text14]]></Name>
-					<X>-410</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Add titles / explanations
-Add 'dot' alternative
-Reduce oversized graph 
-       (scale down, handle individual cases [maxX], or increase view area sizes)
-Change aspect ratio (may fix previous problem)
-Prolong weekly activity (make order speed slower?)
-Consolidate rounding to one location
-Maybe use just integers for products?
-Fix red indicator text for table on stats page
-Remove 'temp' files after usage]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
 				</Text>
 				<Group>
 					<Id>1600039237172</Id>
@@ -9953,30 +9752,6 @@ inProgress = true;]]></Body>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
-				<Text>
-					<Id>1599259820734</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>130</X><Y>40</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[TODO - fill/unfill progress rectangle during delays
-TODO - maybe add 'holding' amount variable if users want to see nested pops
-
-]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Group>
 					<Id>1599507526263</Id>
 					<Name><![CDATA[truckAnim]]></Name>
