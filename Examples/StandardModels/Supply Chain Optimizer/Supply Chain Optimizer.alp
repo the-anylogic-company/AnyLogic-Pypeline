@@ -1017,12 +1017,12 @@ currentViewIndex = viewIndex;]]></Body>
 					<ShowLabel>false</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
-						<ClassName><![CDATA[SCGraph]]></ClassName>
+						<ClassName><![CDATA[NetworkGraph]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
-							<ClassName><![CDATA[SCGraph]]></ClassName>
+							<ClassName><![CDATA[NetworkGraph]]></ClassName>
 							<ItemName><![CDATA[1680713635114]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
@@ -10328,7 +10328,7 @@ TODO - maybe add 'holding' amount variable if users want to see nested pops
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1680713635119</Id>
-			<Name><![CDATA[SCGraph]]></Name>
+			<Name><![CDATA[NetworkGraph]]></Name>
 			<Import><![CDATA[import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 import java.awt.font.FontRenderContext;
