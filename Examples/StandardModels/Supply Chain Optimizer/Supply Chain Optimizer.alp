@@ -145,7 +145,7 @@ static List<Color> tab10Colormap = List.of(
 					<X>-200</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
@@ -194,7 +194,7 @@ static List<Color> tab10Colormap = List.of(
 					<X>-200</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Convert "this" (i.e., Main) to JSON, then pass to Python.
 Object jsonInput = pyCommunicator.toJson(this);
@@ -236,7 +236,7 @@ graph.update();]]></Body>
 					<X>-200</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[viewIndex]]></Name>
@@ -10204,7 +10204,7 @@ import java.awt.geom.Rectangle2D;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1680720444243</Id>
 					<Name><![CDATA[numOrders]]></Name>
-					<X>-270</X><Y>170</Y>
+					<X>-370</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10222,7 +10222,7 @@ import java.awt.geom.Rectangle2D;]]></Import>
 					<Description><![CDATA[Key is a 2-length int array describing factory index and customer index. 
 The value is the point an edge should move through when the given factory ships to the given customer,
 so as to avoid any edges going through a node in the intermediary warehouse layer.]]></Description>
-					<X>-530</X><Y>110</Y>
+					<X>-530</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10241,7 +10241,7 @@ so as to avoid any edges going through a node in the intermediary warehouse laye
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680713635127</Id>
 					<Name><![CDATA[getNodeX]]></Name>
-					<X>-300</X><Y>300</Y>
+					<X>-500</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10264,7 +10264,7 @@ return offsetPerObj*(index+1) + XSTART;]]></Body>
 					<ReturnType><![CDATA[List<Point>]]></ReturnType>
 					<Id>1680720078915</Id>
 					<Name><![CDATA[interpolate]]></Name>
-					<X>-300</X><Y>350</Y>
+					<X>-370</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10326,7 +10326,7 @@ return interpolatedPoints;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680720413955</Id>
 					<Name><![CDATA[update]]></Name>
-					<X>-300</X><Y>150</Y>
+					<X>-400</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10337,7 +10337,7 @@ edges.createShapes();
 textEdgeFG.createShapes();
 textEdgeBG.createShapes();
 
-// create smoothly curving edges in graph for each order
+// create smoothly curving edges in the graph for each order
 int shapeIndex = 0; // may be different from the order index if system is getting backed up
 for (Order order : main.orders) {
 	// skip over this order if it's not newly created
@@ -10412,7 +10412,7 @@ for (int i = 0; i < shapeIndex; i++) {
 					<ReturnType><![CDATA[Point]]></ReturnType>
 					<Id>1680720591978</Id>
 					<Name><![CDATA[getNodePoint]]></Name>
-					<X>-300</X><Y>50</Y>
+					<X>-250</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10425,7 +10425,9 @@ for (int i = 0; i < shapeIndex; i++) {
 						<Name><![CDATA[index]]></Name>
 						<Type><![CDATA[int]]></Type>
 					</Parameter>
-					<Body><![CDATA[ShapeGroup group = null;
+					<Body><![CDATA[// Get the position of the node of the given type, at the given index
+
+ShapeGroup group = null;
 switch (type) {
 	case "f":
 		group = groupF.get(index);
@@ -10446,7 +10448,7 @@ return new Point(group.getX(), group.getY());]]></Body>
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1680720823505</Id>
 					<Name><![CDATA[typeToTier]]></Name>
-					<X>-300</X><Y>70</Y>
+					<X>-250</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10455,7 +10457,7 @@ return new Point(group.getX(), group.getY());]]></Body>
 						<Name><![CDATA[type]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
-					<Body><![CDATA[// tier is a semi-arbitrary number that provides an ordinal value to the categories of the types
+					<Body><![CDATA[// tier is a number that provides an ordinal value to the categories of the types
 int tier = 0;
 switch (type) {
 	case "f":
@@ -10477,12 +10479,14 @@ return tier;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680889939410</Id>
 					<Name><![CDATA[setup]]></Name>
-					<X>-550</X><Y>50</Y>
+					<X>-550</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[setupNodes();
+					<Body><![CDATA[// Replicate the nodes and edges for the number of agents in this model
+
+setupNodes();
 setupEdgeLookup();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -10490,7 +10494,7 @@ setupEdgeLookup();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680889947788</Id>
 					<Name><![CDATA[setupNodes]]></Name>
-					<X>-530</X><Y>70</Y>
+					<X>-530</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10531,15 +10535,15 @@ IntStream.range(0, groupC.size()).forEach(i -> {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1680889954354</Id>
 					<Name><![CDATA[setupEdgeLookup]]></Name>
-					<X>-530</X><Y>90</Y>
+					<X>-530</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Setup the map for mapping a factory -> customer order,
+					<Body><![CDATA[// Setup the map from factory -> customer order,
 //	to the point in the warehouse layer to move the edge thru.
-// Computed once on startup for (probably negligible) efficiency purposes.
-// It assumes there's at least one of each type in the model.
+// It's computed once on startup for (probably negligible) efficiency purposes.
+// It assumes there's at least one of each type of agent in the model.
 
 // All candidates for X position an edge can go thru.
 // Subdivide the width and remove any that are too close to a warehouse's node.
@@ -10581,7 +10585,7 @@ for (int f = 0; f < main.factories.size(); f++) {
 					<ReturnType><![CDATA[Color]]></ReturnType>
 					<Id>1681227932230</Id>
 					<Name><![CDATA[typeToColor]]></Name>
-					<X>-300</X><Y>90</Y>
+					<X>-250</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10590,7 +10594,8 @@ for (int f = 0; f < main.factories.size(); f++) {
 						<Name><![CDATA[type]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
-					<Body><![CDATA[Color color = null;
+					<Body><![CDATA[// convert the type letter to the agent's color
+Color color = null;
 switch (type) {
 	case "f":
 		color = new Color(248, 64, 0);
@@ -10611,7 +10616,7 @@ return color;]]></Body>
 					<ReturnType><![CDATA[boolean]]></ReturnType>
 					<Id>1681496284414</Id>
 					<Name><![CDATA[invalidOverlaps]]></Name>
-					<X>-300</X><Y>210</Y>
+					<X>-370</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10687,7 +10692,7 @@ return false;]]></Body>
 					<ReturnType><![CDATA[Rectangle2D]]></ReturnType>
 					<Id>1681500871631</Id>
 					<Name><![CDATA[getTextBBOX]]></Name>
-					<X>-300</X><Y>190</Y>
+					<X>-370</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11234,6 +11239,31 @@ return bbox;]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Text>
+					<Id>1682025631700</Id>
+					<Name><![CDATA[text50]]></Name>
+					<X>-360</X><Y>40</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[WARNING
+Nothing in this agent relates to the model logic.
+All the objects/functions are used for the highly customized, aesthetic visualization.
+(specifically for the placement of the nodes/edges/labels).
+Examining the code is not for the faint of heart.]]></Text>
+					<Font>
+						<Name>Calibri</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -11496,7 +11526,7 @@ Each order then seizes a vehicle at the respective factory/warehouse, who then g
 			<Parameters>			
 			</Parameters>			
 			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<EnableZoomAndPanning>false</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[Supply Chain Optimizer : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
