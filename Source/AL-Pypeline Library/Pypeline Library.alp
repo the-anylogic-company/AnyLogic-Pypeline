@@ -268,13 +268,7 @@ import java.util.logging.SimpleFormatter;
 import java.util.logging.LogRecord;
 
 import java.util.stream.Collectors;
-import com.google.common.collect.Sets;
-
-import java.lang.reflect.Modifier;
-
-import static anylogic_jsonifier_library.ALJsonifier.fromJson;
-import static anylogic_jsonifier_library.ALJsonifier.fromAgentJson;
-import static anylogic_jsonifier_library.ALJsonifier.fromPopulationJson;]]></Import>
+import com.google.common.collect.Sets;]]></Import>
 			<StartupCode><![CDATA[/*logger.setUseParentHandlers(false);
 ConsoleHandler handler = new ConsoleHandler();
 handler.setFormatter(new SimpleFormatter() {
@@ -530,21 +524,6 @@ try {
 						<Type><![CDATA[Logger]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[Logger.getLogger(PyCommunicator.class.getName())]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1678317670400</Id>
-					<Name><![CDATA[jsonFilter]]></Name>
-					<X>300</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[JsonFilter]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[jsonifier.jsonFilter]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -1501,23 +1480,23 @@ set_redirectPyOutput(
 	Boolean.valueOf(prop.getProperty("redirect_py_output", "true"))
 );
 
-jsonFilter.setMode(Boolean.valueOf(prop.getProperty("json_blacklist_mode", "true")), false);
-jsonFilter.includeGenerated(Boolean.valueOf(prop.getProperty("json_generated_option", "true")));
+jsonifier.jsonFilter.setMode(Boolean.valueOf(prop.getProperty("json_blacklist_mode", "true")), false);
+jsonifier.jsonFilter.includeGenerated(Boolean.valueOf(prop.getProperty("json_generated_option", "true")));
 // clear each property then add it back in manually
-jsonFilter.clearNames();
-jsonFilter.includeNames(prop.getProperty("json_name_filter", "").split(","));
+jsonifier.jsonFilter.clearNames();
+jsonifier.jsonFilter.includeNames(prop.getProperty("json_name_filter", "").split(","));
 
-jsonFilter.clearClasses();
+jsonifier.jsonFilter.clearClasses();
 for (String clz : prop.getProperty("json_class_filter", "").split(",")) {
 	try { // runs verification
-		jsonFilter.includeClasses(Class.forName(clz));
+		jsonifier.jsonFilter.includeClasses(Class.forName(clz));
 	} catch (ClassNotFoundException e) {
 		warning("Class listed in filter but not found: %s", clz);
 	}
 }
 
-jsonFilter.clearPackages();
-jsonFilter.includePackages(prop.getProperty("json_package_filter", "").split(","));]]></Body>
+jsonifier.jsonFilter.clearPackages();
+jsonifier.jsonFilter.includePackages(prop.getProperty("json_package_filter", "").split(","));]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -1543,11 +1522,11 @@ try {
     prop.setProperty("exec_path", String.valueOf(pythonExecPath));
     prop.setProperty("throw_error_on_failed_attempt", String.valueOf(throwErrorOnFailedAttempt));
 	prop.setProperty("redirect_py_output", String.valueOf(redirectPyOutput));
-	prop.setProperty("json_blacklist_mode", String.valueOf(jsonFilter.isInBlacklistMode()));
-	prop.setProperty("json_generated_option", String.valueOf(jsonFilter.isGeneratedIncluded()));
-	prop.setProperty("json_name_filter", jsonFilter.getIncludedNames().stream().collect(Collectors.joining(",")));
-    prop.setProperty("json_class_filter", jsonFilter.getIncludedClasses().stream().map(s -> s.getName()).collect(Collectors.joining(",")));
-    prop.setProperty("json_package_filter", jsonFilter.getIncludedPackages().stream().collect(Collectors.joining(",")));
+	prop.setProperty("json_blacklist_mode", String.valueOf(jsonifier.jsonFilter.isInBlacklistMode()));
+	prop.setProperty("json_generated_option", String.valueOf(jsonifier.jsonFilter.isGeneratedIncluded()));
+	prop.setProperty("json_name_filter", jsonifier.jsonFilter.getIncludedNames().stream().collect(Collectors.joining(",")));
+    prop.setProperty("json_class_filter", jsonifier.jsonFilter.getIncludedClasses().stream().map(s -> s.getName()).collect(Collectors.joining(",")));
+    prop.setProperty("json_package_filter", jsonifier.jsonFilter.getIncludedPackages().stream().collect(Collectors.joining(",")));
     // save properties to project root folder
     prop.store(output, null);
 
@@ -1898,155 +1877,6 @@ try (InputStream input = new FileInputStream(filename)) {
 	error(e, "Exception when reading properties file");
 }
 return prop;]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1678317253530</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON.<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
-					<X>320</X><Y>450</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Body><![CDATA[return jsonifier.toJson(object, false);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1678317253534</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON.<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
-@return The JSON form of the given object, or `null` if an error was encountered<br>]]></Description>
-					<X>300</X><Y>430</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[prettyprint]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Body><![CDATA[return jsonifier.toJson(object, prettyprint);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[T]]></ReturnType>
-					<Id>1678317253544</Id>
-					<Name><![CDATA[fromAgentJson]]></Name>
-					<Description><![CDATA[Converts a JSON string of parameter mapping to an active agent, initialized from the root level agent.<br>
-This function will only work if called from the AnyLogic editor with the ALJsonifier object created as an agent itself (i.e., not programmatically) or manually initialized by calling its `createAndStart` function.<br>
-@param json A JSON string to be converted to an AL agent **or** a path to a file with this information<br>
-@param clazz The class of the AL agent type to convert the provided string to<br>
-@return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>550</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Body><![CDATA[return jsonifier.fromAgentJson(json, clazz, getRootAgent());]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1678317253546</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON and write it to the given file (will overwrite it if it exists) without pretty printing.<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@param file The path to the desried JSON output file; can be relative to the working directory]]></Description>
-					<X>320</X><Y>510</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[file]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[jsonifier.toJson(object, false, file);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[String]]></ReturnType>
-					<Id>1678317253548</Id>
-					<Name><![CDATA[toJson]]></Name>
-					<Description><![CDATA[Converts the given object to JSON and write it to a file (it will overwrite if it exists).<br>
-Note that agents and agent populations are handled manually due to a recursive issue.<br>
-@param object Any data type that can be converted to JSON<br>
-@param prettyprint Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br>
-@param file The path to the desried JSON output file; can be relative to the working directory]]></Description>
-					<X>300</X><Y>490</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[object]]></Name>
-						<Type><![CDATA[Object]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[prettyprint]]></Name>
-						<Type><![CDATA[boolean]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[file]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[jsonifier.toJson(object, prettyprint, file);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[ArrayList]]></ReturnType>
-					<Id>1682112808950</Id>
-					<Name><![CDATA[fromPopulationJson]]></Name>
-					<Description><![CDATA[A function specifically for converting the given JSON (an array of objects mapping parameter names to value) to an arraylist of agents.<br>
-@param json A JSON string **or** a path to a file with this information<br>
-@param agent_clazz The class of the AL agent type<br>
-@return AgentArrayList An access-only ArrayList of the agents]]></Description>
-					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>                 	
-					<X>300</X><Y>580</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[json]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[agent_clazz]]></Name>
-						<Type><![CDATA[Class<T>]]></Type>
-					</Parameter>
-					<Body><![CDATA[return jsonifier.fromPopulationJson(json, agent_clazz, getRootAgent());]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
