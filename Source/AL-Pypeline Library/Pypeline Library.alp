@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.1.202210270952" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -237,7 +237,6 @@ static HashMap<String, Object> serializeStatisticsContinuous(StatisticsContinuou
 	return statMap;
 }
 ]]></AdditionalClassCode>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.nio.file.Files;
 import java.io.IOException;
 import java.io.FileWriter;
@@ -322,7 +321,6 @@ try {
 			<SceneBackgroundColor/>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
-	 			<SpaceType>CONTINUOUS</SpaceType>			
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
 				<RotateAnimationVertically>false</RotateAnimationVertically>
@@ -2025,6 +2023,31 @@ Note that agents and agent populations are handled manually due to a recursive i
 					</Parameter>
 					<Body><![CDATA[jsonifier.toJson(object, prettyprint, file);]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList]]></ReturnType>
+					<Id>1682112808950</Id>
+					<Name><![CDATA[fromPopulationJson]]></Name>
+					<Description><![CDATA[A function specifically for converting the given JSON (an array of objects mapping parameter names to value) to an arraylist of agents.<br>
+@param json A JSON string **or** a path to a file with this information<br>
+@param agent_clazz The class of the AL agent type<br>
+@return AgentArrayList An access-only ArrayList of the agents]]></Description>
+					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>                 	
+					<X>300</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[json]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[agent_clazz]]></Name>
+						<Type><![CDATA[Class<T>]]></Type>
+					</Parameter>
+					<Body><![CDATA[return jsonifier.fromPopulationJson(json, agent_clazz, getRootAgent());]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -2227,7 +2250,6 @@ Note that agents and agent populations are handled manually due to a recursive i
 		<SimulationExperiment ActiveObjectClassId="1569858524855">
 			<Id>1574367440449</Id>
 			<Name><![CDATA[Simulation]]></Name>
-			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
