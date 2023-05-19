@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.2.202303221145" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
 <Model>
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from experiment screen]]></Name>
