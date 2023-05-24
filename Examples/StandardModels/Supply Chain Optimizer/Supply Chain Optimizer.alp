@@ -11431,20 +11431,45 @@ Examining the code is not for the faint of heart.]]></Text>
 			<StopOption><![CDATA[Stop at specified time]]></StopOption>
 			<InitialDate><![CDATA[1578182400000]]></InitialDate>	
 			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1586822400000]]></FinalDate>	
-			<FinalTime><![CDATA[100.0]]></FinalTime>	
+			<FinalDate><![CDATA[1609718400000]]></FinalDate>	
+			<FinalTime><![CDATA[365.0]]></FinalTime>	
 		</ModelTimeProperties>
 		<AnimationProperties>
 			<StopNever>true</StopNever>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
 			<RealTimeScale>1.0</RealTimeScale>
-			<EnableZoomAndPanning>true</EnableZoomAndPanning>
-			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<EnableZoomAndPanning>false</EnableZoomAndPanning>
+			<EnableDeveloperPanel>true</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
-		<Inputs>		
+		<Inputs>
+    		<RunConfigurationInput>
+				<Id>1683054453946</Id>
+				<Name><![CDATA[Input data]]></Name>
+				<InputReference>
+					<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
+					<ClassName><![CDATA[input.xlsx]]></ClassName>
+				</InputReference>
+    		</RunConfigurationInput>		
 		</Inputs>
 		<Outputs>
+    		<RunConfigurationOutput>
+				<Id>1683054454944</Id>
+				<Name><![CDATA[Input data (copy)]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
+					<ClassName><![CDATA[input.xlsx]]></ClassName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683054515626</Id>
+				<Name><![CDATA[Supply demand plot]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[supply_chain_optimizer]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[supplyDemandPlot]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
 		</Outputs>
 	</RunConfiguration>
 	<Experiments>	
@@ -11536,7 +11561,15 @@ At the start of each week, the current model state is sent (in JSON format) to a
 	<ModelResources>
 		<Resource>
 			<Path><![CDATA[input.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[optimizer.py]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[opt_helper.py]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
@@ -11557,5 +11590,6 @@ At the start of each week, the current model state is sent (in JSON format) to a
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
+	<CloudModelUuid><![CDATA[6d7a1559-3eff-4c92-86f6-6b7435181a9e]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>

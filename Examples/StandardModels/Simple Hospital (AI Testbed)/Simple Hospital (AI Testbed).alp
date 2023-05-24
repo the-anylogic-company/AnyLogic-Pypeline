@@ -5901,14 +5901,75 @@ return String.format("[["+placeholders+"]]",
 		<AnimationProperties>
 			<StopNever>true</StopNever>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
-			<RealTimeScale>1.0</RealTimeScale>
-			<EnableZoomAndPanning>true</EnableZoomAndPanning>
-			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<RealTimeScale>25.0</RealTimeScale>
+			<EnableZoomAndPanning>false</EnableZoomAndPanning>
+			<EnableDeveloperPanel>true</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
-		<Inputs>		
+		<Inputs>
+    		<RunConfigurationInput>
+				<Id>1683051562979</Id>
+				<Name><![CDATA[Rate model]]></Name>
+				<InputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[rate_model.h5]]></ClassName>
+				</InputReference>
+    		</RunConfigurationInput>
+    		<RunConfigurationInput>
+				<Id>1683051562190</Id>
+				<Name><![CDATA[Los model]]></Name>
+				<InputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[los_model.h5]]></ClassName>
+				</InputReference>
+    		</RunConfigurationInput>
+    		<RunConfigurationInput>
+				<Id>1683051556331</Id>
+				<Name><![CDATA[Hospital capacity]]></Name>
+				<InputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[hospitalCapacity]]></ItemName>
+				</InputReference>
+    		</RunConfigurationInput>		
 		</Inputs>
 		<Outputs>
+    		<RunConfigurationOutput>
+				<Id>1683051518706</Id>
+				<Name><![CDATA[Patient counts]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[plot]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683051518708</Id>
+				<Name><![CDATA[Daily arrival rate]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[plot1]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683051518710</Id>
+				<Name><![CDATA[Length of stay (predictions)]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[chart]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683051518712</Id>
+				<Name><![CDATA[Time in system]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[simple_hospital_ai_testbed]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[chart1]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
 		</Outputs>
 	</RunConfiguration>
 	<Experiments>	
@@ -5918,7 +5979,7 @@ return String.format("[["+placeholders+"]]",
 			<Name><![CDATA[Simulation]]></Name>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
 			<BeforeSimulationRunCode><![CDATA[// Update start date to today, midnight (real world)
 Date today = new Date();
@@ -10259,7 +10320,7 @@ rot %= (2*PI);]]></OnDrawCode>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<EnableZoomAndPanning>false</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[Hospital stay predictor : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>

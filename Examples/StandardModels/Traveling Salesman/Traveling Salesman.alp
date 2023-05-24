@@ -133,6 +133,28 @@ buildNewOrder();]]></StartupCode>
 			</ScaleRuler>
 			<CurrentLevel>1582063467931</CurrentLevel>
 			<ConnectionsId>1582063467927</ConnectionsId>
+			<Outputs>
+				<Output>
+					<Id>1683052271180</Id>
+					<Name><![CDATA[ordersCompleted]]></Name>
+					<X>1500</X><Y>750</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[int]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[truck.ordersCompleted]]></Code>
+					</Value>
+					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1683100800000</ComputationDate>
+				</Output>
+			</Outputs>
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1582072184262</Id>
@@ -192,6 +214,39 @@ o.set_destinations(newDests);
 send(o, truck);]]></Body>
 				</Function>
 			</Functions>
+			<AnalysisData>
+    			<Histogram2DData>
+					<Id>1683052298576</Id>
+					<Name><![CDATA[completionSizeVsDays]]></Name>
+					<X>1500</X><Y>720</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1683100800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalIntervals>16</HorizontalIntervals>
+					<VerticalIntervals>40</VerticalIntervals>
+					<VerticalRangeFromExpression><![CDATA[0]]></VerticalRangeFromExpression>
+					<VerticalRangeToExpression><![CDATA[10]]></VerticalRangeToExpression>
+					<HorizontalRangeFromExpression><![CDATA[1]]></HorizontalRangeFromExpression>
+					<HorizontalRangeToExpression><![CDATA[17]]></HorizontalRangeToExpression>
+					<Envelope>0.2</Envelope>
+					<Envelope>0.4</Envelope>
+					<Envelope>0.6</Envelope>
+					<Envelope>0.8</Envelope>
+				</Histogram2DData>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1582063467927</Id>
@@ -855,6 +910,59 @@ send(o, truck);]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+    			<Histogram2D>
+					<Id>1683052928064</Id>
+					<Name><![CDATA[chart]]></Name>
+					<X>1260</X><Y>510</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1683100800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>190</Width>
+					<Height>200</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>30</XOffset>
+						<YOffset>10</YOffset>
+						<Width>150</Width>
+						<Height>130</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<ShowType>SHOW_ENVELOPES</ShowType>
+					<HistogramDataExpression>
+					<Id>1683052928066</Id>
+					<Expression><![CDATA[completionSizeVsDays]]></Expression>
+					<Color>-23296</Color>  
+							<Title><![CDATA[Order Size vs Travel Days]]></Title>
+					</HistogramDataExpression>
+    			</Histogram2D>
 				<Text>
 					<Id>1684948573105</Id>
 					<Name><![CDATA[text2]]></Name>
@@ -1988,6 +2096,18 @@ send(o, truck);]]></Body>
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1683052715071</Id>
+					<Name><![CDATA[lastStartTime]]></Name>
+					<X>100</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 			</Variables>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -1999,9 +2119,7 @@ send(o, truck);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
-						<EntryAction><![CDATA[Facility home = main.facilities.findFirst(h -> h.isHomeFacility);
-if (home != null) // this should always be true, but just in case
-	jumpTo( home.getLatitude(), home.getLongitude() );]]></EntryAction>
+						<ExitAction><![CDATA[lastStartTime = time();]]></ExitAction>
 						<FillColor/>
 					</Properties>
 				</StatechartElement>
@@ -2042,6 +2160,9 @@ if (home != null) // this should always be true, but just in case
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<Properties Target="1582071154786">
+						<Action><![CDATA[Facility home = main.facilities.findFirst(h -> h.isHomeFacility);
+if (home != null) // this should always be true, but just in case
+	jumpTo( home.getLatitude(), home.getLongitude() );]]></Action>
 					</Properties>	
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
@@ -2160,7 +2281,9 @@ main.facilities(facIndex).partOfRoute = false;]]></Action>
 					</Points>
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1582071237841" Target="1582071154786" Trigger="timeout">
-						<Action><![CDATA[main.remove_orders(currentOrder);
+						<Action><![CDATA[main.completionSizeVsDays.add(currentOrder.destinations.length-1, (time()-lastStartTime)/24.);
+
+main.remove_orders(currentOrder);
 currentOrder = null;
 ordersCompleted++;
 
@@ -2787,8 +2910,46 @@ return toVisit;]]></Body>
 		<AutoExport>false</AutoExport>
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
+			<ExternalConnection>
+				<Id>1683052132615</Id>
+				<Name><![CDATA[database]]></Name>
+				<X>0</X><Y>0</Y>
+				<Label><X>10</X><Y>0</Y></Label>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>true</ShowLabel>
+				<DatabaseType>EXCEL_ACCESS</DatabaseType>
+				<ConnectionURL><![CDATA[]]></ConnectionURL>
+				<ConnectOnStartup>true</ConnectOnStartup>
+				<DatabaseName><![CDATA[]]></DatabaseName>
+				<ResourceReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[facilities.xlsx]]></ClassName>
+				</ResourceReference>
+				<Host><![CDATA[localhost]]></Host>
+				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
+				<Login><![CDATA[]]></Login>
+				<Password><![CDATA[]]></Password>
+			</ExternalConnection>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[facility_data]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["Sheet1"]]></ExternalTableName>
+				<AutoImport>true</AutoImport>
+			</TableImportSettings>
 		</ImportSettings>
 		<ExportSettings>
+			<ExportExcelResourceReference>
+				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+				<ClassName><![CDATA[facilities.xlsx]]></ClassName>
+			</ExportExcelResourceReference>
+			<TableReference>
+				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+				<ClassName><![CDATA[facility_data]]></ClassName>
+			</TableReference>
 		</ExportSettings>
 	</Database>
 	
@@ -2797,23 +2958,57 @@ return toVisit;]]></Body>
 		<Name><![CDATA[RunConfiguration]]></Name>
 		<MaximumMemory>512</MaximumMemory>
 		<ModelTimeProperties>
-			<StopOption><![CDATA[Stop at specified time]]></StopOption>
+			<StopOption><![CDATA[Stop at specified date]]></StopOption>
 			<InitialDate><![CDATA[1581984000000]]></InitialDate>	
 			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1584489600000]]></FinalDate>	
-			<FinalTime><![CDATA[100.0]]></FinalTime>	
+			<FinalDate><![CDATA[1739836800000]]></FinalDate>	
+			<FinalTime><![CDATA[43848.0]]></FinalTime>	
 		</ModelTimeProperties>
 		<AnimationProperties>
 			<StopNever>true</StopNever>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
-			<RealTimeScale>1.0</RealTimeScale>
-			<EnableZoomAndPanning>true</EnableZoomAndPanning>
-			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<RealTimeScale>50.0</RealTimeScale>
+			<EnableZoomAndPanning>false</EnableZoomAndPanning>
+			<EnableDeveloperPanel>true</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
-		<Inputs>		
+		<Inputs>
+    		<RunConfigurationInput>
+				<Id>1683052166959</Id>
+				<Name><![CDATA[Facility data]]></Name>
+				<InputReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[facilities.xlsx]]></ClassName>
+				</InputReference>
+    		</RunConfigurationInput>		
 		</Inputs>
 		<Outputs>
+    		<RunConfigurationOutput>
+				<Id>1683052168032</Id>
+				<Name><![CDATA[Facility data (input copy)]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[facilities.xlsx]]></ClassName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683053219938</Id>
+				<Name><![CDATA[Orders completed]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[ordersCompleted]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
+    		<RunConfigurationOutput>
+				<Id>1683053224845</Id>
+				<Name><![CDATA[Order Size vs Travel Time (days)]]></Name>
+				<OutputReference>
+					<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
+					<ClassName><![CDATA[Main]]></ClassName>
+					<ItemName><![CDATA[completionSizeVsDays]]></ItemName>
+				</OutputReference>
+    		</RunConfigurationOutput>
 		</Outputs>
 	</RunConfiguration>
 	<Experiments>	
@@ -5474,15 +5669,25 @@ The list is passed to the truck via a message. A statechart is used to have the 
 				<RealTimeScale>10.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
-				<StopOption><![CDATA[Stop at specified time]]></StopOption>
+				<StopOption><![CDATA[Stop at specified date]]></StopOption>
 				<InitialDate><![CDATA[1581984000000]]></InitialDate>	
 				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1941984000000]]></FinalDate>	
-				<FinalTime><![CDATA[100000.0]]></FinalTime>	
+				<FinalDate><![CDATA[1897660800000]]></FinalDate>	
+				<FinalTime><![CDATA[87688.0]]></FinalTime>	
 			</ModelTimeProperties>
 			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
+	<ModelResources>
+		<Resource>
+			<Path><![CDATA[tsp_solver.py]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[facilities.xlsx]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
+	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>0</VersionMajor>

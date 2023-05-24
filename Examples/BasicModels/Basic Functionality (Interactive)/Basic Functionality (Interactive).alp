@@ -8009,6 +8009,6 @@ There are more nuanced use cases and more complex features available as well (re
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
-	<CloudModelUuid><![CDATA[c69aeca1-9566-4898-9d7f-53f873a0e3df]]></CloudModelUuid>
+	<CloudModelUuid><![CDATA[32cea29a-001a-47cb-a853-7aab79615769]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>

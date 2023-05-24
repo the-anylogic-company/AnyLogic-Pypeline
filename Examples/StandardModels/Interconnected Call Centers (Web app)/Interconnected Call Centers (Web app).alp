@@ -5989,18 +5989,18 @@ lines.resetStats();]]></Body>
 		<Name><![CDATA[RunConfiguration]]></Name>
 		<MaximumMemory>512</MaximumMemory>
 		<ModelTimeProperties>
-			<StopOption><![CDATA[Stop at specified time]]></StopOption>
-			<InitialDate><![CDATA[1523880130000]]></InitialDate>	
+			<StopOption><![CDATA[Stop at specified date]]></StopOption>
+			<InitialDate><![CDATA[1523836800000]]></InitialDate>	
 			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1523910130000]]></FinalDate>	
-			<FinalTime><![CDATA[500.0]]></FinalTime>	
+			<FinalDate><![CDATA[1523923200000]]></FinalDate>	
+			<FinalTime><![CDATA[1440.0]]></FinalTime>	
 		</ModelTimeProperties>
 		<AnimationProperties>
 			<StopNever>true</StopNever>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
 			<RealTimeScale>1.0</RealTimeScale>
 			<EnableZoomAndPanning>false</EnableZoomAndPanning>
-			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<EnableDeveloperPanel>true</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
 		<Inputs>
@@ -6246,6 +6246,10 @@ You can use this strategy to create alternatives interfaces for analyzing your m
 			<Path><![CDATA[contactcenteridle.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
+		<Resource>
+			<Path><![CDATA[app.py]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>
@@ -6265,6 +6269,6 @@ You can use this strategy to create alternatives interfaces for analyzing your m
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
-	<CloudModelUuid><![CDATA[6db6616a-dbac-47ac-b82f-579feb589355]]></CloudModelUuid>
+	<CloudModelUuid><![CDATA[f7334819-5401-4be8-bfcc-6ae4d1e710c0]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>
