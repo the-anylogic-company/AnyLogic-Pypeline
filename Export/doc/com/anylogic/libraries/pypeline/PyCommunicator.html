@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":9,"i55":9,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10,"i76":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":9,"i49":9,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -131,7 +131,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>com.anylogic.engine.Agent</li>
 <li>
 <ul class="inheritance">
+<li>anylogic_jsonifier_library.Jsonifier</li>
+<li>
+<ul class="inheritance">
 <li>com.anylogic.libraries.pypeline.PyCommunicator</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -146,11 +151,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>com.anylogic.engine.AgentConstants</code>, <code>com.anylogic.engine.EnvironmentConstants</code>, <code>com.anylogic.engine.internal.a</code>, <code>java.io.Serializable</code></dd>
+<dd><code>com.anylogic.engine.AgentConstants</code>, <code>com.anylogic.engine.EnvironmentConstants</code>, <code>com.anylogic.engine.internal.c</code>, <code>java.io.Serializable</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">PyCommunicator</span>
-extends com.anylogic.engine.Agent</pre>
+extends anylogic_jsonifier_library.Jsonifier</pre>
 <div class="block"><h4>Python Communicator</h4><br>
  <h5>Dragging this agent into a model allows you to run Python code as part of your model.</h5><br>
  <br>
@@ -257,18 +262,8 @@ extends com.anylogic.engine.Agent</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected com.anylogic.engine.presentation.ShapeModelElementsGroup</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#icon">icon</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>protected com.anylogic.engine.presentation.ShapeImage</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#image2">image2</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="JsonFilter.html" title="class in com.anylogic.libraries.pypeline">JsonFilter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#jsonFilter">jsonFilter</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -282,53 +277,36 @@ extends com.anylogic.engine.Agent</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>java.util.logging.Logger</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logger">logger</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static com.fasterxml.jackson.databind.ObjectMapper</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#objmapper">objmapper</a></span></code></th>
-<td class="colLast">
-<div class="block">An instance of Jackson's <code>ObjectMapper</code> class; used in the <code>toJson</code> and <code>fromJson</code> functions.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presentation">presentation</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROPERTIES_FILENAME">PROPERTIES_FILENAME</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PYTHON">PYTHON</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PYTHON_OTHER">PYTHON_OTHER</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PYTHON_PATH">PYTHON_PATH</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PYTHON2">PYTHON2</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PYTHON3">PYTHON3</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pythonCommand">pythonCommand</a></span></code></th>
 <td class="colLast">
@@ -337,7 +315,7 @@ extends com.anylogic.engine.Agent</pre>
  For other settings, this parameter's value will be updated to reflect the executable path of the active Python being used.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pythonCommandType">pythonCommandType</a></span></code></th>
 <td class="colLast">
@@ -346,7 +324,7 @@ extends com.anylogic.engine.Agent</pre>
  If <i>(path)</i> is selected, you can specify the full path to the desired python executable.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pythonExecPath">pythonExecPath</a></span></code></th>
 <td class="colLast">
@@ -355,7 +333,7 @@ extends com.anylogic.engine.Agent</pre>
  For other settings, this parameter's value will be updated to reflect the executable path of the active Python being used.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#redirectPyOutput">redirectPyOutput</a></span></code></th>
 <td class="colLast">
@@ -365,17 +343,17 @@ extends com.anylogic.engine.Agent</pre>
  You may change this parameter during run-time to override the initial value.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static com.anylogic.engine.Scale</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scale">scale</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected com.anylogic.engine.presentation.ShapeText</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#text">text</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#throwErrorOnFailedAttempt">throwErrorOnFailedAttempt</a></span></code></th>
 <td class="colLast">
@@ -383,12 +361,14 @@ extends com.anylogic.engine.Agent</pre>
  In other words: if set to true, errors from Python will cause model-halting errors in AnyLogic.<br></div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.util.LinkedHashSet&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#warnedParameters">warnedParameters</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.anylogic_jsonifier_library.Jsonifier">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;anylogic_jsonifier_library.Jsonifier</h3>
+<code>_connections_commonAnimationSettings_xjal, _image, _text1, _text1_Font, _text2, _text2_Font, _text3, _text3_Font, _text4, _text4_Font, _text5, _text5_Font, connections, icon, image, includeAutogeneratedsBL, includeAutogeneratedsWL, includedClassesBL, includedClassesWL, includedNamesBL, includedNamesWL, includedPackagesBL, includedPackagesWL, isBlacklistMode, isCustomConfiguration, jsonFilter, objmapper, presentation, text1, text2, text3, text4, text5, warnedParameters</code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.anylogic.engine.Agent">
 <!--   -->
@@ -415,7 +395,7 @@ extends com.anylogic.engine.Agent</pre>
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;com.anylogic.engine.AgentConstants</h3>
-<code>AGENT_ORIENTATION_FRONT, AGENT_ORIENTATION_LEFT, AGENT_ORIENTATION_REAR, AGENT_ORIENTATION_RIGHT, ALL, ALL_CONNECTED, ALL_NEIGHBORS, AREA_ACCESS_RESTRICTION_BY_CAPACITY, AREA_ACCESS_RESTRICTION_BY_CONDITION, AREA_ACCESS_RESTRICTION_BY_SCHEDULE, AREA_ACCESS_RESTRICTION_BY_THROUGHPUT, AREA_ACCESS_RESTRICTION_MANUAL, CENTIMETER, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_CENTER, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_NEAR_CONVEYOR, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_RANDOM, CONVEYOR_SIMPLE_STATION_DELAY_TYPE_MANUAL, CONVEYOR_SIMPLE_STATION_DELAY_TYPE_TIMEOUT, CONVEYOR_TYPE_BELT, CONVEYOR_TYPE_CELL, CONVEYOR_TYPE_ROLLER, CUBIC_METER, CUBIC_METER_PER_SECOND, CUSTOM_COLOR_SCHEME, DAY, DEG_PER_SECOND, DEGREE, DENSITY_VALUE_MAX, DENSITY_VALUE_MEAN, EAST, ESCALATOR_STAY_ALL, ESCALATOR_WALK_ALL, ESCALATOR_WALK_ON_LEFT_SIDE, ESCALATOR_WALK_ON_RIGHT_SIDE, EVENT_TIMEOUT_MODE_CYCLIC, EVENT_TIMEOUT_MODE_ONCE, EVENT_TIMEOUT_MODE_USER, EXCEEDED_QUEUE_CROWD_ROUND_AT_THE_END, EXCEEDED_QUEUE_EXTEND_TO_THE_FREE_SPACE, EXT_AGENT_CONTINUOUS, EXT_AGENT_DISCRETE, EXT_AGENT_GIS, EXT_AGENT_INTERACTIVE, EXT_AGENT_NETWORK, EXT_ENTITY, EXT_ENVIRONMENT_CONTINUOUS, EXT_ENVIRONMENT_DISCRETE, EXT_ENVIRONMENT_GIS, EXT_ENVIRONMENT_INTERACTIVE, EXT_SPACE, FLOW_STATISTICS_BOTH, FLOW_STATISTICS_LEFT, FLOW_STATISTICS_RIGHT, FOOT, FPM, FPS, FPS_SQ, HOUR, INCH, JIB_CRANE_CAT_HEAD, JIB_CRANE_FLAT_TOP, JIB_CRANE_INDUSTRIAL, JIB_CRANE_MOVEMENT_CONCURRENT, JIB_CRANE_MOVEMENT_STEP_BY_STEP, KILOGRAM, KILOGRAM_PER_SECOND, KILOMETER, KN, KPH, LIFT_PLATFORM_FLAT, LIFT_PLATFORM_ROLLER, LIFT_SELECTION_MODE_COMPARISON, LIFT_SELECTION_MODE_FIFO, LIFT_SELECTION_MODE_PRIORITY, LINEAR_COLOR_SCHEME, LITER, LITER_PER_SECOND, LOGARITHMIC_COLOR_SCHEME, METER, MILE, MILLIMETER, MILLISECOND, MINUTE, MONTH, MPH, MPS, MPS_SQ, NAUTICAL_MILE, NORTH, NORTHEAST, NORTHWEST, OBJECT_3D_INTERNAL_LIGHTING_GLOBAL, OBJECT_3D_INTERNAL_LIGHTING_INSIDE, OBJECT_3D_INTERNAL_LIGHTING_OFF, OBJECT_3D_XYZ_AXIS_ORDER, OBJECT_3D_YZX_AXIS_ORDER, OBJECT_3D_ZXY_AXIS_ORDER, OIL_BARREL, OIL_BARREL_PER_SECOND, OVERHEAD_CRANE_BRIDGE, OVERHEAD_CRANE_GANTRY, OVERHEAD_CRANE_GIRDER_DOUBLE_TIE, OVERHEAD_CRANE_GIRDER_SINGLE_FLAT, OVERHEAD_CRANE_MOVEMENT_CONCURRENT, OVERHEAD_CRANE_MOVEMENT_INDEPENDENT_HOIST, OVERHEAD_CRANE_MOVEMENT_STEP_BY_STEP, PALLET_RACK_LEFT_TO_RIGHT, PALLET_RACK_NO_DIRECTION, PALLET_RACK_RIGHT_TO_LEFT, PALLET_RACK_SINGLE_AISLE_LEFT, PALLET_RACK_SINGLE_AISLE_RIGHT, PALLET_RACK_TWO_AISLES, PALLET_RACK_TWO_PALLET_RACKS, PARKING_LOT_PARALLEL, PARKING_LOT_PERPENDICULAR, PATH_CONVEYOR, PATH_DASHEDLINE, PATH_LINE, PATH_RAILROAD, PATH_ROAD, PEDESTRIAN_MAP_TYPE, PER_DAY, PER_HOUR, PER_MILLISECOND, PER_MINUTE, PER_MONTH, PER_SECOND, PER_WEEK, PER_YEAR, POSITION_CHOICE_ARRANGED, POSITION_CHOICE_BY_ATTRACTORS, POSITION_CHOICE_RANDOM, RACK_PLACEMENT_BACK_TO_BACK, RACK_PLACEMENT_STAND_ALONE, RACK_SKU_FLOW_DOUBLE_ENTRY, RACK_SKU_FLOW_FIFO, RACK_SKU_FLOW_LIFO, RACK_TYPE_DRIVE_IN, RACK_TYPE_SELECTIVE, RAD_PER_SECOND, RADIAN, RAILWAY_SWITCH_ALL_TO_ALL, RAILWAY_SWITCH_DOUBLE_SLIP, RAILWAY_SWITCH_SINGLE_SLIP, RANDOM, RANDOM_CONNECTED, RANDOM_NEIGHBOR, ROAD_LEFT_HAND, ROAD_LINE_DOUBLE, ROAD_LINE_DOUBLE_DASHED, ROAD_LINE_SINGLE, ROAD_LINE_SINGLE_DASHED, ROAD_RIGHT_HAND, RPM, SECOND, SERVICE_GROUP_BEHAVIOR_DEPENDS_ON_INCOMING_GROUP, SERVICE_GROUP_BEHAVIOR_SAME_FOR_ALL_GROUPS, SERVICE_GROUP_INDIVIDUAL_SERVING, SERVICE_GROUP_ONE_MEMBER_IS_SERVED_OTHERS_WAIT_IN_AREA, SERVICE_GROUP_ONE_MEMBER_IS_SERVED_OTHERS_WAIT_IN_QUEUE, SERVICE_QUEUE_CLOSEST_NON_EMPTY, SERVICE_QUEUE_CLOSEST_STRICT, SERVICE_QUEUE_CUSTOM, SERVICE_QUEUE_LONGEST, SERVICE_QUEUE_NEXT_ROUND_ROBIN, SERVICE_QUEUE_PRIORITY, SERVICE_TYPE_LINEAR, SERVICE_TYPE_POINT, SIGNAL_GREEN, SIGNAL_NONE, SIGNAL_RED, SIGNAL_YELLOW, SIMPLE_STATION_LOADING_MODE_AFTER_UNLOADING, SIMPLE_STATION_LOADING_MODE_SIMULTANEOUS_WITH_UNLOADING, SIMPLE_STATION_PROCESSING_WHEN_AGENT_ENTERS, SIMPLE_STATION_PROCESSING_WHEN_CAPACITY_FULL, SOUTH, SOUTHEAST, SOUTHWEST, SPACE_CONTINUOUS, SPACE_CONTINUOUS_2D, SPACE_DISCRETE, SPACE_DISCRETE_2D, SPACE_GIS, SPACE_UNDEFINED, SQ_CENTIMETER, SQ_FOOT, SQ_INCH, SQ_KILOMETER, SQ_METER, SQ_MILE, SQ_MILLIMETER, SQ_NAUTICAL_MILE, SQ_YARD, TON, TON_PER_SECOND, TRANSPORTER_MAP_TYPE, TURN, TURN_STATION_MODE_ANGLE, TURN_STATION_MODE_ORIENTATION, WALL_FILL_HATCHING, WALL_FILL_NONE, WALL_FILL_SOLID, WEEK, WEST, WINDOW_3D_NAVIGATION_FULL, WINDOW_3D_NAVIGATION_LIMITED_TO_Z_ABOVE_ZERO, WINDOW_3D_NAVIGATION_NONE, WINDOW_3D_NAVIGATION_ROTATION_ONLY, YARD, YEAR</code></li>
+<code>AGENT_ORIENTATION_FRONT, AGENT_ORIENTATION_LEFT, AGENT_ORIENTATION_REAR, AGENT_ORIENTATION_RIGHT, ALL, ALL_CONNECTED, ALL_NEIGHBORS, AREA_ACCESS_RESTRICTION_BY_CAPACITY, AREA_ACCESS_RESTRICTION_BY_CONDITION, AREA_ACCESS_RESTRICTION_BY_SCHEDULE, AREA_ACCESS_RESTRICTION_BY_THROUGHPUT, AREA_ACCESS_RESTRICTION_MANUAL, CENTIMETER, CONVEYOR_BACKWARD, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_CENTER, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_NEAR_CONVEYOR, CONVEYOR_CUSTOM_STATION_AGENT_LOCATION_RANDOM, CONVEYOR_FORWARD, CONVEYOR_SIMPLE_STATION_DELAY_TYPE_MANUAL, CONVEYOR_SIMPLE_STATION_DELAY_TYPE_TIMEOUT, CONVEYOR_TYPE_BELT, CONVEYOR_TYPE_CELL, CONVEYOR_TYPE_ROLLER, CUBIC_METER, CUBIC_METER_PER_SECOND, CUSTOM_COLOR_SCHEME, DAY, DEG_PER_SECOND, DEGREE, DENSITY_VALUE_MAX, DENSITY_VALUE_MEAN, EAST, ELEVATOR_DIRECTION_DOWN_XJAL, ELEVATOR_DIRECTION_NONE_XJAL, ELEVATOR_DIRECTION_UP_XJAL, ELEVATOR_DOORS_FRONT_REAR_XJAL, ELEVATOR_DOORS_FRONT_XJAL, ELEVATOR_MOVEMENT_BY_SPEED_XJAL, ELEVATOR_MOVEMENT_BY_TIME_PER_FLOOR_XJAL, ESCALATOR_STAY_ALL, ESCALATOR_WALK_ALL, ESCALATOR_WALK_ON_LEFT_SIDE, ESCALATOR_WALK_ON_RIGHT_SIDE, EVENT_TIMEOUT_MODE_CYCLIC, EVENT_TIMEOUT_MODE_ONCE, EVENT_TIMEOUT_MODE_USER, EXCEEDED_QUEUE_CROWD_ROUND_AT_THE_END, EXCEEDED_QUEUE_EXTEND_TO_THE_FREE_SPACE, EXT_AGENT_CONTINUOUS, EXT_AGENT_DISCRETE, EXT_AGENT_GIS, EXT_AGENT_INTERACTIVE, EXT_AGENT_NETWORK, EXT_ENTITY, EXT_ENVIRONMENT_CONTINUOUS, EXT_ENVIRONMENT_DISCRETE, EXT_ENVIRONMENT_GIS, EXT_ENVIRONMENT_INTERACTIVE, EXT_SPACE, FLOW_STATISTICS_BOTH, FLOW_STATISTICS_LEFT, FLOW_STATISTICS_RIGHT, FOOT, FPM, FPS, FPS_SQ, HOUR, INCH, JIB_CRANE_CAT_HEAD, JIB_CRANE_FLAT_TOP, JIB_CRANE_INDUSTRIAL, JIB_CRANE_MOVEMENT_CONCURRENT, JIB_CRANE_MOVEMENT_STEP_BY_STEP, KILOGRAM, KILOGRAM_PER_SECOND, KILOMETER, KN, KPH, LIFT_PLATFORM_FLAT, LIFT_PLATFORM_ROLLER, LIFT_SELECTION_MODE_COMPARISON, LIFT_SELECTION_MODE_FIFO, LIFT_SELECTION_MODE_PRIORITY, LINEAR_COLOR_SCHEME, LITER, LITER_PER_SECOND, LOGARITHMIC_COLOR_SCHEME, METER, MILE, MILLIMETER, MILLISECOND, MINUTE, MONTH, MPH, MPS, MPS_SQ, NAUTICAL_MILE, NORTH, NORTHEAST, NORTHWEST, OBJECT_3D_INTERNAL_LIGHTING_GLOBAL, OBJECT_3D_INTERNAL_LIGHTING_INSIDE, OBJECT_3D_INTERNAL_LIGHTING_OFF, OBJECT_3D_XYZ_AXIS_ORDER, OBJECT_3D_YZX_AXIS_ORDER, OBJECT_3D_ZXY_AXIS_ORDER, OIL_BARREL, OIL_BARREL_PER_SECOND, OVERHEAD_CRANE_BRIDGE, OVERHEAD_CRANE_GANTRY, OVERHEAD_CRANE_GIRDER_DOUBLE_TIE, OVERHEAD_CRANE_GIRDER_SINGLE_FLAT, OVERHEAD_CRANE_MOVEMENT_CONCURRENT, OVERHEAD_CRANE_MOVEMENT_INDEPENDENT_HOIST, OVERHEAD_CRANE_MOVEMENT_STEP_BY_STEP, PALLET_RACK_LEFT_TO_RIGHT, PALLET_RACK_NO_DIRECTION, PALLET_RACK_RIGHT_TO_LEFT, PALLET_RACK_SINGLE_AISLE_LEFT, PALLET_RACK_SINGLE_AISLE_RIGHT, PALLET_RACK_TWO_AISLES, PALLET_RACK_TWO_PALLET_RACKS, PARKING_LOT_PARALLEL, PARKING_LOT_PERPENDICULAR, PATH_CONVEYOR, PATH_DASHEDLINE, PATH_LINE, PATH_RAILROAD, PATH_ROAD, PEDESTRIAN_MAP_TYPE, PER_DAY, PER_HOUR, PER_MILLISECOND, PER_MINUTE, PER_MONTH, PER_SECOND, PER_WEEK, PER_YEAR, POSITION_CHOICE_ARRANGED, POSITION_CHOICE_BY_ATTRACTORS, POSITION_CHOICE_RANDOM, RACK_PLACEMENT_BACK_TO_BACK, RACK_PLACEMENT_STAND_ALONE, RACK_TYPE_DRIVE_IN, RACK_TYPE_FIFO_FLOW, RACK_TYPE_LIFO_FLOW, RACK_TYPE_SELECTIVE, RAD_PER_SECOND, RADIAN, RAILWAY_SWITCH_ALL_TO_ALL, RAILWAY_SWITCH_DOUBLE_SLIP, RAILWAY_SWITCH_SINGLE_SLIP, RANDOM, RANDOM_CONNECTED, RANDOM_NEIGHBOR, ROAD_LEFT_HAND, ROAD_LINE_DOUBLE, ROAD_LINE_DOUBLE_DASHED, ROAD_LINE_SINGLE, ROAD_LINE_SINGLE_DASHED, ROAD_RIGHT_HAND, RPM, SECOND, SERVICE_GROUP_BEHAVIOR_DEPENDS_ON_INCOMING_GROUP, SERVICE_GROUP_BEHAVIOR_SAME_FOR_ALL_GROUPS, SERVICE_GROUP_INDIVIDUAL_SERVING, SERVICE_GROUP_ONE_MEMBER_IS_SERVED_OTHERS_WAIT_IN_AREA, SERVICE_GROUP_ONE_MEMBER_IS_SERVED_OTHERS_WAIT_IN_QUEUE, SERVICE_QUEUE_CLOSEST_NON_EMPTY, SERVICE_QUEUE_CLOSEST_STRICT, SERVICE_QUEUE_CUSTOM, SERVICE_QUEUE_LONGEST, SERVICE_QUEUE_NEXT_ROUND_ROBIN, SERVICE_QUEUE_PRIORITY, SERVICE_TYPE_LINEAR, SERVICE_TYPE_POINT, SIGNAL_GREEN, SIGNAL_NONE, SIGNAL_RED, SIGNAL_YELLOW, SIMPLE_STATION_LOADING_MODE_AFTER_UNLOADING, SIMPLE_STATION_LOADING_MODE_SIMULTANEOUS_WITH_UNLOADING, SIMPLE_STATION_PROCESSING_WHEN_AGENT_ENTERS, SIMPLE_STATION_PROCESSING_WHEN_CAPACITY_FULL, SOUTH, SOUTHEAST, SOUTHWEST, SPACE_CONTINUOUS, SPACE_CONTINUOUS_2D, SPACE_DISCRETE, SPACE_DISCRETE_2D, SPACE_GIS, SPACE_UNDEFINED, SQ_CENTIMETER, SQ_FOOT, SQ_INCH, SQ_KILOMETER, SQ_METER, SQ_MILE, SQ_MILLIMETER, SQ_NAUTICAL_MILE, SQ_YARD, TON, TON_PER_SECOND, TRANSPORTER_MAP_TYPE, TURN, TURN_STATION_MODE_ANGLE, TURN_STATION_MODE_ORIENTATION, WALL_FILL_HATCHING, WALL_FILL_NONE, WALL_FILL_SOLID, WEEK, WEST, WINDOW_3D_NAVIGATION_FULL, WINDOW_3D_NAVIGATION_LIMITED_TO_Z_ABOVE_ZERO, WINDOW_3D_NAVIGATION_NONE, WINDOW_3D_NAVIGATION_ROTATION_ONLY, YARD, YEAR</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.anylogic.engine.EnvironmentConstants">
@@ -455,7 +435,17 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 </td>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">PyCommunicator</a></span>&#8203;(boolean&nbsp;enable,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(boolean,boolean,boolean,boolean,java.lang.String%5B%5D,java.lang.String%5B%5D,java.lang.Class%5B%5D,java.lang.Class%5B%5D,java.lang.String%5B%5D,java.lang.String%5B%5D,boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">PyCommunicator</a></span>&#8203;(boolean&nbsp;isBlacklistMode,
+              boolean&nbsp;isCustomConfiguration,
+              boolean&nbsp;includeAutogeneratedsBL,
+              boolean&nbsp;includeAutogeneratedsWL,
+              java.lang.String[]&nbsp;includedPackagesBL,
+              java.lang.String[]&nbsp;includedPackagesWL,
+              java.lang.Class&lt;?&gt;[]&nbsp;includedClassesBL,
+              java.lang.Class&lt;?&gt;[]&nbsp;includedClassesWL,
+              java.lang.String[]&nbsp;includedNamesBL,
+              java.lang.String[]&nbsp;includedNamesWL,
+              boolean&nbsp;enable,
               boolean&nbsp;loadLastWorkingConfig,
               <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
               java.lang.String&nbsp;pythonCommand,
@@ -467,6 +457,18 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">PyCommunicator</a></span>&#8203;(boolean&nbsp;enable,
+              boolean&nbsp;loadLast,
+              <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
+              java.lang.String&nbsp;otherCommandOrPath,
+              java.lang.String&nbsp;execPath,
+              boolean&nbsp;throwError,
+              boolean&nbsp;redirect)</code></th>
+<td class="colLast">
+<div class="block">Initialize PyCommunicator object with the default JSON information and specified Python information</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.anylogic.engine.Engine,com.anylogic.engine.Agent,com.anylogic.engine.AgentList)">PyCommunicator</a></span>&#8203;(com.anylogic.engine.Engine&nbsp;engine,
               com.anylogic.engine.Agent&nbsp;owner,
               com.anylogic.engine.AgentList&lt;? extends <a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;&nbsp;ownerPopulation)</code></th>
@@ -474,7 +476,7 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 <div class="block">Constructor</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.anylogic.libraries.pypeline.PythonCommandType)">PyCommunicator</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType)</code></th>
 <td class="colLast">
 <div class="block">Initialize the PyCommunicator object with an abbreviated constructor.<br><br>
@@ -482,7 +484,7 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 Defaults to throwing an error when a Python command fails and redirecting Python output to the AnyLogic console.<br><br></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.anylogic.libraries.pypeline.PythonCommandType,boolean,boolean)">PyCommunicator</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
               boolean&nbsp;throwErrorOnFailedAttempt,
               boolean&nbsp;redirectPyOutput)</code></th>
@@ -491,7 +493,7 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 <b>Use case:</b> when wanting to call Python with one of the built-in aliases and to specify further parameter options.<br><br></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String)">PyCommunicator</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
               java.lang.String&nbsp;otherCommandOrPath)</code></th>
 <td class="colLast">
@@ -500,7 +502,7 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 Defaults to throwing an error when a Python command fails and redirecting Python output to the AnyLogic console.<br><br></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,boolean,boolean)">PyCommunicator</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
               java.lang.String&nbsp;otherCommandOrPath,
               boolean&nbsp;throwErrorOnFailedAttempt,
@@ -609,128 +611,78 @@ and wanting to specify further parameter options.<br><br></div>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
-             java.lang.Class&lt;T&gt;&nbsp;clazz)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
-             java.lang.Class&lt;T&gt;&nbsp;clazz,
-             com.anylogic.engine.Agent&nbsp;anyAgent)</code></th>
-<td class="colLast">
-<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br></div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">fromAgentJson</a></span>&#8203;(java.lang.String&nbsp;json,
-             java.lang.Class&lt;T&gt;&nbsp;clazz,
-             com.anylogic.engine.AgentArrayList&nbsp;population)</code></th>
-<td class="colLast">
-<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br>
- The agent will be added to the specified population.<br><br>
- Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br><br></div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromJson(java.lang.String,java.lang.Class)">fromJson</a></span>&#8203;(java.lang.String&nbsp;json,
-        java.lang.Class&lt;T&gt;&nbsp;clazz)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>java.util.ArrayList</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">fromPopulationJson</a></span>&#8203;(java.lang.String&nbsp;json,
-                  java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                  com.anylogic.engine.Agent&nbsp;anyAgent)</code></th>
-<td class="colLast">
-<div class="block">A function specifically for converting the given JSON to an arraylist of agents.<br><br></div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>static &lt;T extends com.anylogic.engine.Agent&gt;<br>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">fromPopulationJson</a></span>&#8203;(java.lang.String&nbsp;json,
-                  java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                  com.anylogic.engine.AgentArrayList&nbsp;population)</code></th>
-<td class="colLast">
-<div class="block">Converts a list of agents from JSON and adds it to an existing population.<br></div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultPropertiesPath()">getDefaultPropertiesPath</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.elements.IElementDescriptor&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getElementDesciptors()">getElementDesciptors</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.markup.Level[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLevels()">getLevels</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>com.anylogic.engine.presentation.ShapeModelElementsGroup</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModelElementsShape()">getModelElementsShape</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameter(java.lang.String)">getParameter</a></span>&#8203;(java.lang.String&nbsp;_name_xjal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameterNames()">getParameterNames</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.AgentList&lt;? extends <a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPopulation()">getPopulation</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPresentationShape()">getPresentationShape</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>com.anylogic.engine.Scale</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScale()">getScale</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewAreas(java.util.Map)">getViewAreas</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.presentation.ViewArea&gt;&nbsp;_output)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#instantiateBaseStructure_xjal()">instantiateBaseStructure_xjal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isConnected()">isConnected</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attempts to ping the Python server to see if it's still alive and ready to receive commands<br><br></div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmbeddedAgentPresentationVisible(com.anylogic.engine.Agent)">isEmbeddedAgentPresentationVisible</a></span>&#8203;(com.anylogic.engine.Agent&nbsp;_a)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPublicPresentationDefined()">isPublicPresentationDefined</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_enable()">onChange_enable</a></span>()</code></th>
 <td class="colLast">
@@ -740,12 +692,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_enable()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_enable_xjal(boolean)">onChange_enable_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_loadLastWorkingConfig()">onChange_loadLastWorkingConfig</a></span>()</code></th>
 <td class="colLast">
@@ -755,12 +707,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_loadLastWorkingConfig()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_loadLastWorkingConfig_xjal(boolean)">onChange_loadLastWorkingConfig_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommand()">onChange_pythonCommand</a></span>()</code></th>
 <td class="colLast">
@@ -770,12 +722,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonCommand()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommand_xjal(java.lang.String)">onChange_pythonCommand_xjal</a></span>&#8203;(java.lang.String&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommandType()">onChange_pythonCommandType</a></span>()</code></th>
 <td class="colLast">
@@ -785,12 +737,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonCommandType()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonCommandType_xjal(com.anylogic.libraries.pypeline.PythonCommandType)">onChange_pythonCommandType_xjal</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonExecPath()">onChange_pythonExecPath</a></span>()</code></th>
 <td class="colLast">
@@ -800,12 +752,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_pythonExecPath()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_pythonExecPath_xjal(java.lang.String)">onChange_pythonExecPath_xjal</a></span>&#8203;(java.lang.String&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_redirectPyOutput()">onChange_redirectPyOutput</a></span>()</code></th>
 <td class="colLast">
@@ -815,12 +767,12 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_redirectPyOutput()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_redirectPyOutput_xjal(boolean)">onChange_redirectPyOutput_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_throwErrorOnFailedAttempt()">onChange_throwErrorOnFailedAttempt</a></span>()</code></th>
 <td class="colLast">
@@ -830,22 +782,22 @@ and wanting to specify further parameter options.<br><br></div>
  Please call <code>set_throwErrorOnFailedAttempt()</code> method instead.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onChange_throwErrorOnFailedAttempt_xjal(boolean)">onChange_throwErrorOnFailedAttempt_xjal</a></span>&#8203;(boolean&nbsp;oldValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDestroy()">onDestroy</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onOwnerChanged_xjal()">onOwnerChanged_xjal</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onShapeClick(int,int,double,double)">onShapeClick</a></span>&#8203;(int&nbsp;_shape,
             int&nbsp;index,
@@ -853,12 +805,12 @@ and wanting to specify further parameter options.<br><br></div>
             double&nbsp;clicky)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onStartup()">onStartup</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reset()">reset</a></span>()</code></th>
 <td class="colLast">
@@ -866,21 +818,21 @@ and wanting to specify further parameter options.<br><br></div>
  Executing this function sever the connection to Python and then reestablish it.</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String)">run</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String...)">run</a></span>&#8203;(java.lang.String...&nbsp;lines)</code></th>
 <td class="colLast">
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(java.lang.String,java.lang.Object...)">run</a></span>&#8203;(java.lang.String&nbsp;codeFmt,
    java.lang.Object...&nbsp;args)</code></th>
@@ -888,7 +840,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a statement ("just run" / no expected return)<br><br></div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static <a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String...)">runFile</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;preferredVersion,
        java.lang.String...&nbsp;args)</code></th>
@@ -896,7 +848,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file and get the output.<br><br></div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.Class,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String...)">runFile</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
        <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;preferredVersion,
@@ -905,7 +857,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file and get the output.<br><br></div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.Class,java.lang.String...)">runFile</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
        java.lang.String...&nbsp;args)</code></th>
@@ -913,14 +865,14 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Execute a Python file using the preferred version of the running environment.<br><br></div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runFile(java.lang.String...)">runFile</a></span>&#8203;(java.lang.String...&nbsp;args)</code></th>
 <td class="colLast">
 <div class="block">Execute a Python file using the preferred version of the running environment.<br><br></div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String&nbsp;code)</code></th>
@@ -928,7 +880,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String...)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String...&nbsp;lines)</code></th>
@@ -936,7 +888,7 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.Class,java.lang.String,java.lang.Object...)">runResults</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;returnType,
           java.lang.String&nbsp;codeFmt,
@@ -945,21 +897,21 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String)">runResults</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String...)">runResults</a></span>&#8203;(java.lang.String...&nbsp;lines)</code></th>
 <td class="colLast">
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code><a href="Attempt.html" title="class in com.anylogic.libraries.pypeline">Attempt</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runResults(java.lang.String,java.lang.Object...)">runResults</a></span>&#8203;(java.lang.String&nbsp;codeFmt,
           java.lang.Object...&nbsp;args)</code></th>
@@ -967,54 +919,56 @@ and wanting to specify further parameter options.<br><br></div>
 <div class="block">Evaluate an expression ("get value" / expecting a return)<br><br></div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_enable(boolean)">set_enable</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_loadLastWorkingConfig(boolean)">set_loadLastWorkingConfig</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonCommand(java.lang.String)">set_pythonCommand</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonCommandType(com.anylogic.libraries.pypeline.PythonCommandType)">set_pythonCommandType</a></span>&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pythonExecPath(java.lang.String)">set_pythonExecPath</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_redirectPyOutput(boolean)">set_redirectPyOutput</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_throwErrorOnFailedAttempt(boolean)">set_throwErrorOnFailedAttempt</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParameter(java.lang.String,java.lang.Object,boolean)">setParameter</a></span>&#8203;(java.lang.String&nbsp;_name_xjal,
             java.lang.Object&nbsp;_value_xjal,
             boolean&nbsp;_callOnChange_xjal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i72" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParametersToDefaultValues()">setParametersToDefaultValues</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The initial set of object names, or regex patterns, for which any object whose name matches any one of these will be allowed to be outputted to JSON.</div>
+</td>
 </tr>
-<tr id="i73" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupPlainVariables_xjal()">setupPlainVariables_xjal</a></span>()</code></th>
 <td class="colLast">
@@ -1022,24 +976,7 @@ and wanting to specify further parameter options.<br><br></div>
  <em>This method isn't designed to be called by user and may be removed in future releases.</em></div>
 </td>
 </tr>
-<tr id="i74" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson(java.lang.Object)">toJson</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
-<td class="colLast">
-<div class="block">Converts the given object to JSON.<br><br>
- Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
-</td>
-</tr>
-<tr id="i75" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson(java.lang.Object,boolean)">toJson</a></span>&#8203;(java.lang.Object&nbsp;object,
-      boolean&nbsp;prettyprint)</code></th>
-<td class="colLast">
-<div class="block">Converts the given object to JSON.<br><br>
- Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
-</td>
-</tr>
-<tr id="i76" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -1049,18 +986,25 @@ and wanting to specify further parameter options.<br><br></div>
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.anylogic_jsonifier_library.Jsonifier">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;anylogic_jsonifier_library.Jsonifier</h3>
+<code>_includeAutogeneratedsBL_DefaultValue_xjal, _includeAutogeneratedsWL_DefaultValue_xjal, _includedClassesBL_DefaultValue_xjal, _includedClassesWL_DefaultValue_xjal, _includedNamesBL_DefaultValue_xjal, _includedNamesWL_DefaultValue_xjal, _includedPackagesBL_DefaultValue_xjal, _includedPackagesWL_DefaultValue_xjal, _isBlacklistMode_DefaultValue_xjal, _isCustomConfiguration_DefaultValue_xjal, drawLinksToAgents, fromAgentJson, fromAgentJson, fromAgentJson, fromAgentJson, fromAgentJson, fromJson, fromJson, fromPopulationJson, fromPopulationJson, fromPopulationJson, fromPopulationJson, getLinkToAgentStandard_xjal, onChange_includeAutogeneratedsBL, onChange_includeAutogeneratedsBL_xjal, onChange_includeAutogeneratedsWL, onChange_includeAutogeneratedsWL_xjal, onChange_includedClassesBL, onChange_includedClassesBL_xjal, onChange_includedClassesWL, onChange_includedClassesWL_xjal, onChange_includedNamesBL, onChange_includedNamesBL_xjal, onChange_includedNamesWL, onChange_includedNamesWL_xjal, onChange_includedPackagesBL, onChange_includedPackagesBL_xjal, onChange_includedPackagesWL, onChange_includedPackagesWL_xjal, onChange_isBlacklistMode, onChange_isBlacklistMode_xjal, onChange_isCustomConfiguration, onChange_isCustomConfiguration_xjal, readFile, set_includeAutogeneratedsBL, set_includeAutogeneratedsWL, set_includedClassesBL, set_includedClassesWL, set_includedNamesBL, set_includedNamesWL, set_includedPackagesBL, set_includedPackagesWL, set_isBlacklistMode, set_isCustomConfiguration, toJson, toJson, toJson, toJson, writeFile</code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.anylogic.engine.Agent">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.anylogic.engine.Agent</h3>
-<code>_initGetEngine_xjal, addAgentToContents, addEntityToContents, addExt_xjal, agentInfo, agents, agentsInRange, agentsInRange, agentsInRange, applyLayout, applyNetwork, applyNetwork, areStepsEnabled, assignInitialConditions_xjal, connectTo, contents, create, createAndStart, createAsEmbedded, currentBlock, deleteSelf, deliver, deliver, deliverToAllAgentsInside, deliverToAllConnected, deliverToAllNeighbors, deliverToRandomAgentInside, deliverToRandomConnected, deliverToRandomNeighbor, disableSteps, disconnectFrom, disconnectFromAll, distanceByRoute, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, doAfterCreate, doFinish, drawLinksToAgents, enableSteps, error, errorInModel, evaluateRateOf, evaluateRateOf, evaluateTimeoutOf, evaluateTimeoutOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeOnReceiveActionOf, executeOnSendActionOf, ext, finishSimulation, formulasExecute_xjal, getAgentAtCell, getAgentNextToMe, getAgentSpaceType, getAgentTypeId, getAnimationSettingsOf, getAnimationSettingsOf, getBlockEnterTime, getC, getCameras3D, getColor, getConnectedAgent, getConnections, getConnectionsNumber, getContainerStateOf, getConveyorNetworks, getDefaultPopulation, getDifferentialFlatEquationsCount_xjal, getDynamicEvents, getEmbeddedObjects, getEngine, getEnvironment, getEnvironmentSpaceType, getExperimentHost, getFirstOccurrenceTime, getFlowchartEntryTime, getFullName, getGISHeading, getGISMap, getHeight, getHeight, getId, getIdOf, getIndex, getInitialAlgebraicFlatEquationsCount_xjal, getInitialFormulaFlatEquationsCount_xjal, getIntegrationManager_xjal, getLat, getLatitude, getLayoutType, getLength, getLength, getLevel, getLinkToAgentStandard_xjal, getLon, getLongitude, getModeOf, getName, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOfState, getNearestAgent, getNearestAgentByRoute, getNeighbors, getNetwork, getNetworkConnectionRange, getNetworkConnectionsPerAgent, getNetworkNeighborLinkProbability, getNetworkNode, getNetworks, getNetworkScaleFreeM, getNetworkType, getOwner, getOwnerShape, getPhaseVector_xjal, getPhaseVectorForInitialConditions_xjal, getPosition, getPosition, getPresentationScaleOnOwnerSpace, getR, getRailwayNetworks, getRandomConnectedAgent, getReplicatedCollection, getReplicatedList, getRightPart_xjal, getRightPartForInitialConditions_xjal, getRoadNetworks, getRootAgent, getRotation, getRouteProvider, getRuntimeAlgebraicFlatEquationsCount_xjal, getRuntimeFormulaFlatEquationsCount_xjal, getSpace, getSpeed, getSpeed, getStatechartOf, getStatechartOf, getStatechartOf, getStatechartOf, getTargetLat, getTargetLon, getTargetX, getTargetY, getTargetZ, getVelocity, getVerticalRotation, getWidth, getWidth, getX, getXYZ, getXYZ, getY, getZ, goToPopulation, highlight, inState, isAgent, isAutomaticHorizontalRotation, isAutomaticVerticalRotation, isConnectedTo, isEnvironment, isLoggingToDB, isLoggingToDB, isMoving, isNextCellInsideSpace, isReplicated, isSpacePositionSet_xjal, jumpTo, jumpTo, jumpTo, jumpTo, jumpTo, jumpTo, jumpToCell, jumpToRandomEmptyCell, logToDB, logToDBEnterState, logToDBExitState, markParametersAreSet, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToNearestAgent, moveToNearestAgent, moveToNextCell, moveToStraight, moveToStraight, moveToStraight, moveToStraight, moveToStraightInTime, moveToStraightInTime, moveToStraightInTime, moveToStraightInTime, nothingChanged, onAfterStepEnvironment, onArrival, onBeforeCreate, onBeforeStep, onBeforeStepEnvironment, onChange, onCreate, onEngineFinished, onEnterFlowchartBlock, onExitFlowchartBlock, onReceive, onReleaseResource, onSeizeResource, onStep, pauseSimulation, putPhaseVector_xjal, putPhaseVectorForInitialConditions_xjal, randomAgentInside, randomAgentInside, randomEmptyCell, randomPointOfSpace, receive, removeAgentFromContents, removeEntityFromContents, removeExt_xjal, removeFromFlowchart, resourceUnitOfPool, resourceUnits, resourceUnitsOfPool, resourceUnitsOfSeize, restoreCollection_xjal, restoreConnections_xjal, restoreOwner, runSimulation, send, send, sendToAll, sendToAllConnected, sendToAllNeighbors, sendToRandom, sendToRandomConnected, sendToRandomNeighbor, setAgentSpaceType, setAutomaticHorizontalRotation, setAutomaticVerticalRotation, setCell, setColor, setDestroyed, setDimensions, setDimensions, setEngine, setEnvironment, setHeight, setHeight, setId, setLatLon, setLayoutType, setLength, setLength, setLevel, setLocation, setLocation, setLocation, setLocation, setLocationRandomInside, setNetwork, setNetworkAllInRange, setNetworkNode, setNetworkNode, setNetworkNode, setNetworkRandom, setNetworkRingLattice, setNetworkScaleFree, setNetworkSmallWorld, setNetworkUserDefined, setPosition, setRotation, setRouteProvider, setSpace, setSpeed, setSpeed, setupExt_xjal, setupInitialConditions_xjal, setupSpace, setupSpace, setupSpace, setupSpace, setVelocity, setVerticalRotation, setWidth, setWidth, setXY, setXYZ, setXYZ, spaceCellHeight, spaceCellWidth, spaceColumns, spaceHeight, spaceRows, spaceWidth, spaceZHeight, start, startAsEmbedded, stateContainsState, stop, stopSimulation, swapWithAgent, swapWithCell, swapWithNextCell, testConditionOf, testConditionOf, testGuardOf, testGuardOf, testGuardOf, testGuardOf, testMessageOf, timeToArrival, timeToArrival, toLengthUnits, toPixels, tryExt, warning, warning</code></li>
+<code>_initGetEngine_xjal, addAgentToContents, addEntityToContents, addExt_xjal, agentInfo, agents, agentsInRange, agentsInRange, agentsInRange, applyLayout, applyNetwork, applyNetwork, areStepsEnabled, assignInitialConditions_xjal, connectTo, contents, create, createAndStart, createAsEmbedded, currentBlock, deleteSelf, deliver, deliver, deliverToAllAgentsInside, deliverToAllConnected, deliverToAllNeighbors, deliverToRandomAgentInside, deliverToRandomConnected, deliverToRandomNeighbor, disableSteps, disconnectFrom, disconnectFromAll, distanceByRoute, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, distanceTo, doAfterCreate, doFinish, enableSteps, error, errorInModel, evaluateRateOf, evaluateRateOf, evaluateTimeoutOf, evaluateTimeoutOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeActionOf, executeOnReceiveActionOf, executeOnSendActionOf, ext, finishSimulation, formulasExecute_xjal, getAgentAtCell, getAgentNextToMe, getAgentSpaceType, getAgentTypeId, getAnimationSettingsOf, getAnimationSettingsOf, getBlockEnterTime, getC, getCameras3D, getColor, getConnectedAgent, getConnections, getConnectionsNumber, getContainerStateOf, getConveyorNetworks, getDefaultPopulation, getDifferentialFlatEquationsCount_xjal, getDynamicEvents, getEmbeddedObjects, getEngine, getEnvironment, getEnvironmentSpaceType, getExperimentHost, getFirstOccurrenceTime, getFlowchartEntryTime, getFullName, getGISHeading, getGISMap, getHeight, getHeight, getId, getIdOf, getIndex, getInitialAlgebraicFlatEquationsCount_xjal, getInitialFormulaFlatEquationsCount_xjal, getIntegrationManager_xjal, getLat, getLatitude, getLayoutType, getLength, getLength, getLevel, getLon, getLongitude, getModeOf, getName, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOf, getNameOfState, getNearestAgent, getNearestAgentByRoute, getNeighbors, getNetwork, getNetworkConnectionRange, getNetworkConnectionsPerAgent, getNetworkNeighborLinkProbability, getNetworkNode, getNetworks, getNetworkScaleFreeM, getNetworkType, getOwner, getOwnerShape, getPhaseVector_xjal, getPhaseVectorForInitialConditions_xjal, getPosition, getPosition, getPresentationScaleOnOwnerSpace, getR, getRailwayNetworks, getRandomConnectedAgent, getReplicatedCollection, getReplicatedList, getRightPart_xjal, getRightPartForInitialConditions_xjal, getRoadNetworks, getRootAgent, getRotation, getRouteProvider, getRuntimeAlgebraicFlatEquationsCount_xjal, getRuntimeFormulaFlatEquationsCount_xjal, getSpace, getSpeed, getSpeed, getStatechartOf, getStatechartOf, getStatechartOf, getStatechartOf, getTargetLat, getTargetLon, getTargetX, getTargetY, getTargetZ, getVelocity, getVerticalRotation, getWidth, getWidth, getX, getXYZ, getXYZ, getY, getZ, goToPopulation, highlight, inState, isAgent, isAutomaticHorizontalRotation, isAutomaticVerticalRotation, isConnectedTo, isEnvironment, isLoggingToDB, isLoggingToDB, isMoving, isNextCellInsideSpace, isReplicated, isSpacePositionSet_xjal, jumpTo, jumpTo, jumpTo, jumpTo, jumpTo, jumpTo, jumpToCell, jumpToRandomEmptyCell, logToDB, logToDBEnterState, logToDBExitState, markParametersAreSet, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveTo, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToInTime, moveToNearestAgent, moveToNearestAgent, moveToNextCell, moveToStraight, moveToStraight, moveToStraight, moveToStraight, moveToStraightInTime, moveToStraightInTime, moveToStraightInTime, moveToStraightInTime, nothingChanged, onAfterStepEnvironment, onArrival, onBeforeCreate, onBeforeStep, onBeforeStepEnvironment, onChange, onCreate, onEngineFinished, onEnterFlowchartBlock, onExitFlowchartBlock, onReceive, onReleaseResource, onSeizeResource, onStep, pauseSimulation, putPhaseVector_xjal, putPhaseVectorForInitialConditions_xjal, randomAgentInside, randomAgentInside, randomEmptyCell, randomPointOfSpace, receive, removeAgentFromContents, removeEntityFromContents, removeExt_xjal, removeFromFlowchart, resourceUnitOfPool, resourceUnits, resourceUnitsOfPool, resourceUnitsOfSeize, restoreCollection_xjal, restoreConnections_xjal, restoreOwner, runSimulation, send, send, sendToAll, sendToAllConnected, sendToAllNeighbors, sendToRandom, sendToRandomConnected, sendToRandomNeighbor, setAgentSpaceType, setAutomaticHorizontalRotation, setAutomaticVerticalRotation, setCell, setColor, setDestroyed, setDimensions, setDimensions, setEngine, setEnvironment, setHeight, setHeight, setId, setLatLon, setLayoutType, setLength, setLength, setLevel, setLocation, setLocation, setLocation, setLocation, setLocationRandomInside, setNetwork, setNetworkAllInRange, setNetworkNode, setNetworkNode, setNetworkNode, setNetworkRandom, setNetworkRingLattice, setNetworkScaleFree, setNetworkSmallWorld, setNetworkUserDefined, setPosition, setRotation, setRouteProvider, setSpace, setSpeed, setSpeed, setupExt_xjal, setupInitialConditions_xjal, setupSpace, setupSpace, setupSpace, setupSpace, setVelocity, setVerticalRotation, setWidth, setWidth, setXY, setXYZ, setXYZ, spaceCellHeight, spaceCellWidth, spaceColumns, spaceHeight, spaceRows, spaceWidth, spaceZHeight, start, startAsEmbedded, stateContainsState, stop, stopSimulation, swapWithAgent, swapWithCell, swapWithNextCell, testConditionOf, testConditionOf, testGuardOf, testGuardOf, testGuardOf, testGuardOf, testMessageOf, timeToArrival, timeToArrival, toLengthUnits, toPixels, tryExt, warning, warning</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.anylogic.engine.Utilities">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.anylogic.engine.Utilities</h3>
-<code>addToDate, addToDate, atan2fast, bernoulli, bernoulli, beta, beta, beta, beta, beta, binomial, binomial, binomial, binomial, binomial, briefInfoOn, castNumberTypes, castTypes, castTypesBack, cauchy, cauchy, cauchy, chi2, chi2, chi2, copyToClipboard, copyToClipboard, copyToClipboard, createTableElementDatabaseBuilder, createTrajectoryGIS, createURL_xjal, date, dateToTime, day, deleteFrom, difference, difference, differenceInCalendarUnits, differenceInCalendarUnits, differenceInDateUnits, differenceInDateUnits, differenceInDateUnits, differenceInDateUnits, dirToAngle, dropTime, erlang, erlang, erlang, error, error, error, errorInModel, errorInModel, errorInModel, executeAction, executeExpression, executeExpression, executeStatement, exponential, exponential, exponential, exponential, exponential, exponential, findExistingFile, format, format, format, format, format, format, format, formatAmountUnits, formatDayOfWeek, formatFlowRateUnits, formatGeoHeading, formatLatitude, formatLengthUnits, formatLengthUnits, formatLongitude, formatMonth, formatSpeedUnits, formatTimeInterval, gamma, gamma, gamma, gamma, gamma, gamma_frac, gammaLog, geometric, geometric, getAmPm, getAmPm, getCanonicalPath, getDatabaseConnection, getDateWithTimeNextTo, getDayOfMonth, getDayOfMonth, getDayOfWeek, getDayOfWeek, getDayOfYear, getDefaultRandomGenerator, getDistance, getDistance, getDistanceFromPointToLine, getDistanceFromPointToLineSq, getDistanceFromPointToSegment, getDistanceFromPointToSegment, getDistanceFromPointToSegmentSq, getDistanceFromPointToSegmentSq, getDistanceGIS, getDistanceGIS, getDistanceSq, getDistanceSq, getFullName, getHour, getHour, getHourOfDay, getHourOfDay, getLength, getLength, getLengthSq, getLengthSq, getMillisecond, getMillisecond, getMinute, getMinute, getMonth, getMonth, getName, getNearestPointOnSegment, getNearestPointOnSegment, getPerformanceParallelWorkersCount_xjal, getRandom, getRandom, getResult, getSecond, getSecond, getTime, getTimeoutToNextTime, getYear, getYear, gumbel1, gumbel1, gumbel2, gumbel2, hour, hypergeometric, hypergeometric, initializeRadians, insertInto, inspectOf, inspectOfLink_xjal, isFinite, isLineIntersectingLine, isLineIntersectingRectangle, isLoggingClassToDB, isPointInsideRay, isPointInsideRectangle, isPointInsideSegment, isPointOnTheSameLine, isRayIntersectingSegment, joinArrays_xjal, laplace, laplace, layoutTypeToString, limit, limit, limitMax, limitMax, limitMin, limitMin, logarithmic, logarithmic, logistic, logistic, lognormal, lognormal, logToDB, logToDB, logToDB, logToDB, millisecond, minute, month, negativeBinomial, negativeBinomial, negativeBinomial, negativeBinomial, normal, normal, normal, normal, normal, normal, pareto, pareto, pareto, pert, pert, poisson, poisson, poisson, poisson, prepareBeforeExperimentStart_xjal, prepareStatement, pulse, pulseTrain, quantum, ramp, random, randomColor, randomFalse, randomFalse, randomFrom, randomFrom, randomFrom, randomFrom, randomFrom, randomFrom, randomlyCreate, randomlyCreate, randomlyCreate, randomlyCreate, randomTrue, randomTrue, randomWhere, randomWhere, randomWhere, randomWhere, rayleigh, rayleigh, rayleigh, roundToDecimal, roundToInt, second, selectAndDoForEach, selectArrayOfDouble, selectArrayOfInt, selectExists, selectExists, selectFirstValue, selectFirstValue, selectFirstValue, selectFirstValue, selectFrom, selectResultSet, selectTableFunction, selectUniqueValue, selectUniqueValue, selectUniqueValue, selectUniqueValue, selectValues, selectValues, setDefaultRandomGenerator, shuffle, sqlGetObject, sqlGetObject, sqlGetObject, sqlGetObject, sqlSetObject, sqr, step, time, time, timeToDate, toDate, toDate, toDate, toDateInMillis, toLatitude, toLongitude, toModelRate, toModelTime, toRateUnits, toStringAlignedNameValues, toTimeout, toTimeout, toTimeoutInCalendar, toTimeUnits, trace, trace, traceln, traceln, traceln, traceln, traceln, traceToDB, traceToDB, triangular, triangular, triangular, triangular, triangular, triangularAV, triangularAV, uniform, uniform, uniform, uniform, uniform, uniform_discr, uniform_discr, uniform_discr, uniform_pos, uniform_pos, update, week, weibull, weibull, weibull, weibull, weibull, xidz, year, zidz</code></li>
+<code>addToDate, addToDate, atan2fast, bernoulli, bernoulli, beta, beta, beta, beta, beta, binomial, binomial, binomial, binomial, binomial, briefInfoOn, castNumberTypes, castTypes, castTypesBack, cauchy, cauchy, cauchy, chi2, chi2, chi2, copyToClipboard, copyToClipboard, copyToClipboard, createTableElementDatabaseBuilder, createTrajectoryGIS, createURL_xjal, date, dateToTime, day, deleteFrom, difference, difference, differenceInCalendarUnits, differenceInCalendarUnits, differenceInDateUnits, differenceInDateUnits, differenceInDateUnits, differenceInDateUnits, dirToAngle, dropTime, erlang, erlang, erlang, error, error, error, errorInModel, errorInModel, errorInModel, executeAction, executeExpression, executeExpression, executeStatement, exponential, exponential, exponential, exponential, exponential, exponential, findExistingFile, format, format, format, format, format, format, format, formatAmountUnits, formatDayOfWeek, formatFlowRateUnits, formatGeoHeading, formatLatitude, formatLengthUnits, formatLengthUnits, formatLongitude, formatMonth, formatSpeedUnits, formatTimeInterval, gamma, gamma, gamma, gamma, gamma, gammaLog, geometric, geometric, getAmPm, getAmPm, getCanonicalPath, getDatabaseConnection, getDateWithTimeNextTo, getDayOfMonth, getDayOfMonth, getDayOfWeek, getDayOfWeek, getDayOfYear, getDefaultRandomGenerator, getDistance, getDistance, getDistanceFromPointToLine, getDistanceFromPointToLineSq, getDistanceFromPointToSegment, getDistanceFromPointToSegment, getDistanceFromPointToSegmentSq, getDistanceFromPointToSegmentSq, getDistanceGIS, getDistanceGIS, getDistanceSq, getDistanceSq, getFullName, getHour, getHour, getHourOfDay, getHourOfDay, getLength, getLength, getLengthSq, getLengthSq, getMillisecond, getMillisecond, getMinute, getMinute, getMonth, getMonth, getName, getNearestPointOnSegment, getNearestPointOnSegment, getPerformanceParallelWorkersCount_xjal, getRandom, getRandom, getResult, getSecond, getSecond, getTime, getTimeoutToNextTime, getYear, getYear, gumbel1, gumbel1, gumbel2, gumbel2, hour, hypergeometric, hypergeometric, insertInto, inspectOf, inspectOfLink_xjal, isFinite, isLineIntersectingLine, isLineIntersectingRectangle, isLoggingClassToDB, isPointInsideRay, isPointInsideRectangle, isPointInsideSegment, isPointOnTheSameLine, isRayIntersectingSegment, joinArrays_xjal, laplace, laplace, layoutTypeToString, limit, limit, limitMax, limitMax, limitMin, limitMin, logarithmic, logarithmic, logistic, logistic, lognormal, lognormal, logToDB, logToDB, logToDB, logToDB, millisecond, minute, month, negativeBinomial, negativeBinomial, negativeBinomial, negativeBinomial, normal, normal, normal, normal, normal, normal, pareto, pareto, pareto, pert, pert, poisson, poisson, poisson, poisson, prepareBeforeExperimentStart_xjal, prepareStatement, pulse, pulseTrain, quantum, ramp, random, randomColor, randomFalse, randomFalse, randomFrom, randomFrom, randomFrom, randomFrom, randomFrom, randomFrom, randomlyCreate, randomlyCreate, randomlyCreate, randomlyCreate, randomTrue, randomTrue, randomWhere, randomWhere, randomWhere, randomWhere, rayleigh, rayleigh, rayleigh, roundToDecimal, roundToInt, second, selectAndDoForEach, selectArrayOfDouble, selectArrayOfInt, selectExists, selectExists, selectFirstValue, selectFirstValue, selectFirstValue, selectFirstValue, selectFrom, selectResultSet, selectTableFunction, selectUniqueValue, selectUniqueValue, selectUniqueValue, selectUniqueValue, selectValues, selectValues, setDefaultRandomGenerator, shuffle, sqlGetObject, sqlGetObject, sqlGetObject, sqlGetObject, sqlSetObject, sqr, step, time, time, timeToDate, toDate, toDate, toDate, toDateInMillis, toLatitude, toLongitude, toModelRate, toModelTime, toRateUnits, toStringAlignedNameValues, toTimeout, toTimeout, toTimeoutInCalendar, toTimeUnits, trace, trace, traceln, traceln, traceln, traceln, traceln, traceToDB, traceToDB, triangular, triangular, triangular, triangular, triangular, triangularAV, triangularAV, uniform, uniform, uniform, uniform, uniform, uniform_discr, uniform_discr, uniform_discr, uniform_pos, uniform_pos, update, week, weibull, weibull, weibull, weibull, weibull, xidz, year, zidz</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.anylogic.engine.Presentable">
@@ -1228,34 +1172,6 @@ and wanting to specify further parameter options.<br><br></div>
 </dl>
 </li>
 </ul>
-<a id="objmapper">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>objmapper</h4>
-<pre>public static&nbsp;com.fasterxml.jackson.databind.ObjectMapper objmapper</pre>
-<div class="block">An instance of Jackson's <code>ObjectMapper</code> class; used in the <code>toJson</code> and <code>fromJson</code> functions.</div>
-</li>
-</ul>
-<a id="logger">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>logger</h4>
-<pre>public&nbsp;java.util.logging.Logger logger</pre>
-</li>
-</ul>
-<a id="jsonFilter">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>jsonFilter</h4>
-<pre>public&nbsp;<a href="JsonFilter.html" title="class in com.anylogic.libraries.pypeline">JsonFilter</a> jsonFilter</pre>
-</li>
-</ul>
 <a id="history">
 <!--   -->
 </a>
@@ -1269,15 +1185,6 @@ and wanting to specify further parameter options.<br><br></div>
  And to get the Attempt used in the most recent command: <code>history.get(0).getSecond()</code><br><br>
  <br><br>
  Provided as reference for the end-user; for example, if they execute multiple commands sequentially and want the outputs without having to create an object for each call.<br></div>
-</li>
-</ul>
-<a id="warnedParameters">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>warnedParameters</h4>
-<pre>public static&nbsp;java.util.LinkedHashSet&lt;java.lang.String&gt; warnedParameters</pre>
 </li>
 </ul>
 <a id="scale">
@@ -1387,28 +1294,10 @@ protected static final&nbsp;int _SHAPE_NEXT_ID_xjal</pre>
 <a id="level">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>level</h4>
 <pre>protected&nbsp;com.anylogic.engine.markup.Level level</pre>
-</li>
-</ul>
-<a id="presentation">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>presentation</h4>
-<pre>protected&nbsp;com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup presentation</pre>
-</li>
-</ul>
-<a id="icon">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>icon</h4>
-<pre>protected&nbsp;com.anylogic.engine.presentation.ShapeModelElementsGroup icon</pre>
 </li>
 </ul>
 </li>
@@ -1443,13 +1332,23 @@ protected static final&nbsp;int _SHAPE_NEXT_ID_xjal</pre>
 <div class="block">Simple constructor. Please add created agent to some population by calling goToPopulation() function</div>
 </li>
 </ul>
-<a id="&lt;init&gt;(boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">
+<a id="&lt;init&gt;(boolean,boolean,boolean,boolean,java.lang.String[],java.lang.String[],java.lang.Class[],java.lang.Class[],java.lang.String[],java.lang.String[],boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>PyCommunicator</h4>
-<pre>public&nbsp;PyCommunicator&#8203;(boolean&nbsp;enable,
+<pre>public&nbsp;PyCommunicator&#8203;(boolean&nbsp;isBlacklistMode,
+                      boolean&nbsp;isCustomConfiguration,
+                      boolean&nbsp;includeAutogeneratedsBL,
+                      boolean&nbsp;includeAutogeneratedsWL,
+                      java.lang.String[]&nbsp;includedPackagesBL,
+                      java.lang.String[]&nbsp;includedPackagesWL,
+                      java.lang.Class&lt;?&gt;[]&nbsp;includedClassesBL,
+                      java.lang.Class&lt;?&gt;[]&nbsp;includedClassesWL,
+                      java.lang.String[]&nbsp;includedNamesBL,
+                      java.lang.String[]&nbsp;includedNamesWL,
+                      boolean&nbsp;enable,
                       boolean&nbsp;loadLastWorkingConfig,
                       <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
                       java.lang.String&nbsp;pythonCommand,
@@ -1534,7 +1433,7 @@ Defaults to throwing an error when a Python command fails and redirecting Python
 <a id="&lt;init&gt;(com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,boolean,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>PyCommunicator</h4>
 <pre>public&nbsp;PyCommunicator&#8203;(<a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
@@ -1552,6 +1451,22 @@ and wanting to specify further parameter options.<br><br></div>
 <dd><code>throwErrorOnFailedAttempt</code> - whether to throw an error when a Python command fails</dd>
 <dd><code>redirectPyOutput</code> - whether to pipe prints, warnings, and errors from Python to the AnyLogic console</dd>
 </dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(boolean,boolean,com.anylogic.libraries.pypeline.PythonCommandType,java.lang.String,java.lang.String,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>PyCommunicator</h4>
+<pre>public&nbsp;PyCommunicator&#8203;(boolean&nbsp;enable,
+                      boolean&nbsp;loadLast,
+                      <a href="PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a>&nbsp;pythonCommandType,
+                      java.lang.String&nbsp;otherCommandOrPath,
+                      java.lang.String&nbsp;execPath,
+                      boolean&nbsp;throwError,
+                      boolean&nbsp;redirect)</pre>
+<div class="block">Initialize PyCommunicator object with the default JSON information and specified Python information</div>
 </li>
 </ul>
 </li>
@@ -1879,9 +1794,12 @@ protected&nbsp;void&nbsp;onChange_redirectPyOutput_xjal&#8203;(boolean&nbsp;oldV
 <li class="blockList">
 <h4>setParametersToDefaultValues</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setParametersToDefaultValues()</pre>
+<div class="block">The initial set of object names, or regex patterns, for which any object whose name matches any one of these will be allowed to be outputted to JSON. <br>
+ Calling this function's `set_` function will update the filter with the new set. Individual objects can be added/removed using the functions in the filter object.<br>
+ An error will be thrown if trying to set this while in blacklist mode (use the other parameter).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>setParametersToDefaultValues</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>setParametersToDefaultValues</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -1896,7 +1814,7 @@ protected&nbsp;void&nbsp;onChange_redirectPyOutput_xjal&#8203;(boolean&nbsp;oldV
                             boolean&nbsp;_callOnChange_xjal)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>setParameter</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>setParameter</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -1909,7 +1827,7 @@ protected&nbsp;void&nbsp;onChange_redirectPyOutput_xjal&#8203;(boolean&nbsp;oldV
 <pre class="methodSignature">public&nbsp;&lt;T&gt;&nbsp;T&nbsp;getParameter&#8203;(java.lang.String&nbsp;_name_xjal)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getParameter</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getParameter</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -1922,7 +1840,7 @@ protected&nbsp;void&nbsp;onChange_redirectPyOutput_xjal&#8203;(boolean&nbsp;oldV
 <pre class="methodSignature">public&nbsp;java.lang.String[]&nbsp;getParameterNames()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getParameterNames</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getParameterNames</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -1936,7 +1854,7 @@ protected&nbsp;void&nbsp;onChange_redirectPyOutput_xjal&#8203;(boolean&nbsp;oldV
 public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.elements.IElementDescriptor&gt;&nbsp;getElementDesciptors()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getElementDesciptors</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Presentable</code></dd>
+<dd><code>getElementDesciptors</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -1949,7 +1867,7 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <pre class="methodSignature">public&nbsp;com.anylogic.engine.Scale&nbsp;getScale()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getScale</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getScale</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2042,7 +1960,7 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
  This is the text that appears when you print the object to the console and also what appears in the inspection window when you click on the icon during a running model.<br></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>toString</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the complete Python version (major.minor.patch) and path to Python executable (separated by a newline) if Python is connected to, otherwise "null"</dd>
 </dl>
@@ -2094,40 +2012,6 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <dd>The path to the properties file<br><br>
  <br><br>
  Note: The path will change based on where the exported library jar is stored (as the properties is designed to be generated next to the library jar file).</dd>
-</dl>
-</li>
-</ul>
-<a id="toJson(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toJson</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toJson&#8203;(java.lang.Object&nbsp;object)</pre>
-<div class="block">Converts the given object to JSON.<br><br>
- Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>object</code> - Any data type that can be converted to JSON<br><br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The JSON form of the given object, or `null` if an error was encountered<br></dd>
-</dl>
-</li>
-</ul>
-<a id="fromJson(java.lang.String,java.lang.Class)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;fromJson&#8203;(java.lang.String&nbsp;json,
-                             java.lang.Class&lt;T&gt;&nbsp;clazz)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A JSON string to be converted to a Java object<br><br></dd>
-<dd><code>clazz</code> - The class to convert the provided string to<br><br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The object of the specified type (or `null` if errors were encountered)</dd>
 </dl>
 </li>
 </ul>
@@ -2202,102 +2086,6 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 <dd><code>lines</code> - The multi-lined code to run, with each line as its own argument<br><br></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>T The output, in the type specified</dd>
-</dl>
-</li>
-</ul>
-<a id="toJson(java.lang.Object,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toJson</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toJson&#8203;(java.lang.Object&nbsp;object,
-                               boolean&nbsp;prettyprint)</pre>
-<div class="block">Converts the given object to JSON.<br><br>
- Note that agents and agent populations are handled manually due to a recursive issue.<br><br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>object</code> - Any data type that can be converted to JSON<br><br></dd>
-<dd><code>prettyprint</code> - Whether to output JSON in "pretty" format (with newlines, tabs, etc.)<br><br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The JSON form of the given object, or `null` if an error was encountered<br></dd>
-</dl>
-</li>
-</ul>
-<a id="fromAgentJson(java.lang.String,java.lang.Class)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromAgentJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;T&nbsp;fromAgentJson&#8203;(java.lang.String&nbsp;json,
-                                                                    java.lang.Class&lt;T&gt;&nbsp;clazz)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A JSON string to be converted to an AL agent<br><br></dd>
-<dd><code>clazz</code> - The class of the AL agent type to convert the provided string to<br><br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The agent of the specified type (or `null` if errors were encountered)</dd>
-</dl>
-</li>
-</ul>
-<a id="fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromPopulationJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;java.util.ArrayList&nbsp;fromPopulationJson&#8203;(java.lang.String&nbsp;json,
-                                                                                           java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                                                                                           com.anylogic.engine.Agent&nbsp;anyAgent)</pre>
-<div class="block">A function specifically for converting the given JSON to an arraylist of agents.<br><br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A JSON string to be converted (should be a list of dicts, mapping parameter name to value)<br><br></dd>
-<dd><code>agent_clazz</code> - The class of the AL agent type<br><br></dd>
-<dd><code>anyAgent</code> - Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).<br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>AgentArrayList An access-only ArrayList of the agents</dd>
-</dl>
-</li>
-</ul>
-<a id="fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromAgentJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;T&nbsp;fromAgentJson&#8203;(java.lang.String&nbsp;json,
-                                                                    java.lang.Class&lt;T&gt;&nbsp;clazz,
-                                                                    com.anylogic.engine.AgentArrayList&nbsp;population)</pre>
-<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br>
- The agent will be added to the specified population.<br><br>
- Using <code>fromJson</code> will result in a JsonMappingException regarding conflicting setter definitions for the proper "networkNode" (i.e., internal problems)<br><br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A JSON string to be converted to an AL agent<br><br></dd>
-<dd><code>clazz</code> - The class of the AL agent type to convert the provided string to<br><br></dd>
-<dd><code>population</code> - The population to add this agent to<br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The agent of the specified type (or `null` if errors were encountered)</dd>
-</dl>
-</li>
-</ul>
-<a id="fromPopulationJson(java.lang.String,java.lang.Class,com.anylogic.engine.AgentArrayList)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromPopulationJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;void&nbsp;fromPopulationJson&#8203;(java.lang.String&nbsp;json,
-                                                                            java.lang.Class&lt;T&gt;&nbsp;agent_clazz,
-                                                                            com.anylogic.engine.AgentArrayList&nbsp;population)</pre>
-<div class="block">Converts a list of agents from JSON and adds it to an existing population.<br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A valid JSON array, where each element represents a single agent's JSON object, mapping parameter names to values<br></dd>
-<dd><code>agent_clazz</code> - The Java class for the agent type to convert to<br></dd>
-<dd><code>population</code> - The population to add the agents to</dd>
 </dl>
 </li>
 </ul>
@@ -2390,26 +2178,6 @@ public&nbsp;java.util.Map&lt;java.lang.String,&#8203;com.anylogic.engine.element
 </dl>
 </li>
 </ul>
-<a id="fromAgentJson(java.lang.String,java.lang.Class,com.anylogic.engine.Agent)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>fromAgentJson</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T extends com.anylogic.engine.Agent&gt;&nbsp;T&nbsp;fromAgentJson&#8203;(java.lang.String&nbsp;json,
-                                                                    java.lang.Class&lt;T&gt;&nbsp;clazz,
-                                                                    com.anylogic.engine.Agent&nbsp;anyAgent)</pre>
-<div class="block">Converts a JSON string of parameter mapping to a "living" agent.<br><br></div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>json</code> - A JSON string to be converted to an AL agent<br><br></dd>
-<dd><code>clazz</code> - The class of the AL agent type to convert the provided string to<br><br></dd>
-<dd><code>anyAgent</code> - Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).<br></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The agent of the specified type (or `null` if errors were encountered)</dd>
-</dl>
-</li>
-</ul>
 <a id="getViewAreas(java.util.Map)">
 <!--   -->
 </a>
@@ -2434,7 +2202,7 @@ public&nbsp;int&nbsp;getViewAreas&#8203;(java.util.Map&lt;java.lang.String,&#820
 public&nbsp;boolean&nbsp;isPublicPresentationDefined()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>isPublicPresentationDefined</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>isPublicPresentationDefined</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2448,7 +2216,7 @@ public&nbsp;boolean&nbsp;isPublicPresentationDefined()</pre>
 public&nbsp;boolean&nbsp;isEmbeddedAgentPresentationVisible&#8203;(com.anylogic.engine.Agent&nbsp;_a)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>isEmbeddedAgentPresentationVisible</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>isEmbeddedAgentPresentationVisible</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2465,7 +2233,7 @@ public&nbsp;boolean&nbsp;onShapeClick&#8203;(int&nbsp;_shape,
                             double&nbsp;clicky)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onShapeClick</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Presentable</code></dd>
+<dd><code>onShapeClick</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2478,7 +2246,7 @@ public&nbsp;boolean&nbsp;onShapeClick&#8203;(int&nbsp;_shape,
 <pre class="methodSignature">public&nbsp;com.anylogic.engine.markup.Level[]&nbsp;getLevels()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getLevels</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getLevels</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2492,7 +2260,7 @@ public&nbsp;boolean&nbsp;onShapeClick&#8203;(int&nbsp;_shape,
 public&nbsp;com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup&nbsp;getPresentationShape()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getPresentationShape</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getPresentationShape</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2506,7 +2274,7 @@ public&nbsp;com.anylogic.engine.presentation.ShapeTopLevelPresentationGroup&nbsp
 public&nbsp;com.anylogic.engine.presentation.ShapeModelElementsGroup&nbsp;getModelElementsShape()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getModelElementsShape</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Presentable</code></dd>
+<dd><code>getModelElementsShape</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2520,7 +2288,7 @@ public&nbsp;com.anylogic.engine.presentation.ShapeModelElementsGroup&nbsp;getMod
 public&nbsp;void&nbsp;onOwnerChanged_xjal()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onOwnerChanged_xjal</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>onOwnerChanged_xjal</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2534,7 +2302,7 @@ public&nbsp;void&nbsp;onOwnerChanged_xjal()</pre>
 public&nbsp;void&nbsp;instantiateBaseStructure_xjal()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>instantiateBaseStructure_xjal</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>instantiateBaseStructure_xjal</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2548,7 +2316,7 @@ public&nbsp;void&nbsp;instantiateBaseStructure_xjal()</pre>
 public&nbsp;void&nbsp;doCreate()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>doCreate</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>doCreate</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2562,7 +2330,7 @@ public&nbsp;void&nbsp;doCreate()</pre>
 public&nbsp;void&nbsp;doStart()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>doStart</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>doStart</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2576,7 +2344,7 @@ public&nbsp;void&nbsp;doStart()</pre>
 public&nbsp;void&nbsp;onStartup()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onStartup</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>onStartup</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2590,6 +2358,10 @@ public&nbsp;void&nbsp;onStartup()</pre>
 public&nbsp;void&nbsp;setupPlainVariables_xjal()</pre>
 <div class="block">Assigning initial values for plain variables<br>
  <em>This method isn't designed to be called by user and may be removed in future releases.</em></div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>setupPlainVariables_xjal</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
+</dl>
 </li>
 </ul>
 <a id="getPopulation()">
@@ -2601,7 +2373,7 @@ public&nbsp;void&nbsp;setupPlainVariables_xjal()</pre>
 <pre class="methodSignature">public&nbsp;com.anylogic.engine.AgentList&lt;? extends <a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;&nbsp;getPopulation()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>getPopulation</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>getPopulation</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
@@ -2614,7 +2386,7 @@ public&nbsp;void&nbsp;setupPlainVariables_xjal()</pre>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;? extends <a href="PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a>&gt;&nbsp;agentsInRange&#8203;(double&nbsp;distance)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>agentsInRange</code>&nbsp;in class&nbsp;<code>com.anylogic.engine.Agent</code></dd>
+<dd><code>agentsInRange</code>&nbsp;in class&nbsp;<code>anylogic_jsonifier_library.Jsonifier</code></dd>
 </dl>
 </li>
 </ul>
