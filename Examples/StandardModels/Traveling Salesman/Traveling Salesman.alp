@@ -8,9 +8,8 @@
 <Model>
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
-	<Description><![CDATA[This model showcases an example of a Traveling Salesman problem (TSP). In the TSP, a set of cities are present with one designated as the home location. Given an arbitrary number of cities to visit, the goal is to find the shortest route that starts and ends at the home location. 
-To optimize the order, the Python library OR-tools (by Google) is used. 
--- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
+	<Description><![CDATA[This model showcases an example of a Traveling Salesman problem (TSP). In the TSP, a set of cities are present with one designated as the home location. Given an arbitrary number of cities to visit, the goal is to find the shortest route that starts and ends at the home location. Orders are generated one after another and passed to the Python library OR-tools (by Google) to optimize the route before being sent to the truck to execute. 
+Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the libraries numpy and OR-tools installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[pypeline___traveling_salesman]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
@@ -857,11 +856,11 @@ send(o, truck);]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1596828030669</Id>
+					<Id>1684948573105</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>10</X><Y>10</Y>
+					<X>30</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -869,8 +868,7 @@ send(o, truck);]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
-https://git.io/al_py]]></Text>
+					<Text><![CDATA[Requires 64 bit Python 3.6+ with the libraries numpy and OR-tools]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -879,11 +877,11 @@ https://git.io/al_py]]></Text>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1596828323767</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>10</X><Y>60</Y>
+					<Id>1684948573108</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>30</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -891,7 +889,7 @@ https://git.io/al_py]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[Requires 64 bit Python 3.6+, NumPy, and the OR-tools Python library]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -2868,27 +2866,6 @@ return toVisit;]]></Body>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
 						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1582330175055</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>270</X><Y>40</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires 64 bit Python 3.6+, NumPy, and the OR-tools Python library]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>

@@ -9,8 +9,7 @@
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from experiment screen]]></Name>
 	<Description><![CDATA[While typical use cases of Pypeline involve interaction with Python from within the running model, there are some situations where it would be desirable to have that interaction externally, from an Experiment. This model demonstrates one such use case wherein Python is used to assign the values in a Paramters Variation Experiment. 
-
-This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine. Optional library dependencies: numpy and matplotlib.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the (optional) libraries numpy and matplotlib.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___python_from_experiment_screen]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -1696,11 +1695,11 @@ At the end, if you have the optional dependencies, an image of a 3D plot (genera
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1680031837503</Id>
-					<Name><![CDATA[text8]]></Name>
-					<X>990</X><Y>10</Y>
+					<Id>1684964535351</Id>
+					<Name><![CDATA[text42]]></Name>
+					<X>996</X><Y>10.5</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -1708,9 +1707,8 @@ At the end, if you have the optional dependencies, an image of a 3D plot (genera
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
-https://git.io/al_py
-Optional library dependencies: 'matplotlib' and 'numpy']]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3 with the (optional) libraries numpy and matplotlib]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>

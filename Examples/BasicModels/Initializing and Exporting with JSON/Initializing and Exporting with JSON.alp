@@ -9,8 +9,7 @@
 	<Id>1590593133127</Id>
 	<Name><![CDATA[Initializing and Exporting with JSON]]></Name>
 	<Description><![CDATA[This model showcases the fundamentals of using Pypeline to be able to exchange intricate data structures between AnyLogic and Python via JSON (JavaScript Object Notation), a streamlined data-interchange format. Three features are demonstrated: creating agents or populations from a JSON string or file, serializing the model state as a JSON string or file, and the ability to customize the serialization to specify which elements are included or excluded.
-
-This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[initializing_and_exporting_with_json]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
@@ -564,28 +563,6 @@ traceln(json);]]></ActionCode>
 					</ExtendedProperties>
 				</Control>
 				<Text>
-					<Id>1598897711984</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>990</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
-https://git.io/al_py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
 					<Id>1598898137376</Id>
 					<Name><![CDATA[text]]></Name>
 					<X>710</X><Y>70</Y>
@@ -605,6 +582,28 @@ https://git.io/al_py]]></Text>
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1684964931481</Id>
+					<Name><![CDATA[text42]]></Name>
+					<X>990</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
 				</Text>
 			</Presentation>
 

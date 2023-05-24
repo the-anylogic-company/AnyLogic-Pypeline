@@ -11,7 +11,7 @@
 	<Description><![CDATA[This model demonstrates being able to use simulation as a testbed for evaluating trained AI politices in a dynamic environment. 
 It depicts a simplified hospital where patients arrive, stay for some time, then leave. Two neural networks are utilized: one for predicting the arrival rate of patients based on the last day's worth of arrival rates; the second is for predicting patient length of stay based on 24 attributes. 
 A slider is provided for you to experiment with dynamically adjusting hospital capacity. 
--- This model requires the Pypeline library (allowing for interaction with the Python language) to be installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the numpy and tensorflow libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[simple_hospital_ai_testbed]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
@@ -1637,49 +1637,6 @@ cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
 					<FillAreaUnderLine>true</FillAreaUnderLine>
 					<LabelFormat>SHORT_DATE_AND_TIME</LabelFormat>
     			</TimePlot>
-				<Text>
-					<Id>1596828114895</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>10</X><Y>-90</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
-https://git.io/al_py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1596828346192</Id>
-					<Name><![CDATA[text11]]></Name>
-					<X>10</X><Y>-50</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the Tensorflow and Numpy libraries]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
     			<Histogram>
 					<Id>1600281402024</Id>
 					<Name><![CDATA[chart]]></Name>
@@ -4018,6 +3975,28 @@ https://git.io/al_py]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1684957494963</Id>
+					<Name><![CDATA[text23]]></Name>
+					<X>20</X><Y>-50</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3 with the libraries numpy and tensorflow]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -6691,27 +6670,6 @@ A slider is provided for you to experiment with dynamically adjusting hospital c
 						<Name>SansSerif</Name>
 						<Size>12</Size>
 						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1588442142799</Id>
-					<Name><![CDATA[text11]]></Name>
-					<X>360</X><Y>50</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the Tensorflow and Numpy libraries]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>

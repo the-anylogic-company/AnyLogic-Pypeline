@@ -8,6 +8,8 @@
 <Model>
 	<Id>1599155584007</Id>
 	<Name><![CDATA[Supply Chain Optimizer]]></Name>
+	<Description><![CDATA[This is a model of a 3-echelon supply chain for a single product. Customers request varying amounts of the product weekly from factories, which can store them in warehouses. The model includes costs associated with transporting the product between the three levels of the supply chain, imported from an Excel file to the database on startup. At the start of each week, the current model state is sent (in JSON format) to a Python optimizer to determine how much product to send and to whom.
+Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the numpy and scipy libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[supply_chain_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
@@ -1864,6 +1866,48 @@ W4]]></Text>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Text>
+					<Id>1684948700692</Id>
+					<Name><![CDATA[text14]]></Name>
+					<X>20</X><Y>140</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[Requires Python 3.6+ with the libraries NumPy and SciPy]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1684948700695</Id>
+					<Name><![CDATA[text23]]></Name>
+					<X>20</X><Y>120</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -2345,7 +2389,7 @@ for (Tuple row : rows) {
 					<Description><![CDATA[As the production rate can change at any point by the user, it's impossible to predetermine how long the delay should be. The delay is instead set to only release the order when explicitly told to do so.
 
 This event starts counting down whenever a new order comes into the delay and is updated whenever the set production rate changes. When it fires, it will either release the waiting order if there is enough or restart itself if more time is required.]]></Description>
-					<X>340</X><Y>500</Y>
+					<X>340</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11440,90 +11484,6 @@ Examining the code is not for the faint of heart.]]></Text>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1602549211989</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>30</X><Y>650</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model is incomplete.]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>26</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1602549244232</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>30</X><Y>690</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Run at your own risk!]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>18</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1602549268787</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>200</X><Y>690</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[(There's not actually any risk)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>12</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1602549369750</Id>
-					<Name><![CDATA[text4]]></Name>
-					<X>320</X><Y>20</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777088</Color>
-					<Text><![CDATA[Requires the scipy library]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
 					<Id>1602549397388</Id>
 					<Name><![CDATA[text5]]></Name>
 					<X>50</X><Y>70</Y>
@@ -11536,14 +11496,14 @@ Examining the code is not for the faint of heart.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[This model depicts a 3-echelon supply chain for a single product.
-Customers make weekly requests of varied amounts of the product created by factories, which can be stored within warehouses.
-There are costs associated with sending product for any combination down the chain 
-    (i.e., factories to warehouses or to customers, and warehouses to customers).
-All model data is retrieved from the database on startup, loaded in from the local Excel file.
-At the start of each week, the model state is sent to a Python optimizer as JSON text;
-the returned values include performance indicators of the solver and the list of orders (how much to send and to whom).
-Each order then seizes a vehicle at the respective factory/warehouse, who then goes on to fulfill the order.]]></Text>
+					<Text><![CDATA[This is a model of a 3-echelon supply chain for a single product. 
+Customers request varying amounts of the product weekly from factories, which can store them in warehouses. 
+
+The model includes costs associated with transporting the product between the three levels of the supply chain, 
+      imported from an Excel file to the database on startup. 
+
+At the start of each week, the current model state is sent (in JSON format) to a Python optimizer 
+       to determine how much product to send and to whom.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>

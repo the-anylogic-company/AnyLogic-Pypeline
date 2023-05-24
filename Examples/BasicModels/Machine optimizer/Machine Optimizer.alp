@@ -9,8 +9,7 @@
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
 	<Description><![CDATA[This model demonstrates using Python for performing optimization during runtime to find the number of 3 machine types to build such that the production cost is minimized. As the focus of this model is to demonstrate a basic implementation using the Pypeline library, the scenario is completely static; you input the desired parameter values and click a button to trigger code that sends/retrieves values to/from Python. 
-
-This model requires the Pypeline add-on library in your AnyLogic environment and at least 1 version of Python 3 installed on your machine with the scipy and numpy libraries installed.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the numpy and scipy libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[machine_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -2343,49 +2342,6 @@ machines]]></Text>
 					<Alignment>CENTER</Alignment>
 				</Text>
 				<Text>
-					<Id>1596828165919</Id>
-					<Name><![CDATA[text18]]></Name>
-					<X>10</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model requires the Pypeline library to be installed from GitHub:
-https://git.io/al_py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1596828404756</Id>
-					<Name><![CDATA[text19]]></Name>
-					<X>10</X><Y>50</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the Python libraries 'scipy' and 'numpy']]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
 					<Id>1597356736857</Id>
 					<Name><![CDATA[textBuilt1]]></Name>
 					<X>280</X><Y>960</Y>
@@ -2448,6 +2404,28 @@ https://git.io/al_py]]></Text>
 						<Name>SansSerif</Name>
 						<Size>36</Size>
 						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1684964850155</Id>
+					<Name><![CDATA[text42]]></Name>
+					<X>10</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3 with the libraries numpy and scipy]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -2601,27 +2579,6 @@ The goal is change the number of each type built,
 						<Name>SansSerif</Name>
 						<Size>16</Size>
 						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1574707053743</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>260</X><Y>40</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the Python libraries 'scipy' and 'numpy']]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>

@@ -8,9 +8,8 @@
 <Model>
 	<Id>1271246529984</Id>
 	<Name><![CDATA[Interconnected Call Centers (Web app)]]></Name>
-	<Description><![CDATA[Calls are made to each of the multiple interconnected regional call centers (the number is a parameter of the simulation). If no operator is available to answer the call, the call is placed in the queue. If the queue is full, the center attempts to route the call to another center. If there is another center that is able to take the call and there is a link to that center available, the call is transferred. Otherwise the call is discarded (balked).
-
-The original problem definition was taken from Extend™.  However, this model is created in the spirit and style of AnyLogic: it is using multi-method approach where a call center is an agent interconnected with other agents, and inside a call center a discrete event model of call processing is defined in the form of a process flowchart. Compared to the original model, this one is more detailed, is scalable (you can define any number of call centers) and highly interactive: you can view and modify any parameter of the whole system or an individual call center and link on the fly and watch the impact immediately.]]></Description>
+	<Description><![CDATA[This model is a slightly modified version of the original AnyLogic example model “Interconnected Call Centers” and is an example of using dashboard libraries to build a live web app for the executing model. After launching the model, the web app will be launched in the background Python environment (open a new browser tab to "localhost:8050" to view it). Periodically, the model will transmit its current state to Python, which will then update the web app. You can use this strategy to create alternatives interfaces for analyzing your model as it runs.
+Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the plotly, pandas, and dash libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[interconnected_call_centers_web_app]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Minute]]></ModelTimeUnit>
@@ -2024,49 +2023,6 @@ resetStats();]]></ActionCode>
 						<Title><![CDATA[Calls balked]]></Title>
 					</DataItem>
     			</PieChart>
-				<Text>
-					<Id>1681933949325</Id>
-					<Name><![CDATA[text14]]></Name>
-					<X>10</X><Y>-70</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub:
-https://git.io/al_py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1681933949331</Id>
-					<Name><![CDATA[text15]]></Name>
-					<X>10</X><Y>-30</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the following Python libraries: plotly, pandas, dash, dash_daq, and dash_bootstrap_components]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1681934695603</Id>
@@ -2088,6 +2044,28 @@ https://git.io/al_py]]></Text>
 						<LabelText><![CDATA[Open web app]]></LabelText>
 					</ExtendedProperties>
 				</Control>
+				<Text>
+					<Id>1684964431665</Id>
+					<Name><![CDATA[text42]]></Name>
+					<X>10</X><Y>-40</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3 with the libraries plotly, pandas, dash, dash_daq, and dash_bootstrap_components]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -6186,50 +6164,6 @@ any parameter of the whole system or an individual call center and link on the f
 						<Link>numberOfCallCenters</Link>
 					</ExtendedProperties>
 				</Control>
-				<Text>
-					<Id>1681934129488</Id>
-					<Name><![CDATA[text14]]></Name>
-					<X>1090</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model requires Pypeline library to be installed from GitHub: 
-https://git.io/al_py]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1681934129492</Id>
-					<Name><![CDATA[text15]]></Name>
-					<X>640</X><Y>50</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires the following Python libraries: 
-plotly, pandas, dash, dash_daq, and dash_bootstrap_components]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Text>
 					<Id>1681934173728</Id>
 					<Name><![CDATA[text7]]></Name>
