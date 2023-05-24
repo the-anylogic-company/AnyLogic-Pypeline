@@ -948,6 +948,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "import json",
 "from json.decoder import JSONDecodeError",
 "import struct",
+"import traceback",
 "",
 "LEN_SIZE = 10",
 "TYPE_SIZE = 1",
@@ -1090,6 +1091,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 "                    else:",
 "                        raise Exception('Unrecognized message type: {}'.format(msg_type))",
 "                except Exception as e:",
+"                    traceback.print_exc()",
 "                    out.write_byte(ERR_MSG)",
 "                    out.write_string(repr(e))",
 "                finally:",
@@ -1138,7 +1140,7 @@ Attempt attempt = py.exec(code);
 history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful()) {
-	error(attempt.getFeedback()); // new lines aren't printing properly, TODO - look into that
+	error("Failed to run python code; feedback: %s", attempt.getFeedback()); // new lines aren't printing properly, TODO - look into that
 }
 
 //logger.finer("EXIT run(" + attempt + ")");
@@ -1185,7 +1187,7 @@ return run(code);]]></Body>
 history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
-	error(attempt.getFeedback());
+	error("Failed to run python code; feedback: %s", attempt.getFeedback());
 return attempt;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1636,7 +1638,7 @@ return file;]]></Body>
 history.add(0, new Pair<>(code, attempt));
 validateHistoryLimit();
 if (throwErrorOnFailedAttempt && !attempt.isSuccessful())
-	error(attempt.getFeedback());
+	error("Failed to run python code; feedback: %s", attempt.getFeedback());
 return attempt.getFeedback(returnType);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
