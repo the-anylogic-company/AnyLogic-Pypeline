@@ -443,7 +443,7 @@ send(o, truck);]]></Body>
 				<EmbeddedObject>
 					<Id>1582070883326</Id>
 					<Name><![CDATA[pyCom]]></Name>
-					<X>1300</X><Y>450</Y>
+					<X>1300</X><Y>320</Y>
 					<Label><X>0</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1232,6 +1232,28 @@ send(o, truck);]]></Body>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
+				<Text>
+					<Id>1684947549542</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>1</X><Y>21</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1</Color>
+					<Text><![CDATA[ABCDEF]]></Text>
+					<TextCode><![CDATA[city]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 				<Oval>
 					<Id>1582073514888</Id>
 					<Name><![CDATA[oval]]></Name>
@@ -1924,28 +1946,6 @@ send(o, truck);]]></Body>
 
 				</Group>
 				<Text>
-					<Id>1582072930169</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>0</X><Y>-40</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[X]]></Text>
-					<TextCode><![CDATA[getIndex()]]></TextCode>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
 					<Id>1582072945480</Id>
 					<Name><![CDATA[text1]]></Name>
 					<X>0</X><Y>20</Y>
@@ -1963,7 +1963,7 @@ send(o, truck);]]></Body>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
-						<Style>0</Style>
+						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
@@ -5697,5 +5697,6 @@ The list is passed to the truck via a message. A statechart is used to have the 
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
+	<CloudModelUuid><![CDATA[697da500-46b6-46c1-8134-e0a3724d5996]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>

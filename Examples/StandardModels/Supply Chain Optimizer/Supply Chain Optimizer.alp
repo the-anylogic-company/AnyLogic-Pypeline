@@ -11511,7 +11511,7 @@ Examining the code is not for the faint of heart.]]></Text>
 				<Text>
 					<Id>1602549397388</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>50</X><Y>70</Y>
+					<X>50</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
