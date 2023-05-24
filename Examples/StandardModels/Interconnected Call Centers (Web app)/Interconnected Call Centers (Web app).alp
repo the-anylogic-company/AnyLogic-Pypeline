@@ -575,18 +575,12 @@ return n;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommandType]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[self.PYTHON_PATH]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommand]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["C:\\Program Files\\Python39\\python.exe"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>

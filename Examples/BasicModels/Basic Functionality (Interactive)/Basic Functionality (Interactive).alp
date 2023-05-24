@@ -2195,9 +2195,6 @@ return null;]]></Body>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[enable]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[false]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[loadLastWorkingConfig]]></Name>

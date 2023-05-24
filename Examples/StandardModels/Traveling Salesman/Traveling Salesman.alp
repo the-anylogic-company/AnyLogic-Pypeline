@@ -468,9 +468,6 @@ send(o, truck);]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommandType]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[self.PYTHON_PATH]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommand]]></Name>
