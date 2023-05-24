@@ -10369,5 +10369,6 @@ rot %= (2*PI);]]></OnDrawCode>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
+	<CloudModelUuid><![CDATA[19db2260-7512-42f2-ac1e-38293823dccb]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>
