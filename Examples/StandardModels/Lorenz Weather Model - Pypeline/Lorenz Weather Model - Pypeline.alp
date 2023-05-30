@@ -1916,7 +1916,7 @@ Try changing the parameters on the fly or rotating the graph to see it from a di
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<EnableZoomAndPanning>false</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
