@@ -1412,7 +1412,7 @@ try {
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[String...]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
+					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
 	
 	String pyPath;
 	try {
@@ -1474,7 +1474,7 @@ return attempt;]]></Body>
 tmp[0] = py.activePyPath;
 System.arraycopy(args, 0, tmp, 1, args.length);
 
-Attempt attempt = PyCommunicator.runFile(PythonCommandType.PYTHON_OTHER, tmp);
+Attempt attempt = PyCommunicator.runFile(PythonCommandType.PYTHON_PATH, tmp);
 history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), attempt));
 validateHistoryLimit();
 return attempt;]]></Body>
