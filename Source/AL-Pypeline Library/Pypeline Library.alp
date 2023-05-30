@@ -339,6 +339,8 @@ logger.setLevel(LOG_LEVEL);
 if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
+	// Kill any still active background processes (from running headless files)
+	headlessAttempts.forEach(a -> a.cancel(true));
 	py.close();
 } catch (NullPointerException e) {
 	// ignore (problem with initializing `py`)
@@ -1112,6 +1114,21 @@ Provided as reference for the end-user; for example, if they execute multiple co
 ""
 }]]></Code>
 						</CollectionInitializer>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1685473152541</Id>
+					<Name><![CDATA[headlessAttempts]]></Name>
+					<X>850</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="true">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[FutureAttempt]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
 				</Variable>
@@ -1928,6 +1945,87 @@ try (InputStream input = new FileInputStream(filename)) {
 	error(e, "Exception when reading properties file");
 }
 return prop;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="true">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[FutureAttempt]]></ReturnType>
+					<Id>1685472571576</Id>
+					<Name><![CDATA[runFileHeadless]]></Name>
+					<Description><![CDATA[Execute a Python file in the background (headlessly).<br>
+@param preferredVersion One of the options for which Python version to run the file<br>
+@param args The file path and any arguments to run (flags and values should be separate strings)<br>
+@return FutureAttempt A `Future` implementation that will have a partial or completed Attempt object with syserr and sysout content.]]></Description>
+					<X>850</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[preferredVersion]]></Name>
+						<Type><![CDATA[PythonCommandType]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
+	
+	String pyPath;
+	try {
+		pyPath = PySubProcess.findPythonPath(
+							PySubProcess.convertToCommand(preferredVersion)
+						);
+	} catch (PyException e) {
+		return new FutureAttempt(new Attempt(e));
+	}
+	// add to args
+	String[] tmp = new String[args.length+1];
+	tmp[0] = pyPath;
+	System.arraycopy(args, 0, tmp, 1, args.length);
+	args = tmp;
+}
+
+ProcessBuilder pb = new ProcessBuilder(args);
+Process proc;
+
+try {
+	proc = pb.start();
+} catch (IOException | NullPointerException e) {
+	String msg = String.format("Exception with running the command: `%s`\nStack trace is as follows:\n%s",
+		String.join(" ", pb.command()),
+		ExceptionUtils.toStringStackTrace(e));
+	return new FutureAttempt(new Attempt(Attempt.RESULT_ERROR, msg));
+}
+
+FutureAttempt future = new FutureAttempt(proc);
+headlessAttempts.add(future);
+return future;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[FutureAttempt]]></ReturnType>
+					<Id>1685472571578</Id>
+					<Name><![CDATA[runFileHeadless]]></Name>
+					<Description><![CDATA[Execute a Python file in the background (headlessly).<br>
+@param args The file path, and any arguments to run (flags and values should be separate strings)<br>
+@return FutureAttempt A `Future` implementation that will have a partial or completed Attempt object with syserr and sysout content.]]></Description>
+					<X>870</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[args]]></Name>
+						<Type><![CDATA[String...]]></Type>
+					</Parameter>
+					<Body><![CDATA[String[] tmp = new String[args.length+1];
+tmp[0] = py.activePyPath;
+System.arraycopy(args, 0, tmp, 1, args.length);
+
+FutureAttempt future = PyCommunicator.runFileHeadless(PythonCommandType.PYTHON_PATH, tmp);
+history.add(0, new Pair<String,Attempt>(Arrays.toString(tmp), future.get())); // even if it won't have the content yet, still include it for the call
+validateHistoryLimit();
+return future;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -2850,6 +2948,182 @@ public class PyException extends Exception {
     public PyException(String errorMessage) {
         super(errorMessage);
     }
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1685470484366</Id>
+			<Name><![CDATA[FutureAttempt]]></Name>
+			<Text><![CDATA[
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.lang.Process;
+import java.io.IOException;
+
+/**
+ * An implementation of `Future` for being able to query the process/status of headless or non-blocking requests to Python.
+ */	
+public class FutureAttempt implements Future<Attempt>{
+	private final Process process;
+	private boolean cancelled = false;
+	
+	private boolean completed = false;  // true once the process is finished and the final syserr/out has been appended
+	private StringBuilder syserr = new StringBuilder(),
+							sysout = new StringBuilder();
+	private Attempt result = null;
+	
+	/**
+	 * Create a FutureAttempt whose completion is based on a process running in the background.
+	 * @param process Some in-progress or completed background process.
+	 */
+	public FutureAttempt(Process process) {
+		this.process = process;
+	}
+	
+	/**
+	 * Create an already-completed FutureAttempt.
+	 * This is only intended for internal Pypeline use.
+	 * @param result The completed Attempt
+	 */
+	public FutureAttempt(Attempt result) {
+		this.process = null;
+		this.completed = true;
+		this.result = result;
+	}
+	
+	private void updateResult() throws IOException {
+		if (completed) {
+			return;
+		}
+		
+		syserr.append(new String(process.getErrorStream().readNBytes(process.getErrorStream().available())));
+		sysout.append(new String(process.getInputStream().readNBytes(process.getInputStream().available())));
+		
+		StringBuilder feedback = new StringBuilder();
+		feedback.append(syserr).append("\n").append(sysout);
+		
+		result = new Attempt(
+				sysout.length() > 0 || syserr.length() == 0 ? Attempt.RESULT_SUCCESSFUL : Attempt.RESULT_ERROR, 
+				feedback.toString().trim()
+				);
+		
+		if (isDone()) {
+			completed = true;
+		}
+	}
+	
+	/**
+	 * Retrieves the up-to-date status of the process (which may still be running).
+	 * @return Attempt The current result of the process, containing the syserr and sysout up to the time of the call.
+	 */
+	@Override
+	public Attempt get() {
+		if (!completed) {
+			try {
+				updateResult();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Waits up until the specified timeout for the process to be finished before returning the final results.
+	 * @param timeout The quantity of real-time to wait
+	 * @param unit The unit the timeout is in
+	 * @return Attempt The result of the process, containing the syserr and sysout.
+	 * @throws InterruptedException If the thread is interrupted
+	 * @throws TimeoutException If the timeout elapses without the process finishing
+	 */
+	@Override
+	public Attempt get(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException {
+	    if (completed || timeout <= 0) {
+	    	return get();
+	    }
+
+	    boolean processCompleted;
+	    try {
+	        processCompleted = process.waitFor(timeout, unit);
+	    } catch (InterruptedException e) {
+	        cancel(true);
+	        throw e;
+	    }
+
+	    if (processCompleted) {
+	    	return get();
+	    } else {
+	        throw new TimeoutException("The operation timed out.");
+	    }
+    }
+	
+	/**
+	 * Waits up until the specified timeout for the process to be finished before returning the final results.
+	 * @param timeout The quantity of real-time to wait
+	 * @param unit The unit the timeout is in (using the AnyLogic type for convenience)
+	 * @return Attempt The result of the process, containing the syserr and sysout.
+	 * @throws InterruptedException If the thread is interrupted
+	 * @throws TimeoutException If the timeout elapses without the process finishing
+	 */
+	public Attempt get(long timeout, TimeUnits unit) throws InterruptedException, TimeoutException {
+	    TimeUnit jUnit = null;
+	    switch (unit) {
+		    case MILLISECOND:
+		    	jUnit = TimeUnit.MILLISECONDS;
+		    	break;
+		    case SECOND:
+		    	jUnit = TimeUnit.SECONDS;
+		    	break;
+		    case MINUTE:
+		    	jUnit = TimeUnit.MINUTES;
+		    	break;
+		    case HOUR:
+		    	jUnit = TimeUnit.HOURS;
+		    	break;
+		    case DAY:
+		    	jUnit = TimeUnit.DAYS;
+		    	break;
+		    case WEEK:
+		    case MONTH:
+		    case YEAR:
+		    	timeout = (long)unit.convertTo(timeout*1d, DAY);
+		    	jUnit = TimeUnit.DAYS;
+		    	break;
+	    }
+	    return get(timeout, jUnit);
+    }
+	
+	/**
+	 * 
+	 * @return Whether the underlying process is completed
+	 */
+	@Override
+	public boolean isDone() {
+		return !process.isAlive();
+	}
+	
+	/**
+	 * 
+	 * @param mayInterruptIfRunning Whether the process can be force-quit if it's still in progress
+	 * @return Whether the process was interrupted
+	 */
+	@Override
+	public boolean cancel(boolean mayInterruptIfRunning) {
+		if (mayInterruptIfRunning) {
+			process.destroy();
+			cancelled = true;
+		}
+		return cancelled;
+	}
+	
+	/**
+	 * @return Whether the processes was force-quit (e.g., from the user calling `cancel(true)` or the thread being interrupted from `get(timeout,...)`
+	 */
+	@Override
+	public boolean isCancelled() {
+		return cancelled;
+	}
 }]]></Text>
 		</JavaClass>
 	</JavaClasses>
