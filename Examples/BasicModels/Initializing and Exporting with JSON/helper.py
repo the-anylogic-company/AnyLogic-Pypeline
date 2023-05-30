@@ -2,18 +2,11 @@ import os
 import re
 import json
 import random
-## random.seed(1)  # comment out for different results each time
-import statistics
+## random.seed(1)  # fixed runs
 
-COMPANY_TYPES = ["Aerospace", "Automotive", "Chemical", "Computer", 
-                "Construction", "Education", "Electric", "Energy", 
-                "Entertainment", "Film", "Financial", "Fishing",
-                "Food", "Healthcare", "Insurance", 
-                "Music", "Petroleum", "Pharmaceutical", 
-                "Real estate", "Software", "Sports", "Steel", 
-                "Technology", "Telecom", "Textile", "Tobacco", 
-                "Water"]
-
+COMPANY_TYPES = ['Communication', 'Energy', 'Financial', 'Goods',
+                 'Healthcare', 'Industrial', 'InfoTech', 'Materials',
+                 'RealEstate', 'Utility']
 
 def clear_last_run(pattern: str = ".+?\.json") -> None:
     """Removes all generated JSON files (matching the provided pattern)
@@ -22,13 +15,12 @@ def clear_last_run(pattern: str = ".+?\.json") -> None:
         if re.match(pattern, file):
             os.remove(file)
 
-
 def get_latest_data() -> str:
     """Get the "latest" data (e.g., from our internal company service),
         as a JSON-serialized list of objects"""
     data = []
-    for index in range( random.randint(3, 6) ):
-        # keys are based on parameter names in the AL model
+    for index in range( random.randint(6, 9) ):
+        # keys are based on parameter names in the AL model;
         # omitted entries will use the agent's default value
         entry = {
             "name": f"{random.choice(COMPANY_TYPES)}Company#{index}",
@@ -36,7 +28,6 @@ def get_latest_data() -> str:
             "volatility": random.triangular(2, 10, 5)
             }
         data.append(entry)
-
     return json.dumps(data)
 
 
