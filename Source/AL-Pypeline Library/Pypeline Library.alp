@@ -3080,7 +3080,7 @@ public class FutureAttempt implements Future<Attempt>{
 				<ClassName><![CDATA[Pypeline-libicon.png]]></ClassName>
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
-			<VersionMinor>8</VersionMinor>
+			<VersionMinor>9</VersionMinor>
 			<VersionBuild>0</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
