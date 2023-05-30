@@ -244,44 +244,24 @@ static HashMap<String, Object> serializeStatisticsContinuous(StatisticsContinuou
 	return statMap;
 }
 ]]></AdditionalClassCode>
-			<Import><![CDATA[import java.nio.file.Files;
-import java.io.IOException;
-import java.io.FileWriter;
+			<Import><![CDATA[import com.anylogic.cloud.util.ExceptionUtils;
 import java.io.BufferedWriter;
 import java.io.File;
-import spark.utils.IOUtils;
-import java.util.Properties;
-import java.io.InputStream;
 import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
-import java.net.URI;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Field;
 import java.io.FileNotFoundException;
-import com.anylogic.cloud.util.ExceptionUtils;
-import java.util.stream.IntStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.LogRecord;
-
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.stream.Collectors;
-import com.google.common.collect.Sets;
-
-import java.lang.reflect.Modifier;
-
-import static anylogic_jsonifier_library.Jsonifier.fromJson;
-import static anylogic_jsonifier_library.Jsonifier.fromAgentJson;
-import static anylogic_jsonifier_library.Jsonifier.fromPopulationJson;]]></Import>
+import java.util.stream.IntStream;
+import spark.utils.IOUtils;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[anylogic_jsonifier_library]]></PackageName>
 				<ClassName><![CDATA[Jsonifier]]></ClassName>
@@ -318,25 +298,7 @@ import static anylogic_jsonifier_library.Jsonifier.fromPopulationJson;]]></Impor
 					<Name><![CDATA[includedNamesWL]]></Name>
 				</Parameter>
 			</Parameters>
-			<StartupCode><![CDATA[/*logger.setUseParentHandlers(false);
-ConsoleHandler handler = new ConsoleHandler();
-handler.setFormatter(new SimpleFormatter() {
-            private static final String format = "[%1$tT.%1$tN] [%2$-7s] %3$s %n";
-
-            @Override
-            public synchronized String format(LogRecord lr) {
-                return String.format(format,
-                        new Date(lr.getMillis()),
-                        lr.getLevel().getLocalizedName(),
-                        lr.getMessage()
-                );
-            }
-});
-handler.setLevel(LOG_LEVEL);
-logger.addHandler(handler);
-logger.setLevel(LOG_LEVEL);
-*/
-if (enable) connect();]]></StartupCode>
+			<StartupCode><![CDATA[if (enable) connect();]]></StartupCode>
 			<DestroyCode><![CDATA[// Allow the existing Python environment to die gracefully
 try {
 	// Kill any still active background processes (from running headless files)
@@ -543,38 +505,6 @@ try {
 						<Type><![CDATA[String]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA["pypeline.properties"]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1615911970658</Id>
-					<Name><![CDATA[LOG_LEVEL]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-250</X><Y>670</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="true" AccessType="default" StaticVariable="false">
-						<Type><![CDATA[java.util.logging.Level]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[java.util.logging.Level.OFF]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1615912017437</Id>
-					<Name><![CDATA[logger]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-250</X><Y>650</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[Logger]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[Logger.getLogger(PyCommunicator.class.getName())]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
