@@ -1388,7 +1388,7 @@ if (getCurrentIteration() == getMaximumIterations()) {
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Demo - Python from experiment screen]]></Text>
+					<Text><![CDATA[Python from experiment screen]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -1750,7 +1750,7 @@ Requires Python 3 with the (optional) libraries numpy and matplotlib]]></Text>
 			</ModelTimeProperties>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<Title><![CDATA[Demo - Python from experiment screen : ParametersVariation]]></Title>
+				<Title><![CDATA[Python from experiment screen : ParametersVariation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 			</PresentationProperties>
