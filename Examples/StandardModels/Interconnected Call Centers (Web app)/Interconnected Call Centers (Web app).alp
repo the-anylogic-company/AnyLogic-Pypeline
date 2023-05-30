@@ -9,7 +9,7 @@
 	<Id>1271246529984</Id>
 	<Name><![CDATA[Interconnected Call Centers (Web app)]]></Name>
 	<Description><![CDATA[This model is a slightly modified version of the original AnyLogic example model “Interconnected Call Centers” and is an example of using dashboard libraries to build a live web app for the executing model. After launching the model, the web app will be launched in the background Python environment (open a new browser tab to "localhost:8050" to view it). Periodically, the model will transmit its current state to Python, which will then update the web app. You can use this strategy to create alternatives interfaces for analyzing your model as it runs.
-Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the plotly, pandas, and dash libraries installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the plotly, pandas, psutil, and dash libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[interconnected_call_centers_web_app]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Minute]]></ModelTimeUnit>
@@ -18,9 +18,7 @@ Requires the Pypeline add-on library in your AnyLogic environment and Python 3 o
 		<ActiveObjectClass>
 			<Id>1271246529985</Id>
 			<Name><![CDATA[Main]]></Name>
-			<Import><![CDATA[import java.util.concurrent.Executors;]]></Import>
-			<StartupCode><![CDATA[pyCommunicator.run("import app");
-pyCommunicator.run("app.initialize(%s)", numberOfCallCenters);]]></StartupCode>
+			<StartupCode><![CDATA[attempt = pyCommunicator.runFileHeadless("app.py", "--num", String.valueOf(numberOfCallCenters), "--file", "latest_data.json");]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1423464535421</Id>
@@ -143,6 +141,22 @@ pyCommunicator.run("app.initialize(%s)", numberOfCallCenters);]]></StartupCode>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1685486003235</Id>
+					<Name><![CDATA[attempt]]></Name>
+					<X>730</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[FutureAttempt]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[// Where the background process for the python web server is stored.
+// Referenced in Main's "On startup" and Simulation's "After experiment run" callbacks.]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1271315291476</Id>
 					<Name><![CDATA[numberOfCallCenters]]></Name>
@@ -173,7 +187,7 @@ pyCommunicator.run("app.initialize(%s)", numberOfCallCenters);]]></StartupCode>
 				<Event>
 					<Id>1608077750669</Id>
 					<Name><![CDATA[updateWebApp]]></Name>
-					<X>-200</X><Y>270</Y>
+					<X>730</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -199,14 +213,23 @@ pyCommunicator.run("app.initialize(%s)", numberOfCallCenters);]]></StartupCode>
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[Object[]	bars 	= callCenters.stream().map(cc -> new double[]{cc.getIndex(), cc.nAnsweredLocal, cc.nAnsweredExternal, cc.nBalked}).toArray();
-double[]    utils	= callCenters.stream().mapToDouble(cc -> cc.operators.utilization()*100.).toArray();
+					<Action><![CDATA[double[]    utils	= callCenters.stream().mapToDouble(cc -> cc.operators.utilization()*100.).toArray();
+Object[]	bars 	= callCenters.stream().map(cc -> new double[]{cc.getIndex(), cc.nAnsweredLocal, cc.nAnsweredExternal, cc.nBalked}).toArray();
+Map<String, Object> data = Map.of(
+	"utilizations", utils,
+	"counts", bars,
+	"update_time", roundToDecimal(time(HOUR),3),
+	"update_date", date().toString()
+);
+pyCommunicator.toJson(data, "latest_data.json");
+/*
 pyCommunicator.run(
 	"app.update_timestamp = " + roundToDecimal(time(HOUR),3),
 	"app.update_datestamp = '" + date().toString() + "'",
 	"app.data = " + pyCommunicator.toJson(utils),
 	"app.barchart_data = " + pyCommunicator.toJson(bars)
-	);]]></Action>
+	);
+*/]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -550,7 +573,7 @@ return n;]]></Body>
 				<EmbeddedObject>
 					<Id>1608077636455</Id>
 					<Name><![CDATA[pyCommunicator]]></Name>
-					<X>-210</X><Y>190</Y>
+					<X>650</X><Y>20</Y>
 					<Label><X>-35</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -575,21 +598,24 @@ return n;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommandType]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.PYTHON_PATH]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonCommand]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA["C:\\Program Files\\Python39\\python.exe"]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[throwErrorOnFailedAttempt]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[false]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[isBlacklistMode]]></Name>
@@ -2021,7 +2047,7 @@ resetStats();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1681934695603</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>680</X><Y>20</Y>
+					<X>680</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2052,7 +2078,7 @@ resetStats();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
 					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the libraries plotly, pandas, dash, dash_daq, and dash_bootstrap_components]]></Text>
+Requires Python 3 with the libraries plotly, pandas, psutil, dash, dash_daq, and dash_bootstrap_components]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -2060,6 +2086,27 @@ Requires Python 3 with the libraries plotly, pandas, dash, dash_daq, and dash_bo
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1685474021443</Id>
+					<Name><![CDATA[button1]]></Name>
+					<X>680</X><Y>100</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="120" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[traceln(attempt.get().getFeedback());]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Print web app logs]]></LabelText>
+					</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
@@ -6038,6 +6085,10 @@ lines.resetStats();]]></Body>
 			<MaximumMemory>256</MaximumMemory>
 			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
+			<AfterSimulationRunCode><![CDATA[// Force quit the process hosting the server
+root.attempt.cancel(true);
+// Run the function to clean the temporary files
+root.pyCommunicator.run("from app import cleanup", "cleanup()");]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
@@ -6193,7 +6244,7 @@ any parameter of the whole system or an individual call center and link on the f
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[This Pypeline model is an example of using dashboard libraries - "Dash" in this case - to build a live web app for the executing model.
-After launching the model, the web app will be launched in the running Python environment (open a new browser tab to "localhost:8050" to view it).
+After launching the model, the web app will be launched in a parallel running Python environment (open a new browser tab to "localhost:8050" to view it).
 Periodically, the model will transmit its current state to Python, which will then update the web app.
 You can use this strategy to create alternatives interfaces for analyzing your model as it runs.]]></Text>
 					<Font>

@@ -1,5 +1,6 @@
-dash>=1.18.1
-pandas>=1.1.2
-plotly>=4.10.0
-dash_bootstrap_components>=1.4.1
-dash_daq>=0.5.0
+pandas
+psutil
+dash
+plotly
+dash_bootstrap_components
+dash_daq
