@@ -265,7 +265,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1678920628554</CurrentLevel>
+			<CurrentLevel>1678920615214</CurrentLevel>
 			<ConnectionsId>1678914018157</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -3374,6 +3374,28 @@ For basic usage examples, see the online documentation and practical models (or 
 						<Style>1</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1684964951604</Id>
+					<Name><![CDATA[text47]]></Name>
+					<X>990</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+Requires Python 3]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -6551,28 +6573,6 @@ To properly try this option out, it's suggested to reconfigure
 					<Dy>110</Dy>
 					<Dz>0</Dz>
 				</Line>
-				<Text>
-					<Id>1684964951604</Id>
-					<Name><![CDATA[text47]]></Name>
-					<X>990</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
 			</Presentation>
 
 				</Level>
