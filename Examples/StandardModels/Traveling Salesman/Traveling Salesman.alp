@@ -2934,7 +2934,7 @@ return toVisit;]]></Body>
 					<ClassName><![CDATA[facility_data]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["Sheet1"]]></ExternalTableName>
+				<ExternalTableName><![CDATA["facility_data"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
@@ -2943,10 +2943,6 @@ return toVisit;]]></Body>
 				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
 				<ClassName><![CDATA[facilities.xlsx]]></ClassName>
 			</ExportExcelResourceReference>
-			<TableReference>
-				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
-				<ClassName><![CDATA[facility_data]]></ClassName>
-			</TableReference>
 		</ExportSettings>
 	</Database>
 	
