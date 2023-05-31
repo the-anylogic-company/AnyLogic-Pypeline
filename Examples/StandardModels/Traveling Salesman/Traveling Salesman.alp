@@ -2934,7 +2934,7 @@ return toVisit;]]></Body>
 					<ClassName><![CDATA[facility_data]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["Sheet1"]]></ExternalTableName>
+				<ExternalTableName><![CDATA["facility_data"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
@@ -2943,10 +2943,6 @@ return toVisit;]]></Body>
 				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
 				<ClassName><![CDATA[facilities.xlsx]]></ClassName>
 			</ExportExcelResourceReference>
-			<TableReference>
-				<PackageName><![CDATA[pypeline___traveling_salesman]]></PackageName>
-				<ClassName><![CDATA[facility_data]]></ClassName>
-			</TableReference>
 		</ExportSettings>
 	</Database>
 	
@@ -5687,9 +5683,9 @@ The list is passed to the truck via a message. A statechart is used to have the 
 	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>9</VersionMinor>
+		<VersionBuild>1</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>

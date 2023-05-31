@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":2,"i1":2,"i2":2,"i3":2,"i4":8,"i5":2,"i6":4,"i7":2};
-var tabs = {65535:["t0","All Classes"],2:["t2","Class Summary"],4:["t3","Enum Summary"],8:["t4","Exception Summary"]};
+var data = {"i0":2,"i1":2,"i2":2,"i3":2,"i4":2,"i5":2,"i6":2,"i7":2,"i8":2,"i9":2,"i10":1,"i11":2,"i12":8,"i13":2,"i14":4,"i15":2,"i16":2,"i17":2,"i18":2,"i19":2,"i20":2,"i21":2,"i22":2,"i23":2,"i24":2,"i25":2,"i26":2,"i27":2,"i28":2,"i29":2,"i30":2,"i31":2,"i32":2,"i33":2,"i34":2,"i35":2,"i36":1,"i37":2};
+var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"],4:["t3","Enum Summary"],8:["t4","Exception Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -104,7 +104,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <table class="typeSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Enum Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Exception Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Interface Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Enum Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Exception Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
@@ -116,36 +116,76 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </th>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/CustomAnnotationIntrospector.html" title="class in com.anylogic.libraries.pypeline">CustomAnnotationIntrospector</a></td>
+<th class="colLast" scope="row">
+<div class="block">CustomAnnotationIntrospector</div>
+</th>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Deserializers.html" title="class in com.anylogic.libraries.pypeline">Deserializers</a></td>
+<th class="colLast" scope="row">
+<div class="block">Container class for all deserializers.</div>
+</th>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Deserializers.ACustomDeserializer.html" title="class in com.anylogic.libraries.pypeline">Deserializers.ACustomDeserializer</a>&lt;<a href="com/anylogic/libraries/pypeline/Deserializers.ACustomDeserializer.html" title="type parameter in Deserializers.ACustomDeserializer">T</a>&gt;</td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Deserializers.PointDeserializer.html" title="class in com.anylogic.libraries.pypeline">Deserializers.PointDeserializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Deserializers.PositionDeserializer.html" title="class in com.anylogic.libraries.pypeline">Deserializers.PositionDeserializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/FutureAttempt.html" title="class in com.anylogic.libraries.pypeline">FutureAttempt</a></td>
 <th class="colLast" scope="row">
 <div class="block">An implementation of `Future` for being able to query the process/status of headless or non-blocking requests to Python.</div>
 </th>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/HyperArrays.html" title="class in com.anylogic.libraries.pypeline">HyperArrays</a></td>
 <th class="colLast" scope="row">
 <div class="block">Dimensions</div>
 </th>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/JsonFilter.html" title="class in com.anylogic.libraries.pypeline">JsonFilter</a></td>
+<th class="colLast" scope="row">
+<div class="block">A custom filter used when converting Java/AnyLogic objects to JSON.</div>
+</th>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Jsonifier.html" title="class in com.anylogic.libraries.pypeline">Jsonifier</a></td>
+<th class="colLast" scope="row">
+<div class="block">Add this custom object to your model to gain access to all the functions for serializing and deserializing objects in your model.</div>
+</th>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/PortSuppressionMixIn.html" title="interface in com.anylogic.libraries.pypeline">PortSuppressionMixIn</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/PyCommunicator.html" title="class in com.anylogic.libraries.pypeline">PyCommunicator</a></td>
 <th class="colLast" scope="row">
 <div class="block">Python Communicator</div>
 </th>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/PyException.html" title="class in com.anylogic.libraries.pypeline">PyException</a></td>
 <th class="colLast" scope="row">
 <div class="block">Custom (generic) exception class</div>
 </th>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/PySubProcess.html" title="class in com.anylogic.libraries.pypeline">PySubProcess</a></td>
 <th class="colLast" scope="row">
 <div class="block">This object is created in the main communicator agent and works as the 'middleman' between your model and Python.</div>
 </th>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/PythonCommandType.html" title="enum in com.anylogic.libraries.pypeline">PythonCommandType</a></td>
 <th class="colLast" scope="row">
 <div class="block">Option list for choosing the method to connecting to Python.<br><br>
@@ -154,8 +194,110 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  <code>PYTHON_PATH</code> is used to indicate that an absolute path will be given to the desired Python executable.</div>
 </th>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><a href="com/anylogic/libraries/pypeline/RunConfiguration.html" title="class in com.anylogic.libraries.pypeline">RunConfiguration</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.html" title="class in com.anylogic.libraries.pypeline">Serializers</a></td>
+<th class="colLast" scope="row">
+<div class="block">Container class for all serializers.</div>
+</th>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.AbstractMarkupAggregatorSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.AbstractMarkupAggregatorSerializer</a></td>
+<th class="colLast" scope="row">
+<div class="block">Parent class of all network types ("normal" networks, gis, conveyor, road, rail, level containers).</div>
+</th>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.AbstractMarkupSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.AbstractMarkupSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.ACustomSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.ACustomSerializer</a>&lt;<a href="com/anylogic/libraries/pypeline/Serializers.ACustomSerializer.html" title="type parameter in Serializers.ACustomSerializer">T</a>&gt;</td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.AgentListSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.AgentListSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.AgentSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.AgentSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.DatabaseConnectionSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.DatabaseConnectionSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.DataSetSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.DataSetSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.EventOriginatorSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.EventOriginatorSerializer</a></td>
+<th class="colLast" scope="row">
+<div class="block">Parent class of Transitions, Events, and DyanmicEvents.</div>
+</th>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.FlowchartBlockSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.FlowchartBlockSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.Histogram1DSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.Histogram1DSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i27" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.Histogram2DSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.Histogram2DSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i28" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.LinkToAgentsSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.LinkToAgentsSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i29" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.Shape3DSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.Shape3DSerializer</a></td>
+<th class="colLast" scope="row">
+<div class="block">Parent class of AbstractShapeGISMap, Shape3DObject, ShapeEmbeddedObjectPresentation, ShapeGroup, 
+                                        ShapeImage, ShapeLine, ShapeLineFill, ShapeText</div>
+</th>
+</tr>
+<tr id="i30" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.ShapeSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.ShapeSerializer</a></td>
+<th class="colLast" scope="row">
+<div class="block">Parent class of Shape3D, ShapeCAD, ShapeCanvas, ShapeControl, ShapeEmbeddedObjectIcon, ShapeInspect, 
+                                        ShapeModelPrimitives, ShapeScale, ShapeSVG</div>
+</th>
+</tr>
+<tr id="i31" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.StatechartSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.StatechartSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i32" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.StatisticsContinuousSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.StatisticsContinuousSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i33" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.StatisticsDiscreteSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.StatisticsDiscreteSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i34" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.TableSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.TableSerializer</a></td>
+<th class="colLast" scope="row">
+<div class="block">Parent class of database tables</div>
+</th>
+</tr>
+<tr id="i35" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Serializers.ViewAreaSerializer.html" title="class in com.anylogic.libraries.pypeline">Serializers.ViewAreaSerializer</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i36" class="altColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/SharedSuppressionMixIn.html" title="interface in com.anylogic.libraries.pypeline">SharedSuppressionMixIn</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><a href="com/anylogic/libraries/pypeline/Simulation.html" title="class in com.anylogic.libraries.pypeline">Simulation</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 </table>
