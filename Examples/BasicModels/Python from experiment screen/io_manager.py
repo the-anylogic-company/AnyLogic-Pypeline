@@ -55,8 +55,8 @@ def save_results() -> Optional[bool]:
 
     fig = plt.figure()
     fig.set_tight_layout(True)
-    
-    ax = fig.gca(projection='3d')
+
+    ax = fig.add_subplot(projection='3d')
     ax.set_title("Experiment run results")
     ax.set_xlabel("# Workers")
     ax.set_ylabel("Arrival Rate (per sec)") 

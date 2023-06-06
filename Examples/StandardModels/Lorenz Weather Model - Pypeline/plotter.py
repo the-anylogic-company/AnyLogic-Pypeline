@@ -8,13 +8,13 @@ try:
     # Provides better graph drawing (e.g., moving chart w/o locking thread)
     # But requires PyQt5 to be installed
     use('Qt5Agg')
-except (ModuleNotFoundError, ValueError):
+except (ModuleNotFoundError, ValueError, ImportError):
     # Use whatever is default
     pass
 
 # creation of figure
 fig = plt.figure()
-fig.canvas.set_window_title("Lorenz Weather Model - Stock plotting")
+fig.canvas.manager.set_window_title("Lorenz Weather Model - Stock plotting")
 
 # limit size to the same as default size of datasets in AL model
 xs = deque(maxlen=500)

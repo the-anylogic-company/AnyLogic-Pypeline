@@ -474,9 +474,6 @@ send(o, truck);]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[pythonExecPath]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["C:\\Program Files\\Python36\\python.exe"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[redirectPyOutput]]></Name>
@@ -2816,7 +2813,7 @@ import java.time.Duration;]]></Import>
 
 // choosing some arbitrary number of random elements from a list and adding the home index at the end is just easier with python :)
 // (but obviously still possible with Java)
-String code = String.format("random.sample( set(range(%s)) - set([%s]), %s )", main.facilities.size(), main.home_index, numToChoose, main.home_index);
+String code = String.format("random.sample( [i for i in range(%s) if i != %s], %s )", main.facilities.size(), main.home_index, numToChoose);
 int[] toVisit = main.pyCom.runResults(int[].class, code);
 
 return toVisit;]]></Body>
