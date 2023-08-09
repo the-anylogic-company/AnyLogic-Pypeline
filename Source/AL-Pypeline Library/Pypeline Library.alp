@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -1357,7 +1357,7 @@ try {
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
 					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
 	
@@ -1370,13 +1370,14 @@ try {
 		return new Attempt(e);
 	}
 	// add to args
-	String[] tmp = new String[args.length+1];
+	Object[] tmp = new Object[args.length+1];
 	tmp[0] = pyPath;
 	System.arraycopy(args, 0, tmp, 1, args.length);
 	args = tmp;
 }
 
-ProcessBuilder pb = new ProcessBuilder(args);
+String[] strArgs = Arrays.stream(args).map(a -> a.toString()).toArray(String[]::new);
+ProcessBuilder pb = new ProcessBuilder(strArgs);
 String output = "";
 String error = "";
 
@@ -1415,9 +1416,9 @@ return attempt;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
-					<Body><![CDATA[String[] tmp = new String[args.length+1];
+					<Body><![CDATA[Object[] tmp = new Object[args.length+1];
 tmp[0] = py.activePyPath;
 System.arraycopy(args, 0, tmp, 1, args.length);
 
@@ -1614,7 +1615,7 @@ return attempt.getFeedback(returnType);]]></Body>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
 					<Body><![CDATA[Attempt attempt = runFile(preferredVersion, args);
 return attempt.getFeedback(returnType);]]></Body>
@@ -1640,7 +1641,7 @@ return attempt.getFeedback(returnType);]]></Body>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
 					<Body><![CDATA[Attempt attempt = runFile(args);
 return attempt.getFeedback(returnType);]]></Body>
@@ -1896,7 +1897,7 @@ return prop;]]></Body>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
 					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
 	
@@ -1909,13 +1910,14 @@ return prop;]]></Body>
 		return new FutureAttempt(new Attempt(e));
 	}
 	// add to args
-	String[] tmp = new String[args.length+1];
+	Object[] tmp = new Object[args.length+1];
 	tmp[0] = pyPath;
 	System.arraycopy(args, 0, tmp, 1, args.length);
 	args = tmp;
 }
 
-ProcessBuilder pb = new ProcessBuilder(args);
+String[] strArgs = Arrays.stream(args).map(a -> a.toString()).toArray(String[]::new);
+ProcessBuilder pb = new ProcessBuilder(strArgs);
 Process proc;
 
 try {
@@ -1946,7 +1948,7 @@ return future;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[args]]></Name>
-						<Type><![CDATA[String...]]></Type>
+						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
 					<Body><![CDATA[String[] tmp = new String[args.length+1];
 tmp[0] = py.activePyPath;
