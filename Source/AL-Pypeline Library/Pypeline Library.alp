@@ -1359,21 +1359,22 @@ try {
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
-	
-	String pyPath;
-	try {
-		pyPath = PySubProcess.findPythonPath(
-							PySubProcess.convertToCommand(preferredVersion)
-						);
-	} catch (PyException e) {
-		return new Attempt(e);
+					<Body><![CDATA[try {
+	String pyCmd = PySubProcess.convertToCommand(preferredVersion);
+	if (preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
+		// replace the desired command arg with the path
+		pyCmd = args[0].toString();
+		args[0] = PySubProcess.findPythonPath(pyCmd);
+	} else if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
+		// add path to python path to the args
+		String pyPath = PySubProcess.findPythonPath(pyCmd);
+		Object[] tmp = new Object[args.length + 1];
+		tmp[0] = pyPath;
+		System.arraycopy(args, 0, tmp, 1, args.length);
+		args = tmp;
 	}
-	// add to args
-	Object[] tmp = new Object[args.length+1];
-	tmp[0] = pyPath;
-	System.arraycopy(args, 0, tmp, 1, args.length);
-	args = tmp;
+} catch (PyException e) {
+	throw new RuntimeException(String.format("Could not find Python path with version %s, args %s", preferredVersion, Arrays.toString(args)));
 }
 
 String[] strArgs = Arrays.stream(args).map(a -> a.toString()).toArray(String[]::new);
@@ -1899,21 +1900,22 @@ return prop;]]></Body>
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
-	
-	String pyPath;
-	try {
-		pyPath = PySubProcess.findPythonPath(
-							PySubProcess.convertToCommand(preferredVersion)
-						);
-	} catch (PyException e) {
-		return new FutureAttempt(new Attempt(e));
+					<Body><![CDATA[try {
+	String pyCmd = PySubProcess.convertToCommand(preferredVersion);
+	if (preferredVersion.equals(PythonCommandType.PYTHON_OTHER)) {
+		// replace the desired command arg with the path
+		pyCmd = args[0].toString();
+		args[0] = PySubProcess.findPythonPath(pyCmd);
+	} else if (!preferredVersion.equals(PythonCommandType.PYTHON_PATH)) {
+		// add path to python path to the args
+		String pyPath = PySubProcess.findPythonPath(pyCmd);
+		Object[] tmp = new Object[args.length + 1];
+		tmp[0] = pyPath;
+		System.arraycopy(args, 0, tmp, 1, args.length);
+		args = tmp;
 	}
-	// add to args
-	Object[] tmp = new Object[args.length+1];
-	tmp[0] = pyPath;
-	System.arraycopy(args, 0, tmp, 1, args.length);
-	args = tmp;
+} catch (PyException e) {
+	throw new RuntimeException(String.format("Could not find Python path with version %s, args %s", preferredVersion, Arrays.toString(args)));
 }
 
 String[] strArgs = Arrays.stream(args).map(a -> a.toString()).toArray(String[]::new);
