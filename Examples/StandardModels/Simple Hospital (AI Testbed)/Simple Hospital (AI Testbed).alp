@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
 <Model>
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
@@ -4011,7 +4011,8 @@ Requires Python 3 with the libraries numpy and tensorflow]]></Text>
 		<ActiveObjectClass>
 			<Id>1586799909151</Id>
 			<Name><![CDATA[Patient]]></Name>
-			<Import><![CDATA[import com.google.common.base.Strings;]]></Import>
+			<Import><![CDATA[import java.util.stream.IntStream;
+import java.util.stream.Collectors;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1586799909149</Id>
@@ -5185,8 +5186,8 @@ Requires Python 3 with the libraries numpy and tensorflow]]></Text>
 					<Body><![CDATA[// The neural net is expecting values in a specific order
 // Format as a 2D array in the shape (1,24)
 
-// add format placeholders for each needed var (24) and replace last comma
-String placeholders = Strings.repeat("%s, ", 24).replaceFirst(", $", "");
+// add format placeholders for each needed var (24)
+String placeholders = IntStream.range(0, 24).mapToObj(i -> "%s").collect(Collectors.joining(", "));
 return String.format("[["+placeholders+"]]", 
 	numberOfIssues,
 	visits_last180days,
@@ -10355,7 +10356,7 @@ rot %= (2*PI);]]></OnDrawCode>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>9</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionBuild>2</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>
