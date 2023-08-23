@@ -2370,7 +2370,7 @@ It's only assigned when this object is created in an AL environment. It's used t
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="private" StaticVariable="true">
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="protected" StaticVariable="true">
 						<Type><![CDATA[Agent]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[// static reference to top level agent
@@ -5969,6 +5969,7 @@ import java.lang.reflect.Modifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.querydsl.sql.ColumnMetadata;
 import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Path;
 import com.querydsl.sql.ForeignKey;
@@ -6465,13 +6466,34 @@ public class Serializers {
 	            foreignKeys.add(foreignKeyInfo);
 	        }
 	        
-	        // get data
-	        
 			
 	        jgen.writeStartObject();
 	        jgen.writeStringField("table_name", tableName);
 	        jgen.writeObjectField("columns", columns);
 	        jgen.writeObjectField("constraints", new LinkedHashMap<String, Object>(Map.of("primary_keys", primaryKeys, "foreign_keys", foreignKeys)));
+	        
+	        // cannot get data without reference to the database
+	        if (PyCommunicator.root != null) {
+	        	List<List<Object>> data = new ArrayList<>();
+	        	try {
+				    java.sql.Statement statement = PyCommunicator.root.getDatabaseConnection().createStatement();
+				    java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
+				    java.sql.ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+				    int columnCount = resultSetMetaData.getColumnCount();
+				    while (resultSet.next()) {
+				        List<Object> row = new ArrayList<>();
+				        for (int i = 1; i <= columnCount; i++) {
+				            row.add(resultSet.getObject(i));
+				        }
+				        data.add(row);
+				    }
+				    jgen.writeObjectField("data", data);
+	        	} catch (SQLException e) {
+	        		e.printStackTrace();
+	        	}
+	        }
+	        
+	        
 			jgen.writeEndObject();
 		}
 	}
