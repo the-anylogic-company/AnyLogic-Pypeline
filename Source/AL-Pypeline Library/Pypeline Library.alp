@@ -6574,6 +6574,21 @@ public class Serializers {
 		}
 	}
 	
+	public static class TupleSerializer extends ACustomSerializer<Tuple> {
+		
+		public TupleSerializer() {
+			super(Tuple.class);
+		}
+		
+		@Override
+	    public void serialize(Tuple value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+	        jgen.writeStartArray();
+	        for (Object obj : value.toArray()) {
+	            jgen.writeObject(obj);
+	        }
+	        jgen.writeEndArray();
+		}
+	}
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
