@@ -6415,7 +6415,6 @@ public class Serializers {
 	    		RelationalPathBase value, JsonGenerator jgen, SerializerProvider provider) 
 	      throws IOException, JsonProcessingException {
 			
-			
 			// Get column names/types and constraints for the specified table
 	        String tableName = value.getTableName();
 			List<Map<String, Object>> columns = new ArrayList<>();
@@ -6477,7 +6476,8 @@ public class Serializers {
 	        	List<List<Object>> data = new ArrayList<>();
 	        	try {
 				    java.sql.Statement statement = PyCommunicator.root.getDatabaseConnection().createStatement();
-				    java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
+				    String columnCSV = columns.stream().map(c -> (String)c.get("column_name")).collect(Collectors.joining(",")); 
+				    java.sql.ResultSet resultSet = statement.executeQuery("SELECT " + columnCSV + " FROM " + tableName);
 				    java.sql.ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 				    int columnCount = resultSetMetaData.getColumnCount();
 				    while (resultSet.next()) {
@@ -6492,7 +6492,6 @@ public class Serializers {
 	        		e.printStackTrace();
 	        	}
 	        }
-	        
 	        
 			jgen.writeEndObject();
 		}
@@ -6546,7 +6545,8 @@ public class Serializers {
 				    // build data info
 				    List<List<Object>> data = new ArrayList<>();
 				    java.sql.Statement statement = value.createStatement();
-				    java.sql.ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
+				    String columnCSV = columns.stream().map(c -> (String)c.get("column_name")).collect(Collectors.joining(","));    
+				    java.sql.ResultSet resultSet = statement.executeQuery("SELECT " + columnCSV + " FROM " + tableName);
 				    java.sql.ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 				    int columnCount = resultSetMetaData.getColumnCount();
 				    while (resultSet.next()) {
