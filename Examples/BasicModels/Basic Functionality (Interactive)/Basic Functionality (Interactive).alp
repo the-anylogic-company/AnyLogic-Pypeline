@@ -18,7 +18,29 @@ This model requires the Pypeline add-on library in your AnyLogic environment and
 		<ActiveObjectClass>
 			<Id>1678914018162</Id>
 			<Name><![CDATA[Main]]></Name>
-			<AdditionalClassCode><![CDATA[class ArrowAnimConfig {
+			<AdditionalClassCode><![CDATA[/**
+* A partial recreation of Guava's AtomicDouble, as the library was removed from later AL versions
+*/
+class AtomicDouble {
+	private double value = 0d;
+	
+	public AtomicDouble(double value) {
+		this.value = value;
+	}
+	
+	public double get() {
+		return this.value;
+	}
+	
+	public void set(double value) {
+		this.value = value;
+	}
+}
+
+/**
+* Stores configuration data related to animating the arrows
+*/
+class ArrowAnimConfig {
 	ShapeArrowLine arrow; // object to modify
 	double X; // origin
 	double Y;
@@ -172,7 +194,6 @@ arrowRF1.setVisible(false);
 }]]></AdditionalClassCode>
 			<Import><![CDATA[import java.io.File;
 import java.util.stream.Collectors;
-import com.google.common.util.concurrent.AtomicDouble;]]></Import>
 			<StartupCode><![CDATA[// disable the controls for intended pacing of animations
 getExperimentHost().setRunControlEnabled(false);
 getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
