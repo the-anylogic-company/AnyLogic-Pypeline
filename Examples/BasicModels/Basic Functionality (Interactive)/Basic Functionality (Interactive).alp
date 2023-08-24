@@ -1306,8 +1306,13 @@ buttonTestPrint.setEnabled(false);]]></Body>
 						<Name><![CDATA[index]]></Name>
 						<Type><![CDATA[int]]></Type>
 					</Parameter>
-					<Body><![CDATA[// mark animation as inactive so that any ongoing tasks will clean themselves up
+					<Body><![CDATA[
+// mark animation as inactive and prematurely reset them so that any ongoing tasks will clean themselves up
 isAnimationActive = false; 
+for (AnimateArrow e : getDynamicEvents().stream().filter(e -> e instanceof AnimateArrow).map(e -> (AnimateArrow)e).toArray(AnimateArrow[]::new)) {
+	e.reset();
+	create_AnimateArrow(0, e.stage, e.progress, e.config);
+}
 
 selectedIndex = index;
 lvlSetup.setVisible(selectedIndex == 0);
@@ -1910,11 +1915,11 @@ builderCode.append("\t\t\"my_distribution.py\",\n");
 if (rfPrintHelp) {
 	builderCode.append("\t\t\"--help\"");
 } else {
-	builderCode.append(String.format("\t\t\"%s\", \"%s\", \"%s\"", rfMin, rfAMode, rfMax));
+	builderCode.append(String.format("\t\t%s, %s, %s", rfMin, rfAMode, rfMax));
 	// (purposefully didn't add newline to last append's line since we might have extra args)
 	if (rfUseCustomSeed || rfVerbose) {
 		if (rfUseCustomSeed) {
-			builderCode.append(", \"--seed\", \"").append(rfCustomSeed).append("\"");
+			builderCode.append(", \"--seed\", ").append(rfCustomSeed);
 		}
 		if (rfVerbose) {
 			builderCode.append(", \"--verbose\"");
@@ -2175,7 +2180,7 @@ return pyCom.runFileHeadless(args);]]></Body>
     			<HistogramData>
 					<Id>1679605161780</Id>
 					<Name><![CDATA[histogramData]]></Name>
-					<X>-250</X><Y>590</Y>
+					<X>-250</X><Y>600</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -2250,6 +2255,9 @@ return pyCom.runFileHeadless(args);]]></Body>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[enable]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[false]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[loadLastWorkingConfig]]></Name>
@@ -6659,7 +6667,7 @@ To properly try this option out, it's suggested to reconfigure
 					<Color>-16777216</Color>
 					<Text><![CDATA[The runFile function is used for executing standalone Python files, as if from the command-line.
 
-It takes as arguments one or more Strings for the file to execute and any arguments to the file.
+It takes as arguments a String for the file to execute and any command-line arguments to be passed to the file.
 It returns an Attempt object, allowing you to check the success condition and get any feedback (e.g., script outputs or error messages).
 A second variant allows you to pass the Java class to automatically convert the feedback to which will return an object in that type.
 
@@ -7427,7 +7435,7 @@ printed in Python from the final printed value.]]></Text>
 					<Color>-16744448</Color>
 					<Text><![CDATA[double value = pyCom.runFile(
      "my_distribution.py", 
-     "5.0", "8.5", "15.0", "--seed", "42", "--verbose"
+     5.0, 8.5, 15.0, "--seed", 42, "--verbose"
 );
 
 String temp = attempt.getFeedback(String.class)
@@ -7454,9 +7462,9 @@ histogramData.add(value);]]></Text>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
-						<VisibleCode><![CDATA[histogramData.count() >= 1 && !rfPrintHelp]]></VisibleCode>
+						<VisibleCode><![CDATA[histogramData.count() >= 1]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive()) && !rfPrintHelp && !rfVerbose]]></EnableExpression>
 						<ActionCode><![CDATA[// this process takes a few seconds, so show indicator
 textRFRequesting.setVisible(true);
 // action itself needs to be offset slightly to allow animation time to update (to make text visible) 
@@ -7519,7 +7527,7 @@ delayedNoAnimationRFMultiCall.restart();]]></ActionCode>
 				<Text>
 					<Id>1680191650257</Id>
 					<Name><![CDATA[textRFRequesting]]></Name>
-					<X>200</X><Y>560</Y>
+					<X>200</X><Y>570</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -7602,6 +7610,28 @@ delayedNoAnimationRFMultiCall.restart();]]></ActionCode>
 						<Style>2</Style>
 					</Font>
 					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Text>
+					<Id>1692894443565</Id>
+					<Name><![CDATA[text59]]></Name>
+					<X>200</X><Y>560</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<VisibleCode><![CDATA[button2.isVisible() && (rfPrintHelp || rfVerbose)]]></VisibleCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[to use: disable help and verbose settings]]></Text>
+					<Font>
+						<Name>sans serif</Name>
+						<Size>9</Size>
+						<Style>2</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -8097,9 +8127,9 @@ There are more nuanced use cases and more complex features available as well (re
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>9</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMajor>0</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.fluid]]></LibraryName>
