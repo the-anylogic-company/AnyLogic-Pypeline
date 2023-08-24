@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
 <Model>
 	<Id>1678914018156</Id>
 	<Name><![CDATA[Basic Functionality (Interactive)]]></Name>
@@ -194,6 +194,7 @@ arrowRF1.setVisible(false);
 }]]></AdditionalClassCode>
 			<Import><![CDATA[import java.io.File;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;]]></Import>
 			<StartupCode><![CDATA[// disable the controls for intended pacing of animations
 getExperimentHost().setRunControlEnabled(false);
 getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
@@ -1016,7 +1017,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 			<Events>
 				<Event>
 					<Id>1680192016138</Id>
-					<Name><![CDATA[delayedNoAnimationCall]]></Name>
+					<Name><![CDATA[delayedNoAnimationRFMultiCall]]></Name>
 					<X>-250</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1045,8 +1046,14 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 					</Properties>
 					<Action><![CDATA[// Needed to be slightly delayed so that animation refreshes (namely for the "Requesting" text) 
 //	before this starts (which will lock the thread until completion).
-for (int i = 0; i < 25; i++)
-	onRunFileButton(false);]]></Action>
+
+// call with runFileHeadless but hang thread until all done (still 5-10x faster than individual runFile calls)
+List<FutureAttempt> calls = IntStream.range(0, 25).mapToObj(i -> buildRunFileHeadless()).collect(Collectors.toList());
+while (calls.parallelStream().anyMatch(a -> !a.isDone())) {
+	// keep sleeping thread while there is a still-working FutureAttempt
+	try {Thread.sleep(100);} catch (Exception e) {}
+}
+calls.parallelStream().forEach(a -> histogramData.add(a.get().getFeedback(double.class)));]]></Action>
 				</Event>
 			</Events>
 			<DynamicEvents>
@@ -2135,6 +2142,33 @@ lvlRunFile.add(arrowRF1);
 arrowRF2.setPos(ph_arrowRF2.getX(), ph_arrowRF2.getY());
 lvlRunFile.add(arrowRF2);
 return null;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[FutureAttempt]]></ReturnType>
+					<Id>1692893609757</Id>
+					<Name><![CDATA[buildRunFileHeadless]]></Name>
+					<X>-230</X><Y>570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (rfPrintHelp || rfVerbose) {
+	error("Not intended to run headlessly when help or verbose is enabled");
+	return null;
+}
+
+// build up string array of arguments based on settings
+ArrayList<String> argList = new ArrayList<>();
+argList.addAll(List.of("my_distribution.py", String.valueOf(rfMin), String.valueOf(rfAMode), String.valueOf(rfMax)));
+if (rfUseCustomSeed)
+	argList.addAll(List.of("--seed", String.valueOf(rfCustomSeed)));
+if (rfVerbose)
+	argList.add("--verbose");
+	
+// passing as multiple consequtive args == a single primitive string array
+String[] args = argList.toArray(String[]::new);
+return pyCom.runFileHeadless(args);]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -6653,7 +6687,7 @@ Interact with the form below to see sample Java code and, after submitting, the 
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -6679,7 +6713,7 @@ Interact with the form below to see sample Java code and, after submitting, the 
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -6704,7 +6738,7 @@ Interact with the form below to see sample Java code and, after submitting, the 
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -6731,7 +6765,7 @@ Interact with the form below to see sample Java code and, after submitting, the 
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp && rfUseCustomSeed]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -6757,7 +6791,7 @@ Interact with the form below to see sample Java code and, after submitting, the 
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();
 histogramData.reset();]]></ActionCode>
 					</BasicProperties>
@@ -6784,7 +6818,7 @@ histogramData.reset();]]></ActionCode>
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();
 histogramData.reset();]]></ActionCode>
 					</BasicProperties>
@@ -6811,7 +6845,7 @@ histogramData.reset();]]></ActionCode>
 						<TextColor/>
 						<VisibleCode><![CDATA[!rfPrintHelp]]></VisibleCode>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();
 histogramData.reset();]]></ActionCode>
 					</BasicProperties>
@@ -6836,7 +6870,7 @@ histogramData.reset();]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[onRunFileButton(true);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -6905,7 +6939,7 @@ histogramData.reset();]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationCall.isActive())]]></EnableExpression>
+						<EnableExpression><![CDATA[!(isAnimationActive || delayedNoAnimationRFMultiCall.isActive())]]></EnableExpression>
 						<ActionCode><![CDATA[updateRunFileCode();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -7427,7 +7461,7 @@ histogramData.add(value);]]></Text>
 textRFRequesting.setVisible(true);
 // action itself needs to be offset slightly to allow animation time to update (to make text visible) 
 //		before thread locks with time consuming task
-delayedNoAnimationCall.restart();]]></ActionCode>
+delayedNoAnimationRFMultiCall.restart();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -7491,7 +7525,7 @@ delayedNoAnimationCall.restart();]]></ActionCode>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<VisibleCode><![CDATA[delayedNoAnimationCall.isActive()]]></VisibleCode>
+					<VisibleCode><![CDATA[delayedNoAnimationRFMultiCall.isActive()]]></VisibleCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
