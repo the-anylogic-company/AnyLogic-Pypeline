@@ -1914,7 +1914,7 @@ return future;]]></Body>
 						<Name><![CDATA[args]]></Name>
 						<Type><![CDATA[Object...]]></Type>
 					</Parameter>
-					<Body><![CDATA[String[] tmp = new String[args.length+1];
+					<Body><![CDATA[Object[] tmp = new Object[args.length+1];
 tmp[0] = py.activePyPath;
 System.arraycopy(args, 0, tmp, 1, args.length);
 
