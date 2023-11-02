@@ -9,7 +9,7 @@
 	<Id>1590593133127</Id>
 	<Name><![CDATA[Initializing and Exporting with JSON]]></Name>
 	<Description><![CDATA[This model showcases the fundamentals of using Pypeline to be able to exchange intricate data structures between AnyLogic and Python via JSON (JavaScript Object Notation), a streamlined data-interchange format. Three features are demonstrated: creating agents or populations from a JSON string or file, serializing the model state as a JSON string or file, and the ability to customize the serialization to specify which elements are included or excluded.
-This model requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[initializing_and_exporting_with_json]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
@@ -2972,6 +2972,12 @@ The set of JSON features come from the AnyLogic JSONifier library which comes bu
 			<BypassInitialScreen>false</BypassInitialScreen>
 		</SimulationExperiment>	
 	</Experiments>
+	<ModelResources>
+		<Resource>
+			<Path><![CDATA[helper.py]]></Path>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		</Resource>
+	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
