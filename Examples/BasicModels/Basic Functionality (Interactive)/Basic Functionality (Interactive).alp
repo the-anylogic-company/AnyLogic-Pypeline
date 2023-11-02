@@ -19,25 +19,6 @@ This model requires the Pypeline add-on library in your AnyLogic environment and
 			<Id>1678914018162</Id>
 			<Name><![CDATA[Main]]></Name>
 			<AdditionalClassCode><![CDATA[/**
-* A partial recreation of Guava's AtomicDouble, as the library was removed from later AL versions
-*/
-class AtomicDouble {
-	private double value = 0d;
-	
-	public AtomicDouble(double value) {
-		this.value = value;
-	}
-	
-	public double get() {
-		return this.value;
-	}
-	
-	public void set(double value) {
-		this.value = value;
-	}
-}
-
-/**
 * Stores configuration data related to animating the arrows
 */
 class ArrowAnimConfig {
@@ -194,7 +175,8 @@ arrowRF1.setVisible(false);
 }]]></AdditionalClassCode>
 			<Import><![CDATA[import java.io.File;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;]]></Import>
+import java.util.stream.IntStream;
+import java.util.concurrent.atomic.AtomicReference;]]></Import>
 			<StartupCode><![CDATA[// disable the controls for intended pacing of animations
 getExperimentHost().setRunControlEnabled(false);
 getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
@@ -1528,7 +1510,7 @@ editRRExpression.setText("");]]></Body>
 // Keep track of the outcome (from Python) within this code block.
 // Needs to be final to be used in the enclosed function,
 //		but needs to be atomic so we can optionally modify it.
-final AtomicDouble amount = new AtomicDouble(0d);
+final AtomicReference<Double> amount = new AtomicReference<>(0d);
 
 // Set the arrows at their final positions for reference in the configs
 resetRRArrows();
@@ -1556,7 +1538,7 @@ ArrowAnimConfig config2 = new ArrowAnimConfig(arrowRR2, 0.5, 2.65, 20, textRROut
 					textRROutcome.setX(outcome.getFirst() != null ? 980 : arrowRR2.getX());
 					// update the amount to send if there wasn't any issue with it
 					if (outcome.getSecond() != null)
-						amount.set(outcome.getSecond().doubleValue());
+						amount.set(outcome.getSecond());
 					
 				}
 				@Override
@@ -2012,7 +1994,7 @@ return ytime;]]></Body>
 // Keep track of the outcome (from Python) within this code block.
 // Needs to be final to be used in the enclosed function,
 //		but needs to be atomic so we can optionally modify it.
-final AtomicDouble value = new AtomicDouble(-1d);
+final AtomicReference<Double> value = new AtomicReference<>(-1d);
 
 // Set the arrows at their final positions for reference in the configs
 //resetRFArrows();
