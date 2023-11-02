@@ -3,3 +3,5 @@
 *.docx
 *.properties
 **/cache/giscache*
+/.idea
+/.project

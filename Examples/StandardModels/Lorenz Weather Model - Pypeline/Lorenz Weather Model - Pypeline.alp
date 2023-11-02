@@ -9,7 +9,7 @@
 	<Id>1162412338974</Id>
 	<Name><![CDATA[Lorenz Weather Model - Pypeline]]></Name>
 	<Description><![CDATA[This model is a slightly modified version of the original AnyLogic example model, which is a System Dynamics model demonstrating a chaotic yet deterministic system. When the model starts, Pypeline will spawn a new 3D window and begin streaming data to it. You can interact with it by changing the sliders in the model and viewing the results, in addition to dragging the 3D graph to view it from different angles. This model also demonstrates Pypeline’s ability to function in parallel simulations without any extra code.
-Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the numpy and matplotlib libraries installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the numpy and matplotlib libraries installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[lorenz_weather_model_pypeline_test]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>

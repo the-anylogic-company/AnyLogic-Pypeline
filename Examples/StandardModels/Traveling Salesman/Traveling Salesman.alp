@@ -9,7 +9,7 @@
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
 	<Description><![CDATA[This model showcases an example of a Traveling Salesman problem (TSP). In the TSP, a set of cities are present with one designated as the home location. Given an arbitrary number of cities to visit, the goal is to find the shortest route that starts and ends at the home location. Orders are generated one after another and passed to the Python library OR-tools (by Google) to optimize the route before being sent to the truck to execute. 
-Requires the Pypeline add-on library in your AnyLogic environment and Python 3 on your machine with the libraries numpy and OR-tools installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries numpy and OR-tools installed.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[pypeline___traveling_salesman]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
