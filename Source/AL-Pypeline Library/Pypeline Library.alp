@@ -6825,7 +6825,7 @@ public class Deserializers {
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>9</VersionMinor>
-			<VersionBuild>4</VersionBuild>
+			<VersionBuild>5</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
