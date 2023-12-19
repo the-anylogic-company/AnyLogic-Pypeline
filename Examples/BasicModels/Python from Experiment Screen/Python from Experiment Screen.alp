@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
 <Model>
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from Experiment Screen]]></Name>
@@ -1632,7 +1632,7 @@ if (getCurrentIteration() == getMaximumIterations()) {
 					<Color>-16777216</Color>
 					<Text><![CDATA[The PyCommunicator needs to be a variable because it is technically an agent,
        and agents cannot be dragged in the same way as in the model itself.
-It's initialized the Action fields before each simulation run.]]></Text>
+It's initialized in the Action fields before each simulation run.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -1792,6 +1792,7 @@ Requires Python 3 with the (optional) libraries numpy and matplotlib]]></Text>
 		<Resource>
 			<Path><![CDATA[io_manager.py]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
