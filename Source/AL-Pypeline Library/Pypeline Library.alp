@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -2705,7 +2705,7 @@ Calling this function's `set_` function will update the filter. An error will be
 	IStatechartState.class,
 	AbstractLinkToAgent.class,
 	Scale.class,
-	CustomDistribution.class,
+	CustomDistributionAbstract.class,
 	Random.class,
 	Histogram.Appearance.class,
 	Histogram2D.Appearance.class,
@@ -5333,7 +5333,7 @@ public class JsonFilter {
 			IStatechartState.class,
 			AbstractLinkToAgent.class,
 			Scale.class,
-			CustomDistribution.class,
+			CustomDistributionAbstract.class,
 			Random.class,
 			Histogram.Appearance.class,
 			Histogram2D.Appearance.class,
@@ -6825,7 +6825,7 @@ public class Deserializers {
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>9</VersionMinor>
-			<VersionBuild>4</VersionBuild>
+			<VersionBuild>5</VersionBuild>
 			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
 		</Library>
 	</Libraries>
@@ -6833,26 +6833,32 @@ public class Deserializers {
 		<Resource>
 			<Path><![CDATA[Python-logo-16.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[Python-logo-32.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[Python-logo.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[Pypeline-libicon.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[jsonifier_16.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[jsonifier_32.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
