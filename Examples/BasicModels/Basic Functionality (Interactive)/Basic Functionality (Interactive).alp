@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1678914018156</Id>
 	<Name><![CDATA[Basic Functionality (Interactive)]]></Name>
@@ -13,6 +13,10 @@ This model requires the Pypeline add-on library in your AnyLogic environment (al
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[basic_functionality__interactive_]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -269,7 +273,7 @@ getExperimentHost().setSpeedControlEnabled(false);]]></StartupCode>
 				<Scale>10</Scale>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
-			<CurrentLevel>1678920615214</CurrentLevel>
+			<CurrentLevel>1678920633762</CurrentLevel>
 			<ConnectionsId>1678914018157</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -7815,7 +7819,7 @@ for (Pair p : pyCom.history) {
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -7836,7 +7840,7 @@ for (Pair p : pyCom.history) {
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1678914018162">
 		<Id>1678914018166</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -8099,6 +8103,7 @@ There are more nuanced use cases and more complex features available as well (re
 		<Resource>
 			<Path><![CDATA[my_distribution.py]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
@@ -8109,9 +8114,9 @@ There are more nuanced use cases and more complex features available as well (re
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>9</VersionMinor>
+		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.fluid]]></LibraryName>
