@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181709" AlpVersion="8.8.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
@@ -13,6 +13,10 @@ Requires the Pypeline add-on library in your AnyLogic environment (allowing for 
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[simple_hospital_ai_testbed]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -5864,7 +5868,7 @@ return String.format("[["+placeholders+"]]",
 			</Areas>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -5885,7 +5889,7 @@ return String.format("[["+placeholders+"]]",
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1586797690572">
 		<Id>1586797690575</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -10340,21 +10344,24 @@ rot %= (2*PI);]]></OnDrawCode>
 		<Resource>
 			<Path><![CDATA[los_model.h5]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[nn_model_parser.py]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[rate_model.h5]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>9</VersionMinor>
-		<VersionBuild>2</VersionBuild>
+		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>

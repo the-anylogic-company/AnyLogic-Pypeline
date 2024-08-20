@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.3.202304281216" AlpVersion="8.7.7">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1271246529984</Id>
 	<Name><![CDATA[Interconnected Call Centers (Web App)]]></Name>
@@ -13,12 +13,19 @@ Requires the Pypeline add-on library in your AnyLogic environment (allowing for 
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[interconnected_call_centers_web_app]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Minute]]></ModelTimeUnit>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1271246529985</Id>
 			<Name><![CDATA[Main]]></Name>
-			<StartupCode><![CDATA[attempt = pyCommunicator.runFileHeadless("app.py", "--num", String.valueOf(numberOfCallCenters), "--file", "latest_data.json");]]></StartupCode>
+			<Import><![CDATA[import java.util.concurrent.TimeoutException;]]></Import>
+			<StartupCode><![CDATA[// executes code to attempt to start the web app;
+//	may throw an error if there was a problem
+tryStartWebapp();]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1423464535421</Id>
@@ -152,8 +159,8 @@ Requires the Pypeline add-on library in your AnyLogic environment (allowing for 
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[FutureAttempt]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[// Where the background process for the python web server is stored.
-// Referenced in Main's "On startup" and Simulation's "After experiment run" callbacks.]]></Code>
+							<Code><![CDATA[// This is where the background process for the python web server is stored.
+// It's referenced to in Main's "On startup" and Simulation's "After experiment run" callbacks.]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -213,7 +220,9 @@ Requires the Pypeline add-on library in your AnyLogic environment (allowing for 
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[double[]    utils	= callCenters.stream().mapToDouble(cc -> cc.operators.utilization()*100.).toArray();
+					<Action><![CDATA[// convert the call center data to plain java objects and write them to a JSON file;
+//	the webapp will read from this and update the plots accordingly
+double[]    utils	= callCenters.stream().mapToDouble(cc -> cc.operators.utilization()*100.).toArray();
 Object[]	bars 	= callCenters.stream().map(cc -> new double[]{cc.getIndex(), cc.nAnsweredLocal, cc.nAnsweredExternal, cc.nBalked}).toArray();
 Map<String, Object> data = Map.of(
 	"utilizations", utils,
@@ -221,17 +230,25 @@ Map<String, Object> data = Map.of(
 	"update_time", roundToDecimal(time(HOUR),3),
 	"update_date", date().toString()
 );
-pyCommunicator.toJson(data, "latest_data.json");
-/*
-pyCommunicator.run(
-	"app.update_timestamp = " + roundToDecimal(time(HOUR),3),
-	"app.update_datestamp = '" + date().toString() + "'",
-	"app.data = " + pyCommunicator.toJson(utils),
-	"app.barchart_data = " + pyCommunicator.toJson(bars)
-	);
-*/]]></Action>
+pyCommunicator.toJson(data, "latest_data.json");]]></Action>
 				</Event>
 			</Events>
+			<DynamicEvents>
+				<DynamicEventClass>
+					<Id>1722959436457</Id>
+					<Name><![CDATA[DelayedErrorEvent]]></Name>
+					<X>-180</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[message]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Action><![CDATA[error("Problem with the web app! Fix the following python error: \n" + message);]]></Action>
+				</DynamicEventClass>
+			</DynamicEvents>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -349,6 +366,25 @@ for( CallCenter cc : callCenters )
 	n += cc.nBalked;
 return n;]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722959402060</Id>
+					<Name><![CDATA[tryStartWebapp]]></Name>
+					<X>-200</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[attempt = pyCommunicator.runFileHeadless("app.py", "--num", String.valueOf(numberOfCallCenters), "--file", "latest_data.json");
+// if there's a problem (e.g., missing libraries), the script will return rather than consume the background thread;
+// check for this and report it to the user
+try { 
+	var a = attempt.get(1, SECOND);
+	if (!a.isSuccessful()) // this function gets called on startup, but 'error' calls don't work unless offsetted by an event
+		create_DelayedErrorEvent(0., a.getFeedback());
+} catch (InterruptedException | TimeoutException e) {}]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<HistogramData>
@@ -461,7 +497,7 @@ return n;]]></Body>
 						<Id>1671032981167</Id>
 						<Name><![CDATA[totalCalls]]></Name>
 						<Type>sum</Type>
-						<Expression><![CDATA[item.totalCalls()]]></Expression>
+						<Expression><![CDATA[agent.totalCalls()]]></Expression>
 						<Condition><![CDATA[true]]></Condition>
 					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
@@ -2094,7 +2130,9 @@ Requires Python 3 with the libraries plotly, pandas, psutil, dash, dash_daq, and
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[traceln(attempt.get().getFeedback());]]></ActionCode>
+						<ActionCode><![CDATA[// get the current state of the 'FutureAttempt'
+//	and output its latest feedback (i.e., python console output)
+traceln(attempt.get().getFeedback());]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -5997,7 +6035,7 @@ lines.resetStats();]]></Body>
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -6018,7 +6056,7 @@ lines.resetStats();]]></Body>
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1271246529985">
 		<Id>1481820193920</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -6079,10 +6117,14 @@ lines.resetStats();]]></Body>
 			<MaximumMemory>256</MaximumMemory>
 			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<AfterSimulationRunCode><![CDATA[// Force quit the process hosting the server
-root.attempt.cancel(true);
-// Run the function to clean the temporary files
-root.pyCommunicator.run("from app import cleanup", "cleanup()");]]></AfterSimulationRunCode>
+			<AfterSimulationRunCode><![CDATA[try { // may throw an error if the webapp had problems starting up
+	// Force quit the process hosting the server
+	root.attempt.cancel(true);
+	// Run the function to clean the temporary files
+	root.pyCommunicator.run("from app import cleanup", "cleanup()");
+} catch (Exception e) {
+	e.printStackTrace();
+}]]></AfterSimulationRunCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
@@ -6280,14 +6322,17 @@ You can use this strategy to create alternatives interfaces for analyzing your m
 		<Resource>
 			<Path><![CDATA[contactcenterbusy.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[contactcenteridle.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[app.py]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
@@ -6306,7 +6351,7 @@ You can use this strategy to create alternatives interfaces for analyzing your m
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>9</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
 	<CloudModelUuid><![CDATA[f7334819-5401-4be8-bfcc-6ae4d1e710c0]]></CloudModelUuid>
 </Model>

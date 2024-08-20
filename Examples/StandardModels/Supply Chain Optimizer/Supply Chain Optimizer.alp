@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1599155584007</Id>
 	<Name><![CDATA[Supply Chain Optimizer]]></Name>
@@ -13,6 +13,10 @@ Requires the Pypeline add-on library in your AnyLogic environment (allowing for 
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[supply_chain_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Day]]></ModelTimeUnit>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -47,7 +51,8 @@ static List<Color> tab10Colormap = List.of(
 ]]></AdditionalClassCode>
 			<Import><![CDATA[import java.util.stream.Collectors;]]></Import>
 			<StartupCode><![CDATA[pyCommunicator.run("from opt_helper import find_solution",
-					"import os");]]></StartupCode>
+					"import os");
+]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1599155584011</Id>
@@ -488,7 +493,7 @@ currentViewIndex = viewIndex;]]></Body>
 						<Id>1653492638650</Id>
 						<Name><![CDATA[totalDemand]]></Name>
 						<Type>sum</Type>
-						<Expression><![CDATA[item.demand]]></Expression>
+						<Expression><![CDATA[agent.demand]]></Expression>
 						<Condition><![CDATA[true]]></Condition>
 					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
@@ -614,7 +619,7 @@ currentViewIndex = viewIndex;]]></Body>
 						<Id>1653492638657</Id>
 						<Name><![CDATA[totalProduct]]></Name>
 						<Type>sum</Type>
-						<Expression><![CDATA[item.output]]></Expression>
+						<Expression><![CDATA[agent.output]]></Expression>
 						<Condition><![CDATA[true]]></Condition>
 					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
@@ -740,7 +745,7 @@ currentViewIndex = viewIndex;]]></Body>
 						<Id>1681165424569</Id>
 						<Name><![CDATA[totalHolding]]></Name>
 						<Type>sum</Type>
-						<Expression><![CDATA[item.holding]]></Expression>
+						<Expression><![CDATA[agent.holding]]></Expression>
 						<Condition><![CDATA[]]></Condition>
 					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
@@ -987,7 +992,7 @@ currentViewIndex = viewIndex;]]></Body>
 						<Name><![CDATA[countNew]]></Name>
 						<Type>count</Type>
 						<Expression><![CDATA[]]></Expression>
-						<Condition><![CDATA[time()-item.birthtime == 0]]></Condition>
+						<Condition><![CDATA[time()-agent.birthtime == 0]]></Condition>
 					</StatisticsItem>
 					<InEnvironment>true</InEnvironment>	
 					<InitialSpeedCode Class="CodeUnitValue">
@@ -11510,7 +11515,7 @@ Examining the code is not for the faint of heart.]]></Text>
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -11555,7 +11560,7 @@ Examining the code is not for the faint of heart.]]></Text>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["warehouses"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
+				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
 				<TableReference>
@@ -11564,7 +11569,7 @@ Examining the code is not for the faint of heart.]]></Text>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["costs"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
+				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
 				<TableReference>
@@ -11573,7 +11578,7 @@ Examining the code is not for the faint of heart.]]></Text>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["customers"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
+				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
 				<TableReference>
@@ -11582,13 +11587,13 @@ Examining the code is not for the faint of heart.]]></Text>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["factories"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
+				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1599155584013">
 		<Id>1599155584018</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -12342,9 +12347,9 @@ histogram3_data.add( root.warehouseUtilizationHD.mean()*100.0 );
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.pypeline]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>9</VersionMinor>
+		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>
