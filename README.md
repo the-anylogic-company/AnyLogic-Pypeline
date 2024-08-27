@@ -17,7 +17,7 @@ You need to have AnyLogic with any valid license (PLE, University, or Profession
 
 ### Installation
 
-1. Download the `Pypeline.jar` file (from the [releases](https://github.com/t-wolfeadam/AnyLogic-Pypeline/releases)) and place it somewhere it won't be moved (or accidentally deleted).
+1. Download the `Pypeline.jar` file (from the [releases](https://github.com/the-anylogic-company/AnyLogic-Pypeline/releases)) and place it somewhere it won't be moved (or accidentally deleted).
 2. Add it to your AnyLogic palette. A step-by-step explanation of how to do this is available in the AnyLogic help article ["Managing Libraries"](https://help.anylogic.com/topic/com.anylogic.help/html/libraries/managing-libraries.html?cp=3_5_4). 
 3. You should see a new palette item for Pypeline with the custom Python Communicator agent.
 
