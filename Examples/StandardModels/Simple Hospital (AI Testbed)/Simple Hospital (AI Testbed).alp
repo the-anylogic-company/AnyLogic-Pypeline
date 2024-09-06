@@ -9,7 +9,7 @@
 	<Id>1586797690566</Id>
 	<Name><![CDATA[Simple Hospital (AI Testbed)]]></Name>
 	<Description><![CDATA[This model demonstrates being able to use simulation as a testbed for evaluating trained AI politics in a dynamic environment. It depicts a simplified hospital where patients arrive, stay for some time, then leave. Two neural networks are utilized: one for predicting the arrival rate of patients based on the last days' worth of arrival rates; the second is for predicting patient length of stay based on 24 attributes. A slider is provided for you to experiment with dynamically adjusting hospital capacity. 
-Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the numpy and tensorflow libraries installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries installed (see requirements.txt).]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[simple_hospital_ai_testbed]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
@@ -3994,8 +3994,8 @@ cumulativeTisHD.add(time(DAY)-flowchartEntryDay);]]></Code>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the libraries numpy and tensorflow]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>

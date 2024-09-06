@@ -9,7 +9,7 @@
 	<Id>1574374744725</Id>
 	<Name><![CDATA[Machine Optimizer]]></Name>
 	<Description><![CDATA[This model demonstrates using Python for performing optimization during runtime to find the number of 3 machine types to build such that the production cost is minimized. As the focus of this model is to demonstrate a basic implementation using the Pypeline library, the scenario is completely static; you input the desired parameter values and click a button to trigger code that sends/retrieves values to/from Python. 
-This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the numpy and scipy libraries installed.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries installed (see requirements.txt).]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[machine_optimizer]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -2420,8 +2420,8 @@ machines]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the libraries numpy and scipy]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>

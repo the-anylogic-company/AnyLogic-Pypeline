@@ -9,7 +9,7 @@
 	<Id>1678914018156</Id>
 	<Name><![CDATA[Basic Functionality (Interactive)]]></Name>
 	<Description><![CDATA[This is an interactive simulation model that provides a hands-on learning experience with Pypeline through a variety of demos within a single model. It's designed to help you understand the basic usage of Pypeline, including the basic configuration options and some of the core functions. In exploring the demos, you'll be able to input commands to be executed in the Python environment and see the code generated for each input.
-This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the numpy and scipy libraries installed.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine.]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[basic_functionality__interactive_]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -3437,7 +3437,7 @@ For basic usage examples, see the online documentation and practical models (or 
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
 Requires Python 3]]></Text>
 					<Font>
 						<Name>SansSerif</Name>

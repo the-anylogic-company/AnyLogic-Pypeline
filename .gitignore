@@ -1,5 +1,7 @@
 *.pyc
 *.autosave
+db.lck
+db.log
 *.docx
 *.properties
 **/cache/giscache*

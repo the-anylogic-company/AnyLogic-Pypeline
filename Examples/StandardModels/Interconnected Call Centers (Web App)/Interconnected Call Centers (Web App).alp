@@ -9,7 +9,7 @@
 	<Id>1271246529984</Id>
 	<Name><![CDATA[Interconnected Call Centers (Web App)]]></Name>
 	<Description><![CDATA[This model is a slightly modified version of the original AnyLogic example model “Interconnected Call Centers” and is an example of using dashboard libraries to build a live web app for the executing model. After launching the model, the web app will be launched in the background Python environment (open a new browser tab to "localhost:8050" to view it). Periodically, the model will transmit its current state to Python, which will then update the web app. You can use this strategy to create alternatives interfaces for analyzing your model as it runs.
-Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the plotly, pandas, psutil, and dash libraries installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries installed (see requirements.txt).]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[interconnected_call_centers_web_app]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Minute]]></ModelTimeUnit>
@@ -2107,8 +2107,8 @@ resetStats();]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the libraries plotly, pandas, psutil, dash, dash_daq, and dash_bootstrap_components]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>

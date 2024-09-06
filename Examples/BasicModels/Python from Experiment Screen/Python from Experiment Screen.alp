@@ -9,7 +9,7 @@
 	<Id>1604941166229</Id>
 	<Name><![CDATA[Python from Experiment Screen]]></Name>
 	<Description><![CDATA[While typical use cases of Pypeline involve interaction with Python from within the running model, there are some situations where it would be desirable to have that interaction externally, from an Experiment. This model demonstrates one such use case wherein Python is used to assign the values in a Paramters Variation Experiment. 
-This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the (optional) libraries numpy and matplotlib.]]></Description>
+This model requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries installed (see requirements.txt).]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[demo___python_from_experiment_screen]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -1245,8 +1245,8 @@ All Pypeline related features can be found in the experiments.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the (optional) libraries numpy and matplotlib]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -1719,7 +1719,7 @@ At the end, if you have the optional dependencies, an image of a 3D plot (genera
 				<Text>
 					<Id>1684964535351</Id>
 					<Name><![CDATA[text42]]></Name>
-					<X>996</X><Y>10.5</Y>
+					<X>990</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1729,8 +1729,8 @@ At the end, if you have the optional dependencies, an image of a 3D plot (genera
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)
-Requires Python 3 with the (optional) libraries numpy and matplotlib]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>

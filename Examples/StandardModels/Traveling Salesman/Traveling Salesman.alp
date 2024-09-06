@@ -9,7 +9,7 @@
 	<Id>1582063467926</Id>
 	<Name><![CDATA[Traveling Salesman]]></Name>
 	<Description><![CDATA[This model showcases an example of a Traveling Salesman problem (TSP). In the TSP, a set of cities are present with one designated as the home location. Given an arbitrary number of cities to visit, the goal is to find the shortest route that starts and ends at the home location. Orders are generated one after another and passed to the Python library OR-tools (by Google) to optimize the route before being sent to the truck to execute. 
-Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries numpy and OR-tools installed.]]></Description>
+Requires the Pypeline add-on library in your AnyLogic environment (allowing for interaction with the Python language) and Python 3 on your machine with the libraries installed (see requirements.txt).]]></Description>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[pypeline___traveling_salesman]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
@@ -962,27 +962,6 @@ send(o, truck);]]></Body>
 					</HistogramDataExpression>
     			</Histogram2D>
 				<Text>
-					<Id>1684948573105</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>30</X><Y>40</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-65536</Color>
-					<Text><![CDATA[Requires 64 bit Python 3.6+ with the libraries numpy and OR-tools]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
 					<Id>1684948573108</Id>
 					<Name><![CDATA[text10]]></Name>
 					<X>30</X><Y>20</Y>
@@ -995,7 +974,8 @@ send(o, truck);]]></Body>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-65536</Color>
-					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic (https://git.io/al_py)]]></Text>
+					<Text><![CDATA[This model uses the Pypeline add-on library for AnyLogic ( https://www.anylogic.com/pypeline )
+Requires Python 3 with the libraries (see requirements.txt)]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
