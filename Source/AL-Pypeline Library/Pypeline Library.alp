@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.5.202506190549" AlpVersion="8.9.5">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -42,6 +42,8 @@
 			</Option>
 		</OptionList>
 	</OptionLists>
+	<Folders>
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -243,7 +245,26 @@ static HashMap<String, Object> serializeStatisticsContinuous(StatisticsContinuou
 		.forEach(s -> statMap.put(s[0], Double.valueOf(s[1].replaceAll(",", ""))));
 	return statMap;
 }
-]]></AdditionalClassCode>
+
+public void writeCustomData(java.io.ObjectOutputStream out) throws IOException {
+	// Write background processes (from running headless files)
+	List<Pair<PythonCommandType, Object[]>> savedFutures = new ArrayList<>();
+	for (var futureAttempt : headlessAttempts)
+		if (!futureAttempt.isCancelled() && !futureAttempt.isDone()) 
+			savedFutures.add(futureAttempt.getMetaCommand());
+			
+	out.writeObject(savedFutures);
+}
+
+public void readCustomData(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+	List<Pair<PythonCommandType, Object[]>> savedFutures = (List<Pair<PythonCommandType, Object[]>>) in.readObject();
+	if (enable) 
+		connect();
+		
+	for (var pair : savedFutures) 
+		runFileHeadless(pair.getFirst(), pair.getSecond());
+     
+}]]></AdditionalClassCode>
 			<Import><![CDATA[import com.anylogic.cloud.util.ExceptionUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -325,7 +346,7 @@ try {
 			<ElementsLimitValue>100</ElementsLimitValue>
 			<MakeDefaultViewArea>true</MakeDefaultViewArea>
 			<SceneGridColor/>
-			<SceneBackgroundColor/>
+			<SceneBackgroundColor>-4144960</SceneBackgroundColor>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
@@ -362,9 +383,7 @@ try {
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -372,6 +391,7 @@ try {
 			</EnvironmentProperties>
 			<DatasetsCreationProperties>
 				<AutoCreate>false</AutoCreate>
+					<Id>1567802069992</Id>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1569916800000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -411,7 +431,7 @@ try {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="private" StaticVariable="false">
+					<Properties SaveInSnapshot="false" Constant="false" AccessType="private" StaticVariable="false">
 						<Type><![CDATA[PySubProcess]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[null]]></Code>
@@ -557,7 +577,7 @@ else
 							<Label><![CDATA[Load last working configuration]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069991</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -594,7 +614,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 							<Label><![CDATA[Command to call Python]]></Label>
 							<EditorContolType>RADIO_BUTTONS</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069990</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -602,7 +622,7 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069989</Id>
 								<ParameterId>1589488014296</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -610,28 +630,28 @@ If <i>(path)</i> is selected, you can specify the full path to the desired pytho
 								</Value>
 							</HideCondition>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069988</Id>
 								<Name><![CDATA[python]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[self.PYTHON]]></Code>
 								</Value>
 							</PredefParamValue>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069987</Id>
 								<Name><![CDATA[python3]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[self.PYTHON3]]></Code>
 								</Value>
 							</PredefParamValue>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069986</Id>
 								<Name><![CDATA[(other)]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[self.PYTHON_OTHER]]></Code>
 								</Value>
 							</PredefParamValue>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069985</Id>
 								<Name><![CDATA[(path)]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[self.PYTHON_PATH]]></Code>
@@ -666,7 +686,7 @@ For other settings, this parameter's value will be updated to reflect the execut
 							<Label><![CDATA[Python command]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069984</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -719,7 +739,7 @@ For other settings, this parameter's value will be updated to reflect the execut
 							<Label><![CDATA[Python executable path]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069983</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -727,7 +747,7 @@ For other settings, this parameter's value will be updated to reflect the execut
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069982</Id>
 								<ParameterId>1570726491560</ParameterId>
 								<Operation>NOT_EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -735,7 +755,7 @@ For other settings, this parameter's value will be updated to reflect the execut
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069981</Id>
 								<ParameterId>1589488014296</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -770,7 +790,7 @@ In other words: if set to true, errors from Python will cause model-halting erro
 							<Label><![CDATA[Throw error on failed attempt]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069980</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -778,7 +798,7 @@ In other words: if set to true, errors from Python will cause model-halting erro
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069979</Id>
 								<ParameterId>1589488014296</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -817,7 +837,7 @@ You may change this parameter during run-time to override the initial value.]]><
 							<Label><![CDATA[Redirect Python output]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069978</Id>
 								<ParameterId>1608072595259</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -825,7 +845,7 @@ You may change this parameter during run-time to override the initial value.]]><
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069977</Id>
 								<ParameterId>1589488014296</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -1050,6 +1070,7 @@ Provided as reference for the end-user; for example, if they execute multiple co
 				<Variable Class="CollectionVariable">
 					<Id>1685473152541</Id>
 					<Name><![CDATA[headlessAttempts]]></Name>
+					<CustomModifierCode><![CDATA[transient]]></CustomModifierCode>
 					<X>870</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1550,7 +1571,7 @@ return file;]]></Body>
 @param returnType The Java class of the return type<br>
 @param code The single line of code to be executed<br>
 @return T The output, in the type specified]]></Description>
-					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>
 					<X>750</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1581,7 +1602,7 @@ return attempt.getFeedback(returnType);]]></Body>
 @param preferredVersion One of the options for which Python version to run the file<br>
 @param args The file path and any arguments to run (flags and values should be separate values)<br>
 @return T The output, in the type specified]]></Description>
-					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>
 					<X>770</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1611,7 +1632,7 @@ return attempt.getFeedback(returnType);]]></Body>
 @param returnType The Java class of the return type<br>
 @param args The file path, and any arguments to run (flags and values should be separate values)<br>
 @return T The output, in the type specified]]></Description>
-					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>
 					<X>770</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1637,7 +1658,7 @@ return attempt.getFeedback(returnType);]]></Body>
 @param returnType The Java class of the return type<br>
 @param lines The multi-lined code to run, with each line as its own argument<br>
 @return T The output, in the type specified]]></Description>
-					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>
 					<X>770</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1779,7 +1800,7 @@ return run(code);]]></Body>
 @param codeFmt The single line of code to be executed with String-formatted placeholders<br>
 @param args The objects to replace the placeholders with<br>
 @return T The output, in the type specified]]></Description>
-					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public <T>]]></CustomModifierCode>
 					<X>770</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1893,7 +1914,7 @@ try {
 	return new FutureAttempt(new Attempt(Attempt.RESULT_ERROR, msg));
 }
 
-FutureAttempt future = new FutureAttempt(proc);
+FutureAttempt future = new FutureAttempt(proc, preferredVersion, args);
 headlessAttempts.add(future);
 return future;]]></Body>
 				</Function>
@@ -2252,7 +2273,7 @@ if (!Set.of(_includedNamesWL_DefaultValue_xjal()).equals(JsonFilter.defaultWhite
 			<ElementsLimitValue>100</ElementsLimitValue>
 			<MakeDefaultViewArea>false</MakeDefaultViewArea>
 			<SceneGridColor/>
-			<SceneBackgroundColor/>
+			<SceneBackgroundColor>-4144960</SceneBackgroundColor>
 			<SceneSkybox>null</SceneSkybox>
 			<AgentProperties>
 				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
@@ -2289,9 +2310,7 @@ if (!Set.of(_includedNamesWL_DefaultValue_xjal()).equals(JsonFilter.defaultWhite
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -2299,6 +2318,7 @@ if (!Set.of(_includedNamesWL_DefaultValue_xjal()).equals(JsonFilter.defaultWhite
 			</EnvironmentProperties>
 			<DatasetsCreationProperties>
 				<AutoCreate>false</AutoCreate>
+					<Id>1567802069976</Id>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1665820800000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -2405,14 +2425,14 @@ Calling this parameter's `set_` function will apply the mode and then reset base
 							<Label><![CDATA[Filter mode]]></Label>
 							<EditorContolType>RADIO_BUTTONS</EditorContolType>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069975</Id>
 								<Name><![CDATA[Blacklist]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[true]]></Code>
 								</Value>
 							</PredefParamValue>
 							<PredefParamValue>
-								<Id>0</Id>
+								<Id>1567802069974</Id>
 								<Name><![CDATA[Whitelist]]></Name>
 								<Value Class="CodeValue">
 									<Code><![CDATA[false]]></Code>
@@ -2505,7 +2525,7 @@ jsonFilter.setAutogenerated(includeAutogeneratedsBL);]]></OnChangeCode>
 							<Label><![CDATA[Block autogenerated objects]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069973</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2513,7 +2533,7 @@ jsonFilter.setAutogenerated(includeAutogeneratedsBL);]]></OnChangeCode>
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069972</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2552,7 +2572,7 @@ jsonFilter.setAutogenerated(includeAutogeneratedsWL);]]></OnChangeCode>
 							<Label><![CDATA[Allow autogenerated objects]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069971</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2611,7 +2631,7 @@ jsonFilter.clearPackages().includePackages(includedPackagesBL);]]></OnChangeCode
 							<Label><![CDATA[Blocked packages]]></Label>
 							<EditorContolType>ONE_DIMENSIONAL_ARRAY</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069970</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2619,7 +2639,7 @@ jsonFilter.clearPackages().includePackages(includedPackagesBL);]]></OnChangeCode
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069969</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2661,7 +2681,7 @@ jsonFilter.clearPackages().includePackages(includedPackagesWL);]]></OnChangeCode
 							<Label><![CDATA[Allowed packages]]></Label>
 							<EditorContolType>ONE_DIMENSIONAL_ARRAY</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069968</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2669,7 +2689,7 @@ jsonFilter.clearPackages().includePackages(includedPackagesWL);]]></OnChangeCode
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069967</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2723,7 +2743,7 @@ jsonFilter.clearClasses().includeClasses(includedClassesBL);]]></OnChangeCode>
 							<Label><![CDATA[Blocked classes]]></Label>
 							<EditorContolType>ELEMENT_CHOOSER</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069966</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2731,7 +2751,7 @@ jsonFilter.clearClasses().includeClasses(includedClassesBL);]]></OnChangeCode>
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069965</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2780,7 +2800,7 @@ jsonFilter.clearClasses().includeClasses(includedClassesWL);]]></OnChangeCode>
 							<Label><![CDATA[Allowed classes]]></Label>
 							<EditorContolType>ONE_DIMENSIONAL_ARRAY</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069964</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2788,7 +2808,7 @@ jsonFilter.clearClasses().includeClasses(includedClassesWL);]]></OnChangeCode>
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069963</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2830,7 +2850,7 @@ jsonFilter.clearNames().includeNames(includedNamesBL);]]></OnChangeCode>
 							<Label><![CDATA[Blocked names]]></Label>
 							<EditorContolType>ONE_DIMENSIONAL_ARRAY</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069962</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2838,7 +2858,7 @@ jsonFilter.clearNames().includeNames(includedNamesBL);]]></OnChangeCode>
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069961</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2879,7 +2899,7 @@ jsonFilter.clearNames().includeNames(includedNamesWL);]]></OnChangeCode>
 							<Label><![CDATA[Allowed names]]></Label>
 							<EditorContolType>ONE_DIMENSIONAL_ARRAY</EditorContolType>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069960</Id>
 								<ParameterId>1682441170868</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2887,7 +2907,7 @@ jsonFilter.clearNames().includeNames(includedNamesWL);]]></OnChangeCode>
 								</Value>
 							</HideCondition>
 							<HideCondition>
-								<Id>0</Id>
+								<Id>1567802069959</Id>
 								<ParameterId>1682441114532</ParameterId>
 								<Operation>EQUALS</Operation>
 								<Value Class="CodeValue">
@@ -2972,7 +2992,7 @@ Example 2: {@code List<Integer> nums = fromJson("input_list.json", List.class);}
 @param json A JSON string to be converted <i>or</i> a path to a file with this information
 @param clazz The class - specifically a standard Java type - to convert the provided string to
 @return The object of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>
 					<X>380</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3269,7 +3289,7 @@ Example 2: {@code ArrayList<Person> pop = fromPopulationJson("person_data.json",
 @param agent_clazz The class of the AL agent type
 @param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return ArrayList An ArrayList of the agents]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>360</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3333,7 +3353,7 @@ Example 2: {@code fromAgentJson("person_data.json", "/options/1", Person.class, 
 @param clazz The class of the AL agent type to convert the provided string to
 @param population The population to add this agent to
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>360</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3405,7 +3425,7 @@ Example 2: {@code fromPopulationJson("person_data.json", "/options", Person.clas
 @param pointer A JSON pointer expression to identify the part of the string to convert; if null or empty, uses the json String directly
 @param agent_clazz The Java class for the agent type to convert to
 @param population The population to add the agents to]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>360</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3461,7 +3481,7 @@ Example 2: {@code Person p = fromAgentJson("single_agent.json", Person.class, th
 @param clazz The class of the AL agent type to convert the provided string to
 @param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>380</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3526,7 +3546,7 @@ Example 2: {@code Person p = fromAgentJson("single_agent.json", Person.class);}
 @param json A JSON string to be converted to an AL agent **or** a path to a file with this information
 @param clazz The class of the AL agent type to convert the provided string to
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public <T extends Agent>]]></CustomModifierCode>
 					<X>400</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3759,7 +3779,7 @@ Example 2: {@code List<Integer> nums = fromJson("input_data.json", "/inputs/num_
 @param pointer A JSON pointer expression to identify the part of the string to convert; if null or empty, uses the json String directly
 @param clazz The class - specifically a standard Java type - to convert the provided string to
 @return The object of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T>]]></CustomModifierCode>
 					<X>360</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3812,7 +3832,7 @@ Example 2: {@code Person p = fromAgentJson("person_data.json", "/options/1", Per
 @param clazz The class of the AL agent type to convert the provided string to
 @param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>360</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3875,7 +3895,7 @@ Example 2: {@code fromAgentJson("single_agent.json", Person.class, peoplePop);}
 @param clazz The class of the AL agent type to convert the provided string to
 @param population The population to add this agent to
 @return The agent of the specified type (or `null` if errors were encountered)]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>380</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3907,7 +3927,7 @@ Example 2: {@code ArrayList<Person> pop = fromPopulationJson("person_list.json",
 @param agent_clazz The class of the AL agent type
 @param anyAgent Literally any other active agent in your model; used to properly start the agent (you can use `this` to refer to the active agent you're calling it from).
 @return ArrayList An ArrayList of the agents]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>380</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3938,7 +3958,7 @@ Example 2: {@code fromPopulationJson("person_list.json", Person.class, peoplePop
 @param json A valid JSON array **or** a path to a file with this information
 @param agent_clazz The Java class for the agent type to convert to
 @param population The population to add the agents to]]></Description>
-					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[public static <T extends Agent>]]></CustomModifierCode>
 					<X>380</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3968,7 +3988,7 @@ Example 2: {@code fromPopulationJson("person_list.json", Person.class, peoplePop
 @param json A JSON string which contains a map of parameter names to intended values, somewhere in its content
 @param pointer A JSON pointer expression to identify the part of the string to convert; if null or empty, uses the json String directly
 @return Null if no problems occured, otherwise the encountered exception]]></Description>
-					<CustomModifierCode><![CDATA[private static <T extends Agent>]]></CustomModifierCode>                 	
+					<CustomModifierCode><![CDATA[private static <T extends Agent>]]></CustomModifierCode>
 					<X>360</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4224,7 +4244,7 @@ return exception;]]></Body>
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -4233,10 +4253,12 @@ return exception;]]></Body>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
 	<Frame>
+		<Id>1567802069993</Id>
 		<Width>1000</Width>
 		<Height>600</Height>
 	</Frame>
 	<Database>
+		<Id>1567802069956</Id>
 		<Logging>false</Logging>
 		<AutoExport>false</AutoExport>
 		<ShutdownCompact>false</ShutdownCompact>
@@ -4245,7 +4267,7 @@ return exception;]]></Body>
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1569858524855">
 		<Id>1567802082277</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -4270,7 +4292,7 @@ return exception;]]></Body>
 		<Outputs>
 		</Outputs>
 	</RunConfiguration>
-	<Experiments>	
+	<Experiments>
 		<!--   =========   Simulation Experiment   ========  -->
 		<SimulationExperiment ActiveObjectClassId="1569858524855">
 			<Id>1685539151009</Id>
@@ -4308,7 +4330,7 @@ return exception;]]></Body>
 				</Text>
 			</Presentation>
 
-			<Parameters>			
+			<Parameters>
 				<Parameter>
 					<ParameterName><![CDATA[enable]]></ParameterName>
 				</Parameter>
@@ -4360,21 +4382,21 @@ return exception;]]></Body>
 				<Parameter>
 					<ParameterName><![CDATA[includedNamesWL]]></ParameterName>
 				</Parameter>
-			</Parameters>			
+			</Parameters>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Pypeline Library : Simulation]]></Title>	
+				<Title><![CDATA[Pypeline Library : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Never]]></StopOption>
-				<InitialDate><![CDATA[1685491200000]]></InitialDate>	
-				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1688083200000]]></FinalDate>	
-				<FinalTime><![CDATA[100.0]]></FinalTime>	
+				<InitialDate><![CDATA[1685491200000]]></InitialDate>
+				<InitialTime><![CDATA[0.0]]></InitialTime>
+				<FinalDate><![CDATA[1688083200000]]></FinalDate>
+				<FinalTime><![CDATA[100.0]]></FinalTime>
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
 		</SimulationExperiment>	
@@ -4425,6 +4447,7 @@ import java.util.Date;
  * @author Tyler Wolfe-Adam
  */
 public class PySubProcess {
+	private static final long serialVersionUID = 1L;
 	
 	// the command that will be used to locate python - will be different for windows vs mac/linux
 	public static final String findCmd = System.getProperty("os.name").toLowerCase().contains("win") ? "where" : "which";
@@ -4858,7 +4881,6 @@ public class PySubProcess {
 		return sbuilder.toString();
 	}
 	
-	
 	/**
 	 * Helper function to convert the enum to the Python command
 	 * @param preferredCommand
@@ -4875,6 +4897,21 @@ public class PySubProcess {
 			default:
 				return null;
 		}
+	}
+	
+	/**
+	 * Helper function to convert Python command to the enum
+	 * @param command
+	 * @return PythonCommandType
+	 */
+	private static PythonCommandType convertFromCommand(String command) {
+		if (command == null) return null;
+		return switch (command) {
+			case "python" -> PythonCommandType.PYTHON;
+			case "python2" -> PythonCommandType.PYTHON2;
+			case "python3" -> PythonCommandType.PYTHON3;
+			default -> null;
+		};
 	}
 	
 	/**
@@ -4951,7 +4988,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  * @author Tyler Wolfe-Adam
  */
-public class Attempt {
+public class Attempt implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	public static final int RESULT_SUCCESSFUL = 0;
 	public static final int RESULT_ERROR = 1;
@@ -5072,7 +5110,7 @@ import java.io.IOException;
 /**
  * An implementation of `Future` for being able to query the process/status of headless or non-blocking requests to Python.
  */	
-public class FutureAttempt implements Future<Attempt>{
+public class FutureAttempt implements Future<Attempt> {	
 	private final Process process;
 	private boolean cancelled = false;
 	
@@ -5081,12 +5119,29 @@ public class FutureAttempt implements Future<Attempt>{
 							sysout = new StringBuilder();
 	private Attempt result = null;
 	
+	private final Object[] args;
+	private final PythonCommandType commandType;
+	
 	/**
 	 * Create a FutureAttempt whose completion is based on a process running in the background.
 	 * @param process Some in-progress or completed background process.
 	 */
 	public FutureAttempt(Process process) {
 		this.process = process;
+		this.args = null;
+		this.commandType = null;
+	}
+	
+	/**
+	 * Create a FutureAttempt whose completion is based on a process running in the background with specified command type and args.
+	 * @param process Some in-progress or completed background process.
+	 * @param commandType specified command type
+	 * @param args command line args
+	 */
+	public FutureAttempt(Process process, PythonCommandType commandType, Object... args) {
+		this.process = process;
+		this.commandType = commandType;
+		this.args = args;
 	}
 	
 	/**
@@ -5098,6 +5153,8 @@ public class FutureAttempt implements Future<Attempt>{
 		this.process = null;
 		this.completed = true;
 		this.result = result;
+		this.args = null;
+		this.commandType = null;
 	}
 	
 	private void updateResult() throws IOException {
@@ -5232,6 +5289,13 @@ public class FutureAttempt implements Future<Attempt>{
 	public boolean isCancelled() {
 		return cancelled;
 	}
+	
+	/**
+	 * @return Execution command process metadata
+	 */
+	public Pair<PythonCommandType, Object[]> getMetaCommand() {
+		return new Pair<>(commandType, args);
+	}
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
@@ -5314,7 +5378,9 @@ import java.lang.reflect.Field;
  * There are three possible ways to reference object - by class, package, or name.
  * 	Both modes operate based on an 'OR' condition, meaning you only have to specify one way and it will be applied.
  */	
-public class JsonFilter {
+public class JsonFilter implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private ObjectMapper parent;
 	
 	/**
@@ -6797,6 +6863,7 @@ public class Deserializers {
 			<Name><![CDATA[Pypeline]]></Name>
 			<Description><![CDATA[The library that allows you to run Python code within AnyLogic model.]]></Description>
 			<AOCEntry>
+				<Id>1567802069958</Id>
 				<ActiveObjectClassId>1569858524855</ActiveObjectClassId>
 				<Icon16ResourceReference>
 					<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
@@ -6808,6 +6875,7 @@ public class Deserializers {
 				</Icon32ResourceReference>
 			</AOCEntry>
 			<AOCEntry>
+				<Id>1567802069957</Id>
 				<ActiveObjectClassId>1665787765899</ActiveObjectClassId>
 				<Icon16ResourceReference>
 					<PackageName><![CDATA[com.anylogic.libraries.pypeline]]></PackageName>
@@ -6831,31 +6899,37 @@ public class Deserializers {
 	</Libraries>
 	<ModelResources>
 		<Resource>
+			<Id>1567802069999</Id>
 			<Path><![CDATA[Python-logo-16.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
+			<Id>1567802069998</Id>
 			<Path><![CDATA[Python-logo-32.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
+			<Id>1567802069997</Id>
 			<Path><![CDATA[Python-logo.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
+			<Id>1567802069996</Id>
 			<Path><![CDATA[Pypeline-libicon.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
+			<Id>1567802069995</Id>
 			<Path><![CDATA[jsonifier_16.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
+			<Id>1567802069994</Id>
 			<Path><![CDATA[jsonifier_32.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
@@ -6868,4 +6942,62 @@ public class Deserializers {
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
 </Model>
+<ConvertersApplied>
+	<Uuid>9f7858c9-b2c8-4ead-9244-fd08833f642b</Uuid>
+	<Uuid>404652e6-561a-404c-aab2-ab7415f40ef5</Uuid>
+	<Uuid>6fd6cd57-6dfe-4fc6-be0b-c74065351957</Uuid>
+	<Uuid>3325dc48-3ad4-41e3-836f-dfd0e98fe1ed</Uuid>
+	<Uuid>3f69ef3d-706e-41a6-8af0-11658c5eef68</Uuid>
+	<Uuid>3f6fe405-e047-4304-91d6-6eee206d1106</Uuid>
+	<Uuid>820d2b51-5b4a-48e7-b0b6-e46418e3c0f2</Uuid>
+	<Uuid>630818fa-8975-4b70-976f-03180dce01db</Uuid>
+	<Uuid>7c7e471c-004e-495e-a4ad-d840620ab38e</Uuid>
+	<Uuid>3e38ff63-1f70-4ec0-b42c-e879b146785d</Uuid>
+	<Uuid>b1eb86e4-14b3-405c-8257-56b80f1b485d</Uuid>
+	<Uuid>d55f9fb6-86bb-45ea-9db1-79cecfa0ce91</Uuid>
+	<Uuid>ab77aafd-8f02-4354-b789-928d45b1f73c</Uuid>
+	<Uuid>e4f14fd7-1c4a-42e9-b91d-db2415f475db</Uuid>
+	<Uuid>6d208120-6c7a-45a6-b411-402f18890d9b</Uuid>
+	<Uuid>1816cdd0-177c-4973-9e88-dd8b95318556</Uuid>
+	<Uuid>5c23f62f-06dc-46ad-8ead-688ec434e3e5</Uuid>
+	<Uuid>5c7d7990-3f35-41eb-ae16-d0c16098acc6</Uuid>
+	<Uuid>02a16c52-a834-4f30-b6af-a6aee51a294e</Uuid>
+	<Uuid>f0988929-2718-4984-a1b6-c1f2ce152f1f</Uuid>
+	<Uuid>1c9d9cfe-ea2b-43f9-8f62-dc31d8ed3ae1</Uuid>
+	<Uuid>34cb742a-8ba4-47a7-87e6-f2685fe69e97</Uuid>
+	<Uuid>4fe10751-c399-4752-94b7-30113ad45070</Uuid>
+	<Uuid>c13fe5ac-6466-446e-886a-12df1431b1eb</Uuid>
+	<Uuid>714f9ca2-426e-4bff-8569-2d18f58fdcf8</Uuid>
+	<Uuid>045aeb5f-1087-4ac7-9702-a49404e7f7e8</Uuid>
+	<Uuid>840e9a0a-de98-4b7d-a172-f9bbda2d6b98</Uuid>
+	<Uuid>e342358b-75ed-4812-9376-6043fb6cb473</Uuid>
+	<Uuid>f3d5ccdc-1bb3-466f-871d-f6b92a26cbb4</Uuid>
+	<Uuid>59acb6fb-561c-4038-b722-a596a748b3c7</Uuid>
+	<Uuid>be7e6726-05c0-4228-821d-a8df91aeb5bc</Uuid>
+	<Uuid>df4a6a60-9ce8-4c6c-91c0-ad5a5d732259</Uuid>
+	<Uuid>47491eb9-4606-42bd-8399-125a2b95fded</Uuid>
+	<Uuid>9b2d1306-5d19-439a-8f2c-b144dd7e22fa</Uuid>
+	<Uuid>ef421152-8732-4f97-9acb-c8e9a6890d5e</Uuid>
+	<Uuid>d48f8080-25b1-44f5-8322-7bf2712ff974</Uuid>
+	<Uuid>6c4de826-daad-4cd4-b703-51dfe803e822</Uuid>
+	<Uuid>01af22d6-6889-4e98-a3df-e6eddc40fc92</Uuid>
+	<Uuid>ea3b3dbe-cca2-4bde-957b-feaef7e18789</Uuid>
+	<Uuid>e737c8c6-b526-4f88-b89e-554e205b0614</Uuid>
+	<Uuid>efd24e87-d7f7-425f-9cb0-3ee17c7b2116</Uuid>
+	<Uuid>a62607e6-047e-4910-a1ec-5426bf9283b5</Uuid>
+	<Uuid>64dceb5b-de05-47c7-8e40-e9b293e80d75</Uuid>
+	<Uuid>8d51c652-6aee-4de8-ba03-47b289a13ec5</Uuid>
+	<Uuid>51d7b5ce-5664-4750-b1a0-fabcdc31e49a</Uuid>
+	<Uuid>6522e3af-aa9e-421c-b667-e11db73cd8ca</Uuid>
+	<Uuid>9ac073a0-7abf-4dff-826f-9c44d4780590</Uuid>
+	<Uuid>2da9c21c-adc7-405a-a36e-46fbd9dfcd42</Uuid>
+	<Uuid>fe4d1053-9c84-4221-bac7-cb489a7064ff</Uuid>
+	<Uuid>1f005f88-e6d7-4bdc-81fa-3acf4c89cf64</Uuid>
+	<Uuid>42dc5a7c-d7b1-4653-92b9-9359b46cc2d4</Uuid>
+	<Uuid>e25721a9-34f9-479c-a4c3-31f5ec9e117d</Uuid>
+	<Uuid>506d1de3-06df-4131-9e88-e43f1768e3d8</Uuid>
+	<Uuid>e6625695-25a2-43d0-9056-1e9a1a594b1e</Uuid>
+	<Uuid>91990287-4edf-4e38-aa6c-66d0e906807b</Uuid>
+	<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
+</ConvertersApplied>
 </AnyLogicWorkspace>
