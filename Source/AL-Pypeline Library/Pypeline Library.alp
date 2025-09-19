@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.5.202506190549" AlpVersion="8.9.5">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.6.202509050521" AlpVersion="8.9.6">
 <Model>
 	<Id>1567802082268</Id>
 	<Name><![CDATA[Pypeline Library]]></Name>
@@ -4252,6 +4252,7 @@ return exception;]]></Body>
 	<FixedTimeStep>0.001</FixedTimeStep>
 	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 	<TimeAccuracy>1.0E-5</TimeAccuracy>
+	<InspectionWindowColorTheme>DEFAULT</InspectionWindowColorTheme>
 	<Frame>
 		<Id>1567802069993</Id>
 		<Width>1000</Width>
@@ -6893,8 +6894,8 @@ public class Deserializers {
 			</IconResourceReference>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>9</VersionMinor>
-			<VersionBuild>5</VersionBuild>
-			<Provider><![CDATA[Tyler Wolfe-Adam]]></Provider>    
+			<VersionBuild>6</VersionBuild>
+			<Provider><![CDATA[The AnyLogic Company]]></Provider>    
 		</Library>
 	</Libraries>
 	<ModelResources>
@@ -6999,5 +7000,7 @@ public class Deserializers {
 	<Uuid>e6625695-25a2-43d0-9056-1e9a1a594b1e</Uuid>
 	<Uuid>91990287-4edf-4e38-aa6c-66d0e906807b</Uuid>
 	<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
+	<Uuid>1737c8c6-b526-4dd8-589e-ee4e205b06f4</Uuid>
+	<Uuid>6a43bef6-8b70-4253-a828-82c3ab399655</Uuid>
 </ConvertersApplied>
 </AnyLogicWorkspace>
